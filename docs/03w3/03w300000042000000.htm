@@ -1,0 +1,46 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Open multiple widgets simultaneously For in-panel widgets in a widget pool, the widget behavior is controlled by the Controller widget, such as HeaderController and PanelManager. The HeaderController widget closes other widgets/groups when a widget/group is opened. It also can open all widgets in the same group at the same time in one panel. The PanelManager closes other widgets in the same group when a widget is opened. As a result, if you want to open more than one widget at the same time, here are the options: Customize the HeaderController widget or create a new controller widget that will not close other widgets/groups when a widget/group is opened. Put some widgets in the"><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - Open
+multiple widgets simultaneously
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-F825D79D-966D-403F-A7B5-B60D515A4FE6]--><body><div id="content"><div class="header"><h1>Open
+multiple widgets simultaneously
+</h1><div id="breadcrumb"></div></div>
+<p id="GUID-84BB734E-CAFD-4857-A8FD-83C984BEBDD8"> For in-panel widgets in a widget pool, the widget
+behavior is controlled by the Controller widget, such as
+HeaderController and PanelManager.</p>
+<p id="GUID-B8DC9E27-4F48-4DE6-B9C6-967B8F51529A">The HeaderController widget  closes
+other widgets/groups when a  widget/group is opened. It also can
+open all widgets in the same group at the same time in one
+panel.</p>
+<p id="GUID-CCC39409-515B-4444-9F1B-0E35A9BF4745">The PanelManager closes other widgets
+in the same group when a widget is opened.</p>
+<p id="GUID-FA9BF3B2-A11D-4270-B666-9A676F0691E6"> As a result, if you want to open more than one widget
+at the same time, here are the options:</p>
+
+<ul purpose="ul" id="UL_2604BA53C9AD441EA7086B208CAF8264"><li purpose="li" id="LI_50C804C619DC4AF5957073F7A72C4EBD">  Customize the HeaderController widget or create a new
+controller widget that  will not close other
+widgets/groups when a widget/group is opened.</li>
+
+<li purpose="li" id="LI_2145B1C8E8854B8B92E100ECDC354C34"> Put some widgets in the widgetOnScreen section and
+some in the widgetPool section.</li>
+<li purpose="li" id="LI_CE7DBDCC6D9A45879A16662AEA2B94BC">Put the widgets in the widgetOnScreen's group and
+configure a panel for the group. All groups in the widgetOnScreen
+section open when the app loads.</li><li purpose="li" id="LI_296BBDA7DBD748659AE4CC4F0BCFE6E4">Make the widget off-panel and configure it
+in the widgetOnScreen section. All off-panel widgets in the widgetOnScreen
+section open when the app loads.</li></ul>
+<div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

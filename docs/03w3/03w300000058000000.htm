@@ -1,0 +1,63 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="ItemSelector class The ItemSelector makes it easy to search items of specified types from Portal or ArcGIS.com.AMD Module Require: require([&amp;quot;jimu/dijit/ItemSelector&amp;quot;], function(ItemSelector) { /* code goes here */ });Constructor:new ItemSelector (params, srcNodeRef) Create a new ItemSelector dijit.Parameters: &amp;lt;Object&amp;gt; params: Required. Parameters for the ItemSelector dijit. &amp;lt;DOMNode | String&amp;gt; srcNodeRef: Optional. HTML element where the print widget button and the drop-down list are rendered. params properties: &amp;lt;String&amp;gt; portalUrl: Required. The portalUrl of your portal, such as http://orgname.maps.arcgis.com or http://myportal.company.com/instancename &amp;lt;String&amp;gt;[] itemTypes: Required. ItemSelector supports multiple item types to show items. Only items with specified types will show, such as ['Web Map'], ['Feature Service','Map"><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+ ItemSelector class
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-7D73823A-59EB-4992-8C1A-CD1E1399A30A]--><body><div id="content"><div class="header"><h1>
+ ItemSelector class
+</h1><div id="breadcrumb"></div></div>  
+
+<p id="GUID-A9AE041E-6887-46A2-A642-B5F1CD8340C3">The ItemSelector makes it easy to search items of specified types from Portal or ArcGIS.com.</p><p id="GUID-6241EB0E-2E7C-4683-8604-B20CE3B60C2C"><b>AMD Module Require:</b></p>
+
+<div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>require([&quot;jimu/dijit/ItemSelector&quot;], function(ItemSelector) { /* code goes here */ });
+</code></pre></div>
+</div><p id="GUID-B7926661-1725-4397-98A9-1D67FFB7DEF1"><b>Constructor:</b></p><div class="block_table" id="TABLE_FB3E3B7A87094BBB9C30997D7B6225B4" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="1.12*"></colgroup><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-E6B42A3F-BC35-4C1D-8B7E-94B7146A53F6"><span class="usertext">new ItemSelector (params, srcNodeRef)</span></p><p id="GUID-9C461F04-4B5D-4ECF-B31C-93DC671B693B">  Create a new ItemSelector dijit.</p><p id="GUID-72CB8467-9B12-4623-B054-5102294D3B53"><b>Parameters:</b></p><p id="GUID-60351FB7-EFCB-4017-BD60-24D4EC052C4A"> &lt;Object&gt; params:  Required.   Parameters for the ItemSelector dijit. </p><p id="GUID-2D94106B-AAD3-457E-AF32-6F19A4AA5737"> &lt;DOMNode | String&gt; srcNodeRef: Optional.  HTML element where the print widget button and the  drop-down list are rendered.</p><p id="GUID-82A3ECB1-D9F2-4846-A49A-A9CF8D9F88D1"><b> params properties:</b></p><p id="GUID-97CCB85B-B7AF-4C7F-B1E3-24A638785008"> &lt;String&gt; portalUrl:  Required.    The portalUrl of your portal, such as <a target="_blank" class="xref" rel="http://orgname.maps.arcgis.com/" href="http://orgname.maps.arcgis.com/">http://orgname.maps.arcgis.com</a> or <a target="_blank" class="xref" rel="http://myportal.company.com/instancename" href="http://myportal.company.com/instancename">http://myportal.company.com/instancename</a> </p><p id="GUID-A8A3A3EC-306E-421B-B62C-75B0C04300D1">   &lt;String&gt;[] itemTypes: Required.    ItemSelector supports multiple item types to show items. Only items with specified types will show, such as ['Web Map'], ['Feature Service','Map Service'] and so on.  </p>
+<p id="GUID-336636BF-AD91-41C8-B549-CE4DC9AFDF02"> &lt;String&gt;[] typeKeywords:  Optional.  ItemSelector also supports to search by multiple typeKeywords. Only items with specified typeKeywords will show, such as ['Web AppBuilder'] or ['Web AppBuilder','Web Map'] and so on.</p><p id="GUID-2310E324-B729-44FC-90BE-4FEDD629FB2E">Example:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>require([&#39;jimu/dijit/ItemSelector&#39;], function(ItemSelector){
+        var itemSelector = new ItemSelector({
+          portalUrl: &quot;http://orgname.maps.arcgis.com&quot;,
+          itemTypes: [&#39;Feature Service&#39;,&#39;Map Service&#39;]
+        }, srcNodeRef);
+        ...
+      });
+</code></pre></div>
+</div></td></tr></tbody></table><span class="table_desc"></span></div>
+<p id="GUID-A9878D5B-F732-4E11-B7AD-BE8F99C15876"><b>Methods:</b></p><div class="block_table" id="TABLE_24FF40BE05DE40F6A5C535C77134EE88" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="1.12*"></colgroup><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-9BA97D0E-728C-482D-99E2-BD1ED882C2DE"><span class="usertext"> getSelectedItem()</span></p><p id="GUID-1941547E-5FEB-4E8C-A7D8-BB3EBC316989"> Gets the selected item information.</p>
+</td></tr></tbody></table><span class="table_desc"></span></div><p id="GUID-28DBCF10-E26C-4282-BA99-A9587881546B"><b>Events:</b></p><div class="block_table" id="TABLE_F91FDB3036134BCA818FB77C49B76E5C" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="1.12*"></colgroup><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-9730C3E0-2082-4092-8C6C-DA3744171439"><span class="usertext">item-selected</span></p><p id="GUID-14585B1B-B7A2-4FFA-9EFF-10C3290C6255">Fires when user select one item.</p><p id="GUID-829D0076-20FE-4683-A9DB-67F77853E24E">Example:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>require([&#39;jimu/dijit/ItemSelector&#39;, &#39;dojo/on&#39;], function(ItemSelector, on){
+        var itemSelector = new ItemSelector(...);
+        ...
+        on(itemSelector, &#39;item-selected&#39;, function(itemInfo){
+          console.log(itemInfo);
+        });
+      });
+</code></pre></div>
+</div>
+
+
+
+</td></tr></tbody></table><span class="table_desc"></span></div><div class="block_table" id="TABLE_38B4F5FEA37B41CB9D13BE40A016402A" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="1.12*"></colgroup><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-218E8635-C035-4AF6-AF6B-894BAAD9293C"><span class="usertext">none-item-selected</span></p><p id="GUID-2975561C-11AA-4083-B6A5-BBEC370DEC1A">Fires when the user de-selects all items.</p><p id="GUID-9B335DB7-D320-4930-B19A-A318879B44FE">Example:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>require([&#39;jimu/dijit/ItemSelector&#39;, &#39;dojo/on&#39;], function(ItemSelector, on){
+        var itemSelector = new ItemSelector(...);
+        ...
+        on(itemSelector, &#39;none-item-selected&#39;, function(){
+          console.log(&quot;None item is selected.&quot;);
+        });
+      });
+</code></pre></div>
+</div>
+
+
+
+</td></tr></tbody></table><span class="table_desc"></span></div><div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

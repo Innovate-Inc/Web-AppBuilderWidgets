@@ -1,0 +1,69 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Widget pool configuration The following table shows the attributes and descriptions.AttributeDescriptionpanelobject. Default—BaseWidgetPanel. See the panel's config. All widgets (not in group) display in this panel.widgetsAn array of widgets.groupsAn array of groups.Example:&amp;quot;widgetPool&amp;quot;: { &amp;quot;panel&amp;quot;: { &amp;quot;uri&amp;quot;: &amp;quot;jimu/PanelType1&amp;quot;, &amp;quot;positionRelativeTo&amp;quot;: &amp;quot;map&amp;quot;, &amp;quot;position&amp;quot;: { &amp;quot;left&amp;quot;: 0, &amp;quot;top&amp;quot;: 0, &amp;quot;right&amp;quot;: 0, &amp;quot;bottom&amp;quot;: 30, &amp;quot;width&amp;quot;: 100, &amp;quot;height&amp;quot;: 100 } }, &amp;quot;groups&amp;quot;: [{ &amp;quot;widgets&amp;quot;: [{ &amp;quot;uri&amp;quot;: &amp;quot;widgets/Bookmark/Widget&amp;quot;, &amp;quot;icon&amp;quot;: &amp;quot;&amp;quot;, &amp;quot;label&amp;quot;: &amp;quot;&amp;quot; }], &amp;quot;label&amp;quot;: &amp;quot;&amp;quot;, &amp;quot;index&amp;quot;: 1, &amp;quot;panel&amp;quot;: { &amp;quot;uri&amp;quot;: &amp;quot;jimu/PanelType1&amp;quot;, &amp;quot;positionRelativeTo&amp;quot;: &amp;quot;map&amp;quot;, &amp;quot;position&amp;quot;: { &amp;quot;left&amp;quot;: 0, &amp;quot;top&amp;quot;: 0, &amp;quot;right&amp;quot;: 0, &amp;quot;bottom&amp;quot;: 30, &amp;quot;width&amp;quot;: 100, &amp;quot;height&amp;quot;: 100 } } }], &amp;quot;widgets&amp;quot;: [{ &amp;quot;index&amp;quot;: 2, &amp;quot;uri&amp;quot;: &amp;quot;widgets/Header/Widget&amp;quot;, &amp;quot;icon&amp;quot;: &amp;quot;&amp;quot;, &amp;quot;label&amp;quot;:"><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Widget pool configuration
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-F5B847DD-E3D7-4BEE-B386-93FB870C4237]--><body><div id="content"><div class="header"><h1>
+Widget pool configuration
+</h1><div id="breadcrumb"></div></div>
+<p id="GUID-D5C568D2-F644-4F5A-B13B-E9D8CDEB59AC">The following table shows the attributes and descriptions.</p><p id="GUID-E52AAB0E-37DB-436D-B03E-7001EE3709E6"><div class="block_table" id="TABLE_E733D2780F02431E97166E12946F3149" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="*"></colgroup><colgroup width="*"></colgroup><tr purpose="thead"><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-2E04FC31-D40F-43D1-967D-420337D379C4">Attribute</p></th><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-EFA4839D-6BD4-4BAC-9E14-C0210882F946">Description</p></th></tr><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-BABB2798-8142-4653-90D3-E3EDB7D71AC4"><span class="usertext">panel</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-F81B1ECA-9AF8-4798-9042-ADDCC4445CEA">object. Default—<span class="usertext">BaseWidgetPanel</span>. See the panel's config. All widgets (not in group) display in this panel.</p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-09166D43-0D9C-4101-BCF7-966DF8A90E11"><span class="usertext">widgets</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-8C43D0B5-D14B-4E27-91A5-F5013369A90E">An array of widgets.</p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-179379B2-4719-4AE7-96F4-C036A7CA6817"><span class="usertext">groups</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-D77ED5B7-99BD-4444-BB78-8CCBB56C07B7">An array of groups.</p></td></tr></tbody></table><span class="table_desc"></span></div></p><p id="GUID-00509777-08AB-4557-8F7E-F4E752253677">Example:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>&quot;widgetPool&quot;: {
+    &quot;panel&quot;: {
+      &quot;uri&quot;: &quot;jimu/PanelType1&quot;,
+      &quot;positionRelativeTo&quot;: &quot;map&quot;,
+      &quot;position&quot;: {
+        &quot;left&quot;: 0,
+        &quot;top&quot;: 0,
+        &quot;right&quot;: 0,
+        &quot;bottom&quot;: 30,
+        &quot;width&quot;: 100,
+        &quot;height&quot;: 100
+      }
+    },
+
+    &quot;groups&quot;: [{
+      &quot;widgets&quot;: [{
+        &quot;uri&quot;: &quot;widgets/Bookmark/Widget&quot;,
+        &quot;icon&quot;: &quot;&quot;,
+        &quot;label&quot;: &quot;&quot; 
+      }],
+
+      &quot;label&quot;: &quot;&quot;,
+      &quot;index&quot;: 1,
+      &quot;panel&quot;: {
+        &quot;uri&quot;: &quot;jimu/PanelType1&quot;,
+        &quot;positionRelativeTo&quot;: &quot;map&quot;,
+        &quot;position&quot;: {
+          &quot;left&quot;: 0,
+          &quot;top&quot;: 0,
+          &quot;right&quot;: 0,
+          &quot;bottom&quot;: 30,
+          &quot;width&quot;: 100,
+          &quot;height&quot;: 100
+        }
+      }
+    }],
+
+    &quot;widgets&quot;: [{
+      &quot;index&quot;: 2,
+      &quot;uri&quot;: &quot;widgets/Header/Widget&quot;,
+      &quot;icon&quot;: &quot;&quot;,
+      &quot;label&quot;: &quot;&quot;
+    }]
+  }
+</code></pre></div>
+</div>
+<div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

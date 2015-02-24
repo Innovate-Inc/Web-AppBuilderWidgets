@@ -1,0 +1,239 @@
+#wrapper {
+  margin: 0 auto;
+  width: 100%;
+  min-width: 320px; }
+
+/* =======================================
+
+  ARCGIS DOCUMENTATION 11.x STYLES
+  Created by:        Justin Hough
+  Date Modified:    5/9/13  
+  
+======================================= */
+/* Clearfix */
+.clearfix,
+.notes {
+  display: inline-block; }
+  .clearfix:after,
+  .notes:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0; }
+
+body {
+  color: #323232;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 14px; }
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Segoe UI", sans-serif;
+  color: #323232;
+  font-weight: bold; }
+
+h1 {
+  font-size: 1.429em;
+  line-height: 1.5;
+  margin: 0px; }
+
+h2 {
+  font-size: 1.214em;
+  line-height: 1.5;
+  margin: 14px 0 8px 0; }
+
+h3 {
+  font-size: 1.071em;
+  line-height: 1.5;
+  margin: 10px 0 8px 0; }
+
+h4,
+h5,
+h6 {
+  font-size: 1em;
+  line-height: 1.5;
+  margin: 4px 0 0 0; }
+
+/* Paragraphs */
+p {
+  font-size: 1em;
+  line-height: 1.5;
+  margin: 0 0 10px 0; }
+
+ul,
+ol {
+  font-family: "Segoe UI Semilight", sans-serif;
+  font-size: 12px; }
+  ul li,
+  ol li {
+    line-height: 1.5;
+    margin-bottom: 6px;
+    padding-left: 0; }
+    ul li li,
+    ol li li {
+      padding-left: 0; }
+
+/* Strong and Italic */
+strong, b {
+  font-family: "Segoe UI", sans-serif;
+  font-weight: 400; }
+
+em, i {
+  font-family: "Segoe UI", sans-serif;
+  font-style: italic; }
+
+/* Links */
+a {
+  color: #67A966;
+  text-decoration: none; }
+  a:hover {
+    color: #5A9359; }
+  a:active {
+    color: #5A9359;
+    text-decoration: underline; }
+
+/* Images */
+img {
+  margin-bottom: 0;
+  max-width: 95%;
+  vertical-align: middle; }
+
+.image table td,
+.image table tr {
+  border-bottom: none;
+  padding: 0; }
+.image img {
+  margin-bottom: 10px; }
+
+.caption {
+  font-family: "Segoe UI Italic", sans-serif;
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 0;
+  margin-bottom: 20px; }
+
+/* Content */
+#content {
+  margin: 20px; }
+
+/* Breadcrumbs */
+#breadcrumb {
+  font-size: 0.8em;
+  line-height: 1.5;
+  margin: 0 0 10px 0; }
+
+/* Note Boxes */
+.notes {
+  background: #F9F6E3;
+  border-bottom: 1px solid #CBCBCB;
+  border-top: 1px solid #CBCBCB;
+  font-size: 12px;
+  margin: 10px 0;
+  padding: 14px; }
+  .notes .note,
+  .notes .tip {
+    /* background-image: url('http://placehold.it/45'); */
+    /* background-position: 0 0; */
+    /* background-repeat: no-repeat; */
+    display: inline-block;
+    float: left;
+    /* height: 45px; */
+    /* text-indent: -9999px; */
+    /* width: 55px; */
+    width: 5%; }
+    .notes .note .note_img,
+    .notes .tip .note_img {
+      padding-right: 10px;
+      width: auto !important; }
+  .notes p {
+    margin-bottom: 0; }
+  .notes .tip {
+    /* background-image: url('http://placehold.it/45'); */ }
+  .notes .tipbody {
+    float: left;
+    width: 95%; }
+
+@media screen and (max-width: 960px) {
+  .notes .note,
+  .notes .tip {
+    width: 8%; }
+  .notes .tipbody {
+    width: 92%; } }
+@media screen and (max-width: 700px) {
+  .notes .note,
+  .notes .tip {
+    width: 10%; }
+  .notes .tipbody {
+    width: 90%; } }
+@media screen and (max-width: 500px) {
+  .notes .note,
+  .notes .tip {
+    width: 20%; }
+  .notes .tipbody {
+    width: 80%; } }
+#metadata {
+  float: right;
+  margin-left: 40px;
+  margin-top: -20px;
+  min-height: 200px;
+  min-width: 180px;
+  width: 20%;
+  z-index: 1000; }
+  #metadata .arrows {
+    margin-bottom: 10px;
+    width: 100%; }
+    #metadata .arrows .left,
+    #metadata .arrows .right {
+      background-color: lightblue;
+      background-repeat: no-repeat;
+      background-position: 6px 6px;
+      cursor: pointer;
+      display: inline-block;
+      height: 30px;
+      width: 30px; }
+    #metadata .arrows .left {
+      background-image: url("http://resources.arcgis.com/en/shared/rc/images/help-previous.png"); }
+    #metadata .arrows .right {
+      background-image: url("http://resources.arcgis.com/en/shared/rc/images/help-next.png");
+      margin-left: 5px; }
+  #metadata .metaContent {
+    margin: 20px 0; }
+    #metadata .metaContent .metadataTitle {
+      font-weight: bold;
+      margin: 0; }
+    #metadata .metaContent p {
+      font-size: 0.9em;
+      line-height: 1.2;
+      margin-top: 0;
+      margin-bottom: 10px; }
+  #metadata .feedback {
+    border-top: 1px solid #CBCBCB;
+    margin-top: 0;
+    margin-bottom: 14px; }
+    #metadata .feedback a {
+      display: inline-block;
+      line-height: 1em;
+      margin-top: 4px; }
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 10px; }
+  table tr {
+    border-bottom: 1px solid #CBCBCB;
+    /* background: #444; */ }
+    table tr th {
+      font-family: "Segoe UI Semibold", sans-serif;
+      border-bottom: 1px solid #CBCBCB;
+      padding-bottom: 5px;
+      padding-left: 10px;
+      text-align: left; }
+      table tr th p {
+        margin: 0; }
+    table tr td {
+      border-bottom: 1px solid #CBCBCB;
+      border-spacing: 0;
+      padding: 10px; }

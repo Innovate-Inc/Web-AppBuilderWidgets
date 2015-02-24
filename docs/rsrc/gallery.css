@@ -1,0 +1,225 @@
+﻿.shadowbox
+{
+    /*-moz-box-shadow: 2px 2px 2px #CCCCCC;*/
+    background-color: #FFFFFF;
+     border: 1px solid #CCCCCC;
+  margin-right: 10px;
+    padding: 5px;
+    /*
+    -moz-box-shadow: 3px 3px 4px #666;
+	-webkit-box-shadow: 3px 3px 4px #666;
+	box-shadow: 3px 3px 4px #666;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#666666')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#666666');
+*/
+}
+
+.gal-listing {
+/*	margin:0.5em; 
+	padding: 0.5em; 
+*/	
+	padding-top: 1em;
+	padding-bottom:1em;
+	border-bottom: 1px dotted #CCC;
+	line-height: 1.2em;
+	float:left;
+}
+
+.gal-listing h3, .gal-listing p{
+	padding-bottom: 0.5em;
+}
+.fl-img, .fl-slim {
+	float:left;
+}
+.fl-info{
+	float:left;
+	padding-left: 5px;
+	width: 200px;
+}
+
+.g-info{
+	font-weight: bold;
+	color: #333;
+}
+.g-line{padding-bottom: 0.2em;}
+#viewType
+{
+}
+
+#viewType a
+{
+    cursor: pointer;
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    text-decoration: none;
+    width: 90px;
+}
+
+#viewType a:hover span
+{
+    background: url("sprites.png") no-repeat scroll right -572px transparent;
+}
+
+#viewType a.indenton
+{
+    background: url("sprites.png") no-repeat scroll -90px -166px transparent;
+    text-decoration: none;
+}
+#viewType a.indent:hover, #viewType a.indent:active
+{
+    background: url("sprites.png") no-repeat scroll 0 -166px transparent;
+    text-decoration: none;
+}
+#viewType a sup
+{
+}
+#viewType a span
+{
+    color: #000000;
+    display: inline-block;
+    font: 11px/13px Verdana,Arial;
+    left: 25px;
+    position: absolute;
+    text-decoration: none;
+    top: 5px;
+}
+
+#sortBar
+{
+    background: none repeat scroll 0 0 #E0EEF6;
+    border-left: 1px solid #CCE2F0;
+    border-right: 1px solid #CCE2F0;
+    font: bold 11px Verdana,Arial;
+    padding: 5px 10px;
+}
+#sortBar a
+{
+    color: #000000;
+    display: inline-block;
+    font-weight: normal;
+    line-height: 13px;
+    margin-left: 2px;
+    padding-left: 11px;
+}
+#sortBar a:hover
+{
+    background: url("sprites.png") no-repeat scroll -189px -594px transparent;
+    color: #587792;
+    text-decoration: none;
+}
+#sortBar a span
+{
+    display: inline-block;
+    padding-bottom: 5px;
+    padding-right: 12px;
+    padding-top: 4px;
+}
+#sortBar a:hover span
+{
+    background: url("sprites.png") no-repeat scroll right -572px transparent;
+}
+#sortBar a.selected
+{
+    background: url("sprites.png") no-repeat scroll -189px -550px transparent;
+}
+#sortBar a.selected span
+{
+    background: url("sprites.png") no-repeat scroll right -528px transparent;
+    line-height: 13px;
+}
+#sortBar a.selected sup
+{
+    display: inline-block;
+    height: 7px;
+    width: 11px;
+}
+#sortBar a.desc sup
+{
+    background: url("sprites.png") no-repeat scroll -193px -38px transparent;
+}
+#sortBar a.asc sup
+{
+    background: url("sprites.png") no-repeat scroll -193px -54px transparent;
+}
+
+#tagBar
+{
+    background: none repeat scroll 0 0 #E0EEF6;
+    border-left: 1px solid #CCE2F0;
+    border-right: 1px solid #CCE2F0;
+    padding: 5px 10px;
+}
+
+#pagination
+{
+    list-style: None !important; 
+    font: Normal 10px Verdana, Arial;
+    margin: 20px Auto 0 Auto;
+}
+
+#pagination li.ddd
+{
+    background: #fff;
+    float: Left;
+    padding: 0px;
+    margin: 0 4px 0 1px;
+}
+
+#pagination li
+{
+    background: #fff;
+    border: 1px Solid #6097C6;
+    float: Left;
+    padding: 0px;
+    margin: 0 4px 0 1px;
+}
+
+
+#pagination li:Hover, #pagination li:Hover a
+{
+    background: #CCE2F0;
+}
+
+#pagination li#current
+{
+    background: #6097C6;
+    color: #FFFFFF;
+    margin: 0 4px 0 1px;
+    cursor: Normal;
+}
+
+#pagination li #currenta
+{
+    color: #FFFFFF;
+}
+
+#pagination li.disabled
+{
+    color: #ccc;
+    background: #ccc;
+    border: 1px Solid #ccc;
+    float: Left;
+    padding: 0px;
+    margin: 0 4px 0 1px;
+}
+
+#pagination li.info
+{
+    color: Grey;
+    border: 0;
+    float: right;
+}
+
+#pagination li.info:hover
+{
+    background: none;
+}
+
+#pagination a
+{
+    color: #6097C6;
+    padding: 5px 8px;
+    display: Block;
+    text-decoration: None;
+}

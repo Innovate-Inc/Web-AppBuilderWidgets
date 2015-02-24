@@ -1,0 +1,60 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Basemap Gallery The Basemap Gallery widget displays a collection of basemaps from ArcGIS.com, or a user-defined set of maps or image services. When a new basemap is selected from the Basemap Gallery, basemap layers are removed from the map and new layers are added. All basemaps added to the gallery need the same spatial reference. If default ArcGIS.com basemaps are used, all additional items added to the gallery need to be in Web Mercator (WKIDs: 102100, 102113, and 3857). If default basemaps are not used, add basemaps in any spatial reference as long as all the items added to the gallery share"><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Basemap Gallery
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-5D54B4D6-72A6-49D6-897F-66A468EBF909]--><body><div id="content"><div class="header"><h1>
+Basemap Gallery
+</h1><div id="breadcrumb"></div></div>
+<p id="GUID-DFC9070E-6959-4025-8720-49FA8E1C4BCD">
+The Basemap Gallery widget displays a collection of basemaps from ArcGIS.com, or a user-defined set of maps or image services. When a new basemap is selected from the Basemap Gallery, basemap layers are removed from the map and new layers are added. All basemaps added to the gallery need the same spatial reference. If default ArcGIS.com basemaps are used, all additional items added to the gallery need to be in Web Mercator (WKIDs: 102100, 102113, and 3857). If default basemaps are not used, add basemaps in any spatial reference as long as all the items added to the gallery share that spatial reference. To achieve the best performance, all basemaps added to the gallery are cached (tiled) layers.
+</p>
+<p id="GUID-44879B74-3C67-42CD-B484-7488C43402BB">The following table shows the descriptions of the configurable attributes.</p><p id="GUID-07A928DF-8C3C-4531-B4E3-F03A99C8C706"><div class="block_table" id="TABLE_96F6F288E51C4444866AFBE52D8B5839" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="*"></colgroup><colgroup width="*"></colgroup><tr purpose="thead"><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-A77BDF12-B0FB-4048-828B-8AB2850A5341">Attribute</p></th><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-16E658FB-C8CB-40F0-84DC-CF4720F240A4">Description</p></th></tr><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-97268B88-43D8-412D-8F01-98E810710232"><span class="usertext">basemapGallery</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-4F8E9AE7-F412-4A9A-B5D1-DD657983265D">An object of ArcGIS API for JavaScript. See the params of <a target="_blank" class="xref" href="https://developers.arcgis.com/en/javascript/jsapi/basemapgallery-amd.html#basemapgallery1" rel="https://developers.arcgis.com/en/javascript/jsapi/basemapgallery-amd.html#basemapgallery1">BasemapGallery Constructor</a>.<ul purpose="ul" id="UL_72FE2518D6E144188B61A6E27AFDE4A4"><li purpose="li" id="LI_10E7714DBE684F6594316F312C47B92A">basemaps: object[]. There is no default—An array of user-defined basemaps to display in the BasemapGallery. See the params of <a target="_blank" class="xref" href="https://developers.arcgis.com/en/javascript/jsapi/basemapgallery-amd.html#basemapgallery1" rel="https://developers.arcgis.com/en/javascript/jsapi/basemapgallery-amd.html#basemapgallery1">BasemapGallery Constructor</a>.</li><li purpose="li" id="LI_D38E3C7B6EAD4D92BBE21DA26961C8D5">layers: object[]. There is no default—An array of layers to add to the basemap. See the params of <a target="_blank" class="xref" href="https://developers.arcgis.com/en/javascript/jsapi/basemapgallery-amd.html#basemapgallery1" rel="https://developers.arcgis.com/en/javascript/jsapi/basemapgallery-amd.html#basemapgallery1">BasemapGallery Constructor</a>.</li><li purpose="li" id="LI_3209F8AE2CBA426FBC0FD30C623ADA1F">spatialReference: object; There is no default. Specify the well-known ID of a spatial reference of the basemap.</li></ul></p></td></tr></tbody></table><span class="table_desc"></span></div></p><p id="GUID-F97156C2-80D1-42EB-B662-F41F5D8EF89E">Example:</p><p id="GUID-9D2936F6-9124-470C-91E4-56CE79A1B673"><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
+  &quot;basemapGallery&quot;: {
+    &quot;showArcGISBasemaps&quot;: true,
+    &quot;basemaps&quot;: [{
+      &quot;layers&quot;: [{
+        &quot;url&quot;: &quot;http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer&quot;
+      }],
+      &quot;title&quot;: &quot;Street (Customized)&quot;,
+      &quot;thumbnailUrl&quot;: &quot;images/streets.jpg&quot;,
+						&quot;spatialReference&quot;: {
+          &quot;wkid&quot;: &quot;102100&quot;
+      }
+    }, {
+      &quot;layers&quot;: [{
+        &quot;url&quot;: &quot;http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer&quot;
+      }],
+      &quot;title&quot;: &quot;Topo (Customized)&quot;,
+      &quot;thumbnailUrl&quot;: &quot;images/topo.jpg&quot;,
+						&quot;spatialReference&quot;: {
+          &quot;wkid&quot;: &quot;102100&quot;
+      }
+    }, {
+      &quot;layers&quot;: [{
+        &quot;url&quot;: &quot;http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer&quot;
+      }],
+      &quot;title&quot;: &quot;Imagery (Customized)&quot;,
+      &quot;thumbnailUrl&quot;: &quot;images/imagery.jpg&quot;,
+						&quot;spatialReference&quot;: {
+          &quot;wkid&quot;: &quot;102100&quot;
+      }
+    }]
+  }
+}
+</code></pre></div>
+</div></p><div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

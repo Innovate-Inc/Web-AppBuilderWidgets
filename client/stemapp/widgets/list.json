@@ -1,0 +1,25 @@
+{
+	"widgets": [
+		"AttributeTable",
+		"BasemapGallery",
+		"Bookmark",
+		"Chart",
+		"Coordinate",
+		"Directions",
+		"Draw",
+		"Edit",
+		"Geocoder",
+		"Geoprocessing",
+		"HomeButton",
+		"LayerList",
+		"Legend",
+		"Measurement",
+		"MyLocation",
+		"OverviewMap",
+		"Print",
+		"Query",
+		"Scalebar",
+		"Splash",
+		"About"
+	]
+}

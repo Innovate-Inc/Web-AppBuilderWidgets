@@ -1,0 +1,51 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Directions The Directions widget provides a quick and efficient way to calculate directions between two or more locations. The widget generates a route finding a least-cost path between two or more locations using a specified network service. The Directions widget is pre-configured to work with the ArcGIS Online Network Analysis Services. These services require an ArcGIS Online Organization subscription. If you choose to work with this default, specify a valid user name and password for ArcGIS Online. Each successful request to the service incurs service credits taken from your subscription. The following table shows the descriptions of the configurable attributes.AttributeDescriptionrouteTaskUrlString. The URL for"><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Directions
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-426B82A7-539B-4D56-B7AB-88F72B317B76]--><body><div id="content"><div class="header"><h1>
+Directions
+</h1><div id="breadcrumb"></div></div>
+<p id="GUID-413F194D-1227-4CD3-A73C-AB318B250CE7">
+The Directions widget provides a quick and efficient way to calculate directions between two or more locations. The widget generates a route finding a least-cost path between two or more locations using a specified network service. The Directions widget is pre-configured to work with the ArcGIS Online Network Analysis Services. These services require an ArcGIS Online Organization subscription. If you choose to work with this default, specify a valid user name and password for ArcGIS Online. Each successful request to the service incurs service credits taken from your subscription.
+</p><p id="GUID-4BA843C1-FBE9-4861-B164-891A7A781300">The following table shows the descriptions of the configurable attributes.</p><p id="GUID-B51A6444-58A8-4296-B34A-81FB9790EB5A"><div class="block_table" id="TABLE_6E09E48CFFC74DFBBE82D8B56B1EF8CE" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="*"></colgroup><colgroup width="*"></colgroup><tr purpose="thead"><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-3B8278C6-1D5D-4BE3-8502-AF6E2E854E21">Attribute</p></th><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-19D03845-CAED-4B8E-BA2D-2724FAD9CE66">Description</p></th></tr><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-0652C8F0-E355-4624-89BC-02718D06BD2D"><span class="usertext">routeTaskUrl</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-D09A0C3A-D751-4A38-AD20-59AD89220A16">String. The URL for the network route service. The default service could be either of them:</p><ul purpose="ul" id="UL_19F4BC8D2E9B4449B93339FFEA3AD78E"><li purpose="li" id="LI_BA6467F223314E81BE7B4A88A2806AE8">For ArcGIS Online organization, it is http://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World.</li><li purpose="li" id="LI_D1813FC2C04A44BAB88EEE105A674D00">For ArcGIS for Portal, it is the route service set in the Utility Services.</li></ul></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-12FCE7B9-B922-4E75-85F6-1F0540EA5F1E"><span class="usertext">geocoderOptions</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-9D316CB1-A7EE-4B03-AC08-E0843E95FD9C">Object. There is no default. Defines geocoder options.<ul purpose="ul" id="UL_364C5A1A6ECF4B89A8308B6F5DAE0B03"><li purpose="li" id="LI_41B3DFCE3FB942F8ACAC13489609EFB1">autoComplete: Boolean. The default is true—The value indicating whether autocomplete is enabled.</li><li purpose="li" id="LI_E21B1DEA31F841CE89125D36C9C5F058">maxLocations: Number. Default value is 6. Maximum number of locations to display in the results menu.</li><li purpose="li" id="LI_46FD34BB667D48C9827242C6492A4CEC">minCharacters: Number. Default value is 3. Minimum number of characters entered into the search field before querying for results.</li><li purpose="li" id="LI_806744C89B2C4BBDA4827BFCB81D56B0">searchDelay: Number. Default value is 350. Number of milliseconds before querying for results.</li><li purpose="li" id="LI_1C966E3F10E24021977771AC51B7B67E">arcgisGeocoder: Boolean or Object. Default value is false. If true, the Directions widget  uses the Esri World Locator to find search locations.</li><li purpose="li" id="LI_1DD2AB064EA64716ADFB49AF52633F31"><p id="GUID-466EAB7A-0569-4141-9968-54CFF2F4CAC4">geocoders: Object[]. There is no default value. Each element of geocoders has two attributes: one is url which is the URL for the geocoding service; another is  placeholder which is the placeholder text that will appear in the input box.</p>
+</li></ul></p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-D35E1691-527B-4ADA-8200-FB0A4D71C915"><span class="usertext">routeOptions</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-B9E1FE04-91C1-423A-AA4B-5C22C3B5E7EB">Object. There is no default. Defines route options</p><ul purpose="ul" id="UL_E3E93D8C09AC434C911076B67C462DF5"><li purpose="li" id="LI_0E4E3F571D2446F5B73ACB387D046C00">directionsLanguage: String. There is no default. The language is used when computing directions.</li><li purpose="li" id="LI_D23A8D2B9FD74A99B3389B035D54412B">directionsLengthUnits: String. Default value is esriKilometers. The length units to use when computing directions.</li><li purpose="li" id="LI_DE7FEF2FA7694B24B21CF4C624648C16">directionsOutputType: String. Default value is standard. Defines the amount of direction information returned. Available values are  complete | complete-no-events | instructions-only | standard | summary-only.</li><li purpose="li" id="LI_2819075D726C40A995E611214D9F86A1">impedanceAttribute: String. There is no default value. The network attribute name to be used as the impedance attribute in analysis. You can specify any attribute names listed in the Service Directory under Network Dataset -&gt; Network Attributes as Usage Type: esriNAUTCost. You can also specify a value of none to indicate that no network attributes should be used for impedance. </li></ul></td></tr></tbody></table><span class="table_desc"></span></div></p>
+
+<p id="GUID-0B49DD23-D1A2-4EE6-BCCA-1DD9D35F11C0">Example:</p><p id="GUID-3AB58421-2CC4-4B6E-884C-067D489D2138"><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
+  &quot;routeTaskUrl&quot;: &quot;http://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World&quot;,
+  &quot;routeOptions&quot;: {
+    &quot;directionsLanguage&quot;: &quot;de&quot;,
+    &quot;directionsLengthUnits&quot;: &quot;esriKilometers&quot;,
+    &quot;directionsOutputType&quot;: &quot;standard&quot;,
+    &quot;impedanceAttribute&quot;: &quot;sdfasf&quot;
+  },
+  &quot;geocoderOptions&quot;: {
+    &quot;autoComplete&quot;: true,
+    &quot;maxLocations&quot;: 6,
+    &quot;minCharacters&quot;: 3,
+    &quot;searchDelay&quot;: 350,
+    &quot;arcgisGeocoder&quot;: false,
+    &quot;geocoders&quot;: [
+      {
+        &quot;url&quot;: &quot;https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer&quot;,
+        &quot;placeholder&quot;: &quot;asdfasdfasdfa&quot;
+      }
+    ]
+  }
+}
+</code></pre></div>
+</div></p><div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

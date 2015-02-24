@@ -1,0 +1,35 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Print The Print widget works with the print service, which generates a printer-ready version of the map. You can configure the print service with custom layout templates.The following table shows the descriptions of the configurable attributes..AttributeDescriptionserviceURLString. There is no default. This is the URL to the Export Web Map Task REST endpoint (for example, http:///arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task). You can change the URL to your Export Web Map Task (requires ArcGIS 10.1 and up for Server).defaultTitle String. The default title for the printed output.defaultAuthor String. The default author of the printed output.defaultCopyright String. The default copyright of the printed output.defaultFormat String. The default format of"><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Print
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-12E23045-BA1C-4994-8F2C-AFD1208EA45D]--><body><div id="content"><div class="header"><h1>
+Print
+</h1><div id="breadcrumb"></div></div>
+<p id="GUID-9E26B338-AE54-4320-852A-7ECB55425CD7">
+The Print widget works with the print service, which generates a printer-ready version of the map. You can configure the print service with  custom layout templates.</p><p id="GUID-91010AAE-2E62-4D12-89BD-DB40CECA9CAA">The following table shows the descriptions of the configurable attributes..</p><p id="GUID-C1BF6409-9F26-421E-9813-708B25530B70"><div class="block_table" id="TABLE_36865913FA434C8AB0FF92B22BEC94D8" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="*"></colgroup><colgroup width="*"></colgroup><tr purpose="thead"><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-AF72FF93-917B-46C4-9CF4-E690F5E042DA">Attribute</p></th><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-CAB5F088-2219-4C21-9320-F394FB54B833">Description</p></th></tr><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-7C5B9FE1-F4BC-4898-9E43-597D4E924950"><span class="usertext">serviceURL</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-0D2B46B2-AEA8-4004-BABF-8128F2A6FAD6">String. There is no default. This is the URL to the Export Web Map Task REST endpoint (for example, http:///arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task). You can change the URL to your Export Web Map Task (requires ArcGIS 10.1 and up for Server).</p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-1495D683-F298-448F-8CB6-85788D55D717"><span class="usertext">defaultTitle</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-5AA3E2E4-EA84-40E3-9EE2-B908721FC4B4"> String. The default title for the printed output.</p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-56D50DCD-0384-4BDA-98DE-A73910875498"><span class="usertext">defaultAuthor</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-F61B1722-E6CE-4879-9410-0A91A04526BE"> String. The default author of the printed output.</p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-0277F3A9-A3A8-4203-A2C1-4B3AFD25F88D"><span class="usertext">defaultCopyright </span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-B36956EC-AA1D-4074-B613-411671DC18E8"> String. The default copyright of the printed output.</p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-7DAEE603-44B6-4BEA-8C63-59380DA1CB2B"><span class="usertext">defaultFormat</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-B198D0A0-6458-456B-9595-DF02B9718E74"> String. The default format of the printed output.</p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-B278C55C-5B37-4EEB-9301-C9C409225414"><span class="usertext"> defaultLayout </span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-4B481B60-6D92-4318-B337-FC02CC564D74">String. The default layout of the printed output.</p></td></tr><tr><td purpose="entry" rowspan="1" colspan="2"><p id="GUID-08551820-AECA-4EBC-BBE1-C0CEACACA39E">Example: <div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
+  &quot;serviceURL&quot;: &quot;//utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task&quot;,
+  &quot;defaultTitle&quot;: &quot;ArcGIS WebMap&quot;,
+  &quot;defaultAuthor&quot;: &quot;&quot;,
+  &quot;defaultCopyright&quot;: &quot;&quot;,
+  &quot;defaultFormat&quot;: &quot;PDF&quot;,
+  &quot;defaultLayout&quot;: &quot;Letter ANSI A Landscape&quot;
+}
+</code></pre></div>
+</div></p></td></tr></tbody></table><span class="table_desc"></span></div></p>
+
+<div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

@@ -1,0 +1,101 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Create a basic custom widget with the CustomWidget template."><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Create a custom in-panel widget
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-0CF7F35F-43C5-4CF6-98DA-902956964F29]--><body><div id="content"><div class="header"><h1>
+Create a custom in-panel widget
+</h1><div id="breadcrumb"></div></div>
+
+<p id="GUID-3C584CDE-6205-4E28-811D-65069379E1CD">
+
+The CustomWidget folder contains all required folders and files to create a custom widget. It is convienent for developers as they  can focus on writing the code.</p><div class="wfsteps" purpose="wfsteps"><h4></h4><div class="steps" id="GUID-19D5D194-F2AF-4B9D-842E-4DC107E41863"><div class="step_title">Steps:</div><ol>
+<li purpose="step" id="GUID-D7CC5AFD-397B-47EC-AF3F-1C366F58E53C">
+
+<span purpose="cmd" id="GUID-EC816A10-60F6-4CD9-90DD-675123407F47">Rename the CustomWidgetTemplate folder. </span>
+
+</li><div class="stepinfo" purpose="stepinfo"><p id="GUID-62EC9089-AF2E-4EE0-81DE-AEF9D0BBD885">Go to the \\widgets\samplewidgets folder, make a copy of the CustomWidgetTemplate folder in the same directory, then rename it as MyWidget.</p><div class="image" purpose="image"><table><tr><td><img class="break" src="03w3/GUID-4F3744A9-BFC8-4842-BC1F-160CEFB174CC-web.png" purpose="img" alt="MyWidget folder" title="MyWidget folder"></td></tr></table></div></div><li purpose="step" id="ESRI_STEP_056F560F8D574667954633A4CF337972"><span purpose="cmd" id="GUID-27E572C7-32CA-4011-9544-11249868EBD2">Set the widget  baseClass name.</span></li><div class="stepinfo" purpose="stepinfo">Open Widget.js in the MyWidget folder and set the baseClass name as  jimu-widget-mywidget (mywidget is the custom widget name).<div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>define([&#39;dojo/_base/declare&#39;, &#39;jimu/BaseWidget&#39;],
+function(declare, BaseWidget) {
+  //To create a widget, you need to derive from BaseWidget.
+  return declare([BaseWidget], {
+    // DemoWidget code goes here 
+    baseClass: &#39;jimu-widget-mywidget&#39;
+  });
+});
+</code></pre></div>
+</div> </div><li purpose="step" id="ESRI_STEP_6A26E6BC407D4501AA5F66E32B2D4886"><span purpose="cmd" id="GUID-B183211C-7949-412E-8275-538C7A0F1DC7">Define the widget's UI.</span></li><div class="stepinfo" purpose="stepinfo">The widget's UI is defined by an HTML template. Open the Widget.html file, and copy and paste this. Save the file.<div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>&lt;div&gt;
+    &lt;div&gt;This is my widget.&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+</div></div><li purpose="step" id="ESRI_STEP_08C2697C4E8246ADA4FB70016F33A2CC"><span purpose="cmd" id="GUID-4F13588F-1E1F-45C3-A20F-DAD7711E58BB">Add the widget in the app config file.</span></li><div class="stepinfo" purpose="stepinfo">Open the config-demo.json (in the stemapp/sample-configs folder) file. Find widgetPool-&gt;widgets, and add a new widget element like this. Save the file.<div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
+  &quot;label&quot;: &quot;MyWidget&quot;,
+  &quot;uri&quot;: &quot;widgets/samplewidgets/MyWidget/Widget&quot;
+}
+</code></pre></div>
+</div></div><li purpose="step" id="ESRI_STEP_900B7E207FB943E297D164BC0D7BF6C9"><span purpose="cmd" id="GUID-ADABD5E4-DC4E-489A-9FD2-2EF401664489">Test the widget. </span></li>
+<div class="stepinfo" purpose="stepinfo"><p id="GUID-0B12A84D-2802-4C6F-9980-976C2D47F116">Start the app through http://your host name:3344/webapp/?config=sample-configs/config-demo.json, and click the icon. The widget appears like the following:</p><div class="image" purpose="image"><table><tr><td><img class="break" src="03w3/GUID-A9B9DABF-988F-4135-81E0-5B99B11C3E71-web.png" purpose="img" alt="Non-configurable MyWidget" title="Non-configurable MyWidget"></td></tr></table></div></div><li purpose="step" id="ESRI_STEP_4099008A315D498DACCC032FA612A0EB"><span purpose="cmd" id="GUID-CA5E5207-DA39-4505-97B2-ACBA62BB1537">Make the widget configurable.</span><div class="substeps" id="ESRI_SUBSTEPS_42D3A5F7F9A64EDB83DE8C270A75E2E9" purpose="substeps"><ol><li purpose="substep" id="ESRI_SUBSTEP_E94F44E33DE1495DB653B75DC38B0A84"><span purpose="cmd" id="GUID-B42EA126-22AC-47AE-8764-53F2FC9D0D6D"> Open the config.json file in the MyWidget folder. 
+</span></li><li purpose="substep" id="ESRI_SUBSTEP_7758B20976DB42DC8BEFAA27FEE0CC76"><span purpose="cmd" id="GUID-82018D1E-380E-406D-BBAA-612909ACB510">Add the following JSON-structured text to pass the
+config to the widget.</span><div class="info" purpose="info"><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
+    &quot;configText&quot;:&quot;abcdefg&quot;
+}
+</code></pre></div>
+</div></div></li><li purpose="substep" id="ESRI_SUBSTEP_FD0D44F378364902B1601C8F455C9A35"><span purpose="cmd" id="GUID-A437F092-EBD9-4680-B0BD-38DEA3115798">Alter the HTML template to use the config defined in the above config file.
+</span><div class="info" purpose="info"><p id="GUID-1640C10D-5794-48F7-9173-D5FCF60D2663">Open the MyWidget.html file and replace with the following:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>&lt;div&gt;
+    &lt;div&gt;This is my widget.&lt;/div&gt;
+    &lt;div&gt;This is configurable.[${ config.configText}]&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+</div></div></li><li purpose="substep" id="ESRI_SUBSTEP_6433A9855E154A428AFE9ED6520F87F9"><span purpose="cmd" id="GUID-5380EBBB-D517-4A71-A254-FA8A1C88378C">Start the same  app again and click the icon. </span><div class="info" purpose="info"><p id="GUID-7076E7E7-D219-486C-BE7F-35D832DFAE7A">Now the widget looks like the following. The ${config.configText} marker in the template is
+automatically substituted with the values in the config.json file.
+</p><div class="image" purpose="image"><table><tr><td><img class="break" src="03w3/GUID-1B023247-DBB8-4C73-8336-156B65440189-web.png" purpose="img" alt="Configurable MyWidget" title="Configurable MyWidget"></td></tr></table></div></div></li></ol></div></li><li purpose="step" id="ESRI_STEP_A5EA4F41CBB145A096E9933AE86A162C"><span purpose="cmd" id="GUID-12727715-D2C2-420E-A42E-63D4B028EFD9">Make it user friendly.</span></li><div class="stepinfo" purpose="stepinfo"><p id="GUID-107C12E3-1DCA-4FC8-A788-D8D30E77A5F7">On the HTML page, a CSS file is used to layout the page, making it user friendly. Open the css/style.css file in the MyWidget folder and add the following code:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>.jimu-widget-mywidget div:first-child{
+  color: red;
+}
+</code></pre></div>
+</div><p id="GUID-1B1A1C7D-B78A-4440-91EE-035BD2C009BD">Start the same  app again and click the icon. The widget now resembles the following:</p><span class="usertext">http://your host name:3344/webapp/?config=sample-configs/config-demo.json</span><div class="image" purpose="image"><table><tr><td><img class="break" src="03w3/GUID-9E7275F9-A7F0-453D-94AA-58A3FAAA0972-web.png" purpose="img" alt="Style the widget" title="Style the widget"></td></tr></table></div></div><li purpose="step" id="ESRI_STEP_014AA6B2B5EF4DDFBFD0EEA4FDC1E8FF"><span purpose="cmd" id="GUID-2527532D-3EC2-4511-ACC5-E9EAF3675BB9">Access a map.</span><div class="substeps" id="ESRI_SUBSTEPS_23E3CE83FC0546F6B8BD6C2C289A8017" purpose="substeps"><ol><li purpose="substep" id="ESRI_SUBSTEP_BAFC5E197E9E4941AC972C7854EF646B"><span purpose="cmd" id="GUID-6B616FE5-A011-403E-BC4A-6A51846DA1DE"> Open the Widget.js file, uncomment out the startup function, and replace it with the following lines:</span><div class="info" purpose="info"><p id="GUID-7CB7CED6-6820-4EB6-9A8B-657A9E3D5F1A">The widget's map property is a type of esri.map from ArcGIS JavaScript API, which  can be retrieved  through this.map in the startup function.</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>startup: function() {
+      this.inherited(arguments);
+      this.mapIdNode.innerHTML = &#39;map id is:&#39; + this.map.id;
+    },
+</code></pre></div>
+</div></div></li><li purpose="substep" id="ESRI_SUBSTEP_E6CC1C4387F2479DB97C13E6A3510396"><span purpose="cmd" id="GUID-C7926A63-0E6B-428B-9D3B-2EC2D7CE6121">Modify the Widget.html template to display the map id property.</span><div class="info" purpose="info"><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>&lt;div&gt;
+    &lt;div&gt;This is my widget&lt;/div&gt;
+    &lt;div&gt;This is configurable.[${config.configText}]&lt;/div&gt;
+    &lt;div data-dojo-attach-point=&quot;mapIdNode&quot;&gt;&lt;/div&gt;
+    
+&lt;/div&gt;
+</code></pre></div>
+</div></div></li><li purpose="substep" id="ESRI_SUBSTEP_0C2B1FC9BEC1473CBF335EE5DE6D7028"><span purpose="cmd" id="GUID-6EA76870-3487-4A33-B447-152780572013">Restart the app and click the icon. The widget now resembles the following:</span><div class="info" purpose="info"><p id="GUID-9CAFEC58-13DE-4AA3-B9EA-F8152DF9B2B1">http://your host name:3344/webapp/?config=sample-configs/config-demo.json</p><div class="image" purpose="image"><table><tr><td><img class="break" src="03w3/GUID-1AF07240-907C-4B11-B1FD-FFC257A033F3-web.png" purpose="img" alt="Map id" title="Map id"></td></tr></table></div></div></li></ol></div><ul purpose="choices" id="ESRI_CHOICES_685330E4E67945BD954A864639B0BE75"><li purpose="choice" id="ESRI_CHOICE_2668EB3D1205405A80AA61CD3B13ECB0">Go to step 10 if you want to skip the localization of the widget.</li></ul></li><li purpose="step" id="ESRI_STEP_BC60EB49AB1F42598758692D8F6C0072"><span purpose="cmd" id="GUID-E94E103E-89CF-4E0B-BD6C-4CBC1008BC10">Add i18n support.</span><div class="info" purpose="info"><p id="GUID-870ED94E-E7E6-4D1E-8B23-9FE6E31E398D">Currently, the widget contains two English strings (This is my widget and This is configurable. Using the Chinese language as an example, to internationalize the UI, the following steps are needed: </p></div><div class="substeps" id="ESRI_SUBSTEPS_CF19B5866DA342B99D4339A1A1739B35" purpose="substeps"><ol><li purpose="substep" id="ESRI_SUBSTEP_67BBA0ABE9F04BA39DBF27A890C18C2C"><span purpose="cmd" id="GUID-566585D3-1F27-4567-83E6-64315FEE12C7">Open the nls/strings.js file in the MyWidget folder.</span><div class="info" purpose="info"><p id="GUID-E76A25B7-1128-4836-AA87-2E88D0EC1DE0"> Replace the content with the following lines:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>define({
+    root:{
+        label1: &quot;This is my widget.”
+        label2: &quot;This is configurable.&quot;
+    },
+    &quot;zh-cn&quot;: true    
+});
+</code></pre></div>
+</div></div></li><li purpose="substep" id="ESRI_SUBSTEP_59D17AA037F747EFAF17F35475AEE51E"><span purpose="cmd" id="GUID-16B1CBE5-5399-4CBC-9315-CCE6D12971F1">Create a subfolder named zh-cn under the nls folder.  </span><div class="info" purpose="info"><div class="image" purpose="image"><table><tr><td><img class="break" src="03w3/GUID-14B977B8-D23A-4813-AE60-FC72C4D73ADF-web.png" purpose="img" alt="zh-cn folder" title="zh-cn folder"></td></tr></table></div></div></li><li purpose="substep" id="ESRI_SUBSTEP_8AAD0ED0A1EB450EA5DBD53A405064FB"><span purpose="cmd" id="GUID-1A4827A5-86F4-469B-856E-919CC4F25656"> Copy the nls/strings.js file in the zh-cn folder.</span></li><li purpose="substep" id="ESRI_SUBSTEP_5D888A20FB5E4148A2269FEC7A96B095"><span purpose="cmd" id="GUID-64B5CE4B-6CBF-4163-A18E-FC122C668DA3">Open the zh-cn/strings.js file, replace the content with the following lines. Save the file.</span><div class="info" purpose="info"><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>define({
+    label1 : &quot;我的widget。&quot;,
+    label2 : &quot;这里可以配置。&quot;
+});
+</code></pre></div>
+</div></div></li><li purpose="substep" id="ESRI_SUBSTEP_F8C7A358DB44478A9BCA644D409E0890"><span purpose="cmd" id="GUID-7221BE6D-1A7B-4E82-AA20-B51721E4A5B3">Open the Widget.html file,  replace the hard-coded English strings with markers. Save the file.</span><div class="info" purpose="info"><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>&lt;div&gt;
+    &lt;div&gt;${nls.label1}&lt;/div&gt;
+	   &lt;div&gt;${nls.label2}[${config.configText}]&lt;/div&gt;
+    &lt;div data-dojo-attach-point=&quot;mapIdNode&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+</div></div></li><li purpose="substep" id="ESRI_SUBSTEP_77FDA207D39F4C24935A91C6D32AB9AE"><span purpose="cmd" id="GUID-9D072027-C99E-4CFC-99A3-75894EAA83F9">Reload the app, add a URL parameter, locale=zh-cn, or change the browser's locale configuration to view the changes.</span><div class="info" purpose="info">http://your host name:3344/webapp/?config=sample-configs/config-demo.json&amp;locale=zh-cn</div></li></ol></div></li><li purpose="step" id="ESRI_STEP_79BCDB5490CF424F9AA17240F24D83C5"><span purpose="cmd" id="GUID-AA4EF30C-A7AC-4B9E-92AE-DF8C21A0D444">Deploy the widget.</span><div class="substeps" id="ESRI_SUBSTEPS_BAEC7163ABDF4B08B8448F45F6EC2F08" purpose="substeps"><ol><li purpose="substep" id="ESRI_SUBSTEP_95AB101E916448CAAC39C2931F76491D"><span purpose="cmd" id="GUID-57FDB7B7-7A56-449D-8ABD-AE78D8A059B1">Open the manifest.json file in the MyWidget folder, and change the properties accordingly, such as widget type, name, locale, and so on.</span></li><li purpose="substep" id="ESRI_SUBSTEP_EF8329958C134ED88079577A2357EA22"><span purpose="cmd" id="GUID-ABD0052A-CD0F-4C0A-A972-1DE742F44A11">Copy the MyWidget folder into the  \stemapp\widgets folder.</span></li><li purpose="substep" id="ESRI_SUBSTEP_39146914FB194F209B66D12FFE1CCE5F"><span purpose="cmd" id="GUID-8D3D8EEF-ED25-4614-BC14-DB8E4F8EDA15">Restart node.js and go to http://your host name:3344/webappbuilder. You will see MyWidget shows in the widget pool when you click<span class="uicontrol"> Click here to add widget</span> in the builder.</span></li></ol></div><div class="info" purpose="info"><p id="GUID-49903274-DFFE-45B5-BAB5-014246C3C7E6">The custom widget should always deploy to the stemapp\widgets folder.</p></div></li></ol></div></div>
+
+<div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

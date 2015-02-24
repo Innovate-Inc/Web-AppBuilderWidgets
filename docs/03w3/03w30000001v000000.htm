@@ -1,0 +1,41 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Close widget programmatically WIth a custom widget, you can make it close programmatically. In this way, the user does not have to click the icon button to close it. For in-panel widgets, do the following:define([ 'jimu/PanelManager'], fuction(PanelManager'){ afterSomething: function(){ //you can get widgetid by using this.id PanelManager.getInstance().closePanel(widgetid + ‘_panel’); } }); For off-panel widgets, do the following:WidgetManager. getInstance().closeWidget(‘id’) The closeWidget function just changes the widget state and calls the onClose method. You may override the onClose method for the real close, such as hide or destroy."><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Close widget
+programmatically </title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-0FFC6984-7275-4882-BD7C-563D92519BCA]--><body><div id="content"><div class="header"><h1>
+Close widget
+programmatically </h1><div id="breadcrumb"></div></div>
+<p id="GUID-A84F0FBB-A11C-4465-9F21-575F7D35F124">
+
+</p>
+<div class="section1" id="GUID-0EDFB682-9ADE-4BF7-91ED-E5CD82F76201" purpose="section1"><h2>
+
+</h2><p id="GUID-2C9C6677-2EA2-4269-8CCB-7C925C0B6E53">
+WIth  a custom widget, you can make it close programmatically. In this way,  the user does not have to click the icon button to close it. 
+</p><p id="GUID-C03BAF3B-32C4-4BDB-9E8C-569B3C1D1CE2">For in-panel widgets, do the following:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>define([ &#39;jimu/PanelManager&#39;], fuction(PanelManager&#39;){
+         
+         afterSomething: function(){
+                   //you can get widgetid by using this.id
+                   PanelManager.getInstance().closePanel(widgetid + ‘_panel’);
+         }
+});
+</code></pre></div>
+</div><p id="GUID-0113EE86-1E04-4A7B-8E77-32B5109CDAE8">For off-panel widgets, do the following:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>WidgetManager. getInstance().closeWidget(‘id’)
+</code></pre></div>
+</div><div class="notes" id="GUID-23747575-F733-44D8-ADA1-59000B723709"><div class="tip"><img class="note_img" src="rsrc/tip.png" alt="Tip" title="Tip"><span>Tip:</span></div><div class="tipbody"><p id="GUID-257B552A-216C-4363-8AAE-39A1C04C7239"> The closeWidget function just changes the widget state and calls the onClose method.  You may override the onClose method for the  real close, such as hide or destroy.</p></div></div></div>
+<div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

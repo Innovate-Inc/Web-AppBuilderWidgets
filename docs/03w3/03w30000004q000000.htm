@@ -1,0 +1,38 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Make widget configurable Currently, there are no configuration options for the Demo widget. To change that, in the widget folder open the config.json file in a text editor. Add some JSON-structured text so that you can pass the config to your widget: { &amp;quot;configText&amp;quot;:&amp;quot;abcdefg&amp;quot; }Alter the HTML template to use the config that you read from your config file.&amp;lt;div&amp;gt; &amp;lt;div&amp;gt;I am a demo widget.&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;This is configurable.[${config.configText}]&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; Now, the Demo widget looks like the following:Make widget configurableThe config.configText marker in the template is automatically substituted with the values in the config.json file."><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Make widget configurable
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-D403E035-3DFD-42FA-9C77-EB3D479D3887]--><body><div id="content"><div class="header"><h1>
+Make widget configurable
+</h1><div id="breadcrumb"></div></div>
+<p id="GUID-4E70E316-5786-4042-BFB0-511708C7BF56">
+Currently, there are no configuration options for the Demo widget.
+</p><p id="GUID-A400751D-CE20-4509-BD53-2631326DCD77">To change that, in the widget folder open the config.json file in a text editor. Add some JSON-structured text so that you can pass the config to your widget:</p>
+<div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
+    &quot;configText&quot;:&quot;abcdefg&quot;
+}
+</code></pre></div>
+</div><p id="GUID-01FA1186-DE0E-44E7-A1DE-780CFC98B90E">Alter the HTML template to use the config that you read from
+your config file.</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>&lt;div&gt;
+    &lt;div&gt;I am a demo widget.&lt;/div&gt;
+    &lt;div&gt;This is configurable.[${config.configText}]&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+</div>
+<p id="GUID-DF953808-2A99-45D5-8FF5-0F07CB4B8647">Now, the Demo widget looks like the following:</p><div class="image" purpose="image"><table><tr><td><img class="break" src="03w3/GUID-10E8D0B2-0C70-404A-B7A6-4365A09DFA39-web.png" purpose="img" alt="Make widget configurable" title="Make widget configurable"></td></tr></table></div><p id="GUID-CD02A64B-FD80-4AC8-9884-C9501B3CCF92">The <span class="usertext">config.configText</span> marker in the template is
+automatically substituted with the values in the config.json file.</p><div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

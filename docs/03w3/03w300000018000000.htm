@@ -1,0 +1,67 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Coordinate The Coordinate widget displays x, y-coordinates dynamically when the pointer moves around the map. By default, the coordinate values are based on the spatial reference of the first basemap. The following table shows the descriptions of the configurable attributes.AttributeDescriptionspatialReferencesObject[]; There is no default. Shows a pop-up menu containing all configured spatial references when the mouse hovers over the widget.wkid—Number; There is no default. Well-known ID. Refer to Coordinate system IDs for details..label: String. There is no default. A label for the specified WKID.transformationWkid: Number. There is no default. The well-known ID {wkid:number} for the datum transformation to apply on projected geometries.transformationLabel: String."><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Coordinate
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-F10D34F0-A621-4AD2-97CC-6F4CFBDEFC9E]--><body><div id="content"><div class="header"><h1>
+Coordinate
+</h1><div id="breadcrumb"></div></div>
+<p id="GUID-0C6653D5-559F-4136-B434-2FB6612200F6">
+The Coordinate widget displays x, y-coordinates dynamically when the pointer moves around the map. By default, the coordinate values are based on the spatial reference of the first basemap.
+</p><p id="GUID-298B6C11-275A-40C9-A407-67F15486EE59">The following table shows the descriptions of the configurable attributes.</p><p id="GUID-D9122A55-2362-4040-956D-778374442624"><div class="block_table" id="TABLE_2C06912409474582A380CD37D8F37737" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="*"></colgroup><colgroup width="*"></colgroup><tr purpose="thead"><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-06618E57-5F6E-4856-A04E-D9C4AFBF91A8">Attribute</p></th><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-E7A67668-3DE3-48B4-84AF-9E730E688C62">Description</p></th></tr><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-95D0EFD4-B41D-45FF-87F9-3AEB45D763B4"><span class="usertext">spatialReferences</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-6F074108-E2F0-425A-A899-FE55136F7F47">Object[]; There is no default. Shows a pop-up menu containing all configured spatial references when the mouse hovers over the widget.<ul purpose="ul" id="UL_53CE8ADAF5B44CA09A569E132B7A0F42"><li purpose="li" id="LI_B99AB3E28BCC457B9692D340EDA30FB0">wkid—Number; There is no default. Well-known ID. Refer to  <a target="_blank" class="xref" rel="https://developers.arcgis.com/javascript/jshelp/ref_coordsystems.html" href="https://developers.arcgis.com/javascript/jshelp/ref_coordsystems.html">Coordinate system IDs</a> for details..</li><li purpose="li" id="LI_EE390FAC95C64CBF80282BE664444299">label: String. There is no default. A label for the specified WKID.</li><li purpose="li" id="LI_1C40D7F34E60419CBC295347913AAFE5">transformationWkid: Number. There is no default. The well-known ID {wkid:number} for the datum transformation to apply on projected geometries.</li><li purpose="li" id="LI_17DCEE11A9DB429F9E93AEF20F51E738">transformationLabel: String. There is no default. The well-known text {wkt:string} for the datum transformation to apply on projected geometries.</li><li purpose="li" id="LI_3CE1D18747C54E87BC71BC88131D4120">options:  Object; There is no default; The auxiliary information of Spatial Reference.<ul purpose="ul" id="UL_FAC00B835CEC4C89A1A6D8619D5DDBC4"><li purpose="li" id="LI_983CF4F102E8451BB19B3C2598149E6F">defaultUnit:  String; There is no default;  The unit of Spatial Reference.</li><li purpose="li" id="LI_172234B404074F0D99157E60674664EF"> isGeographicCS:  Boolean; There is no default;   Indicates whether the spatial reference is a Geographic Coordinate System or not.</li><li purpose="li" id="LI_84636389DF174F29A5E6ED645F3F317A"> isGeographicUnit:  Boolean; There is no default;  Indicates whether the output unit is Geographic Coordinate Unit or not.</li><li purpose="li" id="LI_A75964E3041D4CA394AEA7169AEE6E51"> isProjectedCS:  Boolean; There is no default; Indicates whether  the spatial reference is a Projected Coordinate System or not.</li><li purpose="li" id="LI_8E8104FEFC474FD09F14C604B9CF0969"> isProjectUnit:  Boolean; There is no default;  Indicates whether  the output unit is Projected Coordinate Unit or not.</li><li purpose="li" id="LI_EAC7D90710A94965971C0D1ACD3328A4"> sameSRWithMap:  Boolean; There is no default;  Indicates whether  the output wkid is the same as the map.</li><li purpose="li" id="LI_DDFD6132DF724008A2603B250689BA50"> spheroidCS:  Number; There is no default; The wkid of reference ellipsoid.</li><li purpose="li" id="LI_B0C6766A411F4EE4975F00F6A251F07F"> unitRate:  Number; There is no default; The rate from default unit to output unit.</li></ul></li><li purpose="li" id="LI_37943C402F7D4A868D1D612A8F166057"> transformForward: boolean. There is no default. Indicates whether to transform forward or not. The forward or reverse direction of transformation is implied in the name of the transformation.</li><li purpose="li" id="LI_356031DBB26E4D30B25C1B049251FC4C"> outputunit: String. Valid values are <span class="uicontrol">Default,INCHES,FOOT,YARDS,MILES,NAUTICAL_MILES,MILLIMETERS,CENTIMETERS,METER,KILOMETERS,DECIMETERS,DECIMAL_DEGREES,DEGREE_MINUTE_SECONDS,MGRS,USNG</span>. The default value is an empty string, which means using the default unit of wkid.</li></ul></p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><span class="usertext"> decimalPlaces</span></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-6E6FBAF3-94AD-40AF-AF7B-A0F5D42C60EA"> Number; The numeric precision of the coordinates.</p></td></tr><tr><td purpose="entry" rowspan="1" colspan="1"><span class="usertext"> addSeparator</span></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-2188DFB1-391E-425F-B1F8-734764C6FDAC">  Boolean; Default is false. Whether to display thousand separators.</p></td></tr></tbody></table><span class="table_desc"></span></div> </p><p id="GUID-C73FF5FA-4BB2-4023-AC0D-AD4D43CFED06">Example:</p><p id="GUID-CD544525-EF75-4E13-BB1F-5BBF1EDD4873"><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
+  addSeparator: true,
+  decimalPlaces: 3,
+  &quot;spatialReferences&quot;: [{
+    &quot;wkid&quot;: 3857,
+    &quot;label&quot;: &quot;WGS_1984_Web_Mercator_Auxiliary_Sphere&quot;,
+    &quot;transformForward&quot;: false,
+    &quot;transformationLabel&quot;: &quot;&quot;,
+    &quot;transformationWkid&quot;: &quot;&quot;,
+    &quot;options&quot;: {
+      &quot;defaultUnit&quot;: &quot;Meter&quot;,
+      &quot;isGeographicCS&quot;: false,
+      &quot;isGeographicUnit&quot;: false,
+      &quot;isProjectUnit&quot;: true,
+      &quot;isProjectedCS&quot;: true,
+      &quot;sameSRWithMap&quot;: true,
+      &quot;spheroidCS&quot;: 4326,
+      &quot;unitRate&quot;: 1
+    },
+    &quot;outputUnit&quot;: &quot;Meter&quot;
+  },{
+    &quot;wkid&quot;: 2285,
+    &quot;label&quot;: &quot;NAD_1983_StatePlane_Washington_North_FIPS_4601_Feet&quot;,
+    &quot;transformForward&quot;: true,
+    &quot;transformationLabel&quot;: &quot;WGS_1984_(ITRF00)_To_NAD_1983&quot;,
+    &quot;transformationWkid&quot;: 108190,
+    &quot;options&quot;: {
+      &quot;defaultUnit&quot;: &quot;Foot_US&quot;,
+      &quot;isGeographicCS&quot;: false,
+      &quot;isGeographicUnit&quot;: false,
+      &quot;isProjectUnit&quot;: true,
+      &quot;isProjectedCS&quot;: true,
+      &quot;sameSRWithMap&quot;: false,
+      &quot;spheroidCS&quot;: 4269,
+      &quot;unitRate&quot;: 0.00018939431818257576
+    },
+    &quot;outputUnit&quot;: &quot;MILES&quot;
+  }]
+}
+</code></pre></div>
+</div></p>
+
+<div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

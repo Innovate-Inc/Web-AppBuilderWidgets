@@ -1,0 +1,105 @@
+#imgSect 
+{
+    float: left; 
+    margin: 1em;
+}
+
+#imgSect img 
+{
+}
+
+#dlBtn 
+{
+    float:right;
+    margin-right:250px;
+    margin-top: 1em; 
+    margin-left: 1em;
+}
+
+#restriction 
+{    
+    margin-left: 1em;
+    font-size:0.9em;
+}
+
+#tabs 
+{
+    margin-left: 1em; 
+    margin-top: 1.5em; 
+    margin-right: 1em; 
+    border-bottom: 1px solid #0068BA;
+}
+
+.BtnOrange, .BtnBlue, .BtnDisabled {
+    -moz-user-select: none;
+    border: 0 none;
+    border-radius: 3px 3px 3px 3px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: normal;
+    margin: 0;
+    outline: 0 none;
+    overflow: hidden;
+    padding: 5px 15px 7px;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.BtnOrange 
+{
+    background-color: #E98D32 !important;
+    color: #FFFFFF !important;
+}
+.BtnOrange:hover, .BtnOrange:active 
+{
+    background-color: #E16B17 !important;    
+    color: #FFFFFF !important;
+    cursor: pointer;
+}
+
+.BtnOrangeSelected, .BtnOrangeSelected:hover {
+    background-color: #D53500 !important;    
+    cursor: default;
+}
+
+.TabBlue {
+    -moz-user-select: none;
+    border: 0 none;
+    border-radius: 3px 3px 0px 0px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: normal;
+    margin: 0;
+    outline: 0 none;
+    overflow: hidden;
+    padding: 5px 15px 7px;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.TabBlue {
+    background-color:#5DADDD !important;
+    color: #FFFFFF !important;
+}
+
+.TabBlue:hover, .TabBlue:active {
+    background-color:#4997D2 !important;
+    background: -moz-linear-gradient(center top , #4997D2 0%, #0068BA 100%) repeat scroll 0 0 transparent;
+    color: #FFFFFF !important;
+    cursor: pointer;
+}
+.TabBlueSelected, .TabBlueSelected:hover {
+    background-color:#0068BA !important;
+    cursor: default;
+}
+

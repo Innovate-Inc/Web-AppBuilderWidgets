@@ -1,0 +1,72 @@
+@import url("common.css");
+
+body {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 0;
+}
+
+#mainSearch{
+    position: relative !important;
+    top: -60px;
+    right: 15px;
+    width: 275px;
+    height: 0px;
+    float: right;
+}
+
+#contentWrapper {
+  margin-top: 0 !important;
+}
+#content div.license-bar{
+	margin-top:0;
+}
+
+a {
+  text-decoration: none !important;
+}
+/***************************************
+rest api
+***************************************/
+#content div.restmd {
+  margin: 1em 1em 1em 0em !important;
+  padding: 1em 1em 1em 0em !important;
+  background-color: #E5F1F9;
+
+}
+
+ul.restmd 
+{
+    list-style:none !important;
+    display:table;
+}
+
+li.restmd 
+{
+    display:table-row;
+}
+
+.restkey
+{
+    display:table-cell;
+    width: 13em;
+    font-weight: bold;
+}
+
+.restval
+{
+    display:table-cell;
+}
+
+.restverb {
+  margin-left: 0.3em;
+}
+
+.restval > a:first-child 
+{
+    margin-left:0em;
+}
+.restval > a 
+{
+    margin-left:0.3em;
+}

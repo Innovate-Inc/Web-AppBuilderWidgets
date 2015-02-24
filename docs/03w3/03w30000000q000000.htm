@@ -1,0 +1,53 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Measurement The Measurement widget provides tools to calculate the current location, and to measure the distance and area. If the map’s coordinate system is not Web Mercator or geographic, or if complex polygons are drawn, it uses the geometry service to project or simplify geometries. The following table shows the descriptions of the configurable attributes.AttributeDescriptionmeasurementAn object of ArcGIS API for JavaScript. See the params of Measurement Constructor. lineSymbol: A JSON object of ArcGIS API for JavaScript. See the input parameter json for SimpleLineSymbol constructor . pointSymbol: A JSON object of ArcGIS API for JavaScript. See the input parameter json for the marker symbol constructors:"><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Measurement
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-F3152320-001B-4D14-AA41-DA17261BB20D]--><body><div id="content"><div class="header"><h1>
+Measurement
+</h1><div id="breadcrumb"></div></div>
+<p id="GUID-05432F4A-2696-41F2-A6B3-A08A7D2BE713">
+The Measurement widget provides tools to calculate the current location, and to  measure the distance and area. If the map’s coordinate system is not Web Mercator or geographic, or if complex polygons are drawn, it uses the geometry service to project or simplify geometries.
+</p><p id="GUID-A5849AD0-AECB-4B36-ACCC-27607D533D1C">The following table shows the descriptions of the configurable attributes.</p><p id="GUID-E6B428F3-288F-4747-806B-FABECABB069C"><div class="block_table" id="TABLE_C7567F5DA57642AEA2502EDD495B0961" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="*"></colgroup><colgroup width="*"></colgroup><tr purpose="thead"><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-B1378804-AB98-46C5-8BED-52871DB654A9">Attribute</p></th><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-FCCD24F0-3097-4AD7-A4A9-66DA6A1AD162">Description</p></th></tr><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-FE972643-BF95-4902-9E3E-DC7342174C31"><span class="usertext">measurement</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-54F929BA-B151-4E77-A5AF-E118E4317331">An object of ArcGIS API for JavaScript. See the params of <a target="_blank" class="xref" href="https://developers.arcgis.com/en/javascript/jsapi/measurement-amd.html#measurement1" rel="https://developers.arcgis.com/en/javascript/jsapi/measurement-amd.html#measurement1">Measurement Constructor</a>.<ul purpose="ul" id="UL_E1423D9503C84291B539BB4D45CF8221"><li purpose="li" id="LI_8F95F409FEBF4F0AA3CDD6761876114E"> lineSymbol:   A JSON object of ArcGIS API for JavaScript. See the input parameter json for <a target="_blank" class="xref" rel="https://developers.arcgis.com/en/javascript/jsapi/simplelinesymbol-amd.html#https://developers.arcgis.com/en/javascript/jsapi/simplelinesymbol-amd.html/simplelinesymbol3" href="https://developers.arcgis.com/en/javascript/jsapi/simplelinesymbol-amd.html#https://developers.arcgis.com/en/javascript/jsapi/simplelinesymbol-amd.html/simplelinesymbol3">SimpleLineSymbol constructor</a>
+. 
+</li><li purpose="li" id="LI_214294D0BD70436CB222DF10DD445E1F">pointSymbol:   A JSON object of ArcGIS API for JavaScript. See the input parameter json for the marker symbol constructors: 
+<a target="_blank" class="xref" rel="https://developers.arcgis.com/en/javascript/jsapi/simplemarkersymbol-amd.html#https://developers.arcgis.com/en/javascript/jsapi/simplemarkersymbol-amd.html/simplemarkersymbol3" href="https://developers.arcgis.com/en/javascript/jsapi/simplemarkersymbol-amd.html#https://developers.arcgis.com/en/javascript/jsapi/simplemarkersymbol-amd.html/simplemarkersymbol3">SimpleMarkSymbol</a>
+and <a target="_blank" class="xref" rel="https://developers.arcgis.com/en/javascript/jsapi/picturemarkersymbol-amd.html#https://developers.arcgis.com/en/javascript/jsapi/picturemarkersymbol-amd.html/picturemarkersymbol2" href="https://developers.arcgis.com/en/javascript/jsapi/picturemarkersymbol-amd.html#https://developers.arcgis.com/en/javascript/jsapi/picturemarkersymbol-amd.html/picturemarkersymbol2">PictureMarkSymbol</a>
+. 
+<ul purpose="ul" id="UL_4BAA5EAEBBC74FAC94BBBD67D7E29FD1"><li purpose="li" id="LI_1887C73F0A44443EBD5028F71EA1294C">defaultAreaUnit: String, valid values are <span class="uicontrol">esriAcres,esriSquareMiles,esriSquareKilometers,esriHectares,esriSquareYards,esriSquareFeet,esriSquareMeters</span></li><li purpose="li" id="LI_B1D97DFBBA3744A8879612670CF5EAAB">defaultLengthUnit: String, valid values are <span class="uicontrol">esriMiles,esriKilometers,esriFeet,esriMeters,esriYards,esriNauticalMiles</span>.</li></ul></li></ul></p><p id="GUID-743653AF-76A3-427D-AE0B-2B34E026C2EE">Example: <div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
+  &quot;measurement&quot;: {
+    &quot;pointSymbol&quot;: {
+      &quot;type&quot;: &quot;esriSMS&quot;,
+      &quot;style&quot;: &quot;esriSMSSquare&quot;,
+      &quot;color&quot;: [76, 115, 0, 255],
+      &quot;size&quot;: 8,
+      &quot;angle&quot;: 0,
+      &quot;xoffset&quot;: 0,
+      &quot;yoffset&quot;: 0,
+      &quot;outline&quot;: {
+        &quot;color&quot;: [152, 230, 0, 255],
+        &quot;width&quot;: 1
+      }
+    },
+    &quot;defaultAreaUnit&quot;: &quot;esriAcres&quot;,
+    &quot;defaultLengthUnit&quot;: &quot;esriMiles&quot;
+  }
+}
+</code></pre></div>
+</div></p></td></tr></tbody></table><span class="table_desc"></span></div></p>
+
+<div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

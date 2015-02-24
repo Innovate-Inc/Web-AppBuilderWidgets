@@ -1,0 +1,39 @@
+#flexsampleview 
+{
+    float:right;
+    margin-top:-31px;
+    margin-right:3em;
+}
+
+#flexsampleview  .flexbtn 
+{	
+	display: inline;
+	background: transparent url("flexbttn.gif") no-repeat 0px 0;
+	margin-bottom: 10px;
+	line-height:29px;
+}
+#flexsampleview  .flexbtn:hover 
+{	
+	background: transparent url("flexbttn-hover.gif") no-repeat 0px 0;
+}
+#flexsample_srcbtn{padding: 6px 7px;}
+#flexsample_appbtn{padding: 6px 12px; }
+#flexsampleview  .selected 
+{
+    	background: transparent url("flexbttn-active.gif") no-repeat 0px 0;
+
+}
+
+#flexsrclist 
+{
+    list-style: None !important; 
+}
+
+#flexsrclist > li
+{
+    display: inline;
+}
+
+#flexsrc .flexsrclink 
+{
+}

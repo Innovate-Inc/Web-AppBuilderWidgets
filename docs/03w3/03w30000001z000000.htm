@@ -1,0 +1,323 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Chart The Chart widget displays one or more quantitative attributes for a feature as a graphical representation of data. It is designed to make it easy for end users to observe possible patterns and trends in quantitative attribute data.The following table shows the descriptions of the configurable attributes.AttributeDescriptioncharts Object[]. There is no default. --Array of chart tasks. Depending on the chart mode, each task may have following attributes.name: String; There is no default— The name of chart tasks displayed in the widget.url: String; There is no default. -A feature layer URL for the layer you want to perform chart task.filter: Object."><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Chart</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-B7AEF189-F897-4E6F-978A-CD961F64CC8F]--><body><div id="content"><div class="header"><h1>
+Chart</h1><div id="breadcrumb"></div></div>
+<p id="GUID-73166348-C73D-44D8-AE9D-F39AAF621245">
+ The Chart widget displays one or more quantitative attributes for a feature as a graphical representation of data. It is designed to make it easy for end users to observe possible patterns and trends in quantitative attribute data.</p><p id="GUID-3D6D3E61-8610-41E7-9976-63CED34114C5">The following table shows the descriptions of the configurable attributes.</p><p id="GUID-143993B7-83CC-4681-9763-3564CDCC2C09"><div class="block_table" id="TABLE_04717C15362A48AA8611605EFCA5AF13" purpose="block_table"><span class="table_title"></span><table class="table"><colgroup width="*"></colgroup><colgroup width="*"></colgroup><tr purpose="thead"><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-503A48E2-8B03-436C-BF50-6B9039853E24">Attribute</p></th><th class="th" purpose="th" rowspan="1" colspan="1"><p id="GUID-F3DB49CC-954D-4331-B101-27C53F013BC2">Description</p></th></tr><tbody><tr><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-A42EA813-43D9-4E82-8DF0-52930ABC80F5"><span class="usertext">charts</span></p></td><td purpose="entry" rowspan="1" colspan="1"><p id="GUID-6ADF11DF-A59C-4B7D-9DE7-94CF9972F0AB"> Object[]. There is no default. --Array of chart tasks. Depending on the chart mode, each task may have  following attributes.</p><ul purpose="ul" id="UL_D45D48C90E75488E80CC57EE1BD1CAED"><li purpose="li" id="LI_6D4E3A82ADBD4DB4897CA5525E3837D0">name: String; There is no default— The name of chart tasks displayed in the widget.</li><li purpose="li" id="LI_3BB9C4A106AF4CF19282035CD6E327F2">url: String;  There is no default. -A feature layer URL for the layer you want to perform chart task.</li><li purpose="li" id="LI_CFC64896C13540A9848336852B8A0E65">filter:  Object. There is no default. -The 'expr' attribute of filter takes the form of a basic SQL statement and uses it to filter features.</li><li purpose="li" id="LI_AEB8BF141E194367A3B6DFE49B7D76F5"> description:  String. There is no default. -The description of chart task.</li><li purpose="li" id="LI_24FF5104154946509F39288B30AA1092">mode:  String. There is no default. -The mode of chart task. The available values are feature, category, count and field. If feature is selected, chart task displays values feature by feature; If category is selected, chart task displays values by category; If count is selected, chart task displays feature counts by category; If field is selected, chart task displays attribute values as charts.</li><li purpose="li" id="LI_5AC6F815B3394B66B20267E38C8D68A8"> symbol:  Object. There is no default -This is the feature symbol of chart task.</li><li purpose="li" id="LI_F9416B6F58774E5187EB5D090BF141DF"> highLightColor:  String. There is no default -The highlight color of selected features.</li><li purpose="li" id="LI_829F0A0566DA40099B7CD5901AFAA962">labelField: String; There is no default— The field is used as chart axis label. This attribute exists when the mode is feature.</li><li purpose="li" id="LI_416115B333D8405FAB3B524AE94ED5C7">sortOrder:  String. default: asc-- How to sort category field value or label field value. The available values are asc and dec. The asc means ascending order while des means descending order. This attribute exists when the mode is feature, category or count.</li><li purpose="li" id="LI_7CE49C62D67B4F4CA43793BDD6BFCB90"> valueFields:  String[]. There is no default--The fields provide values to statistics. This attribute exists when mode is feature, category or field.</li><li purpose="li" id="LI_691212C85CFD487F9A6DD951AE9B4626"> categoryField:  String. There is no default--The field that is used to categorize the chart. This attribute exists when mode is category or count.</li><li purpose="li" id="LI_6598DFFBAA21478CA8A7C79572AB9CFA"> operation:  String. There is no default.--The attribute indicates which math method the chart task uses to calculate statistics. The available values are average, sum, max and  min. This attribute exists when mode is category or field.</li><li purpose="li" id="LI_A1A9DC82A80748BD943A612EFFA1CC91">column: Object. There is no default. --This attribute only exists when user selects column chart type. It has three properties: horizontalAxis, verticalAxis and colors. The horizontalAxis property determines if Chart widget shows horizontal axis. The verticalAxis property determines if Chart widget shows vertical axis. The colors property is an array of color. If the length of colors is one, Chart widget will render the chart with single color. If the length of colors is two, Chart widget will use the first color and the second color to create gradient colors. If the length of 'colors' is more than two, Chart widget will use colors repeatedly.</li><li purpose="li" id="LI_D1460AC15D594E89B7918729154CBFB3">bar: Object. There is no default. –This attribute only exists when user selects bar chart type. It has three properties: horizontalAxis, verticalAxis and colors. The meaning of these properties is the same as above column object.</li><li purpose="li" id="LI_B9361C9297EC4D0FB631CEE50D71C3B1">line: Object. There is no default. --This attribute only exists when user selects line chart type. It has three properties: horizontalAxis, verticalAxis and colors. The meaning of these properties is the same as above column object.</li><li purpose="li" id="LI_32FD09A67A0F441E818DB77BF101891E">pie: Object. There is no default. –This attribute only exists when user selects pie chart type. It has two properties: label and colors. The label property determines if Pie chart shows the label. Although the behaviour of colors property is similar to the column object, the length of colors of pie is always more than one. Therefor Pie chart won't render with a single color.</li></ul></td></tr></tbody></table><span class="table_desc"></span></div></p>
+
+<p id="GUID-A1B1DF2F-DEB6-4E21-9641-FEDD63BE3A26">Example:</p><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
+  &quot;charts&quot;: [
+    {
+      &quot;url&quot;: &quot;http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0&quot;,
+      &quot;filter&quot;: {
+        &quot;logicalOperator&quot;: &quot;AND&quot;,
+        &quot;parts&quot;: [],
+        &quot;expr&quot;: &quot;1=1&quot;
+      },
+      &quot;name&quot;: &quot;Display values feature by feature&quot;,
+      &quot;description&quot;: &quot;&quot;,
+      &quot;mode&quot;: &quot;feature&quot;,
+      &quot;symbol&quot;: {
+        &quot;color&quot;: [
+          0,
+          0,
+          128,
+          128
+        ],
+        &quot;size&quot;: 18,
+        &quot;angle&quot;: 0,
+        &quot;xoffset&quot;: 0,
+        &quot;yoffset&quot;: 0,
+        &quot;type&quot;: &quot;esriSMS&quot;,
+        &quot;style&quot;: &quot;esriSMSCircle&quot;,
+        &quot;outline&quot;: {
+          &quot;color&quot;: [
+            0,
+            0,
+            128,
+            255
+          ],
+          &quot;width&quot;: 0.75,
+          &quot;type&quot;: &quot;esriSLS&quot;,
+          &quot;style&quot;: &quot;esriSLSSolid&quot;
+        }
+      },
+      &quot;highLightColor&quot;: &quot;#ff0000&quot;,
+      &quot;column&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;pie&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;,
+          &quot;#eb7b3a&quot;,
+          &quot;#a5a5a5&quot;,
+          &quot;#febf29&quot;,
+          &quot;#4673c2&quot;,
+          &quot;#72ad4c&quot;
+        ],
+        &quot;label&quot;: true
+      },
+      &quot;bar&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;line&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;labelField&quot;: &quot;CITY_NAME&quot;,
+      &quot;valueFields&quot;: [
+        &quot;POP&quot;
+      ],
+      &quot;sortOrder&quot;: &quot;asc&quot;
+    },
+    {
+      &quot;url&quot;: &quot;http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0&quot;,
+      &quot;filter&quot;: {
+        &quot;logicalOperator&quot;: &quot;AND&quot;,
+        &quot;parts&quot;: [],
+        &quot;expr&quot;: &quot;1=1&quot;
+      },
+      &quot;name&quot;: &quot;Display values by category&quot;,
+      &quot;description&quot;: &quot;&quot;,
+      &quot;mode&quot;: &quot;category&quot;,
+      &quot;symbol&quot;: {
+        &quot;color&quot;: [
+          0,
+          0,
+          128,
+          128
+        ],
+        &quot;size&quot;: 18,
+        &quot;angle&quot;: 0,
+        &quot;xoffset&quot;: 0,
+        &quot;yoffset&quot;: 0,
+        &quot;type&quot;: &quot;esriSMS&quot;,
+        &quot;style&quot;: &quot;esriSMSCircle&quot;,
+        &quot;outline&quot;: {
+          &quot;color&quot;: [
+            0,
+            0,
+            128,
+            255
+          ],
+          &quot;width&quot;: 0.75,
+          &quot;type&quot;: &quot;esriSLS&quot;,
+          &quot;style&quot;: &quot;esriSLSSolid&quot;
+        }
+      },
+      &quot;highLightColor&quot;: &quot;#ff0000&quot;,
+      &quot;column&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;pie&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;,
+          &quot;#eb7b3a&quot;,
+          &quot;#a5a5a5&quot;,
+          &quot;#febf29&quot;,
+          &quot;#4673c2&quot;,
+          &quot;#72ad4c&quot;
+        ],
+        &quot;label&quot;: true
+      },
+      &quot;bar&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;line&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;categoryField&quot;: &quot;POP_RANK&quot;,
+      &quot;operation&quot;: &quot;sum&quot;,
+      &quot;valueFields&quot;: [
+        &quot;POP&quot;
+      ],
+      &quot;sortOrder&quot;: &quot;asc&quot;
+    },
+    {
+      &quot;url&quot;: &quot;http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0&quot;,
+      &quot;filter&quot;: {
+        &quot;logicalOperator&quot;: &quot;AND&quot;,
+        &quot;parts&quot;: [],
+        &quot;expr&quot;: &quot;1=1&quot;
+      },
+      &quot;name&quot;: &quot;Display feature counts by category&quot;,
+      &quot;description&quot;: &quot;&quot;,
+      &quot;mode&quot;: &quot;count&quot;,
+      &quot;symbol&quot;: {
+        &quot;color&quot;: [
+          0,
+          0,
+          128,
+          128
+        ],
+        &quot;size&quot;: 18,
+        &quot;angle&quot;: 0,
+        &quot;xoffset&quot;: 0,
+        &quot;yoffset&quot;: 0,
+        &quot;type&quot;: &quot;esriSMS&quot;,
+        &quot;style&quot;: &quot;esriSMSCircle&quot;,
+        &quot;outline&quot;: {
+          &quot;color&quot;: [
+            0,
+            0,
+            128,
+            255
+          ],
+          &quot;width&quot;: 0.75,
+          &quot;type&quot;: &quot;esriSLS&quot;,
+          &quot;style&quot;: &quot;esriSLSSolid&quot;
+        }
+      },
+      &quot;highLightColor&quot;: &quot;#ff0000&quot;,
+      &quot;column&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;pie&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;,
+          &quot;#eb7b3a&quot;,
+          &quot;#a5a5a5&quot;,
+          &quot;#febf29&quot;,
+          &quot;#4673c2&quot;,
+          &quot;#72ad4c&quot;
+        ],
+        &quot;label&quot;: true
+      },
+      &quot;bar&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;line&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;categoryField&quot;: &quot;POP_RANK&quot;,
+      &quot;sortOrder&quot;: &quot;asc&quot;
+    },
+    {
+      &quot;url&quot;: &quot;http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0&quot;,
+      &quot;filter&quot;: {
+        &quot;logicalOperator&quot;: &quot;AND&quot;,
+        &quot;parts&quot;: [],
+        &quot;expr&quot;: &quot;1=1&quot;
+      },
+      &quot;name&quot;: &quot;Display attribute values as charts&quot;,
+      &quot;description&quot;: &quot;&quot;,
+      &quot;mode&quot;: &quot;field&quot;,
+      &quot;symbol&quot;: {
+        &quot;color&quot;: [
+          0,
+          0,
+          128,
+          128
+        ],
+        &quot;size&quot;: 18,
+        &quot;angle&quot;: 0,
+        &quot;xoffset&quot;: 0,
+        &quot;yoffset&quot;: 0,
+        &quot;type&quot;: &quot;esriSMS&quot;,
+        &quot;style&quot;: &quot;esriSMSCircle&quot;,
+        &quot;outline&quot;: {
+          &quot;color&quot;: [
+            0,
+            0,
+            128,
+            255
+          ],
+          &quot;width&quot;: 0.75,
+          &quot;type&quot;: &quot;esriSLS&quot;,
+          &quot;style&quot;: &quot;esriSLSSolid&quot;
+        }
+      },
+      &quot;highLightColor&quot;: &quot;#ff0000&quot;,
+      &quot;column&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;pie&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;,
+          &quot;#eb7b3a&quot;,
+          &quot;#a5a5a5&quot;,
+          &quot;#febf29&quot;,
+          &quot;#4673c2&quot;,
+          &quot;#72ad4c&quot;
+        ],
+        &quot;label&quot;: true
+      },
+      &quot;bar&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;line&quot;: {
+        &quot;colors&quot;: [
+          &quot;#5d9cd3&quot;
+        ],
+        &quot;horizontalAxis&quot;: true,
+        &quot;verticalAxis&quot;: true
+      },
+      &quot;operation&quot;: &quot;sum&quot;,
+      &quot;valueFields&quot;: [
+        &quot;POP_RANK&quot;,
+        &quot;LABEL_FLAG&quot;
+      ]
+    }
+  ]
+}
+</code></pre></div>
+</div><div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

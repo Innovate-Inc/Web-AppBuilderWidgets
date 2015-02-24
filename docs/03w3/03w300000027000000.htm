@@ -1,0 +1,37 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Access a map Web AppBuilder for ArcGIS is a map-centric application. It provides a map property defined in the BaseWidget class to access the map. You can access the map property through this map. The widget’s map property is a type of esri.Map from ArcGIS JavaScript API, configured in the config.json file. You can access all map features provided by ArcGIS JavaScript API. Code the widget the same as writing a regular ArcGIS JavaScript application.When a widget instantiates, the map passes into it. As a result, you can access a map property in the postCreate or startup methods.Modify the UI template and"><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - 
+Access a map
+</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-3510BD99-D8E4-4EBF-A10F-DC9DEE5CDCDB]--><body><div id="content"><div class="header"><h1>
+Access a map
+</h1><div id="breadcrumb"></div></div>
+<p id="GUID-41FF6FD8-BDF1-4218-AFEF-AD619E023210"><span purpose="ph" varid="wab">Web AppBuilder for ArcGIS</span> is a map-centric application. It provides a map property defined in the BaseWidget class to access the map. You can access the map property through this  map. The widget’s map property is a type of esri.Map from ArcGIS JavaScript API, configured in the config.json file. You can access all map features provided by ArcGIS JavaScript API. Code the widget the same as writing a regular ArcGIS JavaScript application.</p><p id="GUID-5282D5F5-E563-49B8-91E1-1A87CA62AE46">When a widget instantiates, the map passes into it. As a result, you can access a map property in the postCreate or startup methods.</p><p id="GUID-E3031BAF-5B52-4A47-BCBF-5A7EBB4A9222">Modify the UI template and add a div tag to display the map ID property:</p>
+<p id="GUID-6A024B7C-7F4C-484F-BC69-56490A4ADF8E"><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>&lt;div&gt;
+    &lt;div&gt;${nls.label1}.&lt;/div&gt;
+    &lt;div&gt;${nls.label2}.[${config.configText}]&lt;/div&gt;
+      &lt;div data-dojo-attach-point=&quot;mapIdNode&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+</div></p><p id="GUID-ADF64D48-A6AC-46F5-B83A-39A33BC8006E">Add JavaScript code to access the map:<div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>startup: function(){
+  this.inherited(arguments);
+  this.mapIdNode.innerHTML = &#39;map id:&#39; + this.map.id;
+}
+</code></pre></div>
+</div></p>
+
+<div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>

@@ -1,0 +1,116 @@
+
+#flexsrc .CSSComment {
+	color: #999999;
+}
+
+#flexsrc .CSSDefault_Text {
+}
+
+#flexsrc .CSSDelimiters {
+}
+
+#flexsrc .CSSProperty_Name {
+	color: #330099;
+}
+
+#flexsrc .CSSProperty_Value {
+	color: #3333cc;
+}
+
+#flexsrc .CSSSelector {
+	color: #ff00ff;
+}
+
+#flexsrc .CSSString {
+	color: #990000;
+}
+
+#flexsrc .MXMLASDoc {
+	color: #3f5fbf;
+}
+
+#flexsrc .MXMLComment {
+	color: #800000;
+}
+
+#flexsrc .MXMLComponent_Tag {
+	color: #0000ff;
+}
+
+#flexsrc .MXMLDefault_Text {
+}
+
+#flexsrc .MXMLProcessing_Instruction {
+}
+
+#flexsrc .MXMLSpecial_Tag {
+	color: #006633;
+}
+
+#flexsrc .MXMLString {
+	color: #990000;
+}
+
+#flexsrc .ActionScriptASDoc {
+	color: #3f5fbf;
+}
+
+#flexsrc .ActionScriptBracket/Brace {
+}
+
+#flexsrc .ActionScriptComment {
+	color: #009900;
+	font-style: italic;
+}
+
+#flexsrc .ActionScriptDefault_Text {
+}
+
+#flexsrc .ActionScriptMetadata {
+	color: #0033ff;
+	font-weight: bold;
+}
+
+#flexsrc .ActionScriptOperator {
+}
+
+#flexsrc .ActionScriptReserved {
+	color: #0033ff;
+	font-weight: bold;
+}
+
+#flexsrc .ActionScriptString {
+	color: #990000;
+	font-weight: bold;
+}
+
+#flexsrc .ActionScriptclass {
+	color: #9900cc;
+	font-weight: bold;
+}
+
+#flexsrc .ActionScriptfunction {
+	color: #339966;
+	font-weight: bold;
+}
+
+#flexsrc .ActionScriptinterface {
+	color: #9900cc;
+	font-weight: bold;
+}
+
+#flexsrc .ActionScriptpackage {
+	color: #9900cc;
+	font-weight: bold;
+}
+
+#flexsrc .ActionScripttrace {
+	color: #cc6666;
+	font-weight: bold;
+}
+
+#flexsrc .ActionScriptvar {
+	color: #6699cc;
+	font-weight: bold;
+}
+
