@@ -1,0 +1,363 @@
+/*Share Dialog updates*/
+
+.icon-container {
+  margin: 10px 0 10px;
+}
+
+.map-size-label {
+  float: left;
+  font-size: 15px;
+  margin: 0 5px 0 0;
+}
+
+.esriRTL .map-size-label {
+  float: right;
+  margin: 0 0 0 5px;
+}
+
+.share-dialog-icon {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  text-align: center;
+  float: left;
+  cursor: pointer;
+  margin: 0 20px 0 0;
+  text-decoration: none;
+  display: block;
+}
+
+.share-dialog-icon:visited {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.esriRTL .share-dialog-icon {
+  float: right;
+  margin: 0 0 0 10px;
+}
+
+.share-dialog-icon:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.share-map-url {
+  width: 100%;
+  min-width: 80%;
+  max-width: 100%;
+  height: 25px;
+  font-size: 14px;
+  color: #777;
+  border: 1px solid #dcdcdc;
+  margin: 0 0 10px;
+}
+
+.map-size-container {
+  margin: 0;
+  padding: 0 0 20px;
+}
+
+.embed-map-size-clear,
+.icon-clear {
+  clear: both;
+}
+
+.embed-map-size-dropdown {
+  float: left;
+}
+
+.esriRTL .embed-map-size-dropdown {
+  float: right;
+}
+
+.share-dialog-subheader {
+  font-size: 17px;
+  display: block;
+}
+
+.share-dialog-textarea {
+  width: auto;
+  max-width: 100%;
+  width: 100%;
+  height: 140px;
+  font-size: 14px;
+  color: #777;
+  border: 1px solid #dcdcdc;
+  margin: 0 0 10px;
+}
+
+.FoldableTheme.default .icon-twitter{
+  background-image: url("images/twitter-default.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.black .icon-twitter,
+.TabTheme.default .icon-twitter {
+  background-image: url("images/twitter-black.png");
+  opacity: 0.5;
+}
+
+.icon-twitter {
+  background-image: url("images/twitter-black.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.red .icon-twitter,
+.TabTheme.red .icon-twitter {
+  background-image: url("images/twitter-red.png");
+  opacity: 0.5;
+}
+
+.TabTheme.simpleblue .icon-twitter {
+  background-image: url("images/twitter-blue.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.green .icon-twitter{
+  background-image: url("images/twitter-green.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.cyan .icon-twitter{
+  background-image: url("images/twitter-cyan.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.purple .icon-twitter,
+.TabTheme.purple .icon-twitter {
+  background-image: url("images/twitter-purple.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.red .icon-twitter,
+.TabTheme.red .icon-twitter{
+  background-image: url("images/twitter-red.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.default .icon-twitter:hover,
+.FoldableTheme.black .icon-twitter:hover,
+.FoldableTheme.green .icon-twitter:hover,
+.FoldableTheme.cyan .icon-twitter:hover,
+.FoldableTheme.red .icon-twitter:hover,
+.FoldableTheme.purple .icon-twitter:hover,
+.TabTheme.default .icon-twitter:hover,
+.TabTheme.simpleblue .icon-twitter:hover,
+.TabTheme.red .icon-twitter:hover,
+.TabTheme.purple .icon-twitter:hover,
+.icon-twitter:hover {
+  opacity: 1;
+}
+
+.FoldableTheme.default .icon-facebook-squared{
+  background-image: url("images/facebook-default.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.black .icon-facebook-squared,
+.TabTheme.default .icon-facebook-squared {
+  background-image: url("images/facebook-black.png");
+  opacity: 0.5;
+}
+
+.icon-facebook-squared {
+  background-image: url("images/facebook-black.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.green .icon-facebook-squared{
+  background-image: url("images/facebook-green.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.cyan .icon-facebook-squared{
+  background-image: url("images/facebook-cyan.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.red .icon-facebook-squared,
+.TabTheme.red .icon-facebook-squared {
+  background-image: url("images/facebook-red.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.purple .icon-facebook-squared,
+.TabTheme.purple .icon-facebook-squared {
+  background-image: url("images/facebook-purple.png");
+  opacity: 0.5;
+}
+
+.TabTheme.simpleblue .icon-facebook-squared {
+  background-image: url("images/facebook-blue.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.default .icon-facebook-squared:hover,
+.FoldableTheme.black .icon-facebook-squared:hover,
+.FoldableTheme.green .icon-facebook-squared:hover,
+.FoldableTheme.cyan .icon-facebook-squared:hover,
+.FoldableTheme.red .icon-facebook-squared:hover,
+.FoldableTheme.purple .icon-facebook-squared:hover,
+.TabTheme.default .icon-facebook-squared:hover,
+.TabTheme.simpleblue .icon-facebook-squared:hover,
+.TabTheme.red .icon-facebook-squared:hover,
+.TabTheme.purple .icon-facebook-squared:hover,
+.icon-facebook-squared:hover{
+  opacity: 1;
+}
+
+.FoldableTheme.default .icon-gplus {
+  background-image: url("images/googleplusdefault.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.black .icon-gplus,
+.TabTheme.default .icon-gplus {
+  background-image: url("images/googleplusblack.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.cyan .icon-gplus {
+  background-image: url("images/googlepluscyan.png");
+  opacity: 0.5;
+}
+
+.TabTheme.simpleblue .icon-gplus {
+  background-image: url("images/googleplusblue.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.green .icon-gplus{
+  background-image: url("images/googleplusgreen.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.red .icon-gplus,
+.TabTheme.red .icon-gplus {
+  background-image: url("images/googleplusred.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.purple .icon-gplus,
+.TabTheme.purple .icon-gplus{
+  background-image: url("images/googlepluspurple.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.default .icon-gplus:hover,
+.FoldableTheme.black .icon-gplus:hover,
+.FoldableTheme.green .icon-gplus:hover,
+.FoldableTheme.cyan .icon-gplus:hover,
+.FoldableTheme.red .icon-gplus:hover,
+.FoldableTheme.purple .icon-gplus:hover,
+.TabTheme.default .icon-gplus:hover,
+.TabTheme.simpleblue .icon-gplus:hover,
+.TabTheme.red .icon-gplus:hover,
+.TabTheme.purple .icon-gplus:hover,
+.icon-gplus:hover{
+  opacity: 1;
+}
+
+.FoldableTheme.default .icon-mail-alt {
+  background-image: url("images/Email-default.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.black .icon-mail-alt,
+.TabTheme.default .icon-mail-alt {
+  background-image: url("images/Email-black.png");
+  opacity: 0.5;
+}
+
+.TabTheme.simpleblue .icon-mail-alt {
+  background-image: url("images/Email-blue.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.green .icon-mail-alt {
+  background-image: url("images/Email-green.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.cyan .icon-mail-alt {
+  background-image: url("images/Email-cyan.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.red .icon-mail-alt,
+.TabTheme.red .icon-mail-alt {
+  background-image: url("images/Email-red.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.purple .icon-mail-alt,
+.TabTheme.purple .icon-mail-alt {
+  background-image: url("images/Email-purple.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.default .icon-mail-alt:hover,
+.FoldableTheme.black .icon-mail-alt:hover,
+.FoldableTheme.green .icon-mail-alt:hover,
+.FoldableTheme.cyan .icon-mail-alt:hover,
+.FoldableTheme.red .icon-mail-alt:hover,
+.FoldableTheme.purple .icon-mail-alt:hover,
+.TabTheme.default .icon-mail-alt:hover,
+.TabTheme.simpleblue .icon-mail-alt:hover,
+.TabTheme.red .icon-mail-alt:hover,
+.TabTheme.purple .icon-mail-alt:hover,
+.icon-mail-alt:hover{
+  opacity: 1;
+}
+
+.FoldableTheme.default .icon-link {
+  background-image: url("images/link-default.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.black .icon-link,
+.TabTheme.default .icon-link {
+  background-image: url("images/link-black.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.cyan .icon-link {
+  background-image: url("images/link-cyan.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.green .icon-link {
+  background-image: url("images/link-green.png");
+  opacity: 0.5;
+}
+
+.TabTheme.simpleblue .icon-link {
+  background-image: url("images/link-blue.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.red .icon-link,
+.TabTheme.red .icon-link {
+  background-image: url("images/link-red.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.purple .icon-link,
+.TabTheme.purple .icon-link{
+  background-image: url("images/link-purple.png");
+  opacity: 0.5;
+}
+
+.FoldableTheme.default .icon-link:hover,
+.FoldableTheme.black .icon-link:hover,
+.FoldableTheme.green .icon-link:hover,
+.FoldableTheme.cyan .icon-link:hover,
+.FoldableTheme.red .icon-link:hover,
+.FoldableTheme.purple .icon-link:hover,
+.TabTheme.default .icon-link:hover,
+.TabTheme.simpleblue .icon-link:hover,
+.TabTheme.red .icon-link:hover,
+.TabTheme.purple .icon-link:hover,
+.icon-link:hover{
+  opacity: 1;
+}
