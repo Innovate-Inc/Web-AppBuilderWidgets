@@ -11,7 +11,7 @@ function(declare, BaseWidget, GeometryService, ProjectParameters, SpatialReferen
 
     baseClass: 'jimu-widget-demo',
 
-    name: 'StreetView',
+    name: 'StreetViewer',
 
     postCreate: function () {
       //this.inherited(arguments);

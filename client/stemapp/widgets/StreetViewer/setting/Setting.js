@@ -12,7 +12,7 @@ define([
     BaseWidgetSetting) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
       //these two properties is defined in the BaseWidget
-      baseClass: 'jimu-widget-streetWalker-setting',
+      baseClass: 'jimu-widget-StreetViewer-setting',
 
       startup: function() {
           this.inherited(arguments);
