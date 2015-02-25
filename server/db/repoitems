@@ -130,3 +130,12 @@
 {"k":"0000000051","o":"0000000000","v":"001"}
 {"_id":37,"_uid":44,"_dt":1424891533415,"_a":"del"}
 
+{"k":"0000000080","o":"0000000778","v":"001"}
+{"_id":45,"_uid":45,"_dt":1424892012943,"_s":"ecdccbc53c7dc3b92962fe08530948f6"}
+{"name":"StreetViewer","platform":"HTML","version":"0.0.1","author":"Innovate! Inc.","description":"Opens window of streetview of the clicked location","copyright":"","license":"http://www.apache.org/licenses/LICENSE-2.0","location":"C:\\Data\\Web AppBuilder\\InnovateWebAppBuilder\\client\\stemapp\\widgets\\StreetViewer","url":"/widgets/StreetViewer/","icon":"/widgets/StreetViewer/images/icon.png","category":"widget","support2D":true,"properties":{"isController":false,"isThemeWidget":false,"hasVersionManager":false,"inPanel":true,"hasLocale":true,"hasStyle":true,"hasConfig":true,"hasUIFile":true,"hasSettingPage":true,"hasSettingUIFile":true,"hasSettingLocale":true,"hasSettingStyle":true,"keepConfigAfterMapSwithched":true},"i18nLabels":{},"_id":{"$wrap":"$oid","v":45}}
+{"k":"0000000051","o":"0000000000","v":"001"}
+{"_id":44,"_uid":45,"_dt":1424892012983,"_a":"del"}
+
+{"k":"0000000080","o":"0000000846","v":"001"}
+{"_id":46,"_uid":46,"_dt":1424892705857,"_s":"9b839f982e6f735f918cf5421b88f6e1"}
+{"name":"StreetView","label":"Google Street View","type":"widget","platform":"HTML","version":"1.1.0.2","wabVersion":"1.1","author":"Robert Scheitlin","description":"Allows viewing of Google Street View in a popup window","copyright":"2015","license":"http://www.apache.org/licenses/LICENSE-2.0","properties":{"hasVersionManager":false,"isController":false,"isThemeWidget":false,"inPanel":true,"hasLocale":true,"hasStyle":true,"hasConfig":true,"hasUIFile":true,"hasSettingPage":true,"hasSettingUIFile":true,"hasSettingLocale":true,"hasSettingStyle":true,"keepConfigAfterMapSwithched":true},"location":"C:\\Data\\Web AppBuilder\\InnovateWebAppBuilder\\client\\stemapp\\widgets\\StreetView","url":"/widgets/StreetView/","icon":"/widgets/StreetView/images/icon.png","category":"widget","support2D":true,"i18nLabels":{},"_id":{"$wrap":"$oid","v":46}}
