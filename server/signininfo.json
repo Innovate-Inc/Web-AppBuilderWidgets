@@ -1,0 +1,14 @@
+[
+  {
+    "portalUrl": "http://dyarnell.maps.arcgis.com",
+    "appId": "QfVUhAjhoULlp6wy",
+    "supportsOAuth": true,
+    "isWebTier": false
+  },
+  {
+    "portalUrl": "http://innovate.maps.arcgis.com",
+    "appId": "HZDxjoYa98qWyvK6",
+    "supportsOAuth": true,
+    "isWebTier": false
+  }
+]
