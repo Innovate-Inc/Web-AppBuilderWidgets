@@ -68,9 +68,11 @@ define([
           this.measurement = new Measurement(measurementJson, this.measurementDiv);
           aspect.after(this.measurement, 'setTool', lang.hitch(this, function() {
             if (this.measurement.activeTool) {
-              this.disableWebMapPopup();
+              //this.disableWebMapPopup();
+			  this.map.setInfoWindowOnClick(false);   //DY 2/25/15
             } else {
-              this.enableWebMapPopup();
+              //this.enableWebMapPopup();
+			  this.map.setInfoWindowOnClick(true);   //DY 2/25/15
             }
           }));
 
