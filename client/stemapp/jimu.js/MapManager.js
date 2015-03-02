@@ -237,6 +237,7 @@ define(['dojo/_base/declare',
         var webMapOptions = {
           mapOptions: mapOptions,
           bingMapsKey: appConfig.bingMapsKey
+		  usePopupManager: true
         };
 
         var mapDeferred = jimuUtils.createWebMap(webMapPortalUrl, webMapItemId,
