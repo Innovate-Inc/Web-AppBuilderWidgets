@@ -163,8 +163,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     },
 
     deactivate:function(){
-      //this.enableWebMapPopup();
-	  this.map.setInfoWindowOnClick(true);    //DY 2/25/15
+      this.enableWebMapPopup();
       if(this.drawToolBar){
         this.drawToolBar.deactivate();
       }
@@ -250,8 +249,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       var geotype = target.getAttribute('data-geotype');
       var commontype = target.getAttribute('data-commontype');
       var tool = Draw[geotype];
-      //this.disableWebMapPopup();
-	  this.map.setInfoWindowOnClick(false);    //DY 2/25/15
+      this.disableWebMapPopup();
       this.drawToolBar.activate(tool);
       this.onIconSelected(target,geotype,commontype);
     },
