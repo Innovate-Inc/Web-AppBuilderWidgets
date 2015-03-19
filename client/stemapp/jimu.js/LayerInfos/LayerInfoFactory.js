@@ -1,10 +1,23 @@
+///////////////////////////////////////////////////////////////////////////
+// Copyright © 2014 Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
 define([
   'dojo/_base/declare',
-  'dojo/_base/array',
   'dojo/_base/lang',
-  'dojo/aspect',
   'dojo/Deferred'
-], function(declare, array, lang, aspect, Deferred) {
+], function(declare, lang, Deferred) {
   var instance = null,
     clazz = declare(null, {
       constructor: function() {
@@ -22,7 +35,9 @@ define([
           'jimu/LayerInfos/LayerInfoForGroup',
           'jimu/LayerInfos/LayerInfoForDefaultDynamic',
           'jimu/LayerInfos/LayerInfoForDefaultTile',
-          'jimu/LayerInfos/LayerInfoForDefaultWMS'
+          'jimu/LayerInfos/LayerInfoForDefaultWMS',
+          'jimu/LayerInfos/LayerInfoForDefaultTable',
+          'jimu/LayerInfos/LayerInfoForDefaultImage'
         ], lang.hitch(this, function(
           LayerInfoForCollection,
           LayerInfoForMapService,
@@ -33,7 +48,9 @@ define([
           LayerInfoForGroup,
           LayerInfoForDefaultDynamic,
           LayerInfoForDefaultTile,
-          LayerInfoForDefaultWMS) {
+          LayerInfoForDefaultWMS,
+          LayerInfoForDefaultTable,
+          LayerInfoForDefaultImage) {
           this.LayerInfoForCollection = LayerInfoForCollection;
           this.LayerInfoForMapService = LayerInfoForMapService;
           this.LayerInfoForKML = LayerInfoForKML;
@@ -44,6 +61,8 @@ define([
           this.LayerInfoForDefaultDynamic = LayerInfoForDefaultDynamic;
           this.LayerInfoForDefaultTile = LayerInfoForDefaultTile;
           this.LayerInfoForDefaultWMS = LayerInfoForDefaultWMS;
+          this.LayerInfoForDefaultTable = LayerInfoForDefaultTable;
+          this.LayerInfoForDefaultImage = LayerInfoForDefaultImage;
           retDef.resolve();
         }));
         return retDef;
@@ -65,7 +84,12 @@ define([
             operLayer.layerObject.declaredClass === 'esri.layers.ArcGISTiledMapServiceLayer') {
           return new this.LayerInfoForMapService(operLayer, this.map);
           //} else if (operLayer.layerObject) {
+        } else if (operLayer.layerObject.declaredClass === 'esri.layers.ArcGISImageServiceLayer') {
+          return new this.LayerInfoForDefaultImage(operLayer, this.map);
         } else {
+          if(operLayer.layerObject.type === "Table"){
+            operLayer.selfType = "table";
+          }
           switch (operLayer.selfType) {
           case 'mapservice_dynamic_group':
             return new this.LayerInfoForGroup(operLayer, this.map);
@@ -77,6 +101,8 @@ define([
             return new this.LayerInfoForDefaultTile(operLayer, this.map);
           case 'wms':
             return new this.LayerInfoForDefaultWMS(operLayer, this.map);
+          case 'table':
+            return new this.LayerInfoForDefaultTable(operLayer, this.map);
           default:
             return new this.LayerInfoForDefault(operLayer, this.map);
           }

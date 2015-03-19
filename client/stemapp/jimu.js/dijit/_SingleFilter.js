@@ -25,21 +25,18 @@ define([
   'dojo/_base/array',
   'dojo/json',
   'dojo/on',
-  'dojo/query',
-  'dojo/Deferred',
+  'dojo/store/Memory',
+  'esri/request',
+  'jimu/utils',
+  'jimu/dijit/CheckBox',
   'dijit/form/Select',
   'dijit/form/FilteringSelect',
   'dijit/form/ValidationTextBox',
   'dijit/form/DateTextBox',
-  'dijit/form/NumberTextBox',
-  'dojo/store/Memory',
-  'esri/request',
-  'jimu/dijit/CheckBox',
-  'jimu/utils'
+  'dijit/form/NumberTextBox'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, lang,
-  html, array, json, on, query, Deferred, Select, FilteringSelect, ValidationTextBox,
-  DateTextBox, NumberTextBox, Memory, esriRequest, CheckBox, jimuUtils) {/*jshint unused: false*/
+  html, array, json, on, Memory, esriRequest, jimuUtils) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     templateString:template,
     baseClass: 'jimu-single-filter',
@@ -54,6 +51,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     part: null,
     OPERATORS: null,
     enableAskForValues: false,
+    isHosted: false,
 
     postMixInProperties:function(){
       this.supportFieldTypes = [];
@@ -261,7 +259,15 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     },
 
     _initSelf:function(){
+      if(this.isHosted){
+        this.cbxCaseSensitive.setValue(false);
+        this.cbxCaseSensitive.setStatus(false);
+        this.cbxCaseSensitive.domNode.title = this.nls.notSupportCaseSensitiveTip;
+      }
+
       this.cbxAskValues.onChange = lang.hitch(this, this._onCbxAskValuesClicked);
+
+      this.own(on(this.fieldsSelect, 'MouseEnter', lang.hitch(this, this._onEnterFieldsSelect)));
 
       var store = new Memory({idProperty:'id', data:[]});
       this.uniqueValuesSelect.set('store',store);
@@ -293,6 +299,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         }));
         this._enableRadios();
         this._initFieldsSelect(fields);
+      }
+    },
+
+    _onEnterFieldsSelect: function(){
+      this.fieldsSelect.domNode.title = "";
+      var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
+      if(fieldInfo){
+        this.fieldsSelect.domNode.title=fieldInfo.displayName||fieldInfo.alias||fieldInfo.name;
       }
     },
 
@@ -441,7 +455,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
 
       var fieldName = this.part.fieldObj.name;
       var operator = this.part.operator;
-      var valueObj = this.part.valueObj;
+      //var valueObj = this.part.valueObj;
       this.part.caseSensitive = !!this.part.caseSensitive;
       var fieldItems = this.fieldsSelect.store.query({
         name: fieldName

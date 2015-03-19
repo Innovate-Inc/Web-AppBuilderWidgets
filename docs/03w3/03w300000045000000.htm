@@ -36,7 +36,7 @@ of the screen and right places a widget on the right side of the screen.</li>
 <ul purpose="ul" id="UL_65A32342794E4F29BE223525FB6A70E4">
 <li purpose="li" id="LI_EEBFE34E6F8C460CBCEF410CDE568A75">The source code of the Demo theme is under the
 folder stemapp/themes/DemoTheme. You can
-try the Demo theme from within the GUI AppBuilder.</li>
+try the Demo theme from within the GUI AppBuilder. By default, it is disabled. To enable it, open .repoignore file in <span class="usertext">client\stemapp\themes</span>, remove DemoTheme from the file, then restart the node server. </li>
 <li purpose="li" id="LI_64DB8696ED52437792BF6C65DBBC4783">Once you have created a custom theme, you can put the theme
 folder under the theme repository folder (stemapp/themes by default).</li>
 </ul>
@@ -127,8 +127,7 @@ which is used by default from within the GUI AppBuilder.</p><div class="section2
   border: 1px solid black;
 }
 </code></pre></div>
-</div></p></div></div><div class="section1" id="ESRI_SECTION1_11E962AA597E4B9CAEA80D15E1939E05" purpose="section1"><h2>Create the layouts</h2><p id="GUID-3285C4C2-8DF3-4948-A9B3-9623D738A209">A layout is a config template file, which contains some widget
-config properties but leaves the uri property empty.</p><p id="GUID-39104AFF-D2BC-4187-B7C4-C4F8829E9FF2">The following rules are implemented inside the web AppBuilder GUI when switching layouts from A to B:</p><p id="GUID-2F0459CB-CAC5-44B3-A624-A5E04EAC9A32">
+</div></p></div></div><div class="section1" id="ESRI_SECTION1_11E962AA597E4B9CAEA80D15E1939E05" purpose="section1"><h2>Create the layouts</h2><p id="GUID-3285C4C2-8DF3-4948-A9B3-9623D738A209">A layout is a config template file. Although it uses the same format as app’s config file, it may contain only a subset of the properties. For example, default layout may contain:<ul purpose="ul" id="UL_C353B656FCDE4636905B7466E09AE6E0"><li purpose="li" id="LI_28EB687601E2448199B5CC000C351777">widgetOnScreen--including all of the properties.</li><li purpose="li" id="LI_A8F58D5691174B529C4F0AF2B7173391">map--only position property.</li><li purpose="li" id="LI_A5C42987A3624BFE936EFA725CBA60B8">widgetPool--only panel property.</li></ul></p><p id="GUID-521B7195-443E-4B14-8937-5814836E2705">Other layouts only contain position property.</p><p id="GUID-B2A00DB5-5894-4CD9-AC6B-B5292282275C">In default layout, you can define on-screen widget with uri and position properties, or with position property only. A widget with only position property is  called placeholder,  allowing  to add a widget during configuration. </p><p id="GUID-39104AFF-D2BC-4187-B7C4-C4F8829E9FF2">The following rules are implemented inside the web AppBuilder GUI when switching layouts from A to B:</p><p id="GUID-2F0459CB-CAC5-44B3-A624-A5E04EAC9A32">
 <ul purpose="ul" id="UL_14F7D1EC02F84E42ABD73687798DF319">
 <li purpose="li" id="LI_E688FBFE6AC645CE8462375390C863F6">For on-screen widgets, use the panel and
 position properties of the layout B to replace the panel, and
@@ -195,26 +194,19 @@ GUI AppBuilder.</p><div class="section2" id="ESRI_SECTION2_8A440DADEF2442C7AC523
 </div></p></div><div class="section2" id="ESRI_SECTION2_AA626E32DD74424BB08A83B3A5C32CC8" purpose="section2"><h3>Edit the right layout</h3><p id="GUID-0F472811-068C-4D74-A40E-AC57A78149DF"><div class="codeblock" purpose="codeblock"><div class="codeblockdesc" purpose="codeblockdesc"></div><div class="highlight"><pre><code>{
   &quot;preloadWidgets&quot;: {
     &quot;panel&quot;: {
-      &quot;uri&quot;: &quot;themes/DemoTheme/panels/SimpleBorderPanel/Panel&quot;
     },
     &quot;widgets&quot;: [{
-      &quot;label&quot;: &quot;Scalebar&quot;,
-      &quot;uri&quot;: &quot;widgets/Scalebar/Widget&quot;,
       &quot;position&quot;: {
         &quot;left&quot;: 25,
         &quot;bottom&quot;: 25
       }
     }, {
-      &quot;label&quot;: &quot;Coordinate&quot;,
-      &quot;uri&quot;: &quot;widgets/Coordinate/Widget&quot;,
       &quot;inPanel&quot;: false,
       &quot;position&quot;: {
         &quot;left&quot;: 200,
         &quot;bottom&quot;: 10
       }
     }, {
-      &quot;label&quot;: &quot;Select a basemap&quot;,
-      &quot;uri&quot;: &quot;widgets/BasemapGallery/Widget&quot;,
       &quot;inPanel&quot;: true,
       &quot;position&quot;: {
         &quot;left&quot;: 45,
@@ -233,7 +225,7 @@ GUI AppBuilder.</p><div class="section2" id="ESRI_SECTION2_8A440DADEF2442C7AC523
   }
 }
 </code></pre></div>
-</div></p></div></div><div class="section1" id="ESRI_SECTION1_BF0AB5EDBA1A42E69A6E1926316D1146" purpose="section1"><h2>Edit main.js file</h2><p id="GUID-1C533CE0-7679-4CAB-838A-73E162057BC3"> The main.js file will be loaded and run when the theme loads. You can put the initialization codes in it, or just keep it like this: define([], function(){ });</p></div><div class="section1" id="ESRI_SECTION1_7B49D8B909584C8385CF07ED33BD6E56" purpose="section1"><h2>Add i18n support</h2><p id="GUID-B4D847A4-40FD-4ED0-B809-1CB737B86E43">Your theme may contain some strings that you want to internationalize. Similar to  the widget, you can create the string.js file in a nls folder. Refer to <a class="xref" rel="03w3/03w30000000v000000.htm" href="03w3/03w30000000v000000.htm">Add I18n support</a> under widget development. You can also internationalize display names associated with a theme, such as _themeLabel for theme display name, layout   _layout_[layout name]  for layout display name and  _style[style name] for style display name.</p></div><div class="section1" id="ESRI_SECTION1_0CB5845E450144C0AD8B6F5ABECBA4B2" purpose="section1"><h2>Create a theme widget</h2><p id="GUID-864C1823-6430-4AC6-A338-8A9CD11F39C9"> Creating a theme widget is the same as creating a normal widget except for one extra property <b>isThemeWidget</b>. This property is defined in the manifest.json file and should be set to true. The theme widget is located   at \theme name\widgets folder.   </p></div><div class="section1" id="ESRI_SECTION1_E41FEC1BC2BE438694044E1553520474" purpose="section1"><h2>Try the Demo theme in the builder </h2><p id="GUID-8C14ED88-8B01-4875-9EF0-C0F7761A33A9">Once you place the Demo theme in the themes folder, start the AppBuilder and create a
+</div></p></div></div><div class="section1" id="ESRI_SECTION1_BF0AB5EDBA1A42E69A6E1926316D1146" purpose="section1"><h2>Edit main.js file</h2><p id="GUID-1C533CE0-7679-4CAB-838A-73E162057BC3"> The main.js file will be loaded and run when the theme loads. You can put the initialization codes in it, or just keep it like this: define([], function(){ });</p></div><div class="section1" id="ESRI_SECTION1_7B49D8B909584C8385CF07ED33BD6E56" purpose="section1"><h2>Add i18n support</h2><p id="GUID-B4D847A4-40FD-4ED0-B809-1CB737B86E43">Your theme may contain some strings that you want to internationalize. Similar to  the widget, you can create the string.js file in a nls folder. Refer to <a class="xref" rel="03w3/03w30000000v000000.htm" href="03w3/03w30000000v000000.htm">Add I18n support</a> under widget development. You can also internationalize display names associated with a theme, such as <b>_themeLabel</b> for theme display name, layout   <b>_layout_[layout name]  </b> for layout display name and  <b>_style[style name]</b> for style display name.</p></div><div class="section1" id="ESRI_SECTION1_0CB5845E450144C0AD8B6F5ABECBA4B2" purpose="section1"><h2>Create a theme widget</h2><p id="GUID-864C1823-6430-4AC6-A338-8A9CD11F39C9"> Creating a theme widget is the same as creating a normal widget except for one extra property <b>isThemeWidget</b>. This property is defined in the manifest.json file and should be set to true. The theme widget is located   at \theme name\widgets folder.   </p></div><div class="section1" id="ESRI_SECTION1_E41FEC1BC2BE438694044E1553520474" purpose="section1"><h2>Try the Demo theme in the builder </h2><p id="GUID-8C14ED88-8B01-4875-9EF0-C0F7761A33A9">Once you place the Demo theme in the themes folder, start the AppBuilder and create a
 new app, the Demo theme shows in the Themes tab.</p><p id="GUID-33BFA02D-D1CD-4FAA-A21D-4B0CC81A63D1">
 <ol purpose="ol" id="OL_D163943580DB4055B0B80F2373BE7C1F">
 <li purpose="li" id="LI_898CB8813B57418EA1C39220071116CC">Click the Demo theme.</li>
@@ -243,6 +235,6 @@ layouts.</li>
 <li purpose="li" id="LI_FCBE1CFB98F34C788D32C0D0987CB9F2">Click the style icon to switch
 styles.</li>
 </ol>
-</p><p id="GUID-EA3529E1-EE5B-49E2-BE36-B3978E8B6C74">During development, use http://your
-host/webappbuilder/?appid=stemapp to access your theme
-directly.</p></div><div class="footer"> Copyright © 1995-2014 Esri. All rights reserved. </div></div></body></html>
+</p><p id="GUID-EA3529E1-EE5B-49E2-BE36-B3978E8B6C74">During development, use <span class="usertext">http://your
+host/webappbuilder/?id=stemapp</span> to access your theme
+directly.</p></div><div class="footer"> Copyright © 1995-2015 Esri. All rights reserved. </div></div></body></html>

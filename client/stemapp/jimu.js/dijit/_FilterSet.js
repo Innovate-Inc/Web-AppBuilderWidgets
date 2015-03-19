@@ -43,13 +43,10 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     partsObj: null,
     OPERATORS: null,
     enableAskForValues: false,
+    isHosted: false,
 
     postMixInProperties:function(){
       this.nls = window.jimuNls.filterBuilder;
-      // var strSelect = '<select data-dojo-attach-point=allAnySelect>'+
-      // '<option value=AND selected>'+this.nls.all+'</option>'+
-      // '<option value=OR>'+this.nls.any+'</option></select>';
-      // this.nls.matchMsgSet = esriLang.substitute({any_or_all:strSelect},this.nls.matchMsgSet);
       var a = "${any_or_all}";
       var splits = this.nls.matchMsgSet.split(a);
       this.nls.strMatchMsgPart1 = splits[0] || '';
@@ -126,6 +123,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         part:part,
         OPERATORS: this.OPERATORS,
         enableAskForValues: this.enableAskForValues,
+        isHosted: this.isHosted,
         style:{
           margin:'15px auto 0 auto',
           border:0,

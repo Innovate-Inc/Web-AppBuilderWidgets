@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: '서비스를 찾을 수 없습니다.',
-      unableConnectTo: '다음과 연결할 수 없습니다.'
+      unableConnectTo: '다음과 연결할 수 없습니다.',
+      invalidUrlTip: '입력한 URL이 잘못되었거나 접근할 수 없습니다.'
     },
     serviceBrowser: {
       noGpFound: '지오프로세싱 서비스를 찾을 수 없습니다.',
@@ -174,26 +175,27 @@
         invalidSQL: "잘못된 SQL 식입니다.",
         cantParseSQL: "SQL 식의 구문을 분석할 수 없습니다."
       },
-      caseSensitive: "대소문자 구분"
+      caseSensitive: "대소문자 구분",
+      notSupportCaseSensitiveTip: "호스팅된 서비스는 대소문자 구분 쿼리를 지원하지 않습니다."
     },
 
     featureLayerSource: {
       layer: "레이어",
       browse: "찾아보기",
       selectFromMap: "맵에서 선택",
-      selectFromPortal: "포털에서 추가",
+      selectFromPortal: "Portal for ArcGIS에서 추가",
       addServiceUrl: "서비스 URL 추가",
       inputLayerUrl: "입력 레이어 URL",
       selectLayer: "현재 맵에서 피처 레이어를 선택합니다.",
       chooseItem: "피처 레이어 항목을 선택합니다.",
       setServiceUrl: "피처 서비스 또는 맵 서비스의 URL을 입력합니다.",
-      selectFromOnline: "온라인에서 추가",
+      selectFromOnline: "ArcGIS Online에서 추가",
       chooseLayer: "피처 레이어를 선택합니다."
     },
     gpSource: {
-      selectFromPortal: "포털에서 추가",
+      selectFromPortal: "Portal for ArcGIS에서 추가",
       addServiceUrl: "서비스 URL 추가",
-      selectFromOnline: "온라인에서 추가",
+      selectFromOnline: "ArcGIS Online에서 추가",
       setServiceUrl: "지오프로세싱 서비스 URL을 입력합니다.",
       chooseItem: "지오프로세싱 서비스 항목을 선택합니다.",
       chooseTask: "지오프로세싱 작업을 선택합니다."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "맵",
       selectWebMap: "웹 맵 선택",
-      addMapFromOnlineOrPortal: "ArcGIS Online 공용 리소스 또는 ArcGIS Online이나 포털의 개인 콘텐츠에서 응용프로그램에 사용될 웹 맵을 찾아 추가합니다.",
+      addMapFromOnlineOrPortal: "ArcGIS Online 공용 리소스 또는 ArcGIS Online이나 포털의 개인 콘텐츠에서 응용프로그램에 있는 웹 맵을 찾아 추가합니다.",
       searchMapName: "맵 이름별 검색...",
       searchNone: "검색한 항목을 찾을 수 없습니다. 다시 시도하세요.",
       groups: "그룹",
@@ -242,7 +244,7 @@
       itemToAttributeTable: '속성 테이블 열기'
     },
     imageChooser: {
-      unsupportReaderAPI: "TODO: 파일 리더 API를 지원하지 않는 브라우저",
+      unsupportReaderAPI: "TODO: 브라우저가 파일 리더 API를 지원하지 않습니다.",
       readError: "파일을 읽지 못했습니다.",
       invalidType: "잘못된 파일 유형입니다.",
       exceed: "파일 크기는 1024KB를 넘을 수 없습니다.",

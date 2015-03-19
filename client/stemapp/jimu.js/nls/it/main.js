@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Nessun servizio trovato.',
-      unableConnectTo: 'Impossibile connettersi a'
+      unableConnectTo: 'Impossibile connettersi a',
+      invalidUrlTip: 'L\'URL immesso non è valido o non è accessibile.'
     },
     serviceBrowser: {
       noGpFound: 'Non sono stati trovati servizi di geoprocessing.',
@@ -174,26 +175,27 @@
         invalidSQL: "Espressione SQL non valida.",
         cantParseSQL: "Impossibile analizzare l\'espressione SQL."
       },
-      caseSensitive: "Maiuscole/minuscole"
+      caseSensitive: "Maiuscole/minuscole",
+      notSupportCaseSensitiveTip: "I servizi ospitati non supportano query con distinzione tra maiuscole e minuscole."
     },
 
     featureLayerSource: {
       layer: "Layer",
       browse: "Sfoglia",
       selectFromMap: "Seleziona da mappa",
-      selectFromPortal: "Aggiungi da portale",
+      selectFromPortal: "Aggiungi da Portal for ArcGIS",
       addServiceUrl: "Aggiungi URL del servizio",
       inputLayerUrl: "URL layer di input",
       selectLayer: "Seleziona un layer feature dalla mappa corrente.",
       chooseItem: "Scegli un elemento layer feature.",
       setServiceUrl: "Immetti l\'URL del servizio feature o del servizio mappe.",
-      selectFromOnline: "Aggiungi da Online",
+      selectFromOnline: "Aggiungi da ArcGIS Online",
       chooseLayer: "Scegliere un feature layer."
     },
     gpSource: {
-      selectFromPortal: "Aggiungi da portale",
+      selectFromPortal: "Aggiungi da Portal for ArcGIS",
       addServiceUrl: "Aggiungi URL del servizio",
-      selectFromOnline: "Aggiungi da Online",
+      selectFromOnline: "Aggiungi da ArcGIS Online",
       setServiceUrl: "Immettere l\'URL del servizio di geoprocessing.",
       chooseItem: "Scegliere un elemento del servizio di geoprocessing.",
       chooseTask: "Scegliere un\'attività di geoprocessing."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Mappa",
       selectWebMap: "Scegli mappa Web",
-      addMapFromOnlineOrPortal: "Individuare e aggiungere una mappa Web da utilizzare nell\'applicazione da risorse pubbliche di ArcGIS Online o da contenuti privati disponibili in ArcGIS Online o nel portale.",
+      addMapFromOnlineOrPortal: "Cercare e aggiungere una mappa Web nell\'applicazione da risorse pubbliche di ArcGIS Online o da contenuti privati disponibili in ArcGIS Online o nel portale.",
       searchMapName: "Cerca per nome applicazione...",
       searchNone: "Impossibile trovare l\'elemento cercato. Riprovare.",
       groups: "Gruppi",
@@ -242,7 +244,7 @@
       itemToAttributeTable: 'Apri tabella attributi'
     },
     imageChooser: {
-      unsupportReaderAPI: "TODO: Il browser non supporta lettore di file API",
+      unsupportReaderAPI: "DA FARE: Il browser non supporta lettore di file API",
       readError: "Lettura del file non riuscita.",
       invalidType: "Tipo di file non valido.",
       exceed: "Le dimensioni del file non possono superare 1024 KB",

@@ -23,11 +23,10 @@ define(['dojo/_base/declare',
     'dojo/_base/array',
     'dojo/on',
     'dojo/query',
-    'dojo/mouse',
     'jimu/utils'
   ],
   function(declare, _WidgetBase, _TemplatedMixin, Evented, lang, html, array, on, query,
-    mouse, jimuUtils) {
+  jimuUtils) {
     return declare([_WidgetBase, _TemplatedMixin, Evented], {
       baseClass: 'jimu-simple-table',
       declaredClass: 'jimu.dijit.SimpleTable',
@@ -673,12 +672,14 @@ define(['dojo/_base/declare',
       },
 
       _editNormalText: function(td, fieldMeta, fieldData) {
+        /*jshint unused: false*/
         var normalTextDiv = query('div',td)[0];
         normalTextDiv.innerHTML = fieldData || "";
         normalTextDiv.title = normalTextDiv.innerHTML;
       },
 
       _editEditableText: function(td, fieldMeta, fieldData) {
+        /*jshint unused: false*/
         var editableDiv = query('div', td)[0];
         editableDiv.innerHTML = fieldData || "";
         var editableInput = query('input', td)[0];
@@ -686,11 +687,13 @@ define(['dojo/_base/declare',
       },
 
       _editRadio: function(td, fieldMeta, fieldData) {
+        /*jshint unused: false*/
         var radio = query('input', td)[0];
         radio.checked = fieldData === true;
       },
 
       _editCheckbox: function(td, fieldMeta, fieldData) {
+        /*jshint unused: false*/
         var checkbox = query('input', td)[0];
         checkbox.checked = fieldData === true;
       },

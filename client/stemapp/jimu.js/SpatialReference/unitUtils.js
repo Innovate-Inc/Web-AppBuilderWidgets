@@ -1,10 +1,8 @@
 define([
   'dojo/_base/declare',
-  'dojo/_base/lang',
   'dojo/_base/array'
 ], function(
   declare,
-  lang,
   array
 ) {
   var projectUnits = [

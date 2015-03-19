@@ -20,10 +20,9 @@ define([
   'dojo/_base/lang',
   'dojo/_base/html',
   'dojo/dom-construct',
-  'dojo/aspect',
   'dojo/on',
   './LayerInfoForDefault'
-], function(declare, array, lang, html, domConstruct, aspect, on, LayerInfoForDefault) {
+], function(declare, array, lang, html, domConstruct, on, LayerInfoForDefault) {
   var clazz = declare(LayerInfoForDefault, {
 
 

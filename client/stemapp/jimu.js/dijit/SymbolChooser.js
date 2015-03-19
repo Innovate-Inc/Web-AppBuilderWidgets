@@ -25,31 +25,26 @@ define([
   'dojo/_base/html',
   'dojo/_base/array',
   'dojo/on',
+  'dojo/sniff',
   'dojo/query',
-  'dojox/gfx',
-  'dojo/_base/Color',
   'dojo/request/xhr',
+  'jimu/utils',
+  'jimu/symbolUtils',
+  'esri/symbols/jsonUtils',
+  'esri/symbols/SimpleMarkerSymbol',
+  'esri/symbols/SimpleLineSymbol',
+  'esri/symbols/SimpleFillSymbol',
+  'esri/symbols/TextSymbol',
+  'esri/symbols/Font',
   'dijit/form/Select',
   'dijit/form/NumberSpinner',
   'jimu/dijit/ColorPicker',
-  'jimu/dijit/_Transparency',
-  'jimu/utils',
-  'jimu/symbolUtils',
-  'esri/request',
-  'esri/symbols/jsonUtils',
-  'esri/symbols/SimpleMarkerSymbol',
-  'esri/symbols/PictureMarkerSymbol',
-  'esri/symbols/SimpleLineSymbol',
-  'esri/symbols/CartographicLineSymbol',
-  'esri/symbols/SimpleFillSymbol',
-  'esri/symbols/TextSymbol',
-  'esri/symbols/Font'
+  'jimu/dijit/_Transparency'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-  template, Evented, lang, html, array, on, query, gfx, Color, xhr, Select,
-  NumberSpinner, ColorPicker, _Transparency, jimuUtils, jimuSymUtils,
-  esriRequest, esriSymJsonUtils, SimpleMarkerSymbol, PictureMarkerSymbol,
-  SimpleLineSymbol, CartographicLineSymbol, SimpleFillSymbol, TextSymbol, Font) {
+  template, Evented, lang, html, array, on, has, query, xhr,
+  jimuUtils, jimuSymUtils, esriSymJsonUtils, SimpleMarkerSymbol,
+  SimpleLineSymbol, SimpleFillSymbol, TextSymbol, Font) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
     templateString:template,
     baseClass: 'jimu-symbol-chooser',
@@ -82,6 +77,10 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     postCreate:function(){
       this.inherited(arguments);
+      this._isIE8 = has('ie') === 8;
+      if(this._isIE8){
+        html.addClass(this.domNode, 'ie8');
+      }
       if(this.symbol){
         this.showBySymbol(this.symbol);
       }
@@ -212,7 +211,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       return clone;
     },
 
-    _createSymbolIconTable:function(fileName,jsonSyms){
+    _createSymbolIconTable:function(fileName,jsonSyms, type){
       var countPerRow = 8;
       var class0 = 'icon-table';
       var class1 = this.type+"-icon-table";
@@ -234,6 +233,23 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         html.addClass(td,'symbol-td-item');
         var symNode = this._createSymbolNode(sym);
         html.addClass(symNode,'symbol-div-item');
+        var svgNode = symNode.firstChild;
+        html.addClass(svgNode, 'svg-node');
+        if(this._isIE8){
+          if(type === 'point'){
+            if(window.isRTL){
+              if(jsonSym.name === 'Cross' || jsonSym.name === 'X'){
+                html.setStyle(svgNode, 'right', '-20px');
+                html.setStyle(symNode, 'marginTop', '20px');
+              }
+            }
+            else{
+              if(jsonSym.name === 'Cross' || jsonSym.name === 'X'){
+                html.setStyle(symNode, 'marginTop', '20px');
+              }
+            }
+          }
+        }
         symNode.symbol = jsonSymClone;
         html.place(symNode,td);
       }));
@@ -255,8 +271,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     _createSymbolNode:function(symbol){
       var surfaceSize = {
-        width: 32,
-        height: 32
+        width: 36,
+        height: 36
       };
       var symbolNode = jimuSymUtils.createSymbolNode(symbol, surfaceSize);
       if (!symbolNode){
@@ -408,7 +424,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       });
       this.pointSymClassSelect[defName] = def;
       def.then(lang.hitch(this,function(jsonSyms){
-        var table = this._createSymbolIconTable(fileName,jsonSyms);
+        var table = this._createSymbolIconTable(fileName,jsonSyms,'point');
         html.place(table,this.pointIconTables);
         this._showSelectedPointSymIconTable();
       }),lang.hitch(this,function(error){
@@ -551,13 +567,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       var def = xhr(url, {
         handleAs:'json'
       });
-      // var def = esriRequest({
-      //   url:url,
-      //   handleAs:'json',
-      //   callbackParamName:'callback'
-      // });
       def.then(lang.hitch(this,function(jsonSyms){
-        var table = this._createSymbolIconTable(fileName,jsonSyms);
+        var table = this._createSymbolIconTable(fileName,jsonSyms,'line');
         html.place(table,this.lineIconTables);
       }),lang.hitch(this,function(error){
         console.error('get line symbol failed',error);
@@ -661,13 +672,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       var def = xhr(url, {
         handleAs:'json'
       });
-      // var def = esriRequest({
-      //   url:url,
-      //   handleAs:'json',
-      //   callbackParamName:'callback'
-      // });
       def.then(lang.hitch(this,function(jsonSyms){
-        var table = this._createSymbolIconTable(fileName,jsonSyms);
+        var table = this._createSymbolIconTable(fileName,jsonSyms,'fill');
         html.place(table,this.fillIconTables);
       }),lang.hitch(this,function(error){
         console.error('get fill symbol failed',error);

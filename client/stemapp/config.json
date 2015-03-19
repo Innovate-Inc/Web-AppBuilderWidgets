@@ -3,7 +3,7 @@
     "name": "FoldableTheme"
   },
   "portalUrl": "",
-  "appId": "senJpIJA845L4FlP",
+  "appId": "",
   "title": "ArcGIS Web Application",
   "subtitle": "with Web AppBuilder for ArcGIS",
   "httpProxy": {
@@ -160,5 +160,5 @@
     }]
   },
 
-  "wabVersion": "1.1"
+  "wabVersion": "1.2"
 }

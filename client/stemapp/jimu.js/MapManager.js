@@ -22,20 +22,18 @@ define(['dojo/_base/declare',
   'dojo/on',
   'dojo/aspect',
   'dojo/keys',
-  'esri/arcgis/utils',
   'esri/dijit/InfoWindow',
   "esri/dijit/PopupMobile",
   'esri/InfoTemplate',
   'esri/request',
-  'esri/SpatialReference',
   'esri/geometry/Extent',
+  'esri/geometry/Point',
   'require',
-  'jimu/portalUrlUtils',
   './utils',
   './dijit/LoadingShelter'
-], function(declare, lang, array, html, topic, on, aspect, keys, agolUtils, InfoWindow,
-  PopupMobile, InfoTemplate, esriRequest, SpatialReference, Extent, require,
-  portalUrlUtils, jimuUtils, LoadingShelter) {
+], function(declare, lang, array, html, topic, on, aspect, keys, InfoWindow,
+  PopupMobile, InfoTemplate, esriRequest, Extent, Point, require,
+  jimuUtils, LoadingShelter) {
   /* global jimuConfig */
   var instance = null,
     clazz = declare(null, {
@@ -52,6 +50,7 @@ define(['dojo/_base/declare',
         this.id = mapDivId;
         topic.subscribe("appConfigChanged", lang.hitch(this, this.onAppConfigChanged));
         topic.subscribe("changeMapPosition", lang.hitch(this, this.onChangeMapPosition));
+        topic.subscribe("syncExtent", lang.hitch(this, this.onSyncExtent));
 
         on(window, 'resize', lang.hitch(this, this.onWindowResize));
       },
@@ -86,31 +85,37 @@ define(['dojo/_base/declare',
       onWindowResize: function() {
         if (this.map && this.map.resize) {
           this.map.resize();
-          this.resetInfoWindow();
+          this.resetInfoWindow(false);
         }
       },
 
-      resetInfoWindow: function() {
-        if (!this.previousInfoWindow && this.map && this.map.infoWindow) {
-          this.previousInfoWindow = this.map.infoWindow;
-        }
-        if (!this.mobileInfoWindow && this.map && this.map.root) {
-          this.mobileInfoWindow =
-          new PopupMobile(null, html.create("div", null, null, this.map.root));
-        }
-        if (jimuConfig && jimuConfig.widthBreaks && this.previousInfoWindow &&
-          this.mobileInfoWindow) {
-          var width = jimuConfig.widthBreaks[0];
-          if (html.getContentBox(jimuConfig.layoutId).w < width && !this.isMobileInfoWindow) {
-            this.map.infoWindow.hide();
-            this.map.setInfoWindow(this.mobileInfoWindow);
-            this.isMobileInfoWindow = true;
-          } else if (html.getContentBox(jimuConfig.layoutId).w >= width &&
-              this.isMobileInfoWindow) {
-            this.map.infoWindow.hide();
-            this.map.setInfoWindow(this.previousInfoWindow);
-            this.isMobileInfoWindow = false;
+      getMapInfoWindow: function(){
+        return {
+          mobile: this._mapMobileInfoWindow,
+          bigScreen: this._mapInfoWindow
+        };
+      },
+
+      resetInfoWindow: function(isNewMap) {
+        if(isNewMap){
+          this._mapInfoWindow = this.map.infoWindow;
+          if(this._mapMobileInfoWindow){
+            this._mapMobileInfoWindow.destroy();
           }
+          this._mapMobileInfoWindow =
+          new PopupMobile(null, html.create("div", null, null, this.map.root));
+          this.isMobileInfoWindow = false;
+        }
+        var width = jimuConfig.widthBreaks[0];
+        if (html.getContentBox(jimuConfig.layoutId).w < width && !this.isMobileInfoWindow) {
+          this.map.infoWindow.hide();
+          this.map.setInfoWindow(this._mapMobileInfoWindow);
+          this.isMobileInfoWindow = true;
+        } else if (html.getContentBox(jimuConfig.layoutId).w >= width &&
+            this.isMobileInfoWindow) {
+          this.map.infoWindow.hide();
+          this.map.setInfoWindow(this._mapInfoWindow);
+          this.isMobileInfoWindow = false;
         }
       },
 
@@ -132,6 +137,14 @@ define(['dojo/_base/declare',
         html.setStyle(this.mapDivId, posStyle);
         if (this.map && this.map.resize) {
           this.map.resize();
+        }
+      },
+
+      onSyncExtent: function(map){
+        if(this.map){
+          var extJson = map.extent;
+          var ext = new Extent(extJson);
+          this.map.setExtent(ext);
         }
       },
 
@@ -198,13 +211,14 @@ define(['dojo/_base/declare',
         console.timeEnd('Load Map');
         if (this.map) {
           this.map = map;
+          this.resetInfoWindow(true);
           console.log('map changed.');
           topic.publish('mapChanged', this.map);
         } else {
           this.map = map;
+          this.resetInfoWindow(true);
           topic.publish('mapLoaded', this.map);
         }
-        this.resetInfoWindow();
       },
 
       _getWebsceneData: function(itemId) {
@@ -220,24 +234,17 @@ define(['dojo/_base/declare',
         //   var url = portalUrlUtils.getStandardPortalUrl(appConfig.portalUrl);
         //   agolUtils.arcgisUrl = url + "/sharing/content/items/";
         // }
-
-        var mapOptions = this._processMapOptions(appConfig.map.mapOptions);
-
-        if ((!appConfig.map.mapOptions || !appConfig.map.mapOptions.extent) &&
-          appConfig.map.itemId === "6e03e8c26aad4b9c92a87c1063ddb0e3") {
-          if (!mapOptions) {
-            mapOptions = {};
-          }
-          mapOptions.extent = new Extent(-14480448.059223117, 2605852.2271675873,
-            -6653296.362823148, 6514536.1055573225, new SpatialReference(102100));
+        if(!appConfig.map.mapOptions){
+          appConfig.map.mapOptions = {};
         }
+        var mapOptions = this._processMapOptions(appConfig.map.mapOptions);
 
         var webMapPortalUrl = appConfig.map.portalUrl;
         var webMapItemId = appConfig.map.itemId;
         var webMapOptions = {
           mapOptions: mapOptions,
-          bingMapsKey: appConfig.bingMapsKey
-		  usePopupManager: true
+          bingMapsKey: appConfig.bingMapsKey,
+          usePopupManager: true
         };
 
         var mapDeferred = jimuUtils.createWebMap(webMapPortalUrl, webMapItemId,
@@ -245,6 +252,8 @@ define(['dojo/_base/declare',
 
         mapDeferred.then(lang.hitch(this, function(response) {
           var map = response.map;
+          // set default size of infoWindow.
+          map.infoWindow.resize(270, 316);
           //var extent;
           map.itemId = appConfig.map.itemId;
           map.itemInfo = response.itemInfo;
@@ -268,13 +277,25 @@ define(['dojo/_base/declare',
         if (!mapOptions) {
           return;
         }
+
+        if(!mapOptions.lods){
+          delete mapOptions.lods;
+        }
+        if(mapOptions.lods && mapOptions.lods.length === 0){
+          delete mapOptions.lods;
+        }
+
         var ret = lang.clone(mapOptions);
         if (ret.extent) {
           ret.extent = new Extent(ret.extent);
         }
+        if (ret.center && !lang.isArrayLike(ret.center)) {
+          ret.center = new Point(ret.center);
+        }
         if (ret.infoWindow) {
           ret.infoWindow = new InfoWindow(ret.infoWindow, html.create('div', {}, this.mapDivId));
         }
+
         return ret;
       },
 
@@ -329,21 +350,33 @@ define(['dojo/_base/declare',
         }));
       },
 
-      onAppConfigChanged: function(appConfig, reason, mapConfig, otherOptions) {
-        if (reason !== 'mapChange') {
-          this.appConfig = appConfig;
-          return;
+      onAppConfigChanged: function(appConfig, reason, changedJson) {
+        // jshint unused:false
+        this.appConfig = appConfig;
+        if(reason === 'mapChange'){
+          this._recreateMap(appConfig);
         }
-        if (otherOptions && otherOptions.reCreateMap === false) {
-          this.appConfig = appConfig;
-          return;
+        else if(reason === 'mapOptionsChange'){
+          if(changedJson.lods){
+            this._recreateMap(appConfig);
+          }
         }
-        if (this.map) {
+      },
+
+      _recreateMap: function(appConfig){
+        if(this.map){
           topic.publish('beforeMapDestory', this.map);
           this.map.destroy();
         }
         this._showMap(appConfig);
-        this.appConfig = appConfig;
+      },
+
+      disableWebMapPopup: function() {
+        this.map.setInfoWindowOnClick(false);
+      },
+
+      enableWebMapPopup: function() {
+        this.map.setInfoWindowOnClick(true);
       }
 
     });

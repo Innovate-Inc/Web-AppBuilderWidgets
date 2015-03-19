@@ -1,1 +1,0 @@
-var repoRest=require("./repo");exports.getThemes=function(e,s){repoRest.getItemsByCategory("theme",function(e,t){return e?void s.send({success:!1,message:"Unknow error"}):void s.send({success:!0,themes:t})})},exports.getThemeByName=function(e,s){repoRest.getItemByName(e,s)};

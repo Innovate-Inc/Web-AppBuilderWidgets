@@ -66,6 +66,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
     //setUrl
     //getSelectedItems
     //reset
+    //isServiceTypeSupported
 
     //events:
     //tree-click
@@ -192,6 +193,10 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       }));
 
       return this._def;
+    },
+
+    isServiceTypeSupported: function(type){
+      return this._isServiceTypeSupported(type);
     },
 
     _isServiceTypeSupported: function(type){
@@ -472,8 +477,9 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
     },
 
     _showRequestError:function(){
+      //this.nls.unableConnectTo + " " + this._currentUrl
       new Message({
-        message: this.nls.unableConnectTo + " " + this._currentUrl
+        message: this.nls.invalidUrlTip
       });
     },
 

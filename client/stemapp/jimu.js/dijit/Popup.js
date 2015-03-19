@@ -21,15 +21,12 @@ define(['dojo/_base/declare',
     'dojo/_base/fx',
     'dojo/on',
     'dojo/sniff',
-    'dojo/keys',
     'dojo/query',
-    'dojo/aspect',
-    'dojo/NodeList-dom',
     'dojo/dnd/move',
     'dijit/_WidgetBase'
   ],
-  function(declare, lang, array, html, baseFx, on, has, keys,
-    query, aspect, NodeListDom, Move, _WidgetBase) {
+  function(declare, lang, array, html, baseFx, on, has,
+    query, Move, _WidgetBase) {
     var history = 0;
     /* global jimuConfig */
     return declare(_WidgetBase, {

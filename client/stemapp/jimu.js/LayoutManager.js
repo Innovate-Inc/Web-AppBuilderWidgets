@@ -23,17 +23,11 @@ define([
   'dojo/topic',
   'dojo/on',
   'dojo/dom-construct',
-  'dojo/dom-style',
   'dojo/dom-geometry',
-  'dojo/aspect',
-  'dojo/cookie',
   'dojo/Deferred',
   'dojo/promise/all',
-  'dojo/_base/fx',
-  'dojo/fx',
   'require',
   './WidgetManager',
-  './ConfigManager',
   './PanelManager',
   './MapManager',
   './utils',
@@ -42,16 +36,17 @@ define([
   './dijit/LoadingShelter'
 ],
 
-function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domStyle, domGeometry,
-  aspect, cookie, Deferred, all, baseFx, fx, require, WidgetManager, ConfigManager, PanelManager,
+function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domGeometry,
+  Deferred, all, require, WidgetManager, PanelManager,
   MapManager, utils, PreloadWidgetIcon, WidgetPlaceholder, LoadingShelter) {
   var instance = null, clazz;
 
   clazz = declare([_WidgetBase], {
     constructor: function(options, domId) {
+      /*jshint unused: false*/
       this.widgetManager = WidgetManager.getInstance();
       this.panelManager = PanelManager.getInstance();
-      
+
       this.own(topic.subscribe("appConfigLoaded", lang.hitch(this, this.onAppConfigLoaded)));
       this.own(topic.subscribe("appConfigChanged", lang.hitch(this, this.onAppConfigChanged)));
 
@@ -59,7 +54,8 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
       this.own(topic.subscribe("mapChanged", lang.hitch(this, this.onMapChanged)));
       this.own(topic.subscribe("beforeMapDestory", lang.hitch(this, this.onBeforeMapDestory)));
 
-      this.own(topic.subscribe("actionTriggered", lang.hitch(this, this.onActionTriggered)));
+      this.own(topic.subscribe("builder/actionTriggered",
+        lang.hitch(this, this.onActionTriggered)));
 
       this.widgetPlaceholders = [];
       this.preloadWidgetIcons = []; //preload widgets that in panel
@@ -82,7 +78,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
 
     animTime: 500,
 
-    resize: function(){
+    resize: function() {
       //resize widgets. the panel's resize is called by the panel manager.
       //widgets which is in panel is resized by panel
       array.forEach(this.widgetManager.getAllWidgets(), function(w){
@@ -138,7 +134,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
     onMapChanged: function(map){
       this.map = map;
       this.panelManager.map = map;
-      
+
       this._loadPreloadWidgets(this.appConfig);
     },
 
@@ -151,26 +147,25 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
       this._destroyPreloadWidgetIcons();
     },
 
-    onActionTriggered: function(id, action, data){
-      /* jshint unused:false */
-      if(action === 'highLight'){
+    onActionTriggered: function(info){
+      if(info.action === 'highLight'){
         array.forEach(this.widgetPlaceholders, function(placehoder){
-          if(placehoder.configId === id){
+          if(placehoder.configId === info.elementId){
             this._highLight(placehoder);
           }
         }, this);
         array.forEach(this.preloadWidgetIcons, function(widgetIcon){
-          if (widgetIcon.configId === id){
+          if (widgetIcon.configId === info.elementId){
             this._highLight(widgetIcon);
           }
         }, this);
         array.forEach(this.widgetManager.getPreloadPanelessWidgets(), function(panelessWidget){
-          if (panelessWidget.configId === id){
+          if (panelessWidget.configId === info.elementId){
             this._highLight(panelessWidget);
           }
         }, this);
       }
-      if(action === 'removeHighLight'){
+      if(info.action === 'removeHighLight'){
         this._removeHighLight();
       }
     },
@@ -307,8 +302,8 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
         //instance is still exists
 
         //we use this.appConfig(the old app config) here
-        this.appConfig.visitElement(lang.hitch(this, function(element, index, groupId, isPreload){
-          if(isPreload){
+        this.appConfig.visitElement(lang.hitch(this, function(element, info){
+          if(info.isOnScreen){
             return;
           }
           //we support only one controller, so all pool widgets will be reload
@@ -319,7 +314,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
 
       //load widget
       var newWidgetConfig;
-      appConfig.visitElement(lang.hitch(this, function(element, index, groupId, isPreload){
+      appConfig.visitElement(lang.hitch(this, function(element, info){
         if(element.isController){
           ////we support only one controller
           newWidgetConfig = element;
@@ -394,7 +389,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
       this._destroyPreloadPanelessWidgets();
 
       this.panelManager.destroyAllPanels();
-      
+
       this._updateCommonStyle(appConfig);
       this._onStyleChange(appConfig);
       this._changeMapPosition(appConfig);
@@ -411,7 +406,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
         this._onThemeChange(appConfig);
       }
     },
-    
+
     _updateCommonStyle : function(appConfig){
       var currentTheme = this.appConfig.theme;
 
@@ -430,7 +425,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
           html.removeClass(this.domNode, currentTheme.styles[0]);
         }
         html.destroy(this._getThemeCurrentStyleId(currentTheme));
-        
+
         this._loadThemeCurrentStyle(appConfig.theme);
       }
     },
@@ -458,7 +453,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
         //because change the position style of the widget will make the widget's dimension
         //will not conform the widget state,
         //so, change state here
-        
+
         // if(widget.defaultState){
         //   this.widgetManager.changeWindowStateTo(widget, widget.defaultState);
         // }else{
@@ -599,7 +594,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
       array.forEach(appConfig.widgetOnScreen.groups, function(groupConfig) {
         defs.push(this._loadPreloadGroup(groupConfig));
       }, this);
-      
+
       all(defs).then(lang.hitch(this, function(){
         if(loading){
           loading.destroy();
@@ -627,10 +622,10 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
       // }, jimuConfig.timeout);
     },
 
-    
+
     _doPostLoad: function(){
       //load somethings that may be used later.
-      //let it load behind the stage.  
+      //let it load behind the stage.
       require(['dynamic-modules/postload']);
     },
 
@@ -672,7 +667,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domS
           def.reject(err);
         });
       }
-     
+
       return def;
     },
 

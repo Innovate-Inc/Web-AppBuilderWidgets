@@ -15,7 +15,6 @@
 ///////////////////////////////////////////////////////////////////////////
 
 define(['dojo/_base/declare',
-  'dojo/_base/array',
   'dojo/_base/lang',
   'dojo/on',
   'dijit/_WidgetBase',
@@ -25,7 +24,7 @@ define(['dojo/_base/declare',
   '../utils'
 ],
 
-function(declare, array, lang, on, _WidgetBase, domConstruct, domClass, domAttr, utils) {
+function(declare, lang, on, _WidgetBase, domConstruct, domClass, domAttr, utils) {
   return declare(_WidgetBase, {
     baseClass: 'jimu-timeinput',
     declaredClass: 'jimu.dijit.TimeInput',

@@ -15,13 +15,9 @@
 ///////////////////////////////////////////////////////////////////////////
 
 define([
-  "dojo/_base/array",
-  "dojo/_base/lang",
   "dojo/Deferred",
-  "dojo/promise/all",
-  "dojo/string",
   "dojo/when"
-], function(array, lang, Deferred, all, string, when) {
+], function(Deferred, when) {
 
   //the context require object that is relative to the module that use the plugin
   var require,
@@ -86,6 +82,7 @@ define([
   },
 
   loadPlugins = function( /*String*/ jQueryUrl, /*Array*/ pluginUrls) {
+    /*jshint unused: false*/
     // summary:
     //      load plugins by order
     var i = 0;

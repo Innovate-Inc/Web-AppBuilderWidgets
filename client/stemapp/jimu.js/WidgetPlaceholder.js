@@ -17,14 +17,10 @@
 define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/html',
-  'dojo/on',
-  'dojo/dom-construct',
-  'dojo/dom-style',
-  'dojo/dom-geometry',
   'dijit/_WidgetBase',
   './utils'
 ],
-function(declare, lang, html, on, domConstruct, domStyle, domGeometry, _WidgetBase, utils) {
+function(declare, lang, html, _WidgetBase, utils) {
   return declare(_WidgetBase, {
     'class': 'jimu-widget-placeholder',
 

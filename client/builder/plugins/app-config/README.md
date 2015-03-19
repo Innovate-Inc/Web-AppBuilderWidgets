@@ -1,0 +1,3 @@
+* Public methods:
+  * addRepublishEvent
+  * previewOnDevice

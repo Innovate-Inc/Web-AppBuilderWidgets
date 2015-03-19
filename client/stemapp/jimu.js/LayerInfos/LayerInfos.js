@@ -18,41 +18,30 @@ define([
   'dojo/_base/declare',
   'dojo/_base/array',
   'dojo/_base/lang',
-  'dojo/aspect',
   'dojo/Deferred',
   'dojo/on',
   'dojo/topic',
   'dojo/_base/unload',
   'dojo/Evented',
   'dojo/promise/all',
-  'esri/layers/WMSLayer',
-  'esri/layers/GeoRSSLayer',
-  'esri/layers/KMLLayer',
-  'esri/layers/FeatureLayer',
-  './LayerInfoForCollection',
-  './LayerInfoForMapService',
-  './LayerInfoForKML',
-  './LayerInfoForGeoRSS',
-  './LayerInfoForDefault',
-  './LayerInfoForWMS',
   './LayerInfoFactory'
-], function(declare, array, lang, aspect, Deferred, on, topic,
-baseUnload, Evented, all, WMSLayer, GeoRSSLayer, KMLLayer, FeatureLayer,
-LayerInfoForCollection, LayerInfoForMapService, LayerInfoForKML, LayerInfoForGeoRSS,
-LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
-  var instances = [];
+], function(declare, array, lang, Deferred, on, topic,
+baseUnload, Evented, all, LayerInfoFactory) {
   var clazz = declare([Evented], {
     operLayers: null,
     map: null,
     finalLayerInfos: null,
+    tableInfos: null,
     basemapLayers: null,
 
-    constructor: function(basemapLayers, operLayers, map) {
-      this.basemapLayers = basemapLayers;
-      this.operLayers = operLayers;
+    constructor: function(map, webmapItemData) {
+      this.basemapLayers = webmapItemData.baseMap.baseMapLayers;
+      this.operLayers = webmapItemData.operationalLayers;
+      this.tables = webmapItemData.tables;
       this.map = map;
       this.finalLayerInfos = [];
       this._initLayerInfos();
+      this._initTables();
       this.update();
       //aspect.after(this.map, "onBaseChange", lang.hitch(this, this._onBasemapChange));
       //on(this.map, "basemap-change", lang.hitch(this, this._onBasemapChange));
@@ -71,10 +60,13 @@ LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
       return this.finalLayerInfos;
     },
 
+    getTableInfoArray: function() {
+      return this.tableInfos;
+    },
 
     //callback(layerInfo){
     // return true;   will interrupte traversal
-    // return false;  contiue interrupte traversal
+    // return false;  contiue traversal
     //}
     traversal: function(callback) {
       // array.forEach(this.getLayerInfoArray(), function(layerInfo) {
@@ -86,6 +78,10 @@ LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
           return true;
         }
       }
+    },
+
+    getLayerInfoById: function(layerId) {
+      return this._findLayerInfoById(layerId);
     },
 
     moveUpLayer: function(id) {
@@ -122,6 +118,23 @@ LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
         this._markFirstOrLastNode();
       }
       return beChangedId;
+    },
+
+    getBasemapLayers: function() {
+      var basemapLayers = [];
+      array.forEach(this.map.layerIds, function (layerId) {
+        var layer = this.map.getLayer(layerId);
+        if (layer._basemapGalleryLayerType === "basemap" ||
+              layer._basemapGalleryLayerType === "reference") {
+          basemapLayers.push(layer);
+        }
+      }, this);
+
+      if(basemapLayers.length === 0) {
+        basemapLayers = this.basemapLayers;
+      }
+
+      return basemapLayers;
     },
 
     _initLayerInfos: function() {
@@ -191,19 +204,21 @@ LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
 
     _isBasemap: function(id) {
       var isBasemap = false;
-      var layerIds = this.map.layerIds;
-      var basemapLayers = [];
-      array.forEach(layerIds, function (layerId) {
-        var layer = this.map.getLayer(layerId);
-        if (layer._basemapGalleryLayerType === "basemap" ||
-              layer._basemapGalleryLayerType === "reference") {
-          basemapLayers.push(layer);
-        }
-      }, this);
+      // var layerIds = this.map.layerIds;
+      // var basemapLayers = [];
+      // array.forEach(layerIds, function (layerId) {
+      //   var layer = this.map.getLayer(layerId);
+      //   if (layer._basemapGalleryLayerType === "basemap" ||
+      //         layer._basemapGalleryLayerType === "reference") {
+      //     basemapLayers.push(layer);
+      //   }
+      // }, this);
 
-      if(basemapLayers.length === 0) {
-        basemapLayers = this.basemapLayers;
-      }
+      // if(basemapLayers.length === 0) {
+      //   basemapLayers = this.basemapLayers;
+      // }
+
+      var basemapLayers = this.getBasemapLayers();
 
       for (var i = 0; i < basemapLayers.length; i++) {
         // temporary code
@@ -236,7 +251,8 @@ LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
             newLayerInfo = LayerInfoFactory.getInstance().create({
               layerObject: newLayer,
               title: newLayer.label || newLayer.title || newLayer.name || newLayer.id || " ",
-              id: newLayer.id || " "
+              id: newLayer.id || " ",
+              url: newLayer.url || ""
             }, this.map);
             newLayerInfo.init();
           } catch (err) {
@@ -347,6 +363,7 @@ LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
     },
 
     _onReceiveBasemapGalleryeData: function(name, widgetId, basemapLayers) {
+      /*jshint unused: false*/
       if(name === "BasemapGallery") {
         this.basemapLayers.length = 0;
         array.forEach(basemapLayers, lang.hitch(this, function(basemapLayer) {
@@ -418,6 +435,7 @@ LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
       //    response to any layer change.
       // description:
       //    update LayerInfos data and publish event
+      //    changedType: "added" or "removed"
       var layerInfo = null, layerInfoSelf;
       if (!evt.error &&
           evt.layer.declaredClass !==
@@ -441,6 +459,31 @@ LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
 
     _onShowInMapChanged: function(changedLayerInfos) {
       this.emit('layerInfosIsShowInMapChanged', changedLayerInfos);
+    },
+
+    _initTables: function() {
+      var tableInfo, tableInfos = [];
+      array.forEach(this.tables, function(table) {
+        try {
+          table.empty = true;
+          tableInfo = LayerInfoFactory.getInstance().create({
+            layerObject: table,
+            title: table.title || table.id || " ",
+            id: table.id || " ",
+            selfType: 'table'
+          });
+          tableInfo.init();
+        } catch (err) {
+          console.warn(err.message);
+          tableInfo = null;
+        }
+        if (tableInfo) {
+          tableInfos.push(tableInfo);
+        }
+      }, this);
+
+      //layerInfos.reverse();
+      this.tableInfos = tableInfos;
     }
 
   });
@@ -480,51 +523,36 @@ LayerInfoForDefault, LayerInfoForWMS, LayerInfoFactory) {
     return defRet;
   };
 
-
-  // clazz.create = function(map, webmapItemInfo) {
-  //   // summary:
-  //   //   create a new LayerInfos object.
-  //   // description:
-  //   //   parameters:
-  //   //    map: arcgis map object.
-  //   //    webmapItemInfo: itemInfo object of response from createMap.   
-  //   var def = new Deferred();
-  //   LayerInfoFactory.getInstance(map).init().then(lang.hitch(this, function() {
-  //     var LayerInfos = new clazz(webmapItemInfo.itemData.baseMap.baseMapLayers,
-  //                                webmapItemInfo.itemData.operationalLayers,
-  //                                map);
-  //     def.resolve(LayerInfos);
-  //   }));
-  //   return def;
-  // };
-
+  var instance = {
+    empty: true,
+    map: null,
+    layerInfos: null,
+    def: new Deferred()
+  };
   // Return deferred because refere eatch other between LayerInfoFactory and LayerInfos.
   clazz.getInstance = function(map, webmapItemInfo) {
-    var def = new Deferred();
-    var i, layerInfos = null;
-    for(i = 0; i < instances.length; i++) {
-      if(instances[i].map === map) {
-        layerInfos = instances[i].layerInfos;
-        break;
-      }
+
+    if(instance.map && instance.map !== map) {
+      instance = {
+        empty: true,
+        map: null,
+        layerInfos: null,
+        def: new Deferred()
+      };
     }
 
-    if(layerInfos) {
-      def.resolve(layerInfos);
-    } else {
+    if(instance.layerInfos) {
+      instance.def.resolve(instance.layerInfos);
+    } else if(instance.empty) {
+      instance.empty = false;
       LayerInfoFactory.getInstance(map).init().then(lang.hitch(this, function() {
-        var layerInfos = new clazz(webmapItemInfo.itemData.baseMap.baseMapLayers,
-                                   webmapItemInfo.itemData.operationalLayers,
-                                   map);
-        instances.push({
-          map: map,
-          layerInfos: layerInfos
-        });
-        def.resolve(layerInfos);
+        var layerInfos = new clazz(map, webmapItemInfo.itemData);
+        instance.map = map;
+        instance.layerInfos = layerInfos;
+        instance.def.resolve(layerInfos);
       }));
-    }
-    return def;
+    } // else request is sending, return def.
+    return instance.def;
   };
-
   return clazz;
 });

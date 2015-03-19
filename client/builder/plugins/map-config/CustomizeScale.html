@@ -1,0 +1,17 @@
+<div>
+  <div class="scale-input-div">
+    <div class="jimu-float-leading" data-dojo-attach-point="scaleNumberBox" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props='placeholder:"${nls.scale}",intermediateChanges:true,trim:true,constraints:{min:1,pattern: "###############0.################"}' style="width:550px;height:100%;"></div>
+    <div class="add-btn jimu-float-leading" data-dojo-attach-point="btnAdd" data-dojo-attach-event="onclick:_onBtnAddClicked">+</div>
+  </div>
+  <div class="operations-div">
+    <div class="jimu-float-leading operation-btn delete-btn" data-dojo-attach-point="btnDelete" data-dojo-attach-event="onclick:_onBtnDeleteClicked">
+      <span class="jimu-float-leading icon"></span>
+      <span class="jimu-float-leading label">${nls.deleteTip}</span>
+    </div>
+    <div class="jimu-float-leading operation-btn reset-btn" data-dojo-attach-event="onclick:_onBtnResetClicked">
+      <span class="jimu-float-leading icon"></span>
+      <span class="jimu-float-leading label">${nls.resetTip}</span>
+    </div>
+  </div>
+  <div class="list" data-dojo-attach-point="listNode" data-dojo-attach-event="onclick:_onLodListClicked"></div>
+</div>

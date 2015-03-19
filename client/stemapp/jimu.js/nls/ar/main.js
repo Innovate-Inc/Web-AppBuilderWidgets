@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'لا توجد خدمات',
-      unableConnectTo: 'يتعذر الاتصال بـ'
+      unableConnectTo: 'يتعذر الاتصال بـ',
+      invalidUrlTip: 'عنوان URL الذي أدخلته غير صحيح أو يتعذر الوصول إليه.'
     },
     serviceBrowser: {
       noGpFound: 'لا توجد خدمة معالجة جغرافية.',
@@ -174,26 +175,27 @@
         invalidSQL: "تعبير SQL غير صحيح.",
         cantParseSQL: "يتعذر توزيع تعبير SQL."
       },
-      caseSensitive: "تحسس حالة الأحرف"
+      caseSensitive: "تحسس حالة الأحرف",
+      notSupportCaseSensitiveTip: "الخدمات المستضافة لا تدعم الاستعلام الحساس للحالة."
     },
 
     featureLayerSource: {
       layer: "طبقة",
       browse: "استعراض",
       selectFromMap: "تحديد من الخريطة",
-      selectFromPortal: "إضافة من البوابة الإلكترونية",
+      selectFromPortal: "إضافة من Portal for ArcGIS",
       addServiceUrl: "إضافة عنوان URL للخدمة",
       inputLayerUrl: "إدخال عنوان URL للطبقة",
       selectLayer: "تحديد طبقة معالم من الخريطة الحالية.",
       chooseItem: "اختيار من عنصر طبقة معالم.",
       setServiceUrl: "أدخل عنوان URL لخدمة المعالم أو خدمة الخريطة.",
-      selectFromOnline: "إضافة من الإنترنت",
+      selectFromOnline: "إضافة من ArcGIS Online",
       chooseLayer: "اختر طبقة معلم."
     },
     gpSource: {
-      selectFromPortal: "إضافة من البوابة الإلكترونية",
+      selectFromPortal: "إضافة من Portal for ArcGIS",
       addServiceUrl: "إضافة عنوان URL للخدمة",
-      selectFromOnline: "إضافة من الإنترنت",
+      selectFromOnline: "إضافة من ArcGIS Online",
       setServiceUrl: "أدخل عنوان URL لخدمة المعالجة الجغرافية.",
       chooseItem: "اختر عنصر خدمة المعالجة الجغرافية.",
       chooseTask: "اختر مهمة المعالجة الجغرافية."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "خريطة",
       selectWebMap: "اختر خريطة الويب",
-      addMapFromOnlineOrPortal: "قم بإيجاد خريطة الويب وإضافتها للاستخدام في التطبيق من موارد ArcGIS Online العامة أو المحتويات الخاصة في ArcGIS Online أو البوابة الإلكترونية.",
+      addMapFromOnlineOrPortal: "العثور على خريطة الويب وإضافتها للاستخدام في التطبيق من موارد ArcGIS Online العامة أو المحتويات الخاصة في ArcGIS Online أو البوابة الإلكترونية.",
       searchMapName: "ابحث باستخدام اسم الخريطة...",
       searchNone: "يتعذر إيجاد ما تبحث عنه. يرجى المحاولة مرة أخرى.",
       groups: "مجموعات",
@@ -242,12 +244,12 @@
       itemToAttributeTable: 'فتح جدول البيانات الجدولية'
     },
     imageChooser: {
-      unsupportReaderAPI: "قائمة المهام: المستعرض لا يدعم API قارئ الملف",
+      unsupportReaderAPI: "قائمة المهام: المستعرض لا يدعم API لقارئ الملف",
       readError: "فشل قراءة الملف.",
       invalidType: "نوع الملف غير صحيح.",
       exceed: "لا يجوز أن يتجاوز حجم الملف 1024 كيلوبايت",
       enableFlash: "قائمة المهام: يرجى تمكين الفلاش.",
-      toolTip: "للحصول على أفضل النتائج، ينبغي أن يكون حجم الصورة ${width} بيكسل وارتفاعها ${height} بيكسل. سيتم تعديل الأحجام الأخرى للملائمة. تنسيقات الصورة المقبولة هي PNG وGIF وJPEG."
+      toolTip: "للحصول على أفضل نتيجة، ينبغي أن يكون حجم الصورة ${width} بيكسل وارتفاعها ${height} بيكسل. سيتم تعديل الأحجام الأخرى للملائمة. تنسيقات الصورة المقبولة هي PNG وGIF وJPEG."
     },
     simpleTable: {
       moveUp: 'نقل لأعلى',

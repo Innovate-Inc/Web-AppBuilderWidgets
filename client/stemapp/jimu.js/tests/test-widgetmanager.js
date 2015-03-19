@@ -8,8 +8,8 @@ require(["doh/runner",
  'dojo/promise/all',
  'dojo/NodeList-dom'],
 	function(doh, WidgetManager, ConfigManager, tokenUtils, dom, domConstruct, query, all, nld) {
-	appPath = '/portal/apps/webappbuilder/stemapp/jimu.js/tests/';
-	
+	window.appInfo = {appPath: '/portal/apps/webappbuilder/stemapp/jimu.js/tests/'};
+
 	function removeAllWidgets(wm){
 		wm.loaded.forEach(function (w) {
       w.destroy();
@@ -36,7 +36,7 @@ require(["doh/runner",
 				"label": "label1",
 				"uri": "jimu/tests/testwidgets/Widget1/Widget"
 			};
-			
+
 			wm.loadWidget(widgetConfig).then(function(widget) {
 				dohDeferred.getTestCallback(function(widget) {
 					doh.assertEqual('jimu/tests/testwidgets/Widget1/Widget', widget['uri']);
@@ -50,12 +50,12 @@ require(["doh/runner",
 					doh.assertEqual('normal', widget.windowState);
 					doh.assertEqual('jimu/tests/testwidgets/Widget1/images/icon.png', widget.icon);
 					doh.assertEqual('label1', widget.label);
-					
+
 					doh.assertEqual({
 						"attr1": "value1",
   					"attr2": "111"
   				}, widget.config);
-										
+
 					doh.assertEqual(null, widget.map);
 					doh.assertEqual('111', widget.nls.msg1);
 					doh.assertEqual('LINK', dom.byId('widget_style_jimu_tests_testwidgets_Widget1_Widget').tagName);
@@ -71,7 +71,7 @@ require(["doh/runner",
 	{
 		name: 'testWidgetConfig',
 		runTest: function testWidgetConfig(){
-			
+
 			var dohDeferred = new doh.Deferred();
 			var widgetConfig = {
 				"id": "testwidget2",
@@ -95,7 +95,7 @@ require(["doh/runner",
 	{
 		name: 'testWidgetConfig2',
 		runTest: function (){
-			
+
 			var dohDeferred = new doh.Deferred();
 			var widgetConfig = {
 				"id": "testwidget3",
@@ -117,7 +117,7 @@ require(["doh/runner",
 	{
 		name: 'testWidgetState',
 		runTest: function (){
-			
+
 			var dohDeferred = new doh.Deferred();
 			var widgetConfig = {
 				"id": "w111",
@@ -150,7 +150,7 @@ require(["doh/runner",
 	{
 		name: 'testWidgetLoad',
 		runTest: function (){
-			
+
 			var dohDeferred = new doh.Deferred();
 			var widgetConfig = {
 				"id": "testwidget4",
@@ -174,7 +174,7 @@ require(["doh/runner",
 	{
 		name: 'testWidgetLoadTwoTimes',
 		runTest: function (){
-			
+
 			var dohDeferred = new doh.Deferred();
 			var widgetConfig = {
 				"id": "testwidget42",
@@ -196,7 +196,7 @@ require(["doh/runner",
 	{
 		name: 'testWidgetDestroy',
 		runTest: function (){
-			
+
 			var dohDeferred = new doh.Deferred();
 			var widgetConfig = {
 				"id": "testwidget5",
@@ -230,7 +230,7 @@ require(["doh/runner",
 				};
 
 			removeAllWidgets(wm);
-			wm.loadWidget(widgetConfig1).then(function(widget1){			
+			wm.loadWidget(widgetConfig1).then(function(widget1){
 				wm.loadWidget(widgetConfig2).then(function(widget2){
 					dohDeferred.getTestCallback(function(){
 						var node = query('#widget_style_jimu_tests_testwidgets_Widget1_Widget');
@@ -256,7 +256,7 @@ require(["doh/runner",
 				};
 
 			removeAllWidgets(wm);
-			wm.loadWidget(widgetConfig1).then(function(widget1){			
+			wm.loadWidget(widgetConfig1).then(function(widget1){
 				dohDeferred.getTestCallback(function(widget1){
 					doh.assertEqual('1.1', widget1.config.newVersion);
 				})(widget1);

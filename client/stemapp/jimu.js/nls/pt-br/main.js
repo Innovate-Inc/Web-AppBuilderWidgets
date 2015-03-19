@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Nenhum serviço encontrado.',
-      unableConnectTo: 'Não foi possível conectar ao'
+      unableConnectTo: 'Não foi possível conectar ao',
+      invalidUrlTip: 'O URL que você inseriu é inválido ou inacessível.'
     },
     serviceBrowser: {
       noGpFound: 'Nenhum serviço de geoprocessamento encontrado.',
@@ -174,26 +175,27 @@
         invalidSQL: "Expressão SQL inválida.",
         cantParseSQL: "Não é possível analisar a expressão SQL."
       },
-      caseSensitive: "Diferença Ortográfica"
+      caseSensitive: "Diferença Ortográfica",
+      notSupportCaseSensitiveTip: "Os serviços hospedados não suportam consulta que diferencia maiúsculas de minúsculas."
     },
 
     featureLayerSource: {
       layer: "Camada",
       browse: "Procurar",
       selectFromMap: "Selecionar do Mapa",
-      selectFromPortal: "Adicionar do Portal",
+      selectFromPortal: "Adicionar do Portal for ArcGIS",
       addServiceUrl: "Adicionar URL de Serviço",
       inputLayerUrl: "URL da Camada de Entrada",
       selectLayer: "Seleciona uma camada de feição do mapa atual.",
       chooseItem: "Escolhe um item da camada de feição.",
       setServiceUrl: "Insere a URL de serviço da feição ou serviço do mapa.",
-      selectFromOnline: "Adicionar de Online",
+      selectFromOnline: "Adicionar do ArcGIS Online",
       chooseLayer: "Escolher uma camada de feição."
     },
     gpSource: {
-      selectFromPortal: "Adicionar do Portal",
+      selectFromPortal: "Adicionar do Portal for ArcGIS",
       addServiceUrl: "Adicionar URL de Serviço",
-      selectFromOnline: "Adicionar de Online",
+      selectFromOnline: "Adicionar do ArcGIS Online",
       setServiceUrl: "Insira a URL do serviço de geoprocessamento.",
       chooseItem: "Escolha um item do serviço de geoprocessamento.",
       chooseTask: "Escolha uma tarefa de geoprocessamento."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Mapa",
       selectWebMap: "Escolher Mapa da Web",
-      addMapFromOnlineOrPortal: "Localize e adicione um mapa da web para ser utilizado no aplicativo a partir de recursos públicos do ArcGIS Online ou do seu conteúdo privado no ArcGIS Online ou Portal.",
+      addMapFromOnlineOrPortal: "Localiza e adiciona um mapa da web em um aplicativo a partir de recursos públicos do ArcGIS Online ou do seu conteúdo privado no ArcGIS Online ou Portal.",
       searchMapName: "Procurar por nome do mapa...",
       searchNone: "Não foi possível encontramos o que você procurava. Tente novamente.",
       groups: "Grupos",
@@ -242,7 +244,7 @@
       itemToAttributeTable: 'Abrir Tabela de Atributo'
     },
     imageChooser: {
-      unsupportReaderAPI: "TODO: Navegador sem suporte para API de leitor do arquivo",
+      unsupportReaderAPI: "TODO: O navegador não suporta a API de leitor do arquivo",
       readError: "Falha ao ler o arquivo.",
       invalidType: "Tipo de arquivo inválido.",
       exceed: "O tamanho do arquivo excede 1024 KB",

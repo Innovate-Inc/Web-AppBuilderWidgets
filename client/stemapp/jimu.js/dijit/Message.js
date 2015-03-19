@@ -17,12 +17,11 @@
 define(['dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/_base/html',
-    'dojo/query',
     'dojo/keys',
     'dojo/on',
     'jimu/dijit/Popup'
   ],
-  function(declare, lang, html, query, keys, on, Popup) {
+  function(declare, lang, html, keys, on, Popup) {
     return declare(Popup, {
       //summary:
       //  show a popup message

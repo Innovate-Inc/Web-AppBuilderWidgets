@@ -44,10 +44,12 @@ function(declare, _WidgetBase, lang, html, on) {
 
       this.own(
         on(this.checkNode, 'click', lang.hitch(this, function(){
-          if(this.checked && this.status){
-            this.uncheck();
-          }else if(this.status){
-            this.check();
+          if(this.status){
+            if(this.checked){
+              this.uncheck();
+            }else{
+              this.check();
+            }
           }
         }))
       );
@@ -67,6 +69,9 @@ function(declare, _WidgetBase, lang, html, on) {
     },
 
     setValue: function(value){
+      if(!this.status){
+        return;
+      }
       if(value === true){
         this.check();
       }else{
@@ -91,12 +96,18 @@ function(declare, _WidgetBase, lang, html, on) {
     },
 
     check: function(){
+      if(!this.status){
+        return;
+      }
       this.checked = true;
       html.addClass(this.checkNode, 'checked');
       this.onStateChange();
     },
 
     uncheck: function(notEvent){
+      if(!this.status){
+        return;
+      }
       this.checked = false;
       html.removeClass(this.checkNode, 'checked');
       if(!notEvent){

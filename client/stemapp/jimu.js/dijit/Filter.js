@@ -21,22 +21,22 @@ define([
   'dijit/_WidgetsInTemplateMixin',
   'dojo/text!./templates/Filter.html',
   'jimu/filterUtils',
+  'jimu/utils',
   'dijit/registry',
   'dojo/_base/lang',
   'dojo/_base/html',
   'dojo/_base/array',
-  'dojo/on',
   'dojo/aspect',
   'dojo/query',
   'dojo/Deferred',
   'esri/request',
-  './LoadingIndicator',
   './_SingleFilter',
-  './_FilterSet'
+  './_FilterSet',
+  './LoadingIndicator'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-  template, filterUtils, registry, lang, html, array, on, aspect,
-  query, Deferred, esriRequest, LoadingIndicator, SingleFilter, FilterSet) {
+  template, filterUtils, jimuUtils, registry, lang, html, array, aspect,
+  query, Deferred, esriRequest, SingleFilter, FilterSet) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, filterUtils], {
     templateString: template,
     baseClass: 'jimu-filter',
@@ -99,6 +99,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       if(!this.isBuilding()){
         this.removeAllFilters();
         this.url = null;
+        this.isHosted = false;
         this._layerDefinition = null;
         this.expr = null;
         this.partsObj = null;
@@ -119,6 +120,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this._def = null;
         this.reset();
         this.url = url;
+        this.isHosted = jimuUtils.isHostedService(this.url);
         this.expr = expr || '1=1';
         this._layerDefinition = layerDefinition;
         this._def = this._init("expr");
@@ -139,6 +141,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this._def = null;
         this.reset();
         this.url = url;
+        this.isHosted = jimuUtils.isHostedService(this.url);
         this.partsObj = partsObj;
         this._layerDefinition = layerDefinition;
         this._def = this._init("partsObj");
@@ -373,7 +376,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         numberFieldTypes: this._numberFieldTypes,
         part: part,
         OPERATORS: lang.mixin({}, this.OPERATORS),
-        enableAskForValues: this.enableAskForValues
+        enableAskForValues: this.enableAskForValues,
+        isHosted: this.isHosted
       };
       var singleFilter = new SingleFilter(args);
       singleFilter.placeAt(this.allExpsBox);
@@ -391,7 +395,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         numberFieldTypes: this._numberFieldTypes,
         partsObj: partsObj,
         OPERATORS: lang.mixin({}, this.OPERATORS),
-        enableAskForValues: this.enableAskForValues
+        enableAskForValues: this.enableAskForValues,
+        isHosted: this.isHosted
       };
       var filterSet = new FilterSet(args);
       filterSet.placeAt(this.allExpsBox);

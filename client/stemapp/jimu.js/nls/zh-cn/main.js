@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: '未找到任何服务。',
-      unableConnectTo: '无法连接至'
+      unableConnectTo: '无法连接至',
+      invalidUrlTip: '您输入的 URL 无效或不可访问。'
     },
     serviceBrowser: {
       noGpFound: '未找到任何地理处理服务。',
@@ -174,26 +175,27 @@
         invalidSQL: "SQL 表达式无效。",
         cantParseSQL: "无法解析 SQL 表达式。"
       },
-      caseSensitive: "区分大小写"
+      caseSensitive: "区分大小写",
+      notSupportCaseSensitiveTip: "托管的服务不支持区分大小写的查询。"
     },
 
     featureLayerSource: {
       layer: "图层",
       browse: "浏览",
       selectFromMap: "从地图中选择",
-      selectFromPortal: "从门户添加",
+      selectFromPortal: "从 Portal for ArcGIS 添加",
       addServiceUrl: "添加服务 URL",
       inputLayerUrl: "输入图层 URL",
       selectLayer: "从当前地图中选择要素图层。",
       chooseItem: "选择要素图层项目。",
       setServiceUrl: "输入要素服务 URL 或地图服务。",
-      selectFromOnline: "从 Online 添加",
+      selectFromOnline: "从 ArcGIS Online 添加",
       chooseLayer: "选择要素图层。"
     },
     gpSource: {
-      selectFromPortal: "从 Portal 添加",
+      selectFromPortal: "从 Portal for ArcGIS 添加",
       addServiceUrl: "添加服务 URL",
-      selectFromOnline: "从 Online 添加",
+      selectFromOnline: "从 ArcGIS Online 添加",
       setServiceUrl: "输入地理处理服务的 URL。",
       chooseItem: "选择地理处理服务项目。",
       chooseTask: "选择地理处理任务。"
@@ -201,11 +203,11 @@
     itemSelector: {
       map: "地图",
       selectWebMap: "选择 Web 地图",
-      addMapFromOnlineOrPortal: "从 ArcGIS Online 公共资源或 ArcGIS Online 或门户私有内容中查找并添加一个要用于应用程序的 Web 地图。",
+      addMapFromOnlineOrPortal: "从 ArcGIS Online 公共资源或 ArcGIS Online 或 Portal 私有内容中查找并添加应用程序中的 Web 地图。",
       searchMapName: "按地图名称搜索...",
       searchNone: "无法找到您正在查找的内容。请重试。",
-      groups: "组",
-      noneGroups: "无任何组",
+      groups: "群组",
+      noneGroups: "无任何群组",
       signInTip: "登录会话已过期，请刷新浏览器以重新登录门户。",
       signIn: "登录",
       publicMap: "公共",
@@ -213,7 +215,7 @@
       myGroup: "我的组",
       myContent: "我的内容",
       count: "计数",
-      fromPortal: "从门户",
+      fromPortal: "从 Portal",
       fromOnline: "从 ArcGIS.com",
       noneThumbnail: "缩略图不可用",
       owner: "所有者",
@@ -242,12 +244,12 @@
       itemToAttributeTable: '打开属性表'
     },
     imageChooser: {
-      unsupportReaderAPI: "需执行的操作: 浏览器不支持文件阅读器 API",
+      unsupportReaderAPI: "注释: 浏览器不支持 FileReader API",
       readError: "读取文件失败。",
       invalidType: "无效的文件类型。",
       exceed: "文件大小不得超过 1024 KB",
       enableFlash: "需执行的操作: 请启用闪烁。",
-      toolTip: "为获得最佳效果，影像的宽度应为 ${width} 像素，高度应为 ${height} 像素。其他大小将调整为适应此大小。可接受的影像格式包括: PNG、GIF 和 JPEG。"
+      toolTip: "为获得最佳效果，图像的宽度应为 ${width} 像素，高度应为 ${height} 像素。其他大小将调整为适应此大小。可接受的图像格式包括: PNG、GIF 和 JPEG。"
     },
     simpleTable: {
       moveUp: '上移',

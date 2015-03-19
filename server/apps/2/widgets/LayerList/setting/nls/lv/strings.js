@@ -1,5 +1,0 @@
-﻿define(
-   ({
-    showLegend: "Rādīt leģendu"
-  })
-);

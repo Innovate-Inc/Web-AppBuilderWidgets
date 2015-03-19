@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Сервисы не были найдены.',
-      unableConnectTo: 'Не удается подключиться к'
+      unableConnectTo: 'Не удается подключиться к',
+      invalidUrlTip: 'Введенный URL-адрес недопустим или недоступен.'
     },
     serviceBrowser: {
       noGpFound: 'Сервисы геообработки не найдены.',
@@ -174,26 +175,27 @@
         invalidSQL: "Некорректное sql выражение.",
         cantParseSQL: "Не возможно разобрать sql выражение."
       },
-      caseSensitive: "Учитывать регистр"
+      caseSensitive: "Учитывать регистр",
+      notSupportCaseSensitiveTip: "Опубликованные сервисы не поддерживают запрос с чувствительностью к регистру."
     },
 
     featureLayerSource: {
       layer: "Слой",
       browse: "Обзор",
       selectFromMap: "Выбрать с карты",
-      selectFromPortal: "Добавить с портала",
+      selectFromPortal: "Добавить с Portal for ArcGIS",
       addServiceUrl: "Добавить URL-адрес сервиса",
       inputLayerUrl: "URL-адрес входного слоя",
       selectLayer: "Выбрать слой объектов на текущей карте.",
       chooseItem: "Выбрать элемент слоя объектов.",
       setServiceUrl: "Введите URL-адрес сервиса объектов или картографического сервиса.",
-      selectFromOnline: "Добавить с Online",
+      selectFromOnline: "Добавить с ArcGIS Online",
       chooseLayer: "Выберите векторный слой."
     },
     gpSource: {
-      selectFromPortal: "Добавить с портала",
+      selectFromPortal: "Добавить с Portal for ArcGIS",
       addServiceUrl: "Добавить URL-адрес сервиса",
-      selectFromOnline: "Добавить с Online",
+      selectFromOnline: "Добавить с ArcGIS Online",
       setServiceUrl: "Введите URL-адрес сервиса геообработки.",
       chooseItem: "Выберите элемент сервиса геообработки.",
       chooseTask: "Выберите задачу геообработки."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Карта",
       selectWebMap: "Выбрать веб-карту",
-      addMapFromOnlineOrPortal: "Найти и добавить веб-карты, используемые в приложении из открытых ресурсов ArcGIS Online или ваших частных ресурсов ArcGIS Online или Portal.",
+      addMapFromOnlineOrPortal: "Найти и добавить в приложение веб-карты из открытых ресурсов ArcGIS Online или собственных частных ресурсов ArcGIS Online или Portal.",
       searchMapName: "Поиск по названию карты...",
       searchNone: "Мы не смогли найти то, что вы искали. Пожалуйста, попробуйте снова.",
       groups: "Группы",

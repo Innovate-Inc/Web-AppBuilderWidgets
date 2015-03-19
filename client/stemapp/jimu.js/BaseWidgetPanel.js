@@ -17,12 +17,11 @@
 define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/array',
-  'dojo/_base/html',
   'dijit/_WidgetBase',
   'dijit/_Container',
   './dijit/LoadingIndicator',
   './BaseWidgetFrame'],
-  function (declare, lang, array, html, _WidgetBase, _Container, LoadingIndicator,
+  function (declare, lang, array, _WidgetBase, _Container, LoadingIndicator,
     BaseWidgetFrame) {
   return declare([_WidgetBase, _Container], {
     baseClass: 'jimu-widget-panel jimu-container',

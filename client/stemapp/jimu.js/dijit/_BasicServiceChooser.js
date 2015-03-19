@@ -21,19 +21,17 @@ define(['dojo/_base/declare',
   'dojo/text!./templates/_BasicServiceChooser.html',
   'dojo/Evented',
   'dojo/_base/html',
-  'dojo/_base/array',
   'dojo/_base/lang',
   'dojo/on',
   'dojo/Deferred',
   'dijit/TooltipDialog',
   'dijit/popup',
+  'esri/request',
   'dijit/form/ValidationTextBox',
-  'jimu/dijit/LoadingIndicator',
-  'esri/request'
+  'jimu/dijit/LoadingIndicator'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Evented,
-  html, array, lang, on, Deferred, TooltipDialog, dojoPopup, ValidationTextBox, LoadingIndicator,
-  esriRequest) {
+  html, lang, on, Deferred, TooltipDialog, dojoPopup, esriRequest) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
     templateString: template,
     url:'',

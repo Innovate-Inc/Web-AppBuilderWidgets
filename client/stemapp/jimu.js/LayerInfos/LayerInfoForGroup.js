@@ -18,29 +18,17 @@ define([
   'dojo/_base/declare',
   'dojo/_base/array',
   'dojo/_base/lang',
-  'dojo/aspect',
   'dojo/Deferred',
   'esri/request',
-  './LayerInfoForDefault',
-  './LayerInfoForDefaultDynamic',
-  './LayerInfoForDefaultTile',
   './LayerInfo',
   './LayerInfoFactory'
-], function(declare, array, lang, aspect, Deferred, esriRequest, LayerInfoForDefault,
-LayerInfoForDefaultDynamic,LayerInfoForDefaultTile, LayerInfo, LayerInfoFactory) {
+], function(declare, array, lang, Deferred, esriRequest,
+LayerInfo, LayerInfoFactory) {
   var clazz = declare(LayerInfo, {
 
-
     constructor: function(operLayer, map, noLegend) {
+      /*jshint unused: false*/
       this.noLegend = noLegend;
-            
-      // about popupMenu
-      this.popupMenuInfo.menuItems = [{
-        key: 'description',
-        label: '<a class="menu-item-description" target="_blank" href=' +
-          ((this.layerObject && this.layerObject.url) ? this.layerObject.url : '') + '>' +
-          this.nls.itemDesc + '</a>'
-      }];
     },
 
     getExtent: function() {

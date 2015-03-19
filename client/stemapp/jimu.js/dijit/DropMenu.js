@@ -82,7 +82,11 @@ function(declare, _WidgetBase, lang, array, html, on, Evented, utils) {
 
       array.forEach(this.items, function(item){
         var node;
-        if(item.key){
+        if(item.key && item.key === 'separator'){
+          html.create('hr', {
+            'class': 'menu-item-line'
+          }, this.dropMenuNode);
+        }else if(item.key) {
           node = html.create('div', {
             'class': 'menu-item',
             'itemId': item.key,
@@ -92,10 +96,6 @@ function(declare, _WidgetBase, lang, array, html, on, Evented, utils) {
           this.own(on(node, 'click', lang.hitch(this, function(){
             this.selectItem(item);
           })));
-        }else{
-          html.create('hr', {
-            'class': 'menu-item-line'
-          }, this.dropMenuNode);
         }
       }, this);
     },
@@ -142,9 +142,7 @@ function(declare, _WidgetBase, lang, array, html, on, Evented, utils) {
     openDropMenu: function(){
       this.state = 'opened';
       html.setStyle(this.dropMenuNode, 'display', '');
-
       html.setStyle(this.dropMenuNode, utils.getPositionStyle(this._getDropMenuPosition()));
-
       this.emit('onOpenMenu');
     },
 

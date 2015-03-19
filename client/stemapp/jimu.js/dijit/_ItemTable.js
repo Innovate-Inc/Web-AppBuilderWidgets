@@ -232,8 +232,9 @@ define([
       var emptyTds = query('td.empty',tbody);
       var i;
       if(emptyTds.length > 0){
-        var ws = items.splice(0, emptyTds.length);
-        for(i = 0;i<emptyTds.length;i++){
+        var usedEmptyTdCount = Math.min(items.length, emptyTds.length);
+        var ws = items.splice(0, usedEmptyTdCount);
+        for(i = 0; i < usedEmptyTdCount; i++){
           var emptyTd = emptyTds[i];
           itemDiv = this._createItem(ws[i]);
           itemsHash[itemDiv.item.id] = itemDiv;

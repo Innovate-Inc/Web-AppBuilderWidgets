@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Teenuseid ei leitud.',
-      unableConnectTo: 'Ei õnnestu luua ühendust'
+      unableConnectTo: 'Ei õnnestu luua ühendust',
+      invalidUrlTip: 'Sisestatud URL ei sobi või pole kättesaadav.'
     },
     serviceBrowser: {
       noGpFound: 'Geotöötluse teenuseid ei leitud.',
@@ -174,26 +175,27 @@
         invalidSQL: "Vigane SQL-avaldis.",
         cantParseSQL: "SQL-avaldise parsimine ei õnnestu."
       },
-      caseSensitive: "Tõstutundlik"
+      caseSensitive: "Tõstutundlik",
+      notSupportCaseSensitiveTip: "Majutatud teenused ei toeta tõstutundlikke päringuid."
     },
 
     featureLayerSource: {
       layer: "Kiht",
       browse: "Sirvi",
       selectFromMap: "Vali kaardilt",
-      selectFromPortal: "Lisa portaalist",
+      selectFromPortal: "Lisa Portal for ArcGIS-ist",
       addServiceUrl: "Lisa teenuse URL",
       inputLayerUrl: "Sisendkihi URL",
       selectLayer: "Vali praeguse kaardi objektikiht.",
       chooseItem: "Vali objektikihi sisu.",
       setServiceUrl: "Sisesta objekti- või kaarditeenuse URL.",
-      selectFromOnline: "Lisa veebist",
+      selectFromOnline: "Lisa ArcGIS Online’ist",
       chooseLayer: "Valige objektikiht."
     },
     gpSource: {
-      selectFromPortal: "Lisa portaalist",
+      selectFromPortal: "Lisa Portal for ArcGIS-ist",
       addServiceUrl: "Lisa teenuse URL",
-      selectFromOnline: "Lisa veebist",
+      selectFromOnline: "Lisa ArcGIS Online’ist",
       setServiceUrl: "Sisestage geotöötlusteenuse URL.",
       chooseItem: "Valige geotöötlusteenuse objekt.",
       chooseTask: "Valige geotöötluse ülesanne."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Kaart",
       selectWebMap: "Vali veebikaart",
-      addMapFromOnlineOrPortal: "Saate rakenduses kasutatavat veebikaarti otsida ja lisada teenuse ArcGIS Online avalike ressursside kaudu või teenuste ArcGIS Online või Portal isikliku sisu kaudu.",
+      addMapFromOnlineOrPortal: "Saate rakenduses veebikaarti otsida ja selle lisada ArcGIS Online’i avalike ressursside kaudu või ArcGIS Online’i või Portali isikliku sisu kaudu.",
       searchMapName: "Otsi kaardi nime järgi...",
       searchNone: "Me ei leidnud seda, mida otsisite. Proovige uuesti.",
       groups: "Grupid",
@@ -242,12 +244,12 @@
       itemToAttributeTable: 'Ava atribuuditabel'
     },
     imageChooser: {
-      unsupportReaderAPI: "Märkus. Brauser ei toeta faililugemisliidest.",
+      unsupportReaderAPI: "MÄRKUS. Brauser ei toeta faililugemise liidest.",
       readError: "Faili lugemine nurjus.",
       invalidType: "Sobimatut tüüpi fail",
       exceed: "Faili maht võib olla kuni 1024 KB.",
       enableFlash: "Märkus. Lubage Flash.",
-      toolTip: "Parima tulemuse saavutamiseks peaks pildi laius olema ${width} pikslit ning kõrgus ${height} pikslit. Muud suurused kohandatakse sobivaks. Aktsepteeritavad pildivormingud on: PNG, GIF ja JPEG."
+      toolTip: "Parima tulemuse saamiseks peaks pildi laius olema ${width} pikslit ning kõrgus ${height} pikslit. Muud suurused kohandatakse parajaks. Sobivad pildiformaadid on PNG, GIF ja JPEG."
     },
     simpleTable: {
       moveUp: 'Liiguta ülespoole',

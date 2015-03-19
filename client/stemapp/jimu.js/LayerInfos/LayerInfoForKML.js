@@ -28,18 +28,6 @@ define([
     /*jshint unused: false*/
     constructor: function( operLayer, map) {
       /*jshint unused: false*/
-      //this.popupMenuInfo = {descriptionTitle: NlsStrings.value.itemDownload};
-      var index = -1, i = 0;
-      for (i = 0; i < this.popupMenuInfo.menuItems.length; i++) {
-        if (this.popupMenuInfo.menuItems[i].key === 'description') {
-          index = i;
-          break;
-        }
-      }
-      this.popupMenuInfo.menuItems.splice(index, 1,
-          {key: 'download', label: '<a class="menu-item-description" target="_blank" href=' +
-          ((this.layerObject && this.layerObject.url) ? this.layerObject.url : '') +
-          '>' + this.nls.itemDownload + '</a>'});
     },
 
     getExtent: function() {

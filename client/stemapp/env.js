@@ -22,7 +22,7 @@
 
 /********************************
 Global variables:
-  isXT: XT builder or not
+  isXT: XT builder or not. This variable is set by builder node server.
   isBuilder: is builder or app. This flag is used to distinguish the build and app in jimu.js
   isRunInPortal: whether the app/builder is in portal or not.
   builderNls: the builder nls bundle
@@ -78,6 +78,12 @@ var
 
 // console.time('before map');
 
+/////Builder server will remove this line's comment, so set isXT flag to true
+
+//isXT = true;
+
+/////////////////////////////////////
+
 (function(global){
   //init API URL
   var queryObject = getQueryObject();
@@ -89,23 +95,22 @@ var
 
   //////////////////////////////////////////////////////////////
   allCookies = getAllCookies();
-  isXT = checkIsXT();
   window.isRunInPortal = !isXT;
   if (!apiUrl) {
     if (queryObject.apiurl) {
       apiUrl = queryObject.apiurl;
     } else if (isXT) {
-      apiUrl = '//js.arcgis.com/3.12';
+      apiUrl = '//js.arcgis.com/3.13';
     } else {
       var portalUrl = getPortalUrlFromLocation();
       if (portalUrl.indexOf('arcgis.com') > -1) {
-        apiUrl = '//js.arcgis.com/3.12';
+        apiUrl = '//js.arcgis.com/3.13';
       } else {
         apiUrl = portalUrl + 'jsapi/jsapi/';
       }
     }
   }
-  
+
   if (apiUrl.substr(apiUrl.length - 1, apiUrl.length) !== '/') {
     apiUrl = apiUrl + '/';
   }
@@ -125,10 +130,6 @@ var
       }
     }
     return cookies;
-  }
-
-  function checkIsXT(){
-    return allCookies.wab_xt === 'true';
   }
 
   function getPortalUrlFromLocation(){

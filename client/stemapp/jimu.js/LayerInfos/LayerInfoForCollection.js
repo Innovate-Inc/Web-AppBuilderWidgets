@@ -17,26 +17,19 @@
 define([
   'dojo/_base/declare',
   'dojo/_base/array',
-  'dojo/_base/lang',
   'esri/graphicsUtils',
-  'dojo/aspect',
-  'dojo/Deferred',
   './LayerInfo',
-  './LayerInfoForDefault',
   './LayerInfoFactory'
-], function(declare, array, lang, graphicsUtils, aspect, Deferred, LayerInfo,
-LayerInfoForDefault, LayerInfoFactory) {
+], function(declare, array, graphicsUtils, LayerInfo,
+LayerInfoFactory) {
   return declare(LayerInfo, {
 
     constructor: function( /*operLayer, map*/ ) {
 
       this.layerObject = {
-        declaredClass: "esri.layers.FeatureCollection",
+        declaredClass: "esri.layers.FeatureCollection", //use getLayerType instead of it.
         type: "FeatureCollection"
       };
-      //this.popupMenuInfo.menuItems
-      //.splice(this.popupMenuInfo.menuItems.indexOf('Description') - 1, 2);
-
     },
 
     getExtent: function() {

@@ -15,11 +15,10 @@
 ///////////////////////////////////////////////////////////////////////////
 
 define([
-    'dojo/_base/declare',
     'dojo/_base/lang',
     'jimu/shared/basePortalUrlUtils'
   ],
-  function(declare, lang, basePortalUrlUtils) {
+  function(lang, basePortalUrlUtils) {
     var mo = lang.clone(basePortalUrlUtils);
 
     mo.declaredClass = 'jimu.portalUrlUtils';

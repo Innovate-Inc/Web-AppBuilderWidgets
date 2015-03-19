@@ -1,12 +1,10 @@
 define([
   'dojo/_base/declare',
-  'dojo/_base/lang',
   'dojo/_base/array',
   'esri/SpatialReference',
   'dojo/text!./wkid.json'
 ], function(
   declare,
-  lang,
   array,
   SpatialReference,
   wkids

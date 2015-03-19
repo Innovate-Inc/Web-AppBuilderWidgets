@@ -2,11 +2,13 @@
 <topichead title='Get started'>
 <topicref title='Welcome' path='03w3/03w30000001w000000.htm'>
 </topicref>
-<topicref title='Get started' path='03w3/03w300000033000000.htm'>
+<topicref title='Get started' path='03w3/03w30000005r000000.htm'>
 </topicref>
 <topicref title='Build your first app' path='03w3/03w300000054000000.htm'>
 </topicref>
-<topicref title='Overview' path='03w3/03w30000001q000000.htm'>
+<topicref title='Development overview' path='03w3/03w30000001q000000.htm'>
+</topicref>
+<topicref title='What&apos;s new in version 1.1' path='03w3/03w300000062000000.htm'>
 </topicref>
 </topichead>
 <topichead title='Working with app'>
@@ -28,11 +30,17 @@
 </topicref>
 <topicref title='Export as a template' path='03w3/03w30000004s000000.htm'>
 </topicref>
+<topicref title='Use URL parameters' path='03w3/03w30000005s000000.htm'>
+</topicref>
+<topicref title='Upgrade apps' path='03w3/03w300000060000000.htm'>
+</topicref>
 </topichead>
 <topichead title='Configure widgets'>
 <topicref title='Overview' path='03w3/03w300000047000000.htm'>
 </topicref>
 <topicref title='About widget' path='03w3/03w300000053000000.htm'>
+</topicref>
+<topicref title='Analysis widget' path='03w3/03w300000061000000.htm'>
 </topicref>
 <topicref title='Attribute Table widget' path='03w3/03w30000001s000000.htm'>
 </topicref>
@@ -76,6 +84,10 @@
 </topicref>
 <topicref title='Splash widget' path='03w3/03w300000050000000.htm'>
 </topicref>
+<topicref title='Swipe widget' path='03w3/03w30000005z000000.htm'>
+</topicref>
+<topicref title='Time Slider widget' path='03w3/03w30000005t000000.htm'>
+</topicref>
 </topichead>
 <topichead title='Widget development'>
 <topicref title='Naming convention' path='03w3/03w30000002s000000.htm'>
@@ -114,7 +126,7 @@
 </topicref>
 <topicref title='Make widget configurable in builder' path='03w3/03w30000003v000000.htm'>
 </topicref>
-<topicref title='Make widget back compatible' path='03w3/03w300000057000000.htm'>
+<topicref title='Make widgets back compatible' path='03w3/03w300000057000000.htm'>
 </topicref>
 <topicref title='Deploy your widget' path='03w3/03w300000010000000.htm'>
 </topicref>
@@ -180,6 +192,8 @@
 </topicref>
 <topicref title='About' path='03w3/03w300000052000000.htm'>
 </topicref>
+<topicref title='Analysis' path='03w3/03w30000005q000000.htm'>
+</topicref>
 <topicref title='Attribute Table' path='03w3/03w300000009000000.htm'>
 </topicref>
 <topicref title='Basemap Gallery' path='03w3/03w300000011000000.htm'>
@@ -221,6 +235,10 @@
 <topicref title='Scalebar' path='03w3/03w300000035000000.htm'>
 </topicref>
 <topicref title='Splash' path='03w3/03w300000051000000.htm'>
+</topicref>
+<topicref title='Swipe' path='03w3/03w30000005w000000.htm'>
+</topicref>
+<topicref title='Time Slider' path='03w3/03w30000005v000000.htm'>
 </topicref>
 </topichead>
 <topicref title='FAQs' path='03w3/03w30000004r000000.htm'>

@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Nav atrasts neviens pakalpojums.',
-      unableConnectTo: 'Nevar izveidot savienojumu ar'
+      unableConnectTo: 'Nevar izveidot savienojumu ar',
+      invalidUrlTip: 'Jūsu ievadītais URL nav derīgs vai tam nevar piekļūt.'
     },
     serviceBrowser: {
       noGpFound: 'Nav atrasts neviens ģeodatu apstrādes pakalpojums.',
@@ -174,26 +175,27 @@
         invalidSQL: "Nederīga SQL izteiksme.",
         cantParseSQL: "SQL izteiksmi nevar parsēt."
       },
-      caseSensitive: "Reģistrjutīgs"
+      caseSensitive: "Reģistrjutīgs",
+      notSupportCaseSensitiveTip: "Viesotie servisi neatbalsta reģistrjutīgu vaicājumu."
     },
 
     featureLayerSource: {
       layer: "Slānis",
       browse: "Pārlūkot",
       selectFromMap: "Izvēlēties no kartes",
-      selectFromPortal: "Pievienot no portāla",
+      selectFromPortal: "Pievienot no Portal for ArcGIS",
       addServiceUrl: "Pievienot pakalpojuma vietrādi URL",
       inputLayerUrl: "Ievadīt slāņa URL",
       selectLayer: "Izvēlieties elementu slāni no pašreizējās kartes.",
       chooseItem: "Izvēlieties elementu slāņa vienību.",
       setServiceUrl: "Ievadiet elementu pakalpojuma vai kartes pakalpojuma vietrādi URL.",
-      selectFromOnline: "Pievienot no tiešsaistes",
+      selectFromOnline: "Pievienot no ArcGIS Online",
       chooseLayer: "Izvēlieties elementu slāni."
     },
     gpSource: {
-      selectFromPortal: "Pievienot no portāla",
+      selectFromPortal: "Pievienot no Portal for ArcGIS",
       addServiceUrl: "Pievienot pakalpojuma vietrādi URL",
-      selectFromOnline: "Pievienot no tiešsaistes",
+      selectFromOnline: "Pievienot no ArcGIS Online",
       setServiceUrl: "Ievadiet ģeogrāfisko datu apstrādes pakalpojuma vietrādi URL.",
       chooseItem: "Izvēlieties ģeogrāfisko datu apstrādes pakalpojuma vienumu.",
       chooseTask: "Izvēlieties ģeogrāfisko datu apstrādes uzdevumu."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Karte",
       selectWebMap: "Izvēlieties web karti",
-      addMapFromOnlineOrPortal: "Atrodiet un pievienojiet tīmekļa karti, kas jāizmanto lietojumprogrammā, no ArcGIS Online publiskajiem resursiem vai sava privātā satura pakalpojumā ArcGIS Online vai Portal.",
+      addMapFromOnlineOrPortal: "Atrodiet un pievienojiet web karti aplikācijā no ArcGIS Online publiskajiem resursiem vai sava privātā satura pakalpojumā ArcGIS Online vai Portal.",
       searchMapName: "Meklēt pēc kartes nosaukuma...",
       searchNone: "Neizdevās atrast to, ko meklējāt. Mēģiniet vēlreiz.",
       groups: "Grupas",

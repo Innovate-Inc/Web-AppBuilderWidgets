@@ -22,6 +22,7 @@ define(['dojo/_base/declare',
   'dojo/data/ItemFileWriteStore'
 ],
 function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
+  //refer FilterDlg.js
   return declare([],{
     _stringFieldType: 'esriFieldTypeString',
     _dateFieldType: 'esriFieldTypeDate',
@@ -44,6 +45,11 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
 
     //modify methods(with hint 'code for wab'):
     //builtSingleFilterString
+
+
+    //Description:
+    //builtSingleFilterString is the core method used to convert single partObj to expr
+    //parseSingleExpr is the core method used to parse single expr to partObj
 
     constructor: function(){
       String.prototype.startsWith = function(str) {
@@ -161,12 +167,31 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
       return s && typeof s === 'string';
     },
 
+    containsNonLatinCharacter: function(string) {
+      /*
+      console.log(string);
+      for (var k = 0; k < string.length; k++) {
+        console.log(string.charCodeAt(k));
+      }    
+      */
+      for (var i = 0; i < string.length; i++) {
+        if (string.charCodeAt(i) > 255) {
+          return true;
+        }
+      }
+      return false;
+      
+    },
+
     /**************************************************/
     /****  stringify                               ****/
     /**************************************************/
+    //builtCompleteFilter
     getExprByFilterObj: function(partsObj) {
       var filterString = "";
-      if (partsObj.parts.length === 1) {
+      if(partsObj.parts.length === 0){
+        filterString = "1=1";
+      }else if(partsObj.parts.length === 1) {
         filterString = this.builtFilterString(partsObj.parts[0]);
       } else {
         var join = "";
@@ -210,6 +235,9 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
     },
 
     builtSingleFilterString: function(part, parameterizeCount) {
+      if(this.isHosted){
+        part.caseSensitive = false;
+      }
       // TODO check that expression value has a value ...
       if (esriLang.isDefined(part.valueObj.isValid) && !part.valueObj.isValid) {
         return {
@@ -247,12 +275,14 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
       if (part.fieldObj.shortType === "string") {
 
         var prefix = "";
-        // if (value && part.valueObj.type !== 'field' &&
-        // esriLang.arcgisonline.sharing.util.isHostedService(this.url)) {
-        //   if (this.containsNonLatinCharacter(value)) {
-        //     prefix = 'N';
-        //   }
-        // }
+        if(parameterizeValues && this.isHosted){
+          // just in case the user input value has non-Latin characters
+          prefix = 'N';
+        }else if (value && part.valueObj.type !== 'field' && this.isHosted) {
+          if (this.containsNonLatinCharacter(value)) {
+            prefix = 'N';
+          }
+        }
         switch (part.operator) {
         case this.OPERATORS.stringOperatorIs:
           if (part.valueObj.type === 'field') {
@@ -276,8 +306,9 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
              "'" + value.replace(/\'/g, "''") + "%'";
           }
           else{
-            whereClause = "UPPER("+part.fieldObj.name + ") LIKE " + prefix +
-             "UPPER('" + value.replace(/\'/g, "''") + "%')";
+            //UPPER(County) LIKE UPPER(N'石景山区%')
+            whereClause = "UPPER(" + part.fieldObj.name + ") LIKE " +
+             "UPPER(" + prefix + "'" + value.replace(/\'/g, "''") + "%')";
           }
           break;
         case this.OPERATORS.stringOperatorEndsWith:
@@ -286,8 +317,9 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
            "'%" + value.replace(/\'/g, "''") + "'";
           }
           else{
-            whereClause = "UPPER("+part.fieldObj.name + ") LIKE " + prefix +
-           "UPPER('%" + value.replace(/\'/g, "''") + "')";
+            //UPPER(County) LIKE UPPER(N'%石景山区')
+            whereClause = "UPPER(" + part.fieldObj.name + ") LIKE " +
+           "UPPER(" + prefix + "'%" + value.replace(/\'/g, "''") + "')";
           }
           break;
         case this.OPERATORS.stringOperatorContains:
@@ -296,8 +328,9 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
            "'%" + value.replace(/\'/g, "''") + "%'";
           }
           else{
-            whereClause = "UPPER("+part.fieldObj.name + ") LIKE " + prefix +
-           "UPPER('%" + value.replace(/\'/g, "''") + "%')";
+            //UPPER(County) LIKE UPPER(N'%石景山区%')
+            whereClause = "UPPER(" + part.fieldObj.name + ") LIKE " +
+           "UPPER(" + prefix + "'%" + value.replace(/\'/g, "''") + "%')";
           }
           break;
         case this.OPERATORS.stringOperatorDoesNotContain:
@@ -306,8 +339,9 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
            "'%" + value.replace(/\'/g, "''") + "%'";
           }
           else{
-            whereClause = "UPPER("+part.fieldObj.name + ") NOT LIKE " + prefix +
-           "UPPER('%" + value.replace(/\'/g, "''") + "%')";
+            //UPPER(County) NOT LIKE UPPER(N'%石景山区%')
+            whereClause = "UPPER(" + part.fieldObj.name + ") NOT LIKE " +
+           "UPPER(" +  prefix + "'%" + value.replace(/\'/g, "''") + "%')";
           }
           break;
         case this.OPERATORS.stringOperatorIsBlank:
@@ -764,13 +798,25 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
     _preParseSingleExpr: function(_part) {
       // part: {expr: "<str>"}
       // {expr: "UPPER(CITY_NAME) LIKE UPPER('%#0#%')"}
+      //expr:
+      //for not hosted service
+      // UPPER(County) LIKE UPPER('shijingshan%')
+      // UPPER(County) LIKE UPPER('%shijingshan')
+      // UPPER(County) LIKE UPPER('%shijingshan%')
+      // UPPER(County) NOT LIKE UPPER('%shijingshan%')
+      //for hosted service(maybe doesn't has prefix N)
+      // UPPER(County) LIKE UPPER(N'石景山区%')
+      // UPPER(County) LIKE UPPER(N'%石景山区')
+      // UPPER(County) LIKE UPPER(N'%石景山区%')
+      // UPPER(County) NOT LIKE UPPER(N'%石景山区%')
+      var part = null;
       try {
-        var part = lang.clone(_part);
+        part = lang.clone(_part);
         part.expr = part.expr.trim();
 
         //str: CITY_NAME LIKE '%#0#%'
-        var regIgnoreCaseLike = /^UPPER\((.*)\)(\s+|\s+NOT\s+)LIKE\s+UPPER\('(.*)'\)$/i;
-        //UPPER(CITY_NAME) LIKE UPPER('%BEIJING%')
+        var regIgnoreCaseLike = /^UPPER\((.*)\)(\s+|\s+NOT\s+)LIKE\s+UPPER\(N?'(.*)'\)$/i;
+        //UPPER(CITY_NAME) LIKE UPPER('%BEIJING%') or UPPER(CITY_NAME) LIKE UPPER(N'%北京%')
         if (regIgnoreCaseLike.test(part.expr)) {
           var fieldName = '';
           var value = '';
@@ -783,7 +829,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             return null;
           }
 
-          var reg2 = /UPPER\('(.*)'\)$/i;
+          var reg2 = /UPPER\(N?'(.*)'\)$/i;
           var match2 = part.expr.match(reg2);
 
           if (match2 && match2.length >= 2) {
@@ -793,23 +839,29 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
           }
 
           part.expr = part.expr.replace(/^UPPER\((.*)\)\s+/i, fieldName+' ');
-          part.expr = part.expr.replace(/UPPER\('(.*)'\)$/i, value);
+          part.expr = part.expr.replace(/UPPER\(N?'(.*)'\)$/i, value);
           part.caseSensitive = false;
-          return part;
+          //return part;
         }
         else{
-          var regCaseSensitive = /^(.+)(\s+|\s+NOT\s+)LIKE\s+'(.*)'$/i;
+          var regCaseSensitive = /^(.+)(\s+|\s+NOT\s+)LIKE\s+N?'(.*)'$/i;
           if(regCaseSensitive.test(part.expr)){
             part.caseSensitive = true;
-            return part;
+            //return part;
           }
         }
-
-        return null;
       } catch (e) {
         console.log(e);
         return null;
       }
+
+      if(part){
+        if(this.isHosted){
+          part.caseSensitive = false;
+        }
+      }
+
+      return part;
     },
 
     parseSingleExpr: function(part){

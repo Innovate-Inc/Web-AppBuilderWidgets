@@ -15,15 +15,12 @@
 ///////////////////////////////////////////////////////////////////////////
 
 define(['dojo/_base/declare',
-  'dojo/_base/lang',
   'dojo/_base/html',
-  'dojo/_base/array',
-  'dojo/on',
   'dojo/string',
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin'
 ],
-function(declare, lang, html, array, on, string, _WidgetBase, _TemplatedMixin) {
+function(declare, html, string, _WidgetBase, _TemplatedMixin) {
   return declare([_WidgetBase,_TemplatedMixin], {
     baseClass: 'jimu-search',
     declaredClass: 'jimu.dijit.Search',

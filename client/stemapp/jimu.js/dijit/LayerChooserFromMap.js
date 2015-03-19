@@ -15,12 +15,8 @@
 ///////////////////////////////////////////////////////////////////////////
 
 define(['dojo/_base/declare',
-  'dijit/_WidgetBase',
-  'dijit/_TemplatedMixin',
   './_BasicLayerChooserFromMap',
-  'dojo/text!./templates/_TreeNode.html',
   'jimu/dijit/_Tree',
-  'jimu/dijit/LoadingIndicator',
   'dojo/store/Memory',
   'dojo/Deferred',
   'dojo/store/Observable',
@@ -29,13 +25,11 @@ define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/html',
   'dojo/_base/array',
-  'dojo/query',
-  'dojo/on',
   'jimu/utils'
 ],
-function(declare, _WidgetBase, _TemplatedMixin, _BasicLayerChooserFromMap, tnTemplate,
-  JimuTree, LoadingIndicator, Memory, Deferred, Observable, ObjectStoreModel, all,
-  lang, html, array, query, on, jimuUtils) {
+function(declare, _BasicLayerChooserFromMap,
+  JimuTree, Memory, Deferred, Observable, ObjectStoreModel, all,
+  lang, html, array, jimuUtils) {
 
   var _Tree = declare([JimuTree],{
     postCreate: function(){

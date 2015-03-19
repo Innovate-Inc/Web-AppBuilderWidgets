@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Keinen Service gefunden.',
-      unableConnectTo: 'Verbindung kann nicht hergestellt werden'
+      unableConnectTo: 'Verbindung kann nicht hergestellt werden',
+      invalidUrlTip: 'Die eingegebene URL ist ungültig oder es kann nicht darauf zugegriffen werden.'
     },
     serviceBrowser: {
       noGpFound: 'Keinen Geoverarbeitungs-Service gefunden.',
@@ -174,26 +175,27 @@
         invalidSQL: "Ungültiger SQL-Ausdruck.",
         cantParseSQL: "SQL-Ausdruck kann nicht geparst werden."
       },
-      caseSensitive: "Groß-/Kleinschreibung beachten"
+      caseSensitive: "Groß-/Kleinschreibung beachten",
+      notSupportCaseSensitiveTip: "Gehostete Services unterstützen keine Abfragen, bei denen zwischen Groß- und Kleinschreibung unterschieden wird."
     },
 
     featureLayerSource: {
       layer: "Layer",
       browse: "Durchsuchen",
       selectFromMap: "Aus Karte auswählen",
-      selectFromPortal: "Aus Portal hinzufügen",
+      selectFromPortal: "Aus Portal for ArcGIS hinzufügen",
       addServiceUrl: "Service-URL hinzufügen",
       inputLayerUrl: "Eingabe-Layer-URL",
       selectLayer: "Feature-Layer aus aktueller Karte auswählen.",
       chooseItem: "Ein Feature-Layer-Element auswählen.",
       setServiceUrl: "Geben Sie die URL des Feature-Service oder des Karten-Service ein.",
-      selectFromOnline: "Aus Online-Version hinzufügen",
+      selectFromOnline: "Aus ArcGIS Online hinzufügen",
       chooseLayer: "Wählen Sie einen Feature-Layer aus."
     },
     gpSource: {
-      selectFromPortal: "Aus dem Portal hinzufügen",
+      selectFromPortal: "Aus Portal for ArcGIS hinzufügen",
       addServiceUrl: "Service-URL hinzufügen",
-      selectFromOnline: "Aus Online-Version hinzufügen",
+      selectFromOnline: "Aus ArcGIS Online hinzufügen",
       setServiceUrl: "Geben Sie die URL des Geoverarbeitungs-Service an.",
       chooseItem: "Wählen Sie ein Geoverarbeitungs-Serviceelement aus.",
       chooseTask: "Wählen Sie einen Geoverarbeitungs-Task aus."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Karte",
       selectWebMap: "Webkarte auswählen",
-      addMapFromOnlineOrPortal: "Suchen Sie eine Webkarte in den öffentlichen ArcGIS Online-Ressourcen oder Ihren privaten Inhalten in ArcGIS Online oder Portal zur Nutzung in der Anwendung.",
+      addMapFromOnlineOrPortal: "Suchen Sie in der Anwendung eine Webkarte in den öffentlichen ArcGIS Online-Ressourcen oder Ihren privaten Inhalten in ArcGIS Online oder Portal und fügen Sie sie hinzu.",
       searchMapName: "Nach Kartenname suchen...",
       searchNone: "Die gesuchten Informationen konnten nicht gefunden werden. Versuchen Sie es erneut.",
       groups: "Gruppen",
@@ -242,7 +244,7 @@
       itemToAttributeTable: 'Attributtabelle öffnen'
     },
     imageChooser: {
-      unsupportReaderAPI: "ZU ERLEDIGEN: Browser unterstützt Datei-Reader-API nicht",
+      unsupportReaderAPI: "ZU ERLEDIGEN: Der Browser unterstützt die Datei-Reader-API nicht",
       readError: "Die Datei kann nicht gelesen werden.",
       invalidType: "Ungültiger Dateityp.",
       exceed: "Dateigröße darf 1024 KB nicht überschreiten",

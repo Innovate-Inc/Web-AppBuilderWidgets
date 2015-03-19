@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Nebyly nalezeny žádné služby.',
-      unableConnectTo: 'Nelze se připojit k'
+      unableConnectTo: 'Nelze se připojit k',
+      invalidUrlTip: 'Zadaná adresa URL je neplatná nebo nepřístupná.'
     },
     serviceBrowser: {
       noGpFound: 'Nebyly nalezeny žádné geoprocessingové služby',
@@ -174,26 +175,27 @@
         invalidSQL: "Neplatný výraz SQL.",
         cantParseSQL: "SQL výraz nelze analyzovat."
       },
-      caseSensitive: "Rozlišovat malá a velká písmena"
+      caseSensitive: "Rozlišovat malá a velká písmena",
+      notSupportCaseSensitiveTip: "Hostované služby nepodporují dotazy rozlišující velikost písmen."
     },
 
     featureLayerSource: {
       layer: "Vrstva",
       browse: "Procházet",
       selectFromMap: "Vybrat z mapy",
-      selectFromPortal: "Přidat z portálu",
+      selectFromPortal: "Přidat z Portal for ArcGIS",
       addServiceUrl: "Přidat adresu URL služby",
       inputLayerUrl: "Adresa URL vstupní vrstvy",
       selectLayer: "Zvolte vrstvu prvků z aktuální mapy.",
       chooseItem: "Zvolte položku vrstvy prvků.",
       setServiceUrl: "Zadejte adresu URL služby prvků nebo mapové služby.",
-      selectFromOnline: "Přidat z Online",
+      selectFromOnline: "Přidat z ArcGIS Online",
       chooseLayer: "Zvolte vrstvu prvků."
     },
     gpSource: {
-      selectFromPortal: "Přidat z Portal",
+      selectFromPortal: "Přidat z Portal for ArcGIS",
       addServiceUrl: "Přidat adresu URL služby",
-      selectFromOnline: "Přidat z Online",
+      selectFromOnline: "Přidat z ArcGIS Online",
       setServiceUrl: "Zadejte adresu URL geoprocessingové služby.",
       chooseItem: "Zvolte položku geoprocessingové služby.",
       chooseTask: "Zvolte geoprocessingovou úlohu."

@@ -18,19 +18,19 @@ define([
   'dojo/_base/declare',
   'dojo/_base/array',
   'dojo/_base/lang',
-  'esri/graphicsUtils',
-  'dojo/aspect',
+  'dojo/Deferred',
   './LayerInfo',
   'dojox/gfx',
   'dojo/dom-construct',
   'dojo/dom-attr',
-  'dojo/Deferred',
-  'esri/geometry/webMercatorUtils',
-  'esri/symbols/jsonUtils'
-], function(declare, array, lang, graphicsUtils, aspect, LayerInfo, gfx, domConstruct,
-domAttr, Deferred, webMercatorUtils, jsonUtils) {
+  'dojo/aspect',
+  'esri/symbols/jsonUtils',
+  'esri/dijit/PopupTemplate'
+], function(declare, array, lang, Deferred, LayerInfo, gfx, domConstruct,
+domAttr, aspect, jsonUtils, PopupTemplate) {
   var clazz = declare(LayerInfo, {
     _legendsNode: null,
+    controlPopupInfo: null,
     // operLayer = {
     //    layerObject: layer,
     //    title: layer.label || layer.title || layer.name || layer.id || " ",
@@ -39,11 +39,9 @@ domAttr, Deferred, webMercatorUtils, jsonUtils) {
     //    mapService: {layerInfo: , subId: },
     //    collection: {layerInfo: }
     // };
-    constructor: function( operLayer, map ) {
-
-      this.layerLoadedDef = new Deferred();
-
+    constructor: function() {
       /*
+      this.layerLoadedDef = new Deferred(); 
       if(this.layerObject) {
         this.layerObject.on('load', lang.hitch(this, function(){
           this.layerLoadedDef.resolve();
@@ -51,39 +49,8 @@ domAttr, Deferred, webMercatorUtils, jsonUtils) {
       }
       */
 
-      /*jshint unused: false*/
-
-      // about popupMenu
-      if (operLayer.selfType) {
-        this.popupMenuInfo.menuItems = [{
-          key: 'table',
-          label: this.nls.itemToAttributeTable
-        }, {
-          key: null,
-          label: ''
-        },{
-          key: 'description',
-          label: '<a class="menu-item-description" target="_blank" href=' +
-                 ((this.layerObject && this.layerObject.url) ? this.layerObject.url : '') +
-                 '>' + this.nls.itemDesc + '</a>'
-        }];
-
-        
-      } else if (this.layerObject.declaredClass === 'esri.layers.FeatureLayer' ||
-                 this.layerObject.declaredClass === 'esri.layers.CSVLayer'
-                 /*this.layerObject.declaredClass === 'esri.layers.StreamLayer'*/) {
-        var index = -1;
-        var i     = 0;
-        for(i = 0; i < this.popupMenuInfo.menuItems.length; i++) {
-          if (this.popupMenuInfo.menuItems[i].key === 'movedown') {
-            index = i;
-            break;
-          }
-        }
-
-        this.popupMenuInfo.menuItems
-        .splice(index + 1, 0, '', {key: "table", label: this.nls.itemToAttributeTable});
-      }
+      // init control popup
+      this._initControlPopup();
     },
 
     getExtent: function() {
@@ -96,6 +63,23 @@ domAttr, Deferred, webMercatorUtils, jsonUtils) {
       var visible = false;
       visible = this.originOperLayer.layerObject.visible;
       this._visible = visible;
+    },
+
+    _initControlPopup: function() {
+      this.controlPopupInfo = {
+        //enablePopup: this.originOperLayer.disablePopup ? false : true,
+        enablePopup: this.layerObject.infoTemplate ? true: false,
+        infoTemplate: this.layerObject.infoTemplate
+      };
+      // backup infoTemplate to layer.
+      this.layerObject._infoTemplate = this.layerObject.infoTemplate;
+      aspect.after(this.layerObject, "setInfoTemplate", lang.hitch(this, function(){
+        this.layerObject._infoTemplate = this.layerObject.infoTemplate;
+        this.controlPopupInfo.infoTemplate = this.layerObject.infoTemplate;
+        if(!this.controlPopupInfo.enablePopup) {
+          this.layerObject.infoTemplate = null;
+        }
+      }));
     },
 
     _setTopLayerVisible: function(visible) {
@@ -193,6 +177,13 @@ domAttr, Deferred, webMercatorUtils, jsonUtils) {
             });
           }
 
+          if(layer.renderer && layer.renderer.defaultSymbol && legendInfos.length > 0) {
+            legendInfos.push({
+              label: layer.renderer.defaultLabel || "others",
+              symbol: layer.renderer.defaultSymbol
+            });
+          }
+
           array.forEach(legendInfos, function(legendInfo) {
             legendInfo.legendDiv = domConstruct.create("div", {
               "class": "legend-div"
@@ -250,17 +241,54 @@ domAttr, Deferred, webMercatorUtils, jsonUtils) {
       if (this.layerObject.setOpacity) {
         this.layerObject.setOpacity(opacity);
       }
+    },
+
+    // control popup
+
+    _getDefaultPopupTemplate: function(object) {
+      var popupTemplate = null;
+      if(object && object.fields) {
+        var popupInfo = {
+          title: object.name,
+          fieldInfos:[],
+          description: null,
+          showAttachments: true,
+          mediaInfos: []
+        };
+        array.forEach(object.fields, function(field){
+          if(field.name !== object.objectIdField){
+            popupInfo.fieldInfos.push({
+              fieldName:field.name,
+              visible:true,
+              label:field.alias,
+              isEditable:false
+            });
+          }
+        });
+        popupTemplate = new PopupTemplate(popupInfo);
+      }
+      return popupTemplate;
+    },
+
+    enablePopup: function() {
+      this.controlPopupInfo.enablePopup = true;
+      this.layerObject.infoTemplate = this.controlPopupInfo.infoTemplate;
+    },
+
+    disablePopup: function() {
+      this.controlPopupInfo.enablePopup = false;
+      this.layerObject.infoTemplate = null;
+    },
+
+    loadInfoTemplate: function() {
+      var def = new Deferred();
+      if(!this.controlPopupInfo.infoTemplate) {
+        this.controlPopupInfo.infoTemplate = this._getDefaultPopupTemplate(this.layerObject);
+      }
+      def.resolve(this.controlPopupInfo.infoTemplate);
+      return def;
     }
 
-    // isShowInMap: function() {
-    //   var visible = false;
-    //   if(this.originOperLayer.collection){
-    //     visible = this.originOperLayer.collection.layerInfo._visible && this.layerObject.visible;
-    //   } else {
-    //     visible = this.layerObject.visible;
-    //   }
-    //   return visible;
-    // }
 
   });
   return clazz;

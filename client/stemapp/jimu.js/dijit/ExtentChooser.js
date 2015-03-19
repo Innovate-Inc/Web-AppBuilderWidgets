@@ -17,21 +17,17 @@
 define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/html',
-  'dojo/_base/array',
   'dojo/on',
   'dojo/Deferred',
   'dijit/_WidgetBase',
   'dojo/Evented',
-  'esri/arcgis/utils',
-  'esri/geometry/Point',
   'esri/geometry/Extent',
-  'esri/geometry/webMercatorUtils',
   'jimu/portalUrlUtils',
   'jimu/dijit/LoadingShelter',
   'jimu/utils'
 ],
-function(declare, lang, html, array, on, Deferred, _WidgetBase,
-  Evented, agolUtils, Point, Extent, webMercatorUtils, portalUrlUtils,
+function(declare, lang, html, on, Deferred, _WidgetBase,
+  Evented, Extent, portalUrlUtils,
   LoadingShelter, jimuUtils) {
   /* global esriConfig */
 

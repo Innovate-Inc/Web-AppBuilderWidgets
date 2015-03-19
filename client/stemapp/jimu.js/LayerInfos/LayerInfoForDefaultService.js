@@ -20,44 +20,12 @@ define([
   'dojo/_base/lang',
   'dojo/Deferred',
   'dojo/dom-construct',
-  'dojo/dom-attr',
-  'dojo/query',
   './LayerInfoForDefault',
   'esri/layers/FeatureLayer'
-], function(declare, array, lang, Deferred, domConstruct, domAttr, query,
+], function(declare, array, lang, Deferred, domConstruct,
 LayerInfoForDefault, FeatureLayer) {
   return declare(LayerInfoForDefault, {
     _legendsNode: null,
-    // getDeniedItems: function() {
-    //   var defRet = new Deferred();
-    //   var dynamicDeniedItems = this.inherited(arguments);
-    //   var tableIndex = dynamicDeniedItems
-    //   .indexOf(this.nls.itemToAttributeTable/*'Open attribute table'*/);
-    //   if (tableIndex !== -1) {
-    //     dynamicDeniedItems.splice(tableIndex, 1);
-    //   }
-    //   defRet.resolve(dynamicDeniedItems);
-    //   return defRet;
-    // },
-
-    // _onTableItemClick: function(evt) {
-    //   if (this.layerObject.empty) {
-    //     this.layerObject = new FeatureLayer(this.layerObject.url);
-    //     this.layerObject.on('load', lang.hitch(this, function(){
-    //       this.initLegendsNode(this.legendsNode);
-    //       evt.layerListWidget.publishData({
-    //         'target': 'AttributeTable',
-    //         'layer': this.layerObject
-    //       });
-    //     }));
-    //   } else {
-    //     evt.layerListWidget.publishData({
-    //       'target': 'AttributeTable',
-    //       'layer': this.layerObject
-    //     });
-    //   }
-    // },
-
 
     _loadLegends: function(portalUrl) {
       var defRet = new Deferred();
@@ -123,7 +91,24 @@ LayerInfoForDefault, FeatureLayer) {
       }
     },
 
+    _initControlPopup: function() {
+      var mapServiceLayer = this.originOperLayer.mapService.layerInfo.layerObject;
+      var subId = this.originOperLayer.mapService.subId;
+      this.controlPopupInfo = {
+        enablePopup: (mapServiceLayer.infoTemplates && mapServiceLayer.infoTemplates[subId]) ?
+                      true:
+                      false,
+        infoTemplates: undefined
+      };
+    },
 
+    _afterSetInfoTemplates: function() {
+      var mapServiceLayer = this.originOperLayer.mapService.layerInfo.layerObject;
+      var subId = this.originOperLayer.mapService.subId;
+      if(!this.controlPopupInfo.enablePopup && mapServiceLayer.infoTemplates) {
+        delete mapServiceLayer.infoTemplates[subId];
+      }
+    },
 
     //--------------public interface---------------------------
     getLayerObject: function() {
@@ -143,6 +128,7 @@ LayerInfoForDefault, FeatureLayer) {
       return def;
     },
 
+    // now it is used for Attribute.
     getPopupInfo: function() {
       var popupInfo = null;
       var layers = this.originOperLayer.mapService.layerInfo.originOperLayer.layers;
@@ -160,7 +146,7 @@ LayerInfoForDefault, FeatureLayer) {
     getLayerType: function() {
       var def = new Deferred();
       var mapService = this.originOperLayer.mapService;
-      mapService.layerInfo._getSublayerIdent(mapService.subId)
+      mapService.layerInfo._getSublayerDefinition(mapService.subId)
       .then(lang.hitch(this, function(layerIdent) {
         if (layerIdent) {
           def.resolve(layerIdent.type.replace(/\ /g, ''));
@@ -195,7 +181,7 @@ LayerInfoForDefault, FeatureLayer) {
           resultValue.isSupportedLayer = true;
         }
         var mapService = this.originOperLayer.mapService;
-        mapService.layerInfo._getSublayerIdent(mapService.subId)
+        mapService.layerInfo._getSublayerDefinition(mapService.subId)
         .then(lang.hitch(this, function(layerIdent){
           if(layerIdent && layerIdent.capabilities.indexOf("Data") >= 0) {
             resultValue.isSupportQuery = true;
@@ -207,6 +193,56 @@ LayerInfoForDefault, FeatureLayer) {
       }), function() {
         def.resolve(resultValue);
       });
+      return def;
+    },
+
+    // control popup
+    enablePopup: function() {
+      var mapServiceLayerInfo = this.originOperLayer.mapService.layerInfo;
+      var mapServiceLayer = mapServiceLayerInfo.layerObject;
+      var subId = this.originOperLayer.mapService.subId;
+      this.controlPopupInfo.enablePopup = true;
+      if(mapServiceLayerInfo.controlPopupInfo.infoTemplates) {
+        if(!mapServiceLayer.infoTemplates) {
+          mapServiceLayer.infoTemplates = {};
+        }
+        mapServiceLayer.infoTemplates[subId] =
+          mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId];
+      }
+    },
+
+    disablePopup: function() {
+      var mapServiceLayer = this.originOperLayer.mapService.layerInfo.layerObject;
+      var subId = this.originOperLayer.mapService.subId;
+      this.controlPopupInfo.enablePopup = false;
+      if(mapServiceLayer.infoTemplates) {
+        delete mapServiceLayer.infoTemplates[subId];
+      }
+    },
+
+    loadInfoTemplate: function() {
+      var def = new Deferred();
+      var mapServiceLayerInfo = this.originOperLayer.mapService.layerInfo;
+      var subId = this.originOperLayer.mapService.subId;
+      if(mapServiceLayerInfo.controlPopupInfo.infoTemplates &&
+        mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId]) {
+        def.resolve(mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId]);
+      } else {
+        if(!mapServiceLayerInfo.controlPopupInfo.infoTemplates){
+          mapServiceLayerInfo.controlPopupInfo.infoTemplates = {};
+        }
+        mapServiceLayerInfo._getSublayerDefinition(subId)
+        .then(lang.hitch(this, function(layerDefinition) {
+          var popupTemplate = this._getDefaultPopupTemplate(layerDefinition);
+          mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId] = {
+            infoTemplate: popupTemplate,
+            layerUrl: null
+          };
+          def.resolve(popupTemplate);
+        }), lang.hitch(this, function() {
+          def.resolve(null);
+        }));
+      }
       return def;
     }
 

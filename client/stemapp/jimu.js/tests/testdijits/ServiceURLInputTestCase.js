@@ -49,7 +49,7 @@ require(['doh/main', 'dojo/parser',
 
         return d;
       },
-      timeout: 30000
+      timeout: 90000
     }, {
       name: 'fetchError',
       runTest: function() {

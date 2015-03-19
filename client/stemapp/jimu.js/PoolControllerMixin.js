@@ -16,15 +16,9 @@
 
 define([
   'dojo/_base/declare',
-  'dojo/_base/lang',
   'dojo/_base/array',
-  'dojo/_base/html',
-  'dojo/topic',
-  'dojo/aspect',
-  'dojo/Deferred',
-  'jimu/WidgetManager',
   'jimu/PanelManager'
-], function(declare, lang, array, html, topic, aspect, Deferred, WidgetManager, PanelManager){
+], function(declare, array, PanelManager){
   var clazz = declare(null, {
     // summary:
     //    this mixin process the widgets in the widget pool.
@@ -39,7 +33,6 @@ define([
     //    If not set, do not read any widget.
 
     constructor: function(){
-      this.widgetManager = WidgetManager.getInstance();
       this.panelManager = PanelManager.getInstance();
     },
 
@@ -120,7 +113,7 @@ define([
           }
         }, this);
       }
-      
+
       return ret;
     },
 
@@ -142,7 +135,7 @@ define([
           }
         }, this);
       }
-      
+
       return ret;
     }
   });

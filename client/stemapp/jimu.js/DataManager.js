@@ -36,6 +36,8 @@ define(['dojo/_base/declare',
     _dataStore: {},
 
     onDataPublished: function (name, id, data, keepHistory) {
+      // jshint unused:false
+      
       if(typeof keepHistory === 'undefined') {
         keepHistory = false;
       }

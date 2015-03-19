@@ -46,7 +46,7 @@ var ie = (function() {
         window.path = window.path.replace(reg, 'https://');
       }
     }
-    
+
     /*jshint unused:false*/
     dojoConfig = {
       parseOnLoad: false,
@@ -64,9 +64,17 @@ var ie = (function() {
         dojoConfig.locale = userObj.culture;
       }
     }
-    if(allCookies.wab_app_locale){
-      dojoConfig.locale = allCookies.wab_app_locale;
+
+    if(window.queryObject.mode){
+      if(allCookies.wab_locale){
+        dojoConfig.locale = allCookies.wab_locale;
+      }
+    }else{
+      if(allCookies.wab_app_locale){
+        dojoConfig.locale = allCookies.wab_app_locale;
+      }
     }
+
 
     if(!dojoConfig.locale){
       dojoConfig.locale = navigator.language ? navigator.language : navigator.userLanguage;
@@ -176,7 +184,7 @@ var ie = (function() {
         }
 
         _loadPolyfills("", function() {
-          window.appPath = window.path;
+          window.appInfo = {appPath: window.path};
           require(['jimu/main', 'libs/main', 'dynamic-modules/preload'], function(jimuMain) {
             loadingCallback('jimu', resources.length + 1, resources.length);
             jimuMain.initApp();

@@ -18,13 +18,10 @@ define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/html',
   'dojo/on',
-  'dojo/dom-construct',
-  'dojo/dom-style',
-  'dojo/dom-geometry',
   'dijit/_WidgetBase',
   './utils'
 ],
-function(declare, lang, html, on, domConstruct, domStyle, domGeometry, _WidgetBase, utils) {
+function(declare, lang, html, on, _WidgetBase, utils) {
   /* global jimuConfig */
   return declare(_WidgetBase, {
     'class': 'jimu-preload-widget-icon',

@@ -20,34 +20,50 @@ define([
   'dojo/_base/lang',
   'dojo/Deferred',
   'dojo/json',
+  'dojo/aspect',
   './LayerInfo',
-  './LayerInfoForDefault',
-  './LayerInfoForDefaultDynamic',
-  './LayerInfoForDefaultTile',
-  './LayerInfoForGroup',
-  'esri/layers/ArcGISDynamicMapServiceLayer',
-  'esri/layers/FeatureLayer',
   'esri/request',
   './LayerInfoFactory'
-], function(declare, array, lang, Deferred, Json, LayerInfo, LayerInfoForDefault,
-LayerInfoForDefaultDynamic, LayerInfoForDefaultTile, LayerInfoForGroup,
-ArcGISDynamicMapServiceLayer, FeatureLayer, esriRequest, LayerInfoFactory) {
+], function(declare, array, lang, Deferred, Json, aspect, LayerInfo,
+esriRequest, LayerInfoFactory) {
   return declare(LayerInfo, {
 
     _legendInfo: null,
     _sublayerIdent: null,
+    controlPopupInfo: null,
 
     constructor: function(operLayer, map) {
+      /*jshint unused: false*/
       this.initSubLayerVisible();
 
       // init _subLayerIdent.
       this._sublayerIdent = {
-        idents: [],
+        definitions: [],
         empty: true,
         defLoad: new Deferred()
       };
-      this._sublayerIdent.idents[this.layerObject.layerInfos.length - 1] = null;
-      /*jshint unused: false*/
+      this._sublayerIdent.definitions[this.layerObject.layerInfos.length - 1] = null;
+      
+      // init control popup
+      this._initControlPopup();
+    },
+
+    _initControlPopup: function() {
+      this.controlPopupInfo = {
+        enablePopup: undefined,
+        infoTemplates: lang.clone(this.layerObject.infoTemplates)
+      };
+      // backup infoTemplates to layer.
+      this.layerObject._infoTemplates = lang.clone(this.layerObject.infoTemplates);
+      aspect.after(this.layerObject, "setInfoTemplates", lang.hitch(this, function(){
+        this.layerObject._infoTemplates = lang.clone(this.layerObject.infoTemplates);
+        this.controlPopupInfo.infoTemplates = lang.clone(this.layerObject.infoTemplates);
+        this.traversal(function(layerInfo) {
+          if(layerInfo._afterSetInfoTemplates) {
+            layerInfo._afterSetInfoTemplates();
+          }
+        });
+      }));
     },
 
     initSubLayerVisible: function() {
@@ -265,6 +281,7 @@ ArcGISDynamicMapServiceLayer, FeatureLayer, esriRequest, LayerInfoFactory) {
     },
 
     _handleErrorSubLayer: function(newSubLayers, index, layerId, subId, url, layerInfo) {
+      /*jshint unused: false*/
       //newSubLayers[index] = {error: true};
       //var layer = newSubLayers[index];
       newSubLayers[index] = {
@@ -382,11 +399,11 @@ ArcGISDynamicMapServiceLayer, FeatureLayer, esriRequest, LayerInfoFactory) {
     },
 
     // about all layer and table
-    _getSublayerIdent: function(subId) {
+    _getSublayerDefinition: function(subId) {
       var def;
-      if (this._sublayerIdent[subId]) {
+      if (this._sublayerIdent.definitions[subId]) {
         def = new Deferred();
-        def.resolve(this._sublayerIdent[subId]);
+        def.resolve(this._sublayerIdent.definitions[subId]);
       } else {
         def = this._layerAndTableRequest(subId);
       }
@@ -407,11 +424,11 @@ ArcGISDynamicMapServiceLayer, FeatureLayer, esriRequest, LayerInfoFactory) {
       if(this._sublayerIdent.empty) {
         this._sublayerIdent.empty = false;
         this._request(url).then(lang.hitch(this, function(results) {
-          this._sublayerIdent.idents = results.layers;
+          this._sublayerIdent.definitions = results.layers;
           this._sublayerIdent.defLoad.resolve();
-          def.resolve(this._sublayerIdent.idents[subId]);
+          def.resolve(this._sublayerIdent.definitions[subId]);
         }), lang.hitch(this, function(err) {
-          console.err(err.message || err);
+          console.error(err.message || err);
           this._sublayerIdent.defLoad.reject();
           this._sublayerIdent.defLoad = new Deferred();
           this._sublayerIdent.empty = true;
@@ -419,9 +436,9 @@ ArcGISDynamicMapServiceLayer, FeatureLayer, esriRequest, LayerInfoFactory) {
         }));
       } else {
         this._sublayerIdent.defLoad.then(lang.hitch(this, function() {
-          def.resolve(this._sublayerIdent.idents[subId]);
+          def.resolve(this._sublayerIdent.definitions[subId]);
         }), function(err) {
-          console.err(err.message || err);
+          console.error(err.message || err);
           def.resolve(null);
         });
       }
@@ -432,10 +449,10 @@ ArcGISDynamicMapServiceLayer, FeatureLayer, esriRequest, LayerInfoFactory) {
       var def = new Deferred();
       var url = this.originOperLayer.url + '/' + subId;
       this._request(url).then(lang.hitch(this, function(result) {
-        this._sublayerIdent.idents[subId] = result;
+        this._sublayerIdent.definitions[subId] = result;
         def.resolve(result);
       }), function(err) {
-        console.err(err.message || err);
+        console.error(err.message || err);
         def.resolve(null);
       });
       return def;

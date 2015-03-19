@@ -23,16 +23,15 @@ define(['dojo/_base/declare',
   'dojo/_base/html',
   'dojo/_base/array',
   'esri/request',
+  'dijit/MenuItem',
   'jimu/dijit/SimpleTable',
   'dijit/form/TextBox',
   'dijit/form/DropDownButton',
   'dijit/TooltipDialog',
-  'dijit/Menu',
-  'dijit/MenuItem'
+  'dijit/Menu'
 ],
 function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
-  template, lang, html, array, esriRequest, SimpleTable,
-  TextBox, DropDownButton, TooltipDialog, Menu, MenuItem) {
+  template, lang, html, array, esriRequest, MenuItem) {
   return declare([_WidgetBase,_TemplatedMixin,_WidgetsInTemplateMixin], {
     _def:null,
     declaredClass: 'jimu.dijit.PopupConfig',

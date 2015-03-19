@@ -1,0 +1,46 @@
+<html lang="en" xml:lang="en"><head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="description" content="Apps created with  Web AppBuilder can be modified directly with  URL parameters."><meta name="content-language" content="en"><link href="rsrc/htmlhelp.css" rel="stylesheet" type="text/css"><title>Web AppBuilder for ArcGIS | Help - Use URL parameters</title>
+                <script type="text/javascript" language="JavaScript">
+                    var pathL  = self.location.pathname.split ("/");
+                    var fname = pathL[pathL.length-1];
+                    var i = fname.lastIndexOf (".htm");
+                    if (i>=0) {
+                    fname = fname.substring (0, i)
+                    } else {
+                    //??
+                    }
+                    if (self.location.hash) {
+				    		      fname = fname + self.location.hash;
+						        }
+                    self.location.replace ("../index.html#//" + fname);
+                </script>
+                </head><!--Publication GUID: [GUID-E7D1C130-8F87-4109-8D61-E73A46083F52]--><!--Topic GUID: [GUID-F2078DE3-1AE4-409C-8306-B3F619DF538F]--><body><div id="content"><div class="header"><h1>Use URL parameters</h1><div id="breadcrumb"></div></div>
+
+<p id="GUID-69EBDFCC-B403-4D51-9804-58A8FF9C8CA4">Apps created with  Web AppBuilder can be modified directly with  URL parameters. The URL always begins with <span purpose="ph" ishcondition="(agol_plat=portal) or (agol_plat=wab_dev)"><span class="usertext">&lt;your portal url&gt;/apps/webappviewer/index.html?</span></span>  and includes one or more of the parameters listed below. To include more than one parameter, use an ampersand (&amp;) to separate the parameters. For example:</p>
+<div class="codeblock" purpose="codeblock"><div class="highlight"><pre><code>http://&lt;your portal url&gt;/apps/webappviewer/index.html?id=6815e148ff1c4aee8dc7159816380a4d&amp;webmap=9cf053ea602345ddae060010c470e615
+</code></pre></div>
+</div><div class="section1" id="GUID-5353A623-5E61-4DBD-BE58-B60274FB6D7F" purpose="section1"><h2>
+Open saved app
+</h2><p id="GUID-DA1FC45A-F93A-4D7D-BE1D-BA2A139269B1">To open a saved app created with Web AppBuilder, use id= and the unique ID of the app. For example:</p><div class="codeblock" purpose="codeblock"><div class="highlight"><pre><code>http://&lt;your portal url&gt;/apps/webappviewer/index.html?id=6815e148ff1c4aee8dc7159816380a4d
+</code></pre></div>
+</div></div>
+<div class="section1" id="ESRI_SECTION1_F70E9F0E4D394AB0959E38677B66144A" purpose="section1"><h2>Define web map</h2><p id="GUID-0ED9AD91-7B37-4142-AE6D-F35924C07FB1"> To define the web map, use webmap= and the unique ID of the web map. For example:</p><div class="codeblock" purpose="codeblock"><div class="highlight"><pre><code>http://&lt;your portal url&gt;/apps/webappviewer/index.html?webmap=9cf053ea602345ddae060010c470e615
+</code></pre></div>
+</div></div><div class="section1" id="ESRI_SECTION1_DFA518B2DF5945EFB77D1C925DA2CF76" purpose="section1"><h2>Center map</h2><p id="GUID-BDA3F704-735D-4FAD-A83E-638E2C135C2B"> To center the map at a particular location,
+set center= using geographic coordinates (x,y) or projected
+coordinates (x,y,WKID). You can use commas or semicolons as
+separators. Use semicolons if your numbers use colons as their
+decimals.</p><p id="GUID-0FEF6967-99C3-4209-AA93-754C3EB99A46"> Geographic coordinates example</p><div class="codeblock" purpose="codeblock"><div class="highlight"><pre><code>http://&lt;your portal url&gt;/apps/webappviewer/index.html?center=34,-50
+</code></pre></div>
+</div><p id="GUID-4A3FC794-8F03-4DD2-8AC6-9BFBDC26199F"></p><p id="GUID-4430E7EF-9A81-46C0-A317-817D9D6E1166"> Projected coordinates example</p><div class="codeblock" purpose="codeblock"><div class="highlight"><pre><code>http://&lt;your portal url&gt;/apps/webappviewer/index.html?center=500000,5500000,102100
+</code></pre></div>
+</div></div><div class="section1" id="ESRI_SECTION1_406F3A2E62CF4737ACD37B0ABD562E91" purpose="section1"><h2>Define scale level</h2><p id="GUID-6FA70EE6-1EF0-4676-AB00-B0A266EF5824">To define the scale level of the map, use the center= and level= parameters. The level parameter accepts the level ID of the cache scale as listed in  the map service's REST endpoint.  For example:</p><div class="codeblock" purpose="codeblock"><div class="highlight"><pre><code>http://&lt;your portal url&gt;/apps/webappviewer/index.html?center=20,45&amp;level=4
+</code></pre></div>
+</div></div><div class="section1" id="ESRI_SECTION1_D62E5FCABC6E471DB3B0CD44E88FFFF2" purpose="section1"><h2>Define scale</h2><p id="GUID-802DAAFD-FC4F-40E7-AD5F-ED9158E850BC">To define the scale  of the map, use the center= and scale= parameters. The scale parameter   accepts the cache scale  as listed in  the map service's  REST endpoint. For example:</p><div class="codeblock" purpose="codeblock"><div class="highlight"><pre><code>http://&lt;your portal url&gt;/apps/webappviewer/index.html?center=20,45&amp;scale=4622324
+</code></pre></div>
+</div></div><div class="section1" id="ESRI_SECTION1_7D207DF919C049D68B7F9E1423962B4E" purpose="section1"><h2>Define extent</h2><p id="GUID-E94AF6E8-6BA2-49C1-804A-EBBDDF152042">To define the extent of the map, use extent= to define the extent of the map. The extent parameter accepts geographic coordinates (GCS) as MinX,MinY,MaxX,MaxY or projected coordinates (PCS) as MinX,MinY,MaxX,MaxY,WKID. You can use commas or semicolons as separators. Use semicolons if your numbers use colons as their decimals.</p><p id="GUID-47CF7105-9643-4BF7-ABDC-4A83804080B8"> Geographic coordinates example</p><div class="codeblock" purpose="codeblock"><div class="highlight"><pre><code>http://&lt;your portal url&gt;/apps/webappviewer/index.html?extent=-117.20,34.055,-117.19,34.06
+</code></pre></div>
+</div><p id="GUID-2590ADD2-DE18-47DB-AADA-73AA217EA94A"></p><p id="GUID-CDD92F8A-C0D3-4ED7-A1E2-16969B5282DD"> Projected coordinates example</p><div class="codeblock" purpose="codeblock"><div class="highlight"><pre><code>http://&lt;your portal url&gt;/apps/webappviewer/index.html?extent=-13079253.954115,3959110.38566837,-12918205.318785,4086639.70193162,102113
+</code></pre></div>
+</div></div><div class="footer"> Copyright © 1995-2015 Esri. All rights reserved. </div></div></body></html>

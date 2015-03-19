@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Servis bulunamadı.',
-      unableConnectTo: 'Buraya bağlanılamıyor:'
+      unableConnectTo: 'Buraya bağlanılamıyor:',
+      invalidUrlTip: 'Girdiğiniz URL geçersiz veya erişilemez.'
     },
     serviceBrowser: {
       noGpFound: 'Coğrafi işlem servisi bulunamadı.',
@@ -174,26 +175,27 @@
         invalidSQL: "Geçersiz SQL ifadesi.",
         cantParseSQL: "SQL ifadesi ayrıştırılamadı."
       },
-      caseSensitive: "Büyük/Küçük Harf Duyarlı"
+      caseSensitive: "Büyük/Küçük Harf Duyarlı",
+      notSupportCaseSensitiveTip: "Barındırılan hizmetler büyük küçük harf duyarlı sorgulamayı desteklemez."
     },
 
     featureLayerSource: {
       layer: "Katman",
       browse: "Gözat",
       selectFromMap: "Haritadan seç",
-      selectFromPortal: "Portal\'dan ekle",
+      selectFromPortal: "Portal for ArcGIS\'ten ekle",
       addServiceUrl: "Servis URL\'si ekle",
       inputLayerUrl: "Girdi Katmanı URL\'si",
       selectLayer: "Geçerli haritadan bir detay katmanı seçin.",
       chooseItem: "Bir detay katmanı öğesi seçin.",
       setServiceUrl: "Detay servisinin ya da harita servisinin URL\'sini girin.",
-      selectFromOnline: "Çevrimiçi\'nden Ekle",
+      selectFromOnline: "ArcGIS Online\'dan Ekle",
       chooseLayer: "Bir özellik katmanı seçin."
     },
     gpSource: {
-      selectFromPortal: "Portal\'dan Ekle",
+      selectFromPortal: "Portal for ArcGIS\'ten ekle",
       addServiceUrl: "Servis URL\'si ekle",
-      selectFromOnline: "Online içinden ekle",
+      selectFromOnline: "ArcGIS Online\'dan Ekle",
       setServiceUrl: "Coğrafi işlem hizmetinin URL\'sini girin.",
       chooseItem: "Bir coğrafi işlem hizmet öğesi seçin.",
       chooseTask: "Bir coğrafi işlem görevi seçin."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Harita",
       selectWebMap: "Web Haritası Seç",
-      addMapFromOnlineOrPortal: "ArcGIS Online genel kaynaklarından veya ArcGIS Online veya Portal\'daki özel içeriğinizden gelen uygulamada kullanılmak üzere bir web haritası bulun ve ekleyin.",
+      addMapFromOnlineOrPortal: "ArcGIS Online genel kaynaklarından veya ArcGIS Online veya Portal\'daki özel içeriğinizden gelen uygulamada bir web haritası bulun ve buraya ekleyin.",
       searchMapName: "Harita adına göre ara...",
       searchNone: "Aradığınızı bulamadık. Yeniden deneyin.",
       groups: "Gruplar",
@@ -247,7 +249,7 @@
       invalidType: "Geçersiz dosya türü.",
       exceed: "Dosya boyutu 1024 KB\'yi aşamaz",
       enableFlash: "YAPILACAK: Flash\'ı etkinleştirin.",
-      toolTip: "En iyi sonuçlar için görüntü ${width} piksel genişliğinde ve ${height} piksel yüksekliğinde olmalıdır. Diğer boyutlar sığacak şekilde ayarlanacaktır. Kabul edilebilir görüntü formatları: PNG, GIF ve JPEG."
+      toolTip: "En iyi sonuç için görüntü ${width} piksel genişliğinde ve ${height} piksel yüksekliğinde olmalıdır. Diğer boyutlar sığacak şekilde ayarlanır. Kabul edilen görüntü biçimleri: PNG, GIF ve JPEG."
     },
     simpleTable: {
       moveUp: 'Yukarı taşı',

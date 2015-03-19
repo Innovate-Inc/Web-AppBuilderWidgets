@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Ingen tjeneste funnet.',
-      unableConnectTo: 'Kan ikke koble til'
+      unableConnectTo: 'Kan ikke koble til',
+      invalidUrlTip: 'URL-en du har angitt, er ugyldig eller ikke tilgjengelig.'
     },
     serviceBrowser: {
       noGpFound: 'Fant ingen geoprosesseringstjeneste.',
@@ -174,26 +175,27 @@
         invalidSQL: "Ugyldig SQL-uttrykk.",
         cantParseSQL: "Kan ikke analysere SQL-uttrykket."
       },
-      caseSensitive: "Skille mellom store og små bokstaver"
+      caseSensitive: "Skille mellom store og små bokstaver",
+      notSupportCaseSensitiveTip: "Hostene tjenester støtter ikke spørringer som skiller mellom små og store bokstaver."
     },
 
     featureLayerSource: {
       layer: "Lag",
       browse: "Bla gjennom",
       selectFromMap: "Velg fra kart",
-      selectFromPortal: "Legg til fra portal",
+      selectFromPortal: "Legg til fra Portal for ArcGIS",
       addServiceUrl: "Legg til tjeneste-URL",
       inputLayerUrl: "Angi kartlag-URL",
       selectLayer: "Velg et geoobjektslag i gjeldende kart.",
       chooseItem: "Velg et geoobjektslagelement.",
       setServiceUrl: "Angi URL-adressen for geoobjekts- eller karttjeneste.",
-      selectFromOnline: "Legg til fra nettet",
+      selectFromOnline: "Legg til fra ArcGIS Online",
       chooseLayer: "Velg et geoobjektslag."
     },
     gpSource: {
-      selectFromPortal: "Legg til fra portal",
+      selectFromPortal: "Legg til fra Portal for ArcGIS",
       addServiceUrl: "Legg til tjeneste-URL",
-      selectFromOnline: "Legg til fra nettet",
+      selectFromOnline: "Legg til fra ArcGIS Online",
       setServiceUrl: "Oppgi URL-en for geoprosesseringstjenesten.",
       chooseItem: "Velg et element for geoprosesseringstjenesten.",
       chooseTask: "Velg en geoprosesseringsoppgave."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Kart",
       selectWebMap: "Velg webkart",
-      addMapFromOnlineOrPortal: "Finn og legg til et webkart som skal brukes i programmet fra ArcGIS Onlines offentlige ressurser eller ditt private innhold på ArcGIS Online eller Portal.",
+      addMapFromOnlineOrPortal: "Finn og legg til et webkart som skal brukes i programmet, fra ArcGIS Onlines offentlige ressurser eller ditt private innhold på ArcGIS Online eller Portal.",
       searchMapName: "Søk etter kartnavn ...",
       searchNone: "Vi finner ikke det du leter etter. Prøv på nytt.",
       groups: "Grupper",
@@ -242,12 +244,12 @@
       itemToAttributeTable: 'Åpne attributtabell'
     },
     imageChooser: {
-      unsupportReaderAPI: "TODO: Leser støtter ikke filleser-API",
+      unsupportReaderAPI: "GJØREMÅL: Leseren støtter ikke filleser-API",
       readError: "Kan ikke lese filen.",
       invalidType: "Ugyldig filtype.",
       exceed: "Filstørrelsen må ikke overskride 1 024 kB",
       enableFlash: "TODO: aktiver flash.",
-      toolTip: "Du får best resultater når bildet er ${width} piksler bredt og ${height} piksler høyt. Andre størrelser justeres slik at de passer. Godkjente bildeformater er PNG, GIF og JPEG."
+      toolTip: "Resultatet blir best hvis bildet er ${width} piksler bredt og ${height} piksler høyt. Andre størrelser må justeres for at de skal passe. Godkjente bildeformater er: PNG, GIF og JPEG."
     },
     simpleTable: {
       moveUp: 'Flytt opp',

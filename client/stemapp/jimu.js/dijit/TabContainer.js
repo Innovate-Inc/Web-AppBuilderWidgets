@@ -20,14 +20,12 @@ define(['dojo/_base/declare',
   'dojo/_base/html',
   'dojo/on',
   'dojo/Evented',
-  'dojo/query',
-  'dojo/NodeList-manipulate',
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   './ViewStack',
   '../utils'
 ],
-function(declare, lang, array, html, on, Evented, query, nlm, _WidgetBase, _TemplatedMixin,
+function(declare, lang, array, html, on, Evented, _WidgetBase, _TemplatedMixin,
   ViewStack, utils){
   return declare([_WidgetBase, _TemplatedMixin, Evented], {
     // summary:

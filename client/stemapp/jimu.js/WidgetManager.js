@@ -22,22 +22,15 @@ define(['dojo/_base/declare',
     'dojo/topic',
     'dojo/Evented',
     'dojo/aspect',
-    'dojo/on',
     'dojo/json',
     'dojo/request/xhr',
-    'dojo/i18n',
     'dojo/promise/all',
-    'dojo/query',
-    'dojo/NodeList-traverse',
-    'dojo/dom-geometry',
-    'dojo/dom-style',
-    'esri/request',
     './utils',
     'jimu/tokenUtils',
     './dijit/Message'
   ],
-  function(declare, lang, array, html, Deferred, topic, Evented, aspect, on, json, xhr, i18n,
-    all, query, nlt, domGeometry, domStyle, esriRequest, utils, tokenUtils, Message) {
+  function(declare, lang, array, html, Deferred, topic, Evented, aspect, json, xhr,
+    all, utils, tokenUtils, Message) {
     var instance = null,
       clazz = declare(Evented, {
 
@@ -49,11 +42,22 @@ define(['dojo/_base/declare',
           //{id: widgetId, action: {}}
           this.missedActions = [];
 
-          topic.subscribe("appConfigLoaded", lang.hitch(this, this._onAppConfigLoaded));
-          topic.subscribe("appConfigChanged", lang.hitch(this, this._onAppConfigChanged));
+          if(window.isBuilder){
+            topic.subscribe("app/mapLoaded", lang.hitch(this, this._onMapLoaded));
+            topic.subscribe("app/mapChanged", lang.hitch(this, this._onMapChanged));
+          }else{
+            topic.subscribe("mapLoaded", lang.hitch(this, this._onMapLoaded));
+            topic.subscribe("mapChanged", lang.hitch(this, this._onMapChanged));
+          }
 
-          topic.subscribe("mapLoaded", lang.hitch(this, this._onMapLoaded));
-          topic.subscribe("mapChanged", lang.hitch(this, this._onMapChanged));
+          if(window.isBuilder){
+            topic.subscribe("app/appConfigLoaded", lang.hitch(this, this._onAppConfigLoaded));
+            topic.subscribe("app/appConfigChanged", lang.hitch(this, this._onAppConfigChanged));
+          }else{
+            topic.subscribe("appConfigLoaded", lang.hitch(this, this._onAppConfigLoaded));
+            topic.subscribe("appConfigChanged", lang.hitch(this, this._onAppConfigChanged));
+          }
+
 
           topic.subscribe('userSignIn', lang.hitch(this, this._onUserSignIn));
           topic.subscribe('userSignOut', lang.hitch(this, this._onUserSignOut));
@@ -235,13 +239,15 @@ define(['dojo/_base/declare',
           }
           setting.appConfig = this.appConfig;
 
-          // for IE8 
+          // for IE8
           var setting2 = {};
           for (var prop in setting) {
             if (setting.hasOwnProperty(prop)) {
               setting2[prop] = setting[prop];
             }
           }
+
+          setting2.widgetManager = this;
 
           widget = new clazz(setting2);
           widget.clazz = clazz;
@@ -518,7 +524,7 @@ define(['dojo/_base/declare',
             }
             var configFile = utils.processUrlInAppConfig(setting.config);
             // The widgetConfig filename is dependent on widget label,
-            // IE8 & IE9 do not encode automatically while attempt to request file.  
+            // IE8 & IE9 do not encode automatically while attempt to request file.
             var configFileArray = configFile.split('/');
             configFileArray[configFileArray.length - 1] =
               encodeURIComponent(configFileArray[configFileArray.length - 1]);
@@ -571,7 +577,7 @@ define(['dojo/_base/declare',
               }
             }
           }));
-          
+
           return def;
         },
 
@@ -751,28 +757,28 @@ define(['dojo/_base/declare',
           lang.mixin(w.config, config);
         },
 
-        _onActionTriggered: function(id, action, data) {
-          if (id === 'map' || id === 'app') {
+        _onActionTriggered: function(info) {
+          if (info.elementId === 'map' || info.elementId === 'app') {
             return;
           }
-          var m = this.getWidgetById(id);
+          var m = this.getWidgetById(info.elementId);
           if (!m) {
             this.missedActions.push({
-              id: id,
+              id: info.elementId,
               action: {
-                name: action,
-                data: data
+                name: info.action,
+                data: info.data
               }
             });
           } else {
-            m.onAction(action, data);
+            m.onAction(info.action, info.data);
           }
-          //may be the controller widget also need process the action 
+          //may be the controller widget also need process the action
           array.forEach(this.getControllerWidgets(), function(ctrlWidget) {
-            if (ctrlWidget.widgetIsControlled(id)) {
-              ctrlWidget.onAction(action, {
-                widgetId: id,
-                data: data
+            if (ctrlWidget.widgetIsControlled(info.elementId)) {
+              ctrlWidget.onAction(info.action, {
+                widgetId: info.elementId,
+                data: info.data
               });
             }
           }, this);

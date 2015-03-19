@@ -131,6 +131,7 @@ function(declare, _BasicServiceBrowser, lang, array, Deferred, all, jimuUtils) {
 
     //must return a deffered
     _searchServiceUrlLessThan10: function(serviceUrl, serviceItem, serviceMeta, directLayers){
+      /*jshint unused: false*/
       var resultDef = new Deferred();
 
       var defs = array.map(directLayers, lang.hitch(this, function(layer) {
@@ -167,6 +168,7 @@ function(declare, _BasicServiceBrowser, lang, array, Deferred, all, jimuUtils) {
 
     //must return a deffered
     _searchServiceUrlGreaterEqual10: function(serviceUrl, serviceItem, serviceMeta, directLayers){
+      /*jshint unused: false*/
       var resultDef = new Deferred();
 
       var urlAllLayers = serviceUrl + '/layers';

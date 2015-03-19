@@ -7,7 +7,7 @@ define([
   var queryObject = ioquery.queryToObject(search.substring(1, search.length));
 
   if(queryObject.testfile){
-    doh.register(queryObject.testfile,url + "?file=" + queryObject.testfile,30000);
+    doh.register(queryObject.testfile,url + "?file=" + queryObject.testfile,900000);
     return;
   }
   doh.register('widget manager tests',url + "?file=test-widgetmanager",30000);

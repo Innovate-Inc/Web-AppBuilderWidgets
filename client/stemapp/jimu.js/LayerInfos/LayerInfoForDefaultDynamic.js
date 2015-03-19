@@ -16,12 +16,8 @@
 
 define([
   'dojo/_base/declare',
-  'dojo/_base/array',
-  'dojo/_base/lang',
-  'esri/graphicsUtils',
-  'dojo/aspect',
   './LayerInfoForDefaultService'
-], function(declare, array, lang, graphicsUtils, aspect, LayerInfoForDefaultService) {
+], function(declare, LayerInfoForDefaultService) {
   var clazz = declare(LayerInfoForDefaultService, {
 
     // operLayer = {

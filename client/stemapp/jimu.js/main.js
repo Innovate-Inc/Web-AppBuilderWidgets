@@ -84,6 +84,16 @@ define(["./ConfigManager",
         ioArgs.url = ioArgs.url.replace(patt, '//');
       }
 
+      //working around an arcgis server feature service bug.
+      //Requests to queryRelatedRecords operation fail with feature service 10.
+      //Detect if request conatins the queryRelatedRecords operation
+      //and then change the source url for that request to the corresponding mapservice.
+      if (ioArgs.url.indexOf("/queryRelatedRecords?") !== -1) {
+        if (!jimuUtils.isHostedService(ioArgs.url)) { // hosted service doesn't depend on MapServer
+          ioArgs.url = ioArgs.url.replace("FeatureServer", "MapServer");
+        }
+      }
+
       return ioArgs;
     });
 
@@ -129,9 +139,9 @@ define(["./ConfigManager",
       widthBreaks: [600, 1280]
     }, jimuConfig);
 
-    window.wabVersion = '1.1';
-    window.productVersion = 'Web AppBuilder for ArcGIS (Developer Edition) 1.0';
-    // window.productVersion = 'Online 3.6';
+    window.wabVersion = '1.2';
+    window.productVersion = 'Web AppBuilder for ArcGIS (Developer Edition) 1.1';
+    //window.productVersion = 'Online 3.7';
 
     function initApp() {
       var urlParams, configManager, layoutManager;
@@ -139,7 +149,7 @@ define(["./ConfigManager",
       urlParams = getUrlParams();
 
       DataManager.getInstance();
-      
+
       html.setStyle(jimuConfig.loadingId, 'display', 'none');
       html.setStyle(jimuConfig.mainPageId, 'display', 'block');
 

@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Không tìm thấy dịch vụ nào.',
-      unableConnectTo: 'Không thể kết nối với'
+      unableConnectTo: 'Không thể kết nối với',
+      invalidUrlTip: 'URL bạn vừa nhập không hợp lệ hoặc không thể truy cập được.'
     },
     serviceBrowser: {
       noGpFound: 'Không tìm thấy dịch vụ địa xử lý nào.',
@@ -174,26 +175,27 @@
         invalidSQL: "Biểu thức SQL không hợp lệ.",
         cantParseSQL: "Không thể phân tích biểu thức SQL."
       },
-      caseSensitive: "Phân biệt chữ hoa chữ thường"
+      caseSensitive: "Phân biệt chữ hoa chữ thường",
+      notSupportCaseSensitiveTip: "Dịch vụ được lưu trữ không hỗ trợ truy vấn phân biệt chữ hoa chữ thường."
     },
 
     featureLayerSource: {
       layer: "Lớp",
       browse: "Duyệt",
       selectFromMap: "Chọn từ Bản đồ",
-      selectFromPortal: "Thêm từ Cổng thông tin",
+      selectFromPortal: "Thêm từ Portal for ArcGIS",
       addServiceUrl: "Thêm URL Dịch vụ",
       inputLayerUrl: "URL Lớp Đầu vào",
       selectLayer: "Chọn một lớp đối tượng từ bản đồ hiện tại.",
       chooseItem: "Chọn một mục lớp đối tượng.",
       setServiceUrl: "Nhập URL của dịch vụ đối tượng hoặc dịch vụ bản đồ.",
-      selectFromOnline: "Thêm từ Trực tuyến",
+      selectFromOnline: "Thêm từ ArcGIS Online",
       chooseLayer: "Chọn một lớp đối tượng."
     },
     gpSource: {
-      selectFromPortal: "Thêm từ Cổng thông tin",
+      selectFromPortal: "Thêm từ Portal for ArcGIS",
       addServiceUrl: "Thêm URL Dịch vụ",
-      selectFromOnline: "Thêm từ Trực tuyến",
+      selectFromOnline: "Thêm từ ArcGIS Online",
       setServiceUrl: "Nhập URL của dịch vụ địa xử lý.",
       chooseItem: "Chọn một mục dịch vụ địa xử lý.",
       chooseTask: "Chọn một tác vụ địa xử lý."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Bản đồ",
       selectWebMap: "Chọn Bản đồ Web",
-      addMapFromOnlineOrPortal: "Tìm và thêm bản đồ web sẽ sử dụng trong ứng dụng từ các tài nguyên công khai của ArcGIS Online hoặc nội dung riêng tư của bạn trong ArcGIS Online hoặc Cổng thông tin.",
+      addMapFromOnlineOrPortal: "Tìm và thêm bản đồ web trong ứng dụng từ các tài nguyên công khai của ArcGIS Online hoặc nội dung riêng tư của bạn trong ArcGIS Online hoặc Portal.",
       searchMapName: "Tìm kiếm theo tên bản đồ...",
       searchNone: "Chúng tôi không thể tìm thấy nội dung bạn đang tìm kiếm. Vui lòng thử lại.",
       groups: "Nhóm",
@@ -212,7 +214,7 @@
       myOrganization: "Tổ chức của tôi",
       myGroup: "Nhóm của tôi",
       myContent: "Nội dung của tôi",
-      count: "Đếm",
+      count: "Số lượng",
       fromPortal: "từ Cổng thông tin",
       fromOnline: "từ ArcGIS.com",
       noneThumbnail: "Hình thu nhỏ không khả dụng",
@@ -242,7 +244,7 @@
       itemToAttributeTable: 'Mở Bảng Thuộc tính'
     },
     imageChooser: {
-      unsupportReaderAPI: "CẦN LÀM: Trình duyệt không hỗ trợ API bộ đọc tệp",
+      unsupportReaderAPI: "CẦN LÀM: Trình duyệt này không hỗ trợ API bộ đọc tệp",
       readError: "Không thể đọc tệp.",
       invalidType: "Loại tệp không hợp lệ.",
       exceed: "Kích cỡ tệp không được vượt quá 1024 KB",

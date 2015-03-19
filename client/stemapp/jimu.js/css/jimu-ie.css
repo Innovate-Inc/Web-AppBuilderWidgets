@@ -64,6 +64,10 @@
   filter: Alpha(opacity=60);
   -ms-filter: "Alpha(opacity=60)";
 }
+.app-widgets .moveable.hide {
+  filter: Alpha(opacity=50);
+  -ms-filter: "Alpha(opacity=50)";
+}
 
 /*jimu.css*/
 .jimu-preload-widget-icon,

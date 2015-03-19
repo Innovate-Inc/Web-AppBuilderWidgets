@@ -19,13 +19,12 @@ define([
     'dojo/_base/html',
     'dojo/_base/lang',
     'dojo/on',
-    'dojo/Evented',
     'dojo/Deferred',
     'dojo/aspect',
     'esri/request',
     'dijit/form/ValidationTextBox'
   ],
-  function(declare, html, lang, on, Evented, Deferred, aspect, esriRequest, ValidationTextBox) {
+  function(declare, html, lang, on, Deferred, aspect, esriRequest, ValidationTextBox) {
     return declare([ValidationTextBox], {
       _validatingNode: null,
       _validNode: null,

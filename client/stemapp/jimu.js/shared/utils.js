@@ -14,7 +14,7 @@
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
 
-define(function() {
+define(['./basePortalUrlUtils'], function(basePortalUrlUtils) {
   var mo = {};
 
   var widgetProperties = ['inPanel', 'hasLocale', 'hasStyle', 'hasConfig', 'hasUIFile',
@@ -22,6 +22,8 @@ define(function() {
   'keepConfigAfterMapSwithched', 'isController', 'hasVersionManager', 'isThemeWidget'];
 
   mo.visitElement = visitElement;
+
+  mo.getConfigElementById = getConfigElementById;
   
   mo.getWidgetNameFromUri = getWidgetNameFromUri;
 
@@ -30,6 +32,15 @@ define(function() {
   mo.widgetProperties = widgetProperties;
 
   mo.processWidgetProperties = processWidgetManifestProperties;
+
+  mo.isHostedService = function (url) {
+    //http://services.arcgis.com/XXX/arcgis/rest/services/s/FeatureServer
+    var server = basePortalUrlUtils.getServerByUrl(url);
+    var r = server + "/[^/]+/[^/]+/rest/services";
+    var regExp = new RegExp(r,"gi");
+    var isHosted = regExp.test(url);
+    return isHosted;
+  };
 
   //add default value for widget properties.
   function processWidgetManifestProperties(manifest){
@@ -50,34 +61,76 @@ define(function() {
     });
   }
   
-  function visitElement(config, cb) {
+  function visitElement(appConfig, cb) {
+    /*the cb signature: cb(element, info), the info object:
+      {
+        index:
+        isWidget: 
+        groupId: the groupId can be: groupId, widgetOnScreen, widgetPool
+        isThemeWidget:
+        isOnScreen:
+      }
+    */
+
     visitBigSection('widgetOnScreen', cb);
     visitBigSection('widgetPool', cb);
 
     function visitBigSection(section, cb){
-      var i, j, isThemeWidget;
-      if (config[section]) {
-        if (config[section].groups) {
-          for (i = 0; i < config[section].groups.length; i++) {
-            cb(config[section].groups[i], i, false);
-            for (j = 0; j < config[section].groups[i].widgets.length; j++) {
-              isThemeWidget = config[section].groups[i].widgets[j].uri &&
-                config[section].groups[i].widgets[j].uri
-                .indexOf('themes/' + config.theme.name) > -1;
-              cb(config[section].groups[i].widgets[j], j, isThemeWidget);
+      var i, j, group, widget, isOnScreen = (section === 'widgetOnScreen');
+      if (appConfig[section]) {
+        if (appConfig[section].groups) {
+          for (i = 0; i < appConfig[section].groups.length; i++) {
+            group = appConfig[section].groups[i];
+            cb(group, {
+              index: i,
+              isWidget: false,
+              groupId: group.id,
+              isThemeWidget: false,
+              isOnScreen: isOnScreen
+            });
+            for (j = 0; j < appConfig[section].groups[i].widgets.length; j++) {
+              widget = appConfig[section].groups[i].widgets[j];
+              cb(widget, {
+                index: j,
+                isWidget: true,
+                groupId: group.id,
+                isThemeWidget: widget.uri &&
+                               widget.uri.indexOf('themes/' + appConfig.theme.name) > -1,
+                isOnScreen: isOnScreen
+              });
             }
           }
         }
 
-        if (config[section].widgets) {
-          for (i = 0; i < config[section].widgets.length; i++) {
-            isThemeWidget = config[section].widgets[i].uri &&
-                config[section].widgets[i].uri.indexOf('themes/' + config.theme.name) > -1;
-            cb(config[section].widgets[i], i, isThemeWidget);
+        if (appConfig[section].widgets) {
+          for (i = 0; i < appConfig[section].widgets.length; i++) {
+            widget = appConfig[section].widgets[i];
+            cb(appConfig[section].widgets[i], {
+              index: i,
+              isWidget: true,
+              groupId: section,
+              isThemeWidget: widget.uri &&
+                             widget.uri.indexOf('themes/' + appConfig.theme.name) > -1,
+              isOnScreen: isOnScreen
+            });
           }
         }
       }
     }
+  }
+
+  function getConfigElementById(appConfig, id){
+    var c;
+    if(id === 'map'){
+      return appConfig.map;
+    }
+    visitElement(appConfig, function(e){
+      if(e.id === id){
+        c = e;
+        return true;
+      }
+    });
+    return c;
   }
 
   function getWidgetNameFromUri(uri) {

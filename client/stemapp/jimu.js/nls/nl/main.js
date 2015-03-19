@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Er zijn geen services gevonden.',
-      unableConnectTo: 'Kan geen verbinding maken met'
+      unableConnectTo: 'Kan geen verbinding maken met',
+      invalidUrlTip: 'De URL die u hebt ingevoerd, is ongeldig of ontoegankelijk.'
     },
     serviceBrowser: {
       noGpFound: 'Er zijn geen geoprocessingservices gevonden.',
@@ -174,26 +175,27 @@
         invalidSQL: "Ongeldige SQL-expressie.",
         cantParseSQL: "Kan de SQL-expressie niet parseren."
       },
-      caseSensitive: "Hoofdletter gevoelig"
+      caseSensitive: "Hoofdletter gevoelig",
+      notSupportCaseSensitiveTip: "Hosted services ondersteunen geen hoofdlettergevoelige query."
     },
 
     featureLayerSource: {
       layer: "Kaartlaag",
       browse: "Bladeren",
       selectFromMap: "Selecteren in kaart",
-      selectFromPortal: "Toevoegen van portaal",
+      selectFromPortal: "Toevoegen vanuit Portal for ArcGIS",
       addServiceUrl: "Service-URL toevoegen",
       inputLayerUrl: "URL van invoerlaag",
       selectLayer: "Selecteer een objectlaag in de huidige kaart.",
       chooseItem: "Kies een objectlaagitem.",
       setServiceUrl: "Voer de URL van de featureservice of mapservice in.",
-      selectFromOnline: "Toevoegen vanaf Online",
+      selectFromOnline: "Toevoegen vanuit ArcGIS Online",
       chooseLayer: "Kies een objectlaag."
     },
     gpSource: {
-      selectFromPortal: "Toevoegen vanaf Portal",
+      selectFromPortal: "Toevoegen vanuit Portal for ArcGIS",
       addServiceUrl: "Service-URL toevoegen",
-      selectFromOnline: "Toevoegen vanaf Online",
+      selectFromOnline: "Toevoegen vanuit ArcGIS Online",
       setServiceUrl: "Voer de URL van de geoprocessingservice in.",
       chooseItem: "Kies een geoprocessingservice-item.",
       chooseTask: "Kies een geoprocessingtaak."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Kaart",
       selectWebMap: "Webmap kiezen",
-      addMapFromOnlineOrPortal: "Zoek en voeg een webmap toe die moet worden gebruikt in de applicatie vanaf openbare ArcGIS Online-bronnen of uw privécontent in ArcGIS Online of Portal.",
+      addMapFromOnlineOrPortal: "Zoek en voeg een webmap toe in de applicatie vanaf openbare ArcGIS Online-bronnen of uw privécontent in ArcGIS Online of Portal.",
       searchMapName: "Zoeken op naam van kaart...",
       searchNone: "We hebben niet gevonden wat u zocht. Probeer opnieuw.",
       groups: "Groepen",
@@ -242,12 +244,12 @@
       itemToAttributeTable: 'Attribuuttabel openen'
     },
     imageChooser: {
-      unsupportReaderAPI: "TAAK: Browser biedt geen ondersteuning voor bestandslezer-API",
+      unsupportReaderAPI: "TAAK: De browser biedt geen ondersteuning voor bestandslezer-API",
       readError: "Kan het bestand niet lezen.",
       invalidType: "Ongeldig bestandstype.",
       exceed: "Bestandsgrootte mag niet groter zijn dan 1024 KB",
       enableFlash: "TAAK: schakel Flash in.",
-      toolTip: "Voor de beste resultaten moet de afbeelding ${width} pixels breed zijn bij ${height} pixels hoog. Andere formaten worden aangepast om te passen. Geaccepteerde afbeeldingsformaten zijn: PNG, GIF en JPEG."
+      toolTip: "Voor de beste weergave moet de afbeelding ${width} pixels breed en ${height} pixels hoog zijn. Andere formaten worden passend gemaakt. Aanvaardbare afbeeldingsindelingen zijn: PNG, GIF en JPEG."
     },
     simpleTable: {
       moveUp: 'Naar boven verplaatsen',

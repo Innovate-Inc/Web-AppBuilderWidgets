@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'ไม่พบเซอร์วิสที่ค้นหา',
-      unableConnectTo: 'ไม่สามารถเชื่อมต่อไปยัง'
+      unableConnectTo: 'ไม่สามารถเชื่อมต่อไปยัง',
+      invalidUrlTip: 'URL ที่คุณป้อนไม่ถูกต้องหรือไม่สามารถเข้าถึง'
     },
     serviceBrowser: {
       noGpFound: 'ไม่พบเซอร์วิสกระบวนการทางภูมิศาสตร์ที่ค้นหา',
@@ -174,26 +175,27 @@
         invalidSQL: "สูตรคำนวณ SQL ไม่ถูกต้อง",
         cantParseSQL: "ไม่สามารถแยกสูตรคำนวณ SQL ได้"
       },
-      caseSensitive: "ตัวอักษรใหญ่หรือเล็กมีความสำคัญ"
+      caseSensitive: "ตัวอักษรใหญ่หรือเล็กมีความสำคัญ",
+      notSupportCaseSensitiveTip: "บริการโฮสต์ข้อมูลไม่สนับสนุนการสอบถามเป็นกรณี ๆ"
     },
 
     featureLayerSource: {
       layer: "ชั้นข้อมูล",
       browse: "เบราว์",
       selectFromMap: "เลือกจากแผนที่",
-      selectFromPortal: "เพิ่มจาก Portal",
+      selectFromPortal: "เพิ่มจาก Portal for ArcGIS",
       addServiceUrl: "เพิ่ม URL เซอร์วิส",
       inputLayerUrl: "นำเข้าชั้นข้อมูล URL",
       selectLayer: "เลือกชั้นข้อมูลฟีเจอร์จากแผนที่ปัจจุบัน",
       chooseItem: "เลือกขั้นข้อมูลฟีเจอร์",
       setServiceUrl: "ตั้งค่าเซอร์วิส URL หรือเซอร์วิสแผนที่",
-      selectFromOnline: "เพิ่มจาก Online",
+      selectFromOnline: "เพิ่มจาก ArcGIS Online",
       chooseLayer: "เลือกชั้นข้อมูลฟีเจอร์"
     },
     gpSource: {
-      selectFromPortal: "เพิ่มจากพอร์ทัล",
+      selectFromPortal: "เพิ่มจาก Portal for ArcGIS",
       addServiceUrl: "เพิ่ม Service URL",
-      selectFromOnline: "เพิ่มจาก Online",
+      selectFromOnline: "เพิ่มจาก ArcGIS Online",
       setServiceUrl: "กรอก URL ของ GeoProcessing Service",
       chooseItem: "เลือกรายการข้อมูล GeoProcessing Service",
       chooseTask: "เลือกรายการทำงานของ GeoProessing"

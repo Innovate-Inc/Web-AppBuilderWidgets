@@ -18,18 +18,14 @@ define([
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/html',
-  'dojo/on',
-  'dojo/dom-construct',
-  'dojo/mouse',
-  'dojo/query',
   'dijit/_WidgetBase'
 ],
-function (declare, lang, html, on, domConstruct, mouse, query, _WidgetBase) {
-  
+function (declare, lang, html, _WidgetBase) {
+
   return declare([_WidgetBase], {
     baseClass: 'jimu-tile-container',
     declaredClass: 'jimu.dijit.TileLayoutContainer',
-    
+
     /**
     * Layout the items depends the strategy: fixWidth, breakWidth, fixCols
     * fixWidth:
@@ -54,7 +50,8 @@ function (declare, lang, html, on, domConstruct, mouse, query, _WidgetBase) {
     **/
     constructor: function(){
       this.items = [];
-      this.margin = 15;
+      this.hmargin = 15;
+      this.vmargin = 15;
     },
 
     startup: function(){
@@ -120,8 +117,8 @@ function (declare, lang, html, on, domConstruct, mouse, query, _WidgetBase) {
       box = html.getMarginBox(this.domNode);
 
       itemSize = this.getItemSize(box);
-      cpr = Math.floor((box.w + this.margin) / (itemSize.width + this.margin));
-      
+      cpr = Math.floor((box.w + this.hmargin) / (itemSize.width + this.hmargin));
+
       this.items.forEach(lang.hitch(this, function(item, i){
         this.setItemPosition(item, i, itemSize, cpr);
       }));
@@ -141,7 +138,7 @@ function (declare, lang, html, on, domConstruct, mouse, query, _WidgetBase) {
           }
         }
       }else if(this.strategy === 'fixCols'){
-        size.width = (box.w - this.margin * (this.maxCols - 1)) / this.maxCols;
+        size.width = (box.w - this.hmargin * (this.maxCols - 1)) / this.maxCols;
         if(typeof this.itemSize.height === 'number'){
           size.height = this.itemSize.height;
         }else{
@@ -158,13 +155,16 @@ function (declare, lang, html, on, domConstruct, mouse, query, _WidgetBase) {
       var row = Math.ceil(i / cpr);
 
       if(col === 0){
-        col = 2;
+        col = cpr;
       }
       var itemStyle = {
         position: 'absolute',
-        left: ((this.margin + itemSize.width) * (col - 1)) + 'px',
-        top: ((this.margin + itemSize.height) * (row - 1)) + 'px'
+        top: ((this.vmargin + itemSize.height) * (row - 1)) + 'px'
       };
+
+      itemStyle[window.isRTL? 'right': 'left'] =
+        ((this.hmargin + itemSize.width) * (col - 1)) + 'px';
+
       if (itemSize.width >= 0){
         itemStyle.width = itemSize.width + 'px';
       }

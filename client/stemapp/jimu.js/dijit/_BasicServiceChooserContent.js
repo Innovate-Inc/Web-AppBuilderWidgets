@@ -122,14 +122,58 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     //to be override,return a service browser
     _createServiceBrowser: function(args){/* jshint unused: false */},
 
+    //to be override,return a bool value
+    _validateUrl: function(url){
+      url = url.replace(/\/*$/g, '');
+      var matchResult = url.match(/\/rest\/services\/*(.*)/gi);
+      if(matchResult && matchResult.length > 0){
+        //"/rest/services/SampleWorldCities/MapServer/"
+        var url2 = matchResult[0];
+        //"SampleWorldCities/MapServer/"
+        var url3 = url2.replace(/\/rest\/services\/*/,"");
+        if(url3){
+          var splits = url3.split("/");
+          if(splits.length === 1){
+            //url ends with folder name
+            //url: http://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation
+            return true;
+          }else if(splits.length === 2){
+            //url ends with service type
+            //url: http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/MapServer
+            return this.serviceBrowser.isServiceTypeSupported(splits[1]);
+          }else if(splits.length >= 3){
+            //url ends with service type and has folder
+            //url:http://sampleserver6/arcgis/rest/services/SampleWorldCities/MapServer/0
+            //or
+            //url:http://sampleserver6/arcgis/rest/services/Elevation/WorldElevations/MapServer
+            var b1 = this.serviceBrowser.isServiceTypeSupported(splits[1]);
+            var b2 = this.serviceBrowser.isServiceTypeSupported(splits[2]);
+            return b1 || b2;
+          }
+        }else{
+          //url ends with "rest/services"
+          //url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services"
+          return true;
+        }
+      }else{
+        return false;
+      }
+    },
+
     _afterUrlValidate: function(isValidate){
       var disabledClass = 'jimu-state-disabled';
+
+      if(isValidate){
+        var url = this.urlInput.get('value');
+        isValidate = this._validateUrl(url);
+      }
+
       if(isValidate){
         html.removeClass(this.btnValidate, disabledClass);
-      }
-      else{
+      }else{
         html.addClass(this.btnValidate, disabledClass);
       }
+
       return isValidate;
     },
 

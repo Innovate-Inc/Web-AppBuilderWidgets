@@ -22,23 +22,18 @@ define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/html',
   'dojo/_base/array',
-  'dojo/query',
   'dojo/on',
-  'dojo/Deferred',
-  'dojo/promise/all',
   'dojo/store/Memory',
   'dojo/store/Observable',
   'dijit/tree/ObjectStoreModel',
   'jimu/dijit/_Tree',
-  'dijit/registry',
   'esri/request',
-  'jimu/dijit/Message',
   'jimu/dijit/LoadingIndicator',
   'jimu/LayerInfos/LayerInfos'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented, lang, html,
- array, query, on, Deferred, all, Memory, Observable, ObjectStoreModel, Tree, registry, esriRequest,
- Message, LoadingIndicator, LayerInfos) {
+ array, on, Memory, Observable, ObjectStoreModel, Tree, esriRequest,
+ LoadingIndicator, LayerInfos) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
     templateString:'<div style="width:100%;">' +
       '<div class="error-tip-section">' +
@@ -97,6 +92,17 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
     getSelectedItems: function(){
       var items = this.tree.getSelectedItems();
       return items;//lang.mixin([],items);
+    },
+
+    getAllItems: function(){
+      var items = this.tree.getAllItems();
+      var retItems = [];
+      array.forEach(items,function(item){
+        if(item.id !== 'root'){
+          retItems.push(item);
+        }
+      });
+      return retItems;
     },
 
     setCreateMapResponse: function(createMapResponse){

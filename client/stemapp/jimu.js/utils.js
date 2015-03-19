@@ -26,8 +26,6 @@ define(['dojo/_base/lang',
     'dojo/on',
     'dojo/json',
     'dojo/cookie',
-    'dojo/request/xhr',
-    'dojo/i18n',
     'dojo/number',
     'dojo/date/locale',
     'esri/arcgis/utils',
@@ -43,11 +41,13 @@ define(['dojo/_base/lang',
   ],
 
 function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json, cookie,
-  xhr, i18n, dojoNumber, dateLocale, arcgisUtils,
+  dojoNumber, dateLocale, arcgisUtils,
   SpatialReference, Extent, webMercatorUtils, GeometryService, ProjectParameters,
   portalUrlUtils, esriUrlUtils, esriRequest, sharedUtils) {
   /* global esriConfig, dojoConfig, ActiveXObject */
   var mo = {};
+
+  nlt = null;
 
   var servicesObj = {
     geometryService: 'http://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer'
@@ -79,7 +79,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
           type: "text/css"
         }, document.getElementsByTagName('head')[0]);
       }
-    
+
       if(styleNode.styleSheet && !styleNode.sheet){
         //for IE
         styleNode.styleSheet.cssText=cssStr;
@@ -89,7 +89,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
       def.resolve('load');
       return def;
     }
-    
+
     if (beforeId) {
       styleLinkNode = html.create('link', {
         id: id,
@@ -121,16 +121,22 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
           return true;
         }
       })) {
-        if (!def.isFulfilled() && (loadedSheet.cssRules && loadedSheet.cssRules.length ||
-          loadedSheet.rules && loadedSheet.rules.length)) {
-          def.resolve('load');
+        try{
+          if (!def.isFulfilled() && (loadedSheet.cssRules && loadedSheet.cssRules.length ||
+            loadedSheet.rules && loadedSheet.rules.length)) {
+            def.resolve('load');
+          }
+          clearInterval(ti);
+        }catch(err){
+          //In FF, we can't access .cssRules before style sheet is loaded,
+          //but FF will emit load event. So, we catch this error and do nothing,
+          //just wait for FF to emit load event and go on.
         }
-        clearInterval(ti);
       }
     }, 50);
     return def;
   }
-  
+
   function addRelativePathInCss(css, rpath){
     var m = css.match(/url\([^)]+\)/gi), i, m2;
 
@@ -203,7 +209,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     d = Math.floor(abs);
     m = Math.floor((abs - d) * 60);
     s = (((abs - d) * 60 - m) * 60).toFixed(2);
-    //00B0 id degree character    
+    //00B0 id degree character
     text = d + '\u00B0' + ((m < 10) ? ('0' + m) : m) + '\'' + ((s < 10) ? ('0' + s) : s) + '"';
     return text;
   };
@@ -300,7 +306,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
       if (isNaN(x) && isNaN(y) && typeof x === 'number' && typeof y === 'number') {
         return true;
       }
-      // Compare primitives and functions.     
+      // Compare primitives and functions.
       // Check if both arguments link to the same object.
       // Especially useful on step when comparing prototypes
       if (x === y) {
@@ -600,7 +606,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
       setting.thumbnail = setting.amdFolder + 'images/thumbnail.png';
     }
 
-    //setting.label has been processed when loading config.      
+    //setting.label has been processed when loading config.
     return setting;
   };
 
@@ -931,6 +937,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     var splits = serverName.split('.');
     var length = splits.length;
     var domains = array.map(splits, lang.hitch(this, function(v, index){
+      // jshint unused:false
       var arr = splits.slice(index, length);
       var str = "";
       var lastIndex = arr.length - 1;
@@ -1138,7 +1145,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     var widgetSearchStr = "widgets\\[.+\\]";
     var sectionConfig = config;
     var sectionKey    = key;
-    
+
     // Do not merge fields that in the widget config,
     // beacuse widgetConfig has not been loaded before open
     // widget if the widget has not been edited yet.
@@ -1360,7 +1367,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
       def.resolve(manifest);
       return def;
     }
-    
+
     //theme or widget label
     var key = manifest.category === 'widget'? '_widgetLabel': '_themeLabel';
     require(mo.getRequireConfig(), ['dojo/i18n!' + manifest.amdFolder + '/nls/strings'],
@@ -1422,20 +1429,27 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     }else {
       _pattern = "#,###,###,##0";
     }
-    
+
     var _options = {
       locale: config.locale,
       pattern: _pattern
     };
     lang.mixin(_options, options || {});
-    return dojoNumber.format(num, _options);
+
+    try {
+      var fn = dojoNumber.format(num, _options);
+      return fn;
+    } catch (err) {
+      console.error(err);
+      return num.toLocaleString();
+    }
   };
 
   /*
   *Optional
   *An object with the following properties:
   *pattern (String, optional):
-  *override formatting pattern with this string. Default value is based on locale. 
+  *override formatting pattern with this string. Default value is based on locale.
    Overriding this property will defeat localization. Literal characters in patterns
    are not supported.
   *type (String, optional):
@@ -1457,7 +1471,13 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
       locale: config.locale
     };
     lang.mixin(_options, options || {});
-    return dojoNumber.parse(numStr, _options);
+    try {
+      var dn = dojoNumber.parse(numStr, _options);
+      return dn;
+    } catch(err) {
+      console.error(err);
+      return numStr;
+    }
   };
 
   /*
@@ -1488,7 +1508,20 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
       fullYear: true
     };
     lang.mixin(_options, options || {});
-    return dateLocale.format(d, _options);
+    
+    try {
+      var ld = dateLocale.format(d, _options);
+      return ld;
+    } catch(err) {
+      console.error(err);
+      if (_options.selector === 'date') {
+        return d.toLocaleDateString();
+      } else if (_options.selector === 'time') {
+        return d.toLocaleTimeString();
+      } else {
+        return d.toLocaleString();
+      }
+    }
   };
 
   mo.addRelativePathInCss = addRelativePathInCss;
@@ -1499,6 +1532,39 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
         return false;
       }
       return url.startWith('http') || url.startWith('/');
+    },
+
+    removeQueryParamFromUrl: function(url, paramName){
+      var urlObject = esriUrlUtils.urlToObject(url);
+      if(urlObject.query){
+        delete urlObject.query[paramName];
+      }
+      var ret = urlObject.path;
+      for(var q in urlObject.query){
+        if(ret === urlObject.path){
+          ret = ret + '?' + q + '=' + urlObject.query[q];
+        }else{
+          ret = ret + '&' + q + '=' + urlObject.query[q];
+        }
+      }
+      return ret;
+    },
+
+    addQueryParamToUrl: function(url, paramName, paramValue){
+      var urlObject = esriUrlUtils.urlToObject(url);
+      if(!urlObject.query){
+        urlObject.query = {};
+      }
+      urlObject.query[paramName] = paramValue;
+      var ret = urlObject.path;
+      for(var q in urlObject.query){
+        if(ret === urlObject.path){
+          ret = ret + '?' + q + '=' + urlObject.query[q];
+        }else{
+          ret = ret + '&' + q + '=' + urlObject.query[q];
+        }
+      }
+      return ret;
     }
   };
 
@@ -1509,7 +1575,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     if(url.startWith('data:') || url.startWith('http') || url.startWith('/')){
       return url;
     }else if(url.startWith('${appPath}')){
-      return url.replace('${appPath}', window.appPath);
+      return url.replace('${appPath}', window.appInfo.appPath);
     }else{
       return widgetFolderUrl + url;
     }
@@ -1522,7 +1588,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     if(url.startWith('data:') || url.startWith('http') || url.startWith('/')){
       return url;
     }else{
-      return window.appPath + url;
+      return window.appInfo.appPath + url;
     }
   };
 
@@ -1530,7 +1596,18 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     //url:https://gallery.chn.esri.com:3344/webappbuilder/?action=setportalurl
     //result:https://gallery.chn.esri.com:3344/webappbuilder/
     var loc = window.location;
-    return loc.protocol + "//" + loc.host + loc.pathname;
+    var retUrl = loc.protocol + "//" + loc.host + loc.pathname;
+
+    var urlObject = esriUrlUtils.urlToObject(loc.href);
+    if(urlObject.query && urlObject.query.apiurl){
+      retUrl = mo.url.addQueryParamToUrl(retUrl, 'apiurl', urlObject.query.apiurl);
+    }
+
+    return retUrl;
+  };
+
+  mo.getDefaultWebMapThumbnail = function(){
+    return require.toUrl('jimu/images/webmap.png');
   };
 
   return mo;

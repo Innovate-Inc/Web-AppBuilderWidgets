@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Aucun service n’a été trouvé.',
-      unableConnectTo: 'Connexion impossible à'
+      unableConnectTo: 'Connexion impossible à',
+      invalidUrlTip: 'L\'URL que vous avez saisie est incorrecte ou inaccessible.'
     },
     serviceBrowser: {
       noGpFound: 'Aucun service de géotraitement n’a été trouvé.',
@@ -174,26 +175,27 @@
         invalidSQL: "Expression SQL non valide.",
         cantParseSQL: "Impossible d’analyser l’expression SQL."
       },
-      caseSensitive: "Respecter la casse"
+      caseSensitive: "Respecter la casse",
+      notSupportCaseSensitiveTip: "Les services hébergés ne prennent pas en charge les requêtes respectant la casse."
     },
 
     featureLayerSource: {
       layer: "Couche",
       browse: "Parcourir",
       selectFromMap: "Sélectionner dans la carte",
-      selectFromPortal: "Ajouter depuis le portail",
+      selectFromPortal: "Ajouter depuis Portal for ArcGIS",
       addServiceUrl: "Ajouter une URL de service",
       inputLayerUrl: "URL de la couche en entrée",
       selectLayer: "Sélectionnez une couche d’entités dans la carte actuelle.",
       chooseItem: "Choisissez un élément de couche d’entités.",
       setServiceUrl: "Entrez l’URL du service d’entités ou du service de carte.",
-      selectFromOnline: "Ajouter depuis Online",
+      selectFromOnline: "Ajouter depuis ArcGIS Online",
       chooseLayer: "Choisissez une couche d’entités."
     },
     gpSource: {
-      selectFromPortal: "Ajouter depuis Portal",
+      selectFromPortal: "Ajouter depuis Portal for ArcGIS",
       addServiceUrl: "Ajouter une URL de service",
-      selectFromOnline: "Ajouter depuis Online",
+      selectFromOnline: "Ajouter depuis ArcGIS Online",
       setServiceUrl: "Saisissez l\'URL du service de géotraitement.",
       chooseItem: "Choisissez un élément de service de géotraitement.",
       chooseTask: "Choisissez une tâche de géotraitement."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Carte",
       selectWebMap: "Choisir une carte Web",
-      addMapFromOnlineOrPortal: "Recherchez et ajoutez une carte Web à utiliser dans l’application à partir des ressources publiques d’ArcGIS Online ou de votre contenu privé dans ArcGIS Online ou Portal for ArcGIS.",
+      addMapFromOnlineOrPortal: "Recherchez et ajoutez une carte Web dans l\'application à partir des ressources publiques d\'ArcGIS Online ou de votre contenu privé dans ArcGIS Online ou Portal for ArcGIS.",
       searchMapName: "Rechercher par nom de carte...",
       searchNone: "Votre recherche n’a pas abouti. Réessayez.",
       groups: "Groupes",
@@ -242,12 +244,12 @@
       itemToAttributeTable: 'Ouvrir la table attributaire'
     },
     imageChooser: {
-      unsupportReaderAPI: "A FAIRE : le navigateur ne prend pas en charge l’API du lecteur de fichiers",
+      unsupportReaderAPI: "A FAIRE : le navigateur ne prend pas en charge l\'API du lecteur de fichiers",
       readError: "Echec de la lecture du fichier.",
       invalidType: "Type de fichier non valide.",
       exceed: "La taille du fichier ne peut pas dépasser 1 024 Ko",
       enableFlash: "A FAIRE : activez Flash.",
-      toolTip: "Pour optimiser les résultats, l’image doit être de ${width} pixels en largeur par ${height} pixels en hauteur. Les autres tailles sont ajustées en conséquence. Les formats d’'image acceptables sont : PNG, GIF et JPEG."
+      toolTip: "Pour optimiser les résultats, l\'image doit être de ${width} pixels en largeur sur ${height} pixels en hauteur. Les autres tailles sont ajustées en conséquence. Les formats d\'image acceptables sont : PNG, GIF et JPEG."
     },
     simpleTable: {
       moveUp: 'Monter',

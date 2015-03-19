@@ -22,16 +22,14 @@ define([
   'dojo/text!./templates/GpSource.html',
   'dojo/_base/lang',
   'dojo/_base/html',
-  'dojo/_base/array',
   'dojo/on',
   'dojo/Evented',
-  'dojo/query',
   'jimu/dijit/GpChooserFromPortal',
   'jimu/dijit/_GpServiceChooserContent',
   'jimu/portalUrlUtils'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-  template, lang, html, array, on, Evented, query, GpChooserFromPortal,
+  template, lang, html, on, Evented, GpChooserFromPortal,
   _GpServiceChooserContent, portalUrlUtils) {
 
   return declare([_WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin, Evented], {

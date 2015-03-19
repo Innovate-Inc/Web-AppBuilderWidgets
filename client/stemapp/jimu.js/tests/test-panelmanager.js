@@ -1,7 +1,7 @@
 require(["doh/runner", 'jimu/PanelManager', 'jimu/WidgetManager', 'dojo/on',
   'dojo/dom-construct', 'dojo/query'],
 function(doh, PanelManager, WidgetManager, on, domConstruct, query) {
-  appPath = '/portal/apps/webappbuilder/stemapp/jimu.js/tests/';
+  window.appInfo = {appPath: '/portal/apps/webappbuilder/stemapp/jimu.js/tests/'};
 
   jimuConfig = {
     layoutId: 'app-layout'
@@ -24,7 +24,7 @@ function(doh, PanelManager, WidgetManager, on, domConstruct, query) {
   doh.register("panel manager tests", [{
     name: 'test1',
     runTest: function() {
-      
+
       var dohDeferred = new doh.Deferred();
       var widgetConfig = {
         "id": "testwidget1",
@@ -38,7 +38,7 @@ function(doh, PanelManager, WidgetManager, on, domConstruct, query) {
       };
 
       removeAllWidgets(wm);
-      
+
       pm.showPanel(widgetConfig).then(function(panel) {
         on(wm, 'widget-created', function(widget){
           if(widget.id === 'testwidget1'){

@@ -94,7 +94,8 @@ define({
     },
     basicServiceBrowser: {
       noServicesFound: 'No service found.',
-      unableConnectTo: 'Unable to connect to'
+      unableConnectTo: 'Unable to connect to',
+      invalidUrlTip: 'The URL you have entered is invalid or inaccessible.'
     },
     serviceBrowser: {
       noGpFound: 'No geoprocessing service found.',
@@ -174,26 +175,27 @@ define({
         invalidSQL: "Invalid SQL expression.",
         cantParseSQL: "Can't parse the SQL expression."
       },
-      caseSensitive: "Case Sensitive"
+      caseSensitive: "Case Sensitive",
+      notSupportCaseSensitiveTip: "Hosted services do not support case-sensitive query."
     },
 
     featureLayerSource: {
       layer: "Layer",
       browse: "Browse",
       selectFromMap: "Select from Map",
-      selectFromPortal: "Add from Portal",
+      selectFromPortal: "Add from Portal for ArcGIS",
       addServiceUrl: "Add Service URL",
       inputLayerUrl: "Input Layer URL",
       selectLayer: "Select a feature layer from current map.",
       chooseItem: "Choose a feature layer item.",
       setServiceUrl: "Enter the URL of feature service or map service.",
-      selectFromOnline: "Add from Online",
+      selectFromOnline: "Add from ArcGIS Online",
       chooseLayer: "Choose a feature layer."
     },
     gpSource: {
-      selectFromPortal: "Add from Portal",
+      selectFromPortal: "Add from Portal for ArcGIS",
       addServiceUrl: "Add Service URL",
-      selectFromOnline: "Add from Online",
+      selectFromOnline: "Add from ArcGIS Online",
       setServiceUrl: "Enter the URL of geoprocessing service.",
       chooseItem: "Choose a geoprocessing service item.",
       chooseTask: "Choose a geoprocessing task."
@@ -201,7 +203,7 @@ define({
     itemSelector: {
       map: "Map",
       selectWebMap: "Choose Web Map",
-      addMapFromOnlineOrPortal: "Find and add a web map to be used in the application from ArcGIS Online public resources or your private content in ArcGIS Online or Portal.",
+      addMapFromOnlineOrPortal: "Find and add a web map in the application from ArcGIS Online public resources or your private content in ArcGIS Online or Portal.",
       searchMapName: "Search by map name...",
       searchNone: "We couldn't find what you were looking for. Please try again.",
       groups: "Groups",
@@ -242,12 +244,12 @@ define({
       itemToAttributeTable: 'Open Attribute Table'
     },
     imageChooser: {
-      unsupportReaderAPI: "TODO: Browser not suport file reader API",
+      unsupportReaderAPI: "TODO: The browser does not suport file reader API",
       readError: "Failed to read the file.",
       invalidType: "Invalid file type.",
       exceed: "File size cannot exceed 1024 KB",
       enableFlash: "TODO: please enable flash.",
-      toolTip: "For best results, the image should be ${width} pixels wide by ${height} pixels high. Other sizes will be adjusted to fit. Acceptable image formats are: PNG, GIF and JPEG."
+      toolTip: "For the best result, the image should be ${width} pixels wide by ${height} pixels high. Other sizes will be adjusted to fit. Acceptable image formats are: PNG, GIF and JPEG."
     },
     simpleTable: {
       moveUp: 'Move up',
@@ -260,6 +262,7 @@ define({
   "cs": 1,
   "da": 1,
   "de": 1,
+  "el": 1,
   "es": 1,
   "et": 1,
   "fi": 1,

@@ -9,7 +9,7 @@
     errorCode: "コード",
     errorMessage: "メッセージ",
     errorDetail: "詳細",
-    widgetPlaceholderTooltip: "これを設定するには、ウィジェットに移動して、対応するプレースホルダをクリックします",
+    widgetPlaceholderTooltip: "これを設定するには、ウィジェットに移動して、対応するプレースホルダーをクリックします",
     symbolChooser: {
       preview: 'プレビュー',
       basic: '基本',
@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'サービスが見つかりませんでした。',
-      unableConnectTo: '次に接続できません:'
+      unableConnectTo: '次に接続できません:',
+      invalidUrlTip: '入力した URL は無効であるか、アクセスできません。'
     },
     serviceBrowser: {
       noGpFound: 'ジオプロセシング サービスが見つかりませんでした。',
@@ -116,9 +117,9 @@
       invalidUrl: '無効な URL です。'
     },
     filterBuilder: {
-      addAnotherExpression: "フィルタの条件式を追加",
+      addAnotherExpression: "フィルターの条件式を追加",
       addSet: "式セットの追加",
-      matchMsg: "次の条件式の ${any_or_all} に一致するレイヤのフィーチャを取得",
+      matchMsg: "次の条件式の ${any_or_all} に一致するレイヤーのフィーチャを取得",
       matchMsgSet: "このセットの次の条件式の${any_or_all}に当てはまります。",
       all: "すべて",
       any: "一部",
@@ -168,32 +169,33 @@
       prompt: "プロンプト",
       hint: "ヒント",
       error: {
-        invalidParams: "無効なパラメータです。",
+        invalidParams: "無効なパラメーターです。",
         invalidUrl: "無効な URL です。",
-        noFilterFields: "レイヤには、フィルタに使用できるフィールドがありません。",
+        noFilterFields: "レイヤーには、フィルターに使用できるフィールドがありません。",
         invalidSQL: "無効な SQL 式です。",
         cantParseSQL: "SQL 式を解析できません。"
       },
-      caseSensitive: "大文字/小文字を区別します"
+      caseSensitive: "大文字/小文字を区別します",
+      notSupportCaseSensitiveTip: "ホスト サービスでは、大文字/小文字を区別するクエリはサポートされていません。"
     },
 
     featureLayerSource: {
-      layer: "レイヤ",
+      layer: "レイヤー",
       browse: "参照",
       selectFromMap: "マップから選択",
-      selectFromPortal: "ポータルから追加",
+      selectFromPortal: "Portal for ArcGIS から追加",
       addServiceUrl: "サービス URL を追加",
-      inputLayerUrl: "レイヤ URL を入力",
-      selectLayer: "現在のマップからフィーチャ レイヤを選択",
-      chooseItem: "フィーチャ レイヤ アイテムを選択",
+      inputLayerUrl: "レイヤー URL を入力",
+      selectLayer: "現在のマップからフィーチャ レイヤーを選択",
+      chooseItem: "フィーチャ レイヤー アイテムを選択",
       setServiceUrl: "フィーチャ サービスまたはマップ サービスの URL を入力",
-      selectFromOnline: "オンラインから追加",
-      chooseLayer: "フィーチャ レイヤを選択します。"
+      selectFromOnline: "ArcGIS Online から追加",
+      chooseLayer: "フィーチャ レイヤーを選択します。"
     },
     gpSource: {
-      selectFromPortal: "ポータルから追加",
+      selectFromPortal: "Portal for ArcGIS から追加",
       addServiceUrl: "サービス URL の追加",
-      selectFromOnline: "オンラインから追加",
+      selectFromOnline: "ArcGIS Online から追加",
       setServiceUrl: "ジオプロセシング サービスの URL を入力します。",
       chooseItem: "ジオプロセシング サービス アイテムを選択します。",
       chooseTask: "ジオプロセシング タスクを選択します。"
@@ -201,12 +203,12 @@
     itemSelector: {
       map: "マップ",
       selectWebMap: "Web マップの選択",
-      addMapFromOnlineOrPortal: "アプリケーションで使用する Web マップを、ArcGIS Online のパブリック コンテンツから検索するか、ArcGIS Online または Portal のプライベート コンテンツから検索して追加します。",
+      addMapFromOnlineOrPortal: "アプリケーションの Web マップを、ArcGIS Online のパブリック コンテンツから検索するか、ArcGIS Online または Portal のプライベート コンテンツから検索して追加します。",
       searchMapName: "マップ名で検索...",
       searchNone: "検索対象が見つかりませんでした。もう一度試してください。",
       groups: "グループ",
       noneGroups: "グループはありません",
-      signInTip: "ログイン セッションの期限が切れています。ブラウザを更新して、ポータルにもう一度サイン インしてください。",
+      signInTip: "ログイン セッションの期限が切れています。ブラウザーを更新して、ポータルにもう一度サイン インしてください。",
       signIn: "サイン イン",
       publicMap: "パブリック",
       myOrganization: "組織",
@@ -225,12 +227,12 @@
       notSupportQuery: "サービスはクエリをサポートしていません。"
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "マップで利用できるレイヤはありません。"
+      noLayersTip: "マップで利用できるレイヤーはありません。"
     },
     layerInfosMenu: {
       titleBasemap: 'ベースマップ',
-      titleLayers: '操作レイヤ',
-      labelLayer: 'レイヤ名',
+      titleLayers: '操作レイヤー',
+      labelLayer: 'レイヤー名',
       itemZoomTo: 'ズーム',
       itemTransparency: '透過表示',
       itemTransparent: '透明',
@@ -242,7 +244,7 @@
       itemToAttributeTable: '属性テーブルを開く'
     },
     imageChooser: {
-      unsupportReaderAPI: "TODO: ファイル リーダー API をサポートしないブラウザ",
+      unsupportReaderAPI: "TODO: ブラウザーはファイル リーダー API をサポートしていません",
       readError: "ファイルの読み込みに失敗しました。",
       invalidType: "無効なファイル タイプです。",
       exceed: "ファイル サイズが 1024 KB を超えてはいけません。",

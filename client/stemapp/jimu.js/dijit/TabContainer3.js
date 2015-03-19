@@ -81,6 +81,63 @@ function(declare, lang, array, html, on, Evented, query,
       this.emit('tabChanged', title);
     },
 
+    addTab: function(tabConfig){
+      if(!this.average){
+        //remove last td int this.tabTr
+        var lastTd = query('td:last-child',this.tabTr);
+        if(lastTd.length > 0){
+          html.destroy(lastTd[0]);
+        }
+      }
+
+      //create tab
+      var tabsHasSameTitle = array.filter(this.tabs,function(tab){
+        return tab.title === tabConfig.title;
+      });
+      if(tabsHasSameTitle.length > 0){
+        console.error('tab title conflict: ' + tabConfig.title);
+        return;
+      }
+      this.tabs.push(tabConfig);
+      this._createTab(tabConfig);
+
+      if(!this.average){
+        var strTabItemTd='<td nowrap class="tab-item-td" style="border-bottom:1px solid #ccc;">'+
+        '<div class="tab-item-div"></div></td>';
+        var tabItemTd = html.toDom(strTabItemTd);
+        html.place(tabItemTd,this.tabTr);
+      }
+    },
+
+    removeTab: function(title){
+      var idx = -1;
+      var result = array.some(this.tabs,function(item,i){
+        if(item.title === title){
+          idx = i;
+          return true;
+        }
+      });
+
+      if(result){
+        //remove from this.tabs
+        var removedTab = this.tabs.splice(idx,1)[0];
+        //remove from this.tabTr
+        var tdItems = query('td',this.tabTr);
+        var tdToRemove;
+        var tdSelected = array.some(tdItems,function(tdItem){
+          if(tdItem.label === title){
+            tdToRemove = tdItem;
+            return true;
+          }
+        });
+        if(tdSelected){
+          html.destroy(tdToRemove);
+        }
+        //remove from this.viewStack
+        this.viewStack.removeView(removedTab.content);
+      }
+    },
+
     showShelter: function(){
       html.setStyle(this.shelter,'display','block');
     },

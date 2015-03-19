@@ -25,14 +25,13 @@ define([
   'dojo/_base/array',
   'dojo/on',
   'dojo/Evented',
-  'dojo/query',
   'jimu/dijit/FeaturelayerChooserFromMap',
   'jimu/dijit/FeaturelayerChooserFromPortal',
   'jimu/dijit/_FeaturelayerServiceChooserContent',
   'jimu/portalUrlUtils'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-  template, lang, html, array, on, Evented, query, FeaturelayerChooserFromMap,
+  template, lang, html, array, on, Evented, FeaturelayerChooserFromMap,
   FeaturelayerChooserFromPortal, _FeaturelayerServiceChooserContent, portalUrlUtils) {
   //define private dijit FeaturelayerChooserWithButtons
   var baseClassArr = [_WidgetBase,_TemplatedMixin,_WidgetsInTemplateMixin,Evented];

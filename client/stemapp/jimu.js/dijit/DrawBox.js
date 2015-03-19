@@ -25,44 +25,50 @@ define([
   'dojo/_base/array',
   'dojo/on',
   'dojo/query',
+  'dojo/Evented',
   'esri/layers/GraphicsLayer',
   'esri/graphic',
   'esri/toolbars/draw',
   'esri/symbols/jsonUtils'
 ],
 function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
-  template, lang, html, array, on, query,
+  template, lang, html, array, on, query, Evented,
   GraphicsLayer, Graphic, Draw, jsonUtils) {
-  return declare([_WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin], {
+  return declare([_WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin, Evented], {
     templateString:template,
     baseClass: 'jimu-draw-box',
     declaredClass: 'jimu.dijit.DrawBox',
     nls:null,
+    drawLayer:null,
+    drawLayerId:null,
+    drawToolBar:null,
+    
+    //options:
     types:null,//['point','polyline','polygon','text']
+    map:null,
     pointSymbol:null,
     polylineSymbol:null,
     polygonSymbol:null,
     textSymbol:null,
-    map:null,
-    drawLayer:null,
-    drawLayerId:null,
-    drawToolBar:null,
-    showClear:false,
-    keepOneGraphic:false,
-
-    //options:
-    //types
-    //showClear
-    //keepOneGraphic
-    //map
-    //pointSymbol
-    //polylineSymbol
-    //polygonSymbol
-    //textSymbol
+    showClear:false,//show Clear button or not
+    keepOneGraphic:false,//only keep one graphic or not
+    deactivateAfterDrawing: true,//deactivate drawToolbar or not after every drawing
 
     //public methods:
+    //setMap
+    //setPointSymbol
+    //setLineSymbol
+    //setPolygonSymbol
+    //setTextSymbol
+    //addGraphic
+    //removeGraphic
     //clear
+    //activate
     //deactivate
+
+    //events:
+    //icon-selected
+    //draw-end
 
     postMixInProperties:function(){
       this.nls = window.jimuNls.drawBox;
@@ -88,24 +94,14 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     },
 
     disableWebMapPopup:function(){
-      if(this.map && this.map.webMapResponse){
-        var handler = this.map.webMapResponse.clickEventHandle;
-        if(handler){
-          handler.remove();
-          this.map.webMapResponse.clickEventHandle = null;
-        }
+      if(this.map){
+        this.map.setInfoWindowOnClick(false);
       }
     },
 
     enableWebMapPopup:function(){
-      if(this.map && this.map.webMapResponse){
-        var handler = this.map.webMapResponse.clickEventHandle;
-        var listener = this.map.webMapResponse.clickEventListener;
-        if(listener && !handler){
-          this.map.webMapResponse.clickEventHandle=on(this.map,
-                                                      'click',
-                                                      lang.hitch(this.map,listener));
-        }
+      if(this.map){
+        this.map.setInfoWindowOnClick(true);
       }
     },
 
@@ -163,17 +159,44 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     },
 
     deactivate:function(){
-      //this.enableWebMapPopup();
-	  this.map.setInfoWindowOnClick(true);    //DY 2/25/15
+      this.enableWebMapPopup();
       if(this.drawToolBar){
         this.drawToolBar.deactivate();
       }
       query('.draw-item',this.domNode).removeClass('selected');
     },
 
-    onIconSelected:function(target,geotype,commontype){/*jshint unused: false*/},
+    activate: function(tool){
+      //tool available values: 
+      //POINT
+      //LINE,POLYLINE,FREEHAND_POLYLINE
+      //TRIANGLE,EXTENT,CIRCLE,ELLIPSE,POLYGON,FREEHAND_POLYGON
+      //TEXT
+      var itemIcon = null;
+      var items = query('.draw-item', this.domNode);
+      if(tool === 'TEXT'){
+        tool = 'POINT';
+        itemIcon = this.textIcon;
+      }else{
+        var filterItems = items.filter(function(itemNode){
+          return itemNode.getAttribute('data-geotype') === tool;
+        });
+        if(filterItems.length > 0){
+          itemIcon = filterItems[0];
+        }
+      }
+      if(itemIcon){
+        this._activate(itemIcon);
+      }
+    },
 
-    onDrawEnd:function(graphic,geotype,commontype){/*jshint unused: false*/},
+    onIconSelected:function(target, geotype, commontype){
+      this.emit("icon-selected", target, geotype, commontype);
+    },
+
+    onDrawEnd:function(graphic, geotype, commontype){
+      this.emit('draw-end', graphic, geotype, commontype);
+    },
 
     onClear:function(){},
 
@@ -244,16 +267,26 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
 
     _onItemClick:function(event){
       var target = event.target||event.srcElement;
-      var items = query('.draw-item',this.domNode);
+      var isSelected = html.hasClass(target, 'selected');
+
+      //toggle tools on and off
+      if(isSelected){
+        this.deactivate();
+      }else{
+        this._activate(target);
+      }
+    },
+
+    _activate: function(itemIcon){
+      var items = query('.draw-item', this.domNode);
       items.removeClass('selected');
-      html.addClass(target,'selected');
-      var geotype = target.getAttribute('data-geotype');
-      var commontype = target.getAttribute('data-commontype');
+      html.addClass(itemIcon, 'selected');
+      var geotype = itemIcon.getAttribute('data-geotype');
+      var commontype = itemIcon.getAttribute('data-commontype');
       var tool = Draw[geotype];
-      //this.disableWebMapPopup();
-	  this.map.setInfoWindowOnClick(false);    //DY 2/25/15
+      this.disableWebMapPopup();
       this.drawToolBar.activate(tool);
-      this.onIconSelected(target,geotype,commontype);
+      this.onIconSelected(itemIcon, geotype, commontype);
     },
 
     _onDrawEnd:function(event){
@@ -280,7 +313,9 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         this.drawLayer.clear();
       }
       this.drawLayer.add(g);
-      this.deactivate();
+      if(this.deactivateAfterDrawing){
+        this.deactivate();
+      }
       this.onDrawEnd(g,geotype,commontype);
     }
 

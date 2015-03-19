@@ -17,16 +17,14 @@
 define(['dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/_base/html',
-    'dojo/_base/array',
     'dojo/on',
-    'dojo/topic',
     'dojo/dnd/move',
     'dijit/_TemplatedMixin',
     'jimu/BaseWidgetPanel',
     'dojox/layout/ResizeHandle'
   ],
   function(
-    declare, lang, html, array, on, topic, Move,
+    declare, lang, html, on, Move,
     _TemplatedMixin, BaseWidgetPanel, ResizeHandle
   ) {
     /* global jimuConfig */
@@ -68,6 +66,7 @@ define(['dojo/_base/declare',
               right: 0,
               height: 'auto'
             });
+            this.panelManager.minimizePanel(this);
           } else {
             //show container
             html.setStyle(this.containerNode, 'display', 'block');
@@ -82,6 +81,7 @@ define(['dojo/_base/declare',
               height: '100%'
             });
           }
+          this.panelManager.maximizePanel(this);
         }
       },
 

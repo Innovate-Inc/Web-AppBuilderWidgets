@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Palvelua ei löytynyt.',
-      unableConnectTo: 'Yhteyttä kohteeseen ei voi muodostaa.'
+      unableConnectTo: 'Yhteyttä kohteeseen ei voi muodostaa.',
+      invalidUrlTip: 'Syötetty URL on virheellinen, tai se ei ole käytettävissä.'
     },
     serviceBrowser: {
       noGpFound: 'Geoprosessointipalvelua ei löytynyt.',
@@ -174,26 +175,27 @@
         invalidSQL: "Virheellinen SQL-lauseke.",
         cantParseSQL: "SQL-lauseketta ei voi jäsentää."
       },
-      caseSensitive: "Kirjainkoolla on merkitystä"
+      caseSensitive: "Kirjainkoolla on merkitystä",
+      notSupportCaseSensitiveTip: "Isännöidyt palvelut eivät tue kirjainkoon tunnistavaa kyselyä."
     },
 
     featureLayerSource: {
       layer: "Karttataso",
       browse: "Selaa",
       selectFromMap: "Valitse kartasta",
-      selectFromPortal: "Lisää portaalista",
+      selectFromPortal: "Lisää Portal for ArcGIS:stä",
       addServiceUrl: "Lisää palvelun URL-osoite",
       inputLayerUrl: "Anna karttatason URL-osoite",
       selectLayer: "Valitse kohteen karttataso nykyisestä kartasta.",
       chooseItem: "Valitse kohteen karttataso",
       setServiceUrl: "Anna kohdepalvelun tai karttapalvelun URL-osoite.",
-      selectFromOnline: "Lisää Online-palvelusta",
+      selectFromOnline: "Lisää ArcGIS Online -palvelusta",
       chooseLayer: "Valitse kohdekarttataso."
     },
     gpSource: {
-      selectFromPortal: "Lisää portaalista",
+      selectFromPortal: "Lisää Portal for ArcGIS:stä",
       addServiceUrl: "Lisää palvelun URL-osoite",
-      selectFromOnline: "Lisää Online-palvelusta",
+      selectFromOnline: "Lisää ArcGIS Online -palvelusta",
       setServiceUrl: "Anna geoprosessointipalvelun URL-osoite.",
       chooseItem: "Valitse geoprosessointipalvelun kohde.",
       chooseTask: "Valitse geoprosessointipalvelun tehtävä."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Kartta",
       selectWebMap: "Valitse Web-kartta",
-      addMapFromOnlineOrPortal: "Etsi ja lisää sovelluksessa käytettävä Web-kartta ArcGIS Onlinen julkisista lähteistä tai ArcGIS Onlinen tai portaalin yksityisestä sisällöstäsi.",
+      addMapFromOnlineOrPortal: "Etsi ja lisää sovelluksen Web-kartta ArcGIS Onlinen julkisista lähteistä tai ArcGIS Onlinen tai portaalin yksityisestä sisällöstäsi.",
       searchMapName: "Hae kartan nimellä...",
       searchNone: "Emme löytäneet etsimääsi. Kokeile uudelleen.",
       groups: "Ryhmät",
@@ -242,7 +244,7 @@
       itemToAttributeTable: 'Avaa ominaisuustietotaulu'
     },
     imageChooser: {
-      unsupportReaderAPI: "TODO: Selain ei tue tiedoston lukuohjelman ohjelmointirajapintaa",
+      unsupportReaderAPI: "TEHTÄVÄT: Selain ei tue tiedoston lukuohjelman ohjelmointirajapintaa",
       readError: "Tiedoston luku epäonnistui.",
       invalidType: "Invalid file type.",
       exceed: "Tiedoston koko ei saa ylittää 1024 kt",

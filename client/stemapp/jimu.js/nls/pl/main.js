@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Nie odnaleziono żadnej usługi.',
-      unableConnectTo: 'Nie można nawiązać połączenia z'
+      unableConnectTo: 'Nie można nawiązać połączenia z',
+      invalidUrlTip: 'Wprowadzony adres URL jest nieprawidłowy lub nieosiągalny.'
     },
     serviceBrowser: {
       noGpFound: 'Nie odnaleziono żadnej usługi geoprzetwarzania.',
@@ -174,26 +175,27 @@
         invalidSQL: "Nieprawidłowe wyrażenie SQL",
         cantParseSQL: "Nie można przeanalizować wyrażenia SQL."
       },
-      caseSensitive: "Uwzględnia wielkość liter"
+      caseSensitive: "Uwzględnia wielkość liter",
+      notSupportCaseSensitiveTip: "Hostowane usługi nie obsługują zapytań rozróżniających wielkość liter."
     },
 
     featureLayerSource: {
       layer: "Warstwa",
       browse: "Przeglądaj",
       selectFromMap: "Wybierz na mapie",
-      selectFromPortal: "Dodaj z portalu",
+      selectFromPortal: "Dodaj z witryny Portal for ArcGIS",
       addServiceUrl: "Dodaj adres URL usługi",
       inputLayerUrl: "Adres URL warstwy wejściowej",
       selectLayer: "Zaznacz na bieżącej mapie warstwę obiektów.",
       chooseItem: "Wybierz atrybut warstwy obiektów.",
       setServiceUrl: "Wprowadź adres URL usługi obiektowej lub mapowej.",
-      selectFromOnline: "Dodaj z serwisu ArcGIS Online",
+      selectFromOnline: "Dodaj z usługi ArcGIS Online",
       chooseLayer: "Wybierz warstwę obiektów."
     },
     gpSource: {
-      selectFromPortal: "Dodaj z portalu",
+      selectFromPortal: "Dodaj z witryny Portal for ArcGIS",
       addServiceUrl: "Dodaj adres URL usługi",
-      selectFromOnline: "Dodaj z serwisu ArcGIS Online",
+      selectFromOnline: "Dodaj z usługi ArcGIS Online",
       setServiceUrl: "Wpisz adres URL usługi geoprzetwarzania.",
       chooseItem: "Wybierz element będący usługą geoprzetwarzania.",
       chooseTask: "Wybierz zadanie geoprzetwarzania."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Mapa",
       selectWebMap: "Wybierz mapę internetową",
-      addMapFromOnlineOrPortal: "Wyszukaj mapę internetową spośród zasobów publicznych serwisu ArcGIS Online bądź własnych, prywatnych zasobów serwisu ArcGIS Online lub portalu i dodaj ją do aplikacji.",
+      addMapFromOnlineOrPortal: "Wyszukaj mapę internetową spośród zasobów publicznych usługi cGIS Online bądź własnych, prywatnych zasobów serwisu ArcGIS Online lub Portal i dodaj ją do aplikacji.",
       searchMapName: "Wyszukaj wg nazwy mapy...",
       searchNone: "Nie można odnaleźć wyszukiwanego zasobu. Spróbuj ponownie.",
       groups: "Grupy",
@@ -242,12 +244,12 @@
       itemToAttributeTable: 'Otwórz tabelę atrybutów'
     },
     imageChooser: {
-      unsupportReaderAPI: "DO OPRACOWANIA: Przeglądarka nie obsługuje interfejsu API czytnika plików",
+      unsupportReaderAPI: "DO OPRACOWANIA:  Przeglądarka nie obsługuje interfejsu API czytnika plików",
       readError: "Nie można odczytać pliku.",
       invalidType: "Nieprawidłowy typ plików",
       exceed: "Rozmiar pliku nie może przekraczać 1024 KB",
       enableFlash: "DO WYKONANIA: Włącz technologię Flash.",
-      toolTip: "W celu uzyskania najlepszych rezultatów obraz powinien mieć ${width} piksele(-i) szerokości oraz ${height} piksele(-i) wysokości. Inne rozmiary zostaną dopasowane. Dopuszczalne formaty zdjęć to: PNG, GIF i JPEG."
+      toolTip: "W celu uzyskania najlepszych wyników obraz powinien mieć szerokość ${width} pikseli i wysokość ${height} pikseli.  Inne wielkości zostaną dopasowane.  Akceptowane formaty obrazów:  PNG, GIF i JPEG."
     },
     simpleTable: {
       moveUp: 'Przesuń w górę',

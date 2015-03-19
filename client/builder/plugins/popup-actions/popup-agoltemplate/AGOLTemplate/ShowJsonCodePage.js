@@ -1,0 +1,3 @@
+//>>built
+define(["dojo/_base/declare","dijit/_WidgetBase"],function(b,c){return b([c],{baseClass:"show-json-code-div",postCreate:function(){this.inherited(arguments);this.jsonEditor=ace.edit(this.domNode);this.jsonEditor.setTheme("ace/theme/textmate");this.jsonEditor.setHighlightActiveLine(!0);this.jsonEditor.setValue(JSON.stringify(this.json,null,2));this.jsonEditor.getSession().setMode("ace/mode/json")},setJSON:function(a){this.json=a;this.jsonEditor.setValue(JSON.stringify(this.json,null,2))},getJSON:function(){return JSON.parse(this.jsonEditor.getValue())},
+setConfig:function(a){return this.setJSON(a)},getConfig:function(){return this.getJSON()}})});

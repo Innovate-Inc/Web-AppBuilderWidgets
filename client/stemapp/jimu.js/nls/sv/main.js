@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Ingen tjänst hittades.',
-      unableConnectTo: 'Det gick inte att ansluta till'
+      unableConnectTo: 'Det gick inte att ansluta till',
+      invalidUrlTip: 'Den URL du har angett är ogiltig eller går inte att komma åt.'
     },
     serviceBrowser: {
       noGpFound: 'Ingen geobearbetningstjänst hittades.',
@@ -174,26 +175,27 @@
         invalidSQL: "Ogiltigt SQL-uttryck.",
         cantParseSQL: "Det går inte att tolka SQL-uttrycket."
       },
-      caseSensitive: "Skiftlägeskänsligt"
+      caseSensitive: "Skiftlägeskänsligt",
+      notSupportCaseSensitiveTip: "Värdbaserade tjänster stöder inte skiftlägeskänsliga frågor."
     },
 
     featureLayerSource: {
       layer: "Lager",
       browse: "Bläddra",
       selectFromMap: "Välj från karta",
-      selectFromPortal: "Lägg till från portal",
+      selectFromPortal: "Lägg till från Portal for ArcGIS",
       addServiceUrl: "Lägg till tjänst-URL",
       inputLayerUrl: "Indatalager-URL",
       selectLayer: "Välj ett geoobjektlager i den aktuella kartan.",
       chooseItem: "Välj ett objekt i geoobjektlagret.",
       setServiceUrl: "Ange URL till karttjänsten eller geoobjekttjänsten.",
-      selectFromOnline: "Lägg till från nätet",
+      selectFromOnline: "Lägg till från ArcGIS Online",
       chooseLayer: "Välj ett geoobjektslager."
     },
     gpSource: {
-      selectFromPortal: "Lägg till från portal",
+      selectFromPortal: "Lägg till från Portal for ArcGIS",
       addServiceUrl: "Lägg till tjänst-URL",
-      selectFromOnline: "Lägg till från nätet",
+      selectFromOnline: "Lägg till från ArcGIS Online",
       setServiceUrl: "Ange webbadressen till geobearbetningstjänsten.",
       chooseItem: "Välj ett objekt från geobearbetningstjänsten.",
       chooseTask: "Välj en geobearbetningsåtgärd."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Karta",
       selectWebMap: "Välj webbkarta",
-      addMapFromOnlineOrPortal: "Hitta och lägg till en webbkarta som kan användas i applikationen från publika ArcGIS Online-resurser eller ditt privata innehåll i ArcGIS Online eller Portal.",
+      addMapFromOnlineOrPortal: "Hitta och lägg till en webbkarta i applikationen från offentliga ArcGIS Online-resurser eller ditt privata innehåll i ArcGIS Online eller Portal.",
       searchMapName: "Sök efter kartnamn ...",
       searchNone: "Vi kunde inte hitta det du söker. Försök igen.",
       groups: "Grupper",
@@ -247,7 +249,7 @@
       invalidType: "Ogiltig filtyp.",
       exceed: "Filstorleken får inte överskrida 1 024 KB",
       enableFlash: "TODO: aktivera flash.",
-      toolTip: "För bästa resultat ska bilden vara ${width} pixlar bred och ${height} pixlar hög. Andra storlekar anpassas. Tillåtna format är: PNG, GIF och JPEG."
+      toolTip: "För bästa resultat ska bilden vara ${width} bildpunkter bred och ${height} bildpunkter hög. Andra storlekar justeras för att passa in. Tillåtna bildformat är: PNG, GIF och JPEG."
     },
     simpleTable: {
       moveUp: 'Flytta uppåt',

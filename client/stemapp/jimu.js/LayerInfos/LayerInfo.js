@@ -19,21 +19,16 @@ define([
   'dojo/_base/array',
   'dojo/_base/lang',
   'dojo/Deferred',
-  'esri/graphicsUtils',
-  'dojo/aspect',
-  'dojo/dom-style',
-  'dojo/dom-class',
-  'dojo/dom-attr',
+  'dojo/promise/all',
   //'./NlsStrings',
   'dojo/dom-construct',
   'dojo/topic',
-  'esri/layers/FeatureLayer',
   'esri/config',
   'esri/tasks/ProjectParameters',
   'esri/SpatialReference',
   'esri/geometry/webMercatorUtils'
-], function(declare, array, lang, Deferred, graphicsUtils, aspect, domStyle, domClass, domAttr,
-/*NlsStrings,*/ domConstruct, topic, FeatureLayer, esriConfig, ProjectParameters,
+], function(declare, array, lang, Deferred, all,
+/*NlsStrings,*/ domConstruct, topic, esriConfig, ProjectParameters,
 SpatialReference, webMercatorUtils) {
   return declare(null, {
     originOperLayer: null,
@@ -52,47 +47,6 @@ SpatialReference, webMercatorUtils) {
       this.id = this.originOperLayer.id;
       this.parentLayerInfo = operLayer.parentLayerInfo ? operLayer.parentLayerInfo : null;
       this.nls = window.jimuNls.layerInfosMenu;
-
-      this.popupMenuInfo = {
-        //descriptionTitle: NlsStrings.value.itemDesc,
-        menuItems: [{
-          key: 'zoomto',
-          label: this.nls.itemZoomTo
-        },{
-          key: 'transparency',
-          label: this.nls.itemTransparency
-        },{
-          key: null,
-          label: ''
-        },{
-          key: 'moveup',
-          label: this.nls.itemMoveUp
-        },{
-          key: 'movedown',
-          label: this.nls.itemMoveDown
-        },{
-          key: null,
-          label: ''
-        },{
-          key: 'description',
-          label: '<a class="menu-item-description" target="_blank" href=' +
-                  ((this.layerObject && this.layerObject.url) ? this.layerObject.url : '') + '>' +
-                  this.nls.itemDesc + '</a>'
-        }],
-        deniedItems: []
-      };
-
-      // if (this.layerObject && this.layerObject.url) {
-      //   this.popupMenuInfo.menuItems.push({
-      //     key: null,
-      //     label: ''
-      //   });
-      //   this.popupMenuInfo.menuItems.push({
-      //     key: 'description',
-      //     label: '<a class="menu-item-description" target="_blank" href=' +
-      //       this.layerObject.url +'>' + this.nls.itemDesc + '</a>'
-      //   });
-      // }
     },
 
     init: function() {
@@ -151,12 +105,12 @@ SpatialReference, webMercatorUtils) {
     moveRightOfIndex: function(index) {
       this.map.reorderLayer(this.layerObject, index);
     },
-    
+
+    //callback(layerInfo){
+    // return true;   will interrupte traversal
+    // return false;  contiue traversal
+    //}
     traversal: function(callback) {
-      // callback(this);
-      // array.forEach(this.getSubLayers(), lang.hitch(this, function(subLayerInfo) {
-      //   subLayerInfo.traversal(callback);
-      // }));
       if(callback(this)) {
         return true;
       }
@@ -188,6 +142,7 @@ SpatialReference, webMercatorUtils) {
       }
     },
 
+    // public function, base calss has only.
     setTopLayerVisible: function(visible) {
       var oldIsShowInMap = this.isShowInMap();
       this._setTopLayerVisible(visible);
@@ -302,8 +257,12 @@ SpatialReference, webMercatorUtils) {
 
 
     _isShowInMapChanged: function(oldIsShowInMap) {
-      if (oldIsShowInMap === this.isShowInMap()) {
+      var newIsShowInMap = this.isShowInMap();
+      if (oldIsShowInMap === newIsShowInMap) {
         return;
+      } else if(newIsShowInMap === false) {
+        //hide map's popup.
+        this.map.infoWindow.hide();
       }
       var changedLayerInfos = [];
       this.traversal(function(layerInfo) {
@@ -345,140 +304,16 @@ SpatialReference, webMercatorUtils) {
       // implemented by sub class.
     },
 
-    getDeniedItems: function() {
-      var defRet = new Deferred();
-      var dynamicDeniedItems = [];
-      if (this.isFirst) {
-        dynamicDeniedItems.push('moveup'/*this.nls.itemMoveUp'Move up'*/);
-      } else if (this.isLast) {
-        dynamicDeniedItems.push('movedown'/*this.nls.itemMoveDown'Move down'*/);
-      }
-
-
-      if(!this.layerObject || !this.layerObject.url) {
-        dynamicDeniedItems.push('description'/*this.nls.itemDesc'Description'*/);
-        dynamicDeniedItems.push('download'/*this.nls.itemDownload'Download'*/);
-      }
-
-      // this.getLayerType().then(lang.hitch(this, function(layerType){
-      //   if (layerType !== "FeatureLayer") {
-      //    dynamicDeniedItems.push('table'/*this.nls.itemToAttributeTable'Open attribute table'*/);
-      //   }
-      //   defRet.resolve(this.popupMenuInfo.deniedItems.concat(dynamicDeniedItems));
-      // }), function() {
-      //   defRet.resolve(this.popupMenuInfo.deniedItems.concat(dynamicDeniedItems));
-      // });
-      this.getSupportTableInfo().then(lang.hitch(this, function(result){
-        if (!(result.isSupportedLayer && result.isSupportQuery)) {
-          dynamicDeniedItems.push('table'/*this.nls.itemToAttributeTable'Open attribute table'*/);
-        }
-        defRet.resolve(this.popupMenuInfo.deniedItems.concat(dynamicDeniedItems));
-      }), function() {
-        defRet.resolve(this.popupMenuInfo.deniedItems.concat(dynamicDeniedItems));
-      });
-
-      return defRet;
-    },
-
-    onPopupMenuClick: function(evt) {
-      var result = {
-        closeMenu: true
-      };
-      switch (evt.itemKey) {
-      case 'zoomto'/*this.nls.itemZoomTo'Zoom to'*/:
-        this._onItemZoomToClick(evt);
-        break;
-      case 'moveup'/*this.nls.itemMoveUp'Move up'*/:
-        this._onMoveUpItemClick(evt);
-        break;
-      case 'movedown'/*this.nls.itemMoveDown'Move down'*/:
-        this._onMoveDownItemClick(evt);
-        break;
-      case 'table'/*this.nls.itemToAttributeTable'Open attribute table'*/:
-        this._onTableItemClick(evt);
-        break;
-      // case 'description':
-      // case 'download':
-      //   this._onUrlItemClick(evt);
-      //   break;
-      case 'transparencyChanged':
-        this._onTransparencyChanged(evt);
-        result.closeMenu = false;
-        break;
-
-      }
-      return result;
-    },
-
-    // about popupMenu item click response
-    _onItemZoomToClick: function(evt) {
-      /*jshint unused: false*/
-      //this.map.setExtent(this.getExtent());
-      this.getExtent().then(lang.hitch(this, function(geometries) {
-        this.map.setExtent(geometries[0]);
-      }));
-    },
-
-    _onTransparencyItemClick: function(evt) {
-      /*jshint unused: false*/
-    },
-
-    _onMoveUpItemClick: function(evt) {
-      if (!this.isFirst) {
-        evt.layerListView.moveUpLayer(this.id);
-      }
-    },
-
-    _onMoveDownItemClick: function(evt) {
-      if (!this.isLast) {
-        evt.layerListView.moveDownLayer(this.id);
-      }
-    },
-
-    _onTableItemClick: function(evt) {
-      // old version, send layerObject.
-      // if (this.layerObject.declaredClass === 'esri.layers.FeatureLayer') {
-      //   evt.layerListWidget.publishData({
-      //     'target': 'AttributeTable',
-      //     'layer': this.layerObject
-      //   });
-      // }
-
-      // new version, send layerInfo object.
-      this.getLayerType().then(lang.hitch(this, function(layerType){
-        if (this._getLayerTypesOfSupportTable().indexOf(layerType) >= 0) {
-          evt.layerListWidget.publishData({
-            'target': 'AttributeTable',
-            'layer': this
-          });
-        }
-      }));
-    },
-
-    _onUrlItemClick: function(evt) {
-      /*jshint unused: false*/
-      var a;
-      if (this.layerObject && this.layerObject.url) {
-        a = domConstruct.create('a', {
-          'href': this.layerObject.url,
-          'target': '_blank'
-        });
-        a.click();
-      }
-    },
-
-    _onTransparencyChanged: function(evt) {
-      this.setOpacity(1 - evt.data.newTransValue);
-    },
-
     _getLayerTypesOfSupportTable: function() {
-      var layerTypesOfSupportTable = "FeatureLayer,CSVLayer";
+      var layerTypesOfSupportTable = "FeatureLayer,CSVLayer,Table";
       return layerTypesOfSupportTable;
     },
 
     // return itemId if the layer is added from an item of Portal.
+    // there is _itemId attribute fo LayerObject be added by widget's
+    // result(such as Analysis) 
     _isItemLayer: function() {
-      return this.originOperLayer.itemId;
+      return this.originOperLayer.itemId || this.layerObject._itemId;
     },
 
     //--------------public interface---------------------------
@@ -504,6 +339,14 @@ SpatialReference, webMercatorUtils) {
       }
     },
 
+    isRootLayer: function() {
+      if(!this.parentLayerInfo) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
     isShowInMap: function() {
       var isShow = true;
       var currentLayerInfo = this;
@@ -523,8 +366,16 @@ SpatialReference, webMercatorUtils) {
       return def;
     },
 
+    // now it is used for Attribute.
     getPopupInfo: function() {
       return this.originOperLayer.popupInfo;
+    },
+
+    loadInfoTemplate: function() {
+      // implemented by sub class.
+      var def = new Deferred();
+      def.resolve(null);
+      return def;
     },
 
     getUrl: function() {
@@ -552,12 +403,21 @@ SpatialReference, webMercatorUtils) {
         isSupportQuery: false,
         layerType: null
       };
-      this.getLayerType().then(lang.hitch(this, function(layerType){
+      var typeDef = this.getLayerType();
+      var layerObjectDef = this.getLayerObject();
+
+      all({
+        type: typeDef,
+        layerObject: layerObjectDef
+      }).then(lang.hitch(this, function(res){
+        var layerType = res.type;
+        var layerObject = res.layerObject;
         resultValue.layerType = layerType;
         if (this._getLayerTypesOfSupportTable().indexOf(layerType) >= 0) {
           resultValue.isSupportedLayer = true;
         }
-        if (this.layerObject.capabilities && this.layerObject.capabilities.indexOf("Query") >= 0) {
+        if (!layerObject.url ||
+            (layerObject.capabilities && layerObject.capabilities.indexOf("Query") >= 0)) {
           resultValue.isSupportQuery = true;
         }
         def.resolve(resultValue);

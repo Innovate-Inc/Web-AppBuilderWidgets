@@ -1,5 +1,7 @@
 {
 	"widgets": [
+		"About",
+		"Analysis",
 		"AttributeTable",
 		"BasemapGallery",
 		"Bookmark",
@@ -20,6 +22,7 @@
 		"Query",
 		"Scalebar",
 		"Splash",
-		"About"
+		"Swipe",
+		"TimeSlider"
 	]
 }

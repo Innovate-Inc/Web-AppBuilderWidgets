@@ -35,10 +35,10 @@ function (declare, lang, array, html, baseFx, Deferred, on, aspect, require, uti
       this.widgetManager = WidgetManager.getInstance();
       on(window, 'resize', lang.hitch(this, this.onWindowResize));
     },
-    
+
     showPanel: function(config){
       /*global jimuConfig*/
-      // summary: 
+      // summary:
       //    show panel depends on the config object(widget/group's config)
       var def = new Deferred();
       require([config.panel.uri], lang.hitch(this, function(Panel){
@@ -47,7 +47,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, aspect, require, uti
           if(panel.state === 'closed'){
             this.openPanel(panel, config.panel.position);
           }
-          
+
           // if(panel.windowState){
           //   this.changeWindowStateTo(panel, panel.windowState);
           // }
@@ -99,7 +99,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, aspect, require, uti
             def.reject(err);
             return;
           }
-          
+
           this.openPanel(panel);
           //use the widget/group default state as the panel's default state
           // if(config.defaultState){
@@ -112,7 +112,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, aspect, require, uti
           def.resolve(panel);
         }
       }));
-      
+
       return def;
     },
 
@@ -162,7 +162,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, aspect, require, uti
         console.log(console.error('fail to open panel ' + panel.id + '. ' + err.stack));
       }
 
-      
+
       return def;
     },
 
@@ -208,7 +208,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, aspect, require, uti
       }catch(err){
         console.log(console.error('fail to close panel ' + panel.id + '. ' + err.stack));
       }
-      
+
       return def;
     },
 
@@ -325,7 +325,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, aspect, require, uti
           return;
         }
       }
-      
+
       if(!panel.domNode){
         return;
       }
@@ -347,7 +347,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, aspect, require, uti
       this._removePanel(panel);
       console.log('destroy panel ' + panel.id);
     },
-    
+
     destroyAllPanels: function(){
       var allPanelIds = array.map(this.panels, function(panel){
         return panel.id;

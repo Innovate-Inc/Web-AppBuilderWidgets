@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Ningún servicio encontrado.',
-      unableConnectTo: 'No se puede conectar a'
+      unableConnectTo: 'No se puede conectar a',
+      invalidUrlTip: 'La URL que has introducido no es válida o no se puede acceder a ella.'
     },
     serviceBrowser: {
       noGpFound: 'Ningún servicio de geoprocesamiento encontrado.',
@@ -174,26 +175,27 @@
         invalidSQL: "Expresión SQL no válida.",
         cantParseSQL: "No se puede analizar la expresión SQL."
       },
-      caseSensitive: "Distinguir mayúsculas de minúsculas"
+      caseSensitive: "Distinguir mayúsculas de minúsculas",
+      notSupportCaseSensitiveTip: "Los servicios alojados no admiten consultas que distingan mayúsculas de minúsculas."
     },
 
     featureLayerSource: {
       layer: "Capa",
       browse: "Examinar",
       selectFromMap: "Seleccionar en el mapa",
-      selectFromPortal: "Agregar desde el portal",
+      selectFromPortal: "Agregar desde Portal for ArcGIS",
       addServiceUrl: "Agregar URL de servicio",
       inputLayerUrl: "Introducir URL de capa",
       selectLayer: "Selecciona una capa de entidades en el mapa actual.",
       chooseItem: "Elige un elemento de capa de entidades.",
       setServiceUrl: "Introduce la dirección URL del servicio de entidades o servicio de mapa.",
-      selectFromOnline: "Agregar desde Online",
+      selectFromOnline: "Agregar desde ArcGIS Online",
       chooseLayer: "Elige una capa de entidades."
     },
     gpSource: {
-      selectFromPortal: "Agregar desde el portal",
+      selectFromPortal: "Agregar desde Portal for ArcGIS",
       addServiceUrl: "Agregar URL de servicio",
-      selectFromOnline: "Agregar desde Online",
+      selectFromOnline: "Agregar desde ArcGIS Online",
       setServiceUrl: "Introduce la URL del servicio de geoprocesamiento.",
       chooseItem: "Elige un elemento de servicio de geoprocesamiento.",
       chooseTask: "Elige una tarea de geoprocesamiento."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Mapa",
       selectWebMap: "Elegir mapa Web",
-      addMapFromOnlineOrPortal: "Buscar y agregar un mapa web para utilizarlo en la aplicación desde los recursos públicos de ArcGIS Online o tu contenido privado en ArcGIS Online o Portal.",
+      addMapFromOnlineOrPortal: "Busca y agrega un mapa web en la aplicación desde los recursos públicos de ArcGIS Online o tu contenido privado en ArcGIS Online o Portal.",
       searchMapName: "Buscar por nombre de mapa...",
       searchNone: "No hemos podido encontrar lo que buscas. Inténtalo de nuevo.",
       groups: "Grupos",
@@ -247,7 +249,7 @@
       invalidType: "Tipo de archivo no válido.",
       exceed: "El tamaño de archivo no puede sobrepasar los 1024 KB",
       enableFlash: "TAREA PENDIENTE: habilita flash.",
-      toolTip: "Para obtener mejores resultados, la imagen debe tener ${width} píxeles de ancho y ${height} píxeles de alto. El resto de tamaños se adaptará a este tamaño. Los formatos de imagen válidos son: PNG, GIF y JPEG."
+      toolTip: "Para obtener el mejor resultado, la imagen debe tener ${width} píxeles de ancho y ${height} píxeles de alto. El resto de tamaños se adaptará a este tamaño. Los formatos de imagen válidos son: PNG, GIF y JPEG."
     },
     simpleTable: {
       moveUp: 'Mover hacia arriba',

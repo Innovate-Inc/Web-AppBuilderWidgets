@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'לא נמצא שירות:',
-      unableConnectTo: 'לא יכול להתחבר'
+      unableConnectTo: 'לא יכול להתחבר',
+      invalidUrlTip: 'ה-URL שהזנת לא חוקי או שלא ניתן לגשת אליו.'
     },
     serviceBrowser: {
       noGpFound: 'לא נמצא שרות geoprocessing.',
@@ -174,26 +175,27 @@
         invalidSQL: "ביטוי SQL לא חוקי.",
         cantParseSQL: "לא ניתן לפענח את ביטוי ה-SQL."
       },
-      caseSensitive: "תלוי רישיות"
+      caseSensitive: "תלוי רישיות",
+      notSupportCaseSensitiveTip: "השירותים המתארחים אינם תומכים בשאילתא תלויית רישיות."
     },
 
     featureLayerSource: {
       layer: "שכבה",
       browse: "דפדף",
       selectFromMap: "בחר ממפה",
-      selectFromPortal: "הוסף מפורטל",
+      selectFromPortal: "הוסף מ- Portal for ArcGIS",
       addServiceUrl: "הוסף כתובת URL של שירות",
       inputLayerUrl: "URL של שכבת הקלט",
       selectLayer: "בחר שכבת ישויות מהמפה הנוכחית.",
       chooseItem: "בחר פריט שכבת ישויות.",
       setServiceUrl: "הזן את כתובת ה-URL של שירות הישויות או שירות המפות.",
-      selectFromOnline: "הוסף  מתוך ה-Online",
+      selectFromOnline: "הוסף  מ-ArcGIS Online",
       chooseLayer: "בחר שכבת ישויות."
     },
     gpSource: {
-      selectFromPortal: "הוסף מהפורטל",
+      selectFromPortal: "הוסף מ- Portal for ArcGIS",
       addServiceUrl: "הוסף כתובת URL של שירות",
-      selectFromOnline: "הוסף מתוך ה-Online",
+      selectFromOnline: "הוסף  מ-ArcGIS Online",
       setServiceUrl: "הזן את כתובת ה- URL של שירות העיבוד הגיאוגרפי.",
       chooseItem: "בחר פריט שירות של עיבוד גיאוגרפי.",
       chooseTask: "בחר משימת עיבוד גיאוגרפי."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "מפה",
       selectWebMap: "בחר Web Map",
-      addMapFromOnlineOrPortal: "מצא והוסף web map בה יעשה שימוש מתוך המקורות הציבוריים של ArcGIS Online, התוכן הפרטי שלך בתוך ArcGIS Online או הפורטל.",
+      addMapFromOnlineOrPortal: "מצא והוסף Web Map מתוך המקורות הציבוריים של ArcGIS Online, התוכן הפרטי שלך בתוך ArcGIS Online או הפורטל.",
       searchMapName: "חפש לפי שם מפה...",
       searchNone: "לא מצאנו את מה שחיפשת. נסה בבקשה שנית.",
       groups: "קבוצות",
@@ -242,12 +244,12 @@
       itemToAttributeTable: 'פתח טבלת מאפיינים'
     },
     imageChooser: {
-      unsupportReaderAPI: "לביצוע: דפדפן לא תומך ב-API של קריאת קבצים",
+      unsupportReaderAPI: "לביצוע: הדפדפן לא תומך ב-API של קריאת קבצים",
       readError: "קריאת הקובץ נכשלה.",
       invalidType: "סוג קובץ לא חוקי.",
       exceed: "גודל הקובץ אינו יכול להיות יותר מ-‎1024 KB",
       enableFlash: "לביצוע: הפעל Flash.",
-      toolTip: "לקבלת תוצאות מיטביות, הקובץ צריך להיות ברוחב של ${width} פיקסלים ובגובה של ${height} פיקסלים. גדלים אחרים יותאמו. פורמטי התמונות שיתקבלו הם: PNG,‏ GIF ו-JPEG."
+      toolTip: "לקבלת תוצאות מיטביות, הקובץ צריך להיות ברוחב של ${width} פיקסלים ובגובה של ${height} פיקסלים. גדלים אחרים יותאמו. פורמטים של תמונות שיתקבלו הם: PNG,‏ GIF ו-JPEG."
     },
     simpleTable: {
       moveUp: 'הזז למעלה',

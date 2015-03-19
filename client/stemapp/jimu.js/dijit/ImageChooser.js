@@ -180,15 +180,21 @@ define(['dojo/_base/declare',
       },
 
       _setupFileInput: function() {
+        var maxSize = has('ie') < 9 ? 23552 : 1048576; //ie8:21k others:1M
         this.own(on(this.fileInput, 'change', lang.hitch(this, function(evt) {
           utils.file.readFile(
             evt,
             'image/*',
-            1048576,
+            maxSize,
             lang.hitch(this, function(err, fileName, fileData) {
+              /*jshint unused: false*/
               if (err) {
+                var message = this.nls[err.errCode];
+                if (err.errCode === 'exceed') {
+                  message = message.replace('1024', maxSize / 1024);
+                }
                 new Message({
-                  message: this.nls[err.errCode]
+                  'message': message
                 });
                 return;
               }

@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Paslaugų nerasta.',
-      unableConnectTo: 'Nepavyksta prisijungti prie'
+      unableConnectTo: 'Nepavyksta prisijungti prie',
+      invalidUrlTip: 'URL, kurį nurodėte yra arba neteisingas, arba nepasiekiamas.'
     },
     serviceBrowser: {
       noGpFound: 'Geoduomenų apdorojimo paslaugų nerasta.',
@@ -174,26 +175,27 @@
         invalidSQL: "Neleistina SQL sąlyga.",
         cantParseSQL: "Nepavyksta išanalizuoti SQL sąlygos."
       },
-      caseSensitive: "Didžiosios ir mažosios raidės skirtingos"
+      caseSensitive: "Didžiosios ir mažosios raidės skirtingos",
+      notSupportCaseSensitiveTip: "Patalpintos paslaugos nepalaiko užklausos, kurioje skiriamos didžiosios ir mažosios raidės."
     },
 
     featureLayerSource: {
       layer: "Sluoksnis",
       browse: "Parinkti",
       selectFromMap: "Pasirinkti iš žemėlapio",
-      selectFromPortal: "Pridėti iš portalo",
+      selectFromPortal: "Pridėti iš Portal for ArcGIS",
       addServiceUrl: "Pridėti paslaugos URL",
       inputLayerUrl: "Įvesties sluoksnio URL",
       selectLayer: "Pasirinkite elementų sluoksnį iš dabartinio žemėlapio.",
       chooseItem: "Pasirinkite elementų sluoksnio elementą.",
       setServiceUrl: "Įveskite elementų paslaugos arba žemėlapių paslaugos URL.",
-      selectFromOnline: "Pridėti iš Online",
+      selectFromOnline: "Pridėti iš ArcGIS Online",
       chooseLayer: "Pasirinkite elementų sluoksnį."
     },
     gpSource: {
-      selectFromPortal: "Pridėti iš portalo",
+      selectFromPortal: "Pridėti iš Portal for ArcGIS",
       addServiceUrl: "Pridėti paslaugos URL",
-      selectFromOnline: "Pridėti iš Online",
+      selectFromOnline: "Pridėti iš ArcGIS Online",
       setServiceUrl: "Įveskite geoduomenų apdorojimo paslaugos URL.",
       chooseItem: "Pasirinkite geoduomenų apdorojimo paslaugos elementą.",
       chooseTask: "Pasirinkite geoduomenų apdorojimo užduotį."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Žemėlapis",
       selectWebMap: "Pasirinkti žemėlapį",
-      addMapFromOnlineOrPortal: "ArcGIS Online viešuosiuose ištekliuose arba privačiame turinyje, esančiame ArcGIS Online arba portale, raskite ir pridėkite interneto žemėlapį, kuris bus naudojamas aplikacijoje.",
+      addMapFromOnlineOrPortal: "ArcGIS Online viešuosiuose ištekliuose arba privačiame turinyje, esančiame ArcGIS Online arba Portal, raskite ir pridėkite aplikacijoje interneto žemėlapį.",
       searchMapName: "Ieškoti pagal žemėlapio pavadinimą...",
       searchNone: "Nepavyko rasti jūsų ieškomo elemento. Bandykite dar kartą.",
       groups: "Grupės",

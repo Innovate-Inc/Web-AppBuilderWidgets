@@ -23,14 +23,15 @@ define(['dojo/_base/declare',
   'dojo/_base/array',
   'dojo/_base/event',
   'dojo/query',
+  'dojo/aspect',
   'dojo/on',
   'dojo/Evented',
   'dijit/registry',
   'dijit/Tree',
   'jimu/utils'
 ],
-function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang,
-  html, array, dojoEvent, query, on, Evented, registry, DojoTree, jimuUtils) {
+function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
+  dojoEvent, query, aspect, on, Evented, registry, DojoTree, jimuUtils) {
   /*jshint unused: false*/
   var JimuTreeNode = declare([DojoTree._TreeNode, Evented],{
     templateString: tnTemplate,
@@ -60,22 +61,52 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang,
       this.own(on(this.checkNode, 'click', lang.hitch(this, this._onClick)));
 
       if(this.isLeaf){
-        html.setStyle(this.checkNode, 'display', 'inline');
+        if(this.groupId){
+          html.setStyle(this.checkNode, 'display', 'none');
+        }else{
+          html.setStyle(this.checkNode, 'display', 'inline');
+        }
       }
       else{
         html.setStyle(this.checkNode, 'display', 'none');
       }
+      if(this.isLeaf){
+        html.addClass(this.domNode, 'jimu-tree-leaf-node');
+      }else{
+        html.addClass(this.domNode, 'jimu-tree-not-leaf-node');
+      }
     },
+
+    // hasSelectedClass: function(){
+    //   if(this.rowNode){
+    //     if(html.hasClass(this.rowNode, 'dijitTreeRowSelected')){
+    //       return true;
+    //     }
+    //   }
+    //   return false;
+    // },
 
     select: function(){
       if(this.isLeaf){
         this.checkNode.checked = true;
+        html.addClass(this.domNode, 'jimu-tree-selected-leaf-node');
       }
     },
 
     unselect: function(){
       if(this.isLeaf){
         this.checkNode.checked = false;
+        html.removeClass(this.domNode, 'jimu-tree-selected-leaf-node');
+      }
+    },
+
+    toggleSelect: function(){
+      if(this.isLeaf){
+        if(this.checkNode.checked){
+          this.unselect();
+        }else{
+          this.select();
+        }
       }
     },
 
@@ -110,6 +141,7 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang,
 
   var JimuTree = declare([DojoTree, Evented], {
     declaredClass:'jimu._Tree',
+    openOnClick: true,
 
     //options:
     leafType:"",
@@ -133,6 +165,8 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang,
     postCreate: function(){
       this.inherited(arguments);
       html.addClass(this.domNode, 'jimu-tree');
+      this.own(aspect.before(this, 'onClick', lang.hitch(this, this._jimuBeforeClick)));
+      //this.own(aspect.before(this, 'onOpen', lang.hitch(this, this._jimuBeforeOpen)));
     },
 
     removeItem: function(id){
@@ -154,6 +188,9 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang,
       var selectedTNs = array.filter(allTNs, lang.hitch(this, function(tn){
         return tn.checkNode.checked;
       }));
+      // selectedTNs = array.filter(selectedTNs, lang.hitch(this, function(tn){
+      //   return tn.hasSelectedClass();
+      // }));
       var items = array.map(selectedTNs, lang.hitch(this, function(tn){
         return tn.item;
       }));
@@ -188,7 +225,8 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang,
     selectItem: function(itemId){
       var tn = this.getTreeNodeByItemId(itemId);
       if(tn && tn.isLeaf){
-        tn.select();
+        //tn.select();
+        this.selectNodeWidget(tn);
       }
     },
 
@@ -250,22 +288,52 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang,
       this.emit('item-unselect', args);
     },
 
+    selectNodeWidget: function(nodeWidget){
+      if(!this.multiple){
+        this.unselectAllLeafNodeWidgets();
+      }
+      nodeWidget.select();
+    },
+
+    _jimuBeforeClick: function(item, node, evt){
+      /*jshint unused: false*/
+      if(node.isLeaf){
+        if(this.multiple){
+          node.toggleSelect();
+        }else{
+          //node.select();
+          this.selectNodeWidget(node);
+        }
+      }
+      return arguments;
+    },
+
     _onCheckNodeClick: function(/*TreeNode*/ nodeWidget,/*Boolean*/ newState, /*Event*/ evt){
       if(!this.multiple && newState){
-        this._uncheckAllCheckboxes();
+        this.unselectAllLeafNodeWidgets();
       }
       dojoEvent.stop(evt);
       this.focusNode(nodeWidget);
       setTimeout(lang.hitch(this, function(){
-        nodeWidget.checkNode.checked = newState;
+        if(newState){
+          //nodeWidget.select();
+          this.selectNodeWidget(nodeWidget);
+        }else{
+          nodeWidget.unselect();
+        }
+        //nodeWidget.checkNode.checked = newState;
         this.onClick(nodeWidget.item, nodeWidget, evt);
       }), 0);
     },
 
-    _uncheckAllCheckboxes: function(){
-      var allCbxes = query('.jimu-tree-check-node', this.domNode);
-      array.forEach(allCbxes, lang.hitch(this, function(checkNode){
-        checkNode.checked = false;
+    unselectAllLeafNodeWidgets: function(){
+      // var allCbxes = query('.jimu-tree-check-node', this.domNode);
+      // array.forEach(allCbxes, lang.hitch(this, function(checkNode){
+      //   checkNode.checked = false;
+      // }));
+      var nodes = this.getAllLeafTreeNodeWidgets();
+      array.forEach(nodes, lang.hitch(this, function(nodeWidget){
+        nodeWidget.unselect();
       }));
     }
 

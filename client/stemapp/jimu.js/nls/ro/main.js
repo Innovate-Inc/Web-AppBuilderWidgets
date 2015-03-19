@@ -94,7 +94,8 @@
     },
     basicServiceBrowser: {
       noServicesFound: 'Nu a fost găsit niciun serviciu.',
-      unableConnectTo: 'Nu se poate efectua conectarea la'
+      unableConnectTo: 'Nu se poate efectua conectarea la',
+      invalidUrlTip: 'Adresa URL pe care aţi introdus-o este nevalidă sau inaccesibilă.'
     },
     serviceBrowser: {
       noGpFound: 'Nu a fost găsit niciun serviciu de geoprocesare.',
@@ -174,26 +175,27 @@
         invalidSQL: "Expresie SQL nevalidă.",
         cantParseSQL: "Expresia SQL nu poate fi analizată."
       },
-      caseSensitive: "Sensibil la majuscule/minuscule"
+      caseSensitive: "Sensibil la majuscule/minuscule",
+      notSupportCaseSensitiveTip: "Serviciile găzduite nu acceptă interogările care depind de majuscule/minuscule."
     },
 
     featureLayerSource: {
       layer: "Strat tematic",
       browse: "Parcurgere",
       selectFromMap: "Selectare din hartă",
-      selectFromPortal: "Adăugare din portal",
+      selectFromPortal: "Adăugare din Portal for ArcGIS",
       addServiceUrl: "Adăugare URL serviciu",
       inputLayerUrl: "URL strat tematic de intrare",
       selectLayer: "Selectaţi un strat tematic de obiecte spaţiale din harta actuală.",
       chooseItem: "Selectaţi un element strat tematic de obiecte spaţiale.",
       setServiceUrl: "Introduceţi adresa URL a serviciului de obiecte spaţiale sau a serviciului de hartă.",
-      selectFromOnline: "Adăugaţi din online",
+      selectFromOnline: "Adăugare din ArcGIS Online",
       chooseLayer: "Selectaţi un strat tematic de obiecte spaţiale."
     },
     gpSource: {
-      selectFromPortal: "Adăugaţi din portal",
+      selectFromPortal: "Adăugare din Portal for ArcGIS",
       addServiceUrl: "Adăugare URL serviciu",
-      selectFromOnline: "Adăugaţi din online",
+      selectFromOnline: "Adăugare din ArcGIS Online",
       setServiceUrl: "Introduceţi adresa URL a serviciului de geoprocesare.",
       chooseItem: "Selectaţi un element de tip serviciu de geoprocesare.",
       chooseTask: "Selectaţi o operaţie de geoprocesare."
@@ -201,7 +203,7 @@
     itemSelector: {
       map: "Hartă",
       selectWebMap: "Selectare hartă Web",
-      addMapFromOnlineOrPortal: "Găsiţi şi adăugaţi o hartă web de utilizat în aplicaţie din resurse ArcGIS Online publice sau din conţinutul dvs. privat din ArcGIS Online sau Portal.",
+      addMapFromOnlineOrPortal: "Găsiţi şi adăugaţi o hartă web în aplicaţie din resurse ArcGIS Online publice sau din conţinutul dvs. privat din ArcGIS Online sau Portal.",
       searchMapName: "Căutare după numele hărţii...",
       searchNone: "Nu am putut găsi ceea ce căutaţi. Încercaţi din nou.",
       groups: "Grupuri",
@@ -247,7 +249,7 @@
       invalidType: "Tip de fişier nevalid.",
       exceed: "Dimensiunea fişierului nu poate depăşi 1024 KB",
       enableFlash: "Acţiune: activaţi funcţia flash.",
-      toolTip: "Pentru rezultate optime, imaginea trebuie să aibă ${width} pixeli lăţime şi ${height} pixeli înălţime. Alte dimensiuni vor fi ajustate pentru a se încadra. Formatele de imagine acceptate sunt: PNG, GIF şi JPEG."
+      toolTip: "Pentru cel mai bun rezultat, imaginea trebuie să aibă ${width} pixeli lăţime şi ${height} pixeli înălţime. Alte dimensiuni vor fi ajustate pentru a se încadra. Formatele de imagine acceptate sunt: PNG, GIF şi JPEG."
     },
     simpleTable: {
       moveUp: 'Deplasare în sus',
