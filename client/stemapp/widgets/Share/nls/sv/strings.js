@@ -9,6 +9,9 @@ define(
     facebookTooltip: "Facebook",
     twitterTooltip: "Twitter",
     gplusTooltip: "Google Plus",
-    emailTooltip: "E-post"
+    emailTooltip: "E-post",
+    widgetversion: 'Share Widget Version Info',
+    widgetverstr: 'Widget Version',
+    wabversionmsg: 'Widget is designed to run in Web AppBuilder version'
   })
 );

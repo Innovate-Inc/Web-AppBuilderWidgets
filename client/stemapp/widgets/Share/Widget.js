@@ -14,9 +14,11 @@ define(['dojo/Evented',
     'dojo/number',
     'dojo/_base/event',
     'dijit/_WidgetsInTemplateMixin',
-    'jimu/BaseWidget'
+    'jimu/BaseWidget',
+    'jimu/dijit/Message',
+    'jimu/dijit/CheckBox'
   ],
-  function(Evented, declare, lang, has, esriNS, html, on, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, number, event, _WidgetsInTemplateMixin, BaseWidget) {
+  function(Evented, declare, lang, has, esriNS, html, on, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, number, event, _WidgetsInTemplateMixin, BaseWidget, Message) {
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin, Evented], {
       name: 'Share this map',
       baseClass: 'widget-share',
@@ -42,7 +44,7 @@ define(['dojo/Evented',
             'height': '320px'
           }
         ],
-//      useExtent: null,
+      useExtent: null,
       mailURL: 'mailto:%20?subject={title}&body={summary}%20{url}',
       facebookURL: 'https://www.facebook.com/sharer/sharer.php?s=100&p[url]={url}&p[images][0]={image}&p[title]={title}&p[summary]={summary}',
       twitterURL: 'https://twitter.com/intent/tweet?url={url}&text={title}&hashtags={hashtags}',
@@ -56,12 +58,13 @@ define(['dojo/Evented',
       hashtags: '',
       embedHeight: null,
       embedWidth: null,
-
+      extentEvt: null,
 
       postCreate: function() {
         this.inherited(arguments);
-//        this.own(on(this._extentInput, 'click', lang.hitch(this, this._useExtentUpdate)));
-//        this.useExtent = this.config.useExtent || false;
+        this.own(on(this._extentInput, 'click', lang.hitch(this, this._useExtentUpdate)));
+        this.useExtent = this.config.useExtent || false;
+        this._setExtentChecked();
         this.title = this.config.title || window.document.title;
         this.bitlyLogin = this.config.bitlyLogin;
         this.bitlyKey = this.config.bitlyKey;
@@ -73,7 +76,7 @@ define(['dojo/Evented',
         this.watch('embedSizes', this._setSizeOptions);
         this.watch('embed', this._updateEmbed);
         this.watch('bitlyUrl', this._updateBitlyUrl);
-//        this.watch('useExtent', this._useExtentChanged);
+        this.watch('useExtent', this._useExtentChanged);
 
         this._updateUrl();
         this._shareLink();
@@ -84,13 +87,39 @@ define(['dojo/Evented',
         this._init();
       },
 
+      onOpen: function() {
+        var widgetTitlebar = this.domNode.parentNode.parentNode.parentNode.childNodes[0];
+        if(typeof widgetTitlebar.onmousedown !== "function") {
+           this.own(on(widgetTitlebar, 'mousedown', lang.hitch(this, function(event) {
+            event.stopPropagation();
+            if(event.altKey){
+              var msgStr = this.nls.widgetverstr + ': ' + this.manifest.version;
+              msgStr += '\n' + this.nls.wabversionmsg + ': ' + this.manifest.wabVersion;
+              msgStr += '\n' + this.manifest.description;
+              new Message({
+                titleLabel: this.nls.widgetversion,
+                message: msgStr
+              });
+            }
+          })));
+        }
+      },
+
       destroy: function () {
         this.inherited(arguments);
       },
 
-//WAB does not currently support extent param in the url
-      /*_setExtentChecked: function () {
+      _setExtentChecked: function () {
         this._extentInput.setValue(this.useExtent);
+        if(this.useExtent){
+          this.extentEvt = this.own(this.map.on('extent-change', lang.hitch(this, function(){
+            this._updateUrl();
+          })));
+        }else{
+          if(this.extentEvt){
+            this.extentEvt.remove();
+          }
+        }
       },
 
       _useExtentUpdate: function () {
@@ -100,7 +129,7 @@ define(['dojo/Evented',
       _useExtentChanged: function () {
         this._updateUrl();
         this._shareLink();
-      },*/
+      },
 
       _setSizeOptions: function () {
         // clear select menu
@@ -134,21 +163,20 @@ define(['dojo/Evented',
         // get url params
         var urlObject = urlUtils.urlToObject(window.location.href);
         urlObject.query = urlObject.query || {};
-//WAB does not currently support an extent perameter in the url
         // include extent in url
-        /*if (this.get('useExtent') && map) {
+        if (this.get('useExtent') && map) {
           // get map extent in geographic
           var gExtent = map.geographicExtent;
           // set extent string
           urlObject.query.extent = gExtent.xmin.toFixed(4) + ',' + gExtent.ymin.toFixed(4) + ',' + gExtent.xmax.toFixed(4) + ',' + gExtent.ymax.toFixed(4);
         } else {
           urlObject.query.extent = null;
-        }*/
+        }
         // create base url
         url = window.location.protocol + '//' + window.location.host + window.location.pathname;
         // each param
         for (var i in urlObject.query) {
-          if (urlObject.query[i]) {
+          if (urlObject.query[i] && urlObject.query[i] !== 'config') {
             // use separator
             if (useSeparator) {
               url += '&';

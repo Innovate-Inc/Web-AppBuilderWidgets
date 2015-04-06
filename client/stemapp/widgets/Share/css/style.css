@@ -16,14 +16,11 @@
 }
 
 .share-dialog-icon {
-  content: "";
-  width: 30px;
-  height: 30px;
-  background-repeat: no-repeat;
-  text-align: center;
+  font-size: 30px;
+  line-height: 30px;
   float: left;
   cursor: pointer;
-  margin: 0 20px 0 0;
+  margin: 0 10px 0 0;
   text-decoration: none;
   display: block;
 }
@@ -86,278 +83,410 @@
   margin: 0 0 10px;
 }
 
-.FoldableTheme.default .icon-twitter{
-  background-image: url("images/twitter-default.png");
-  opacity: 0.5;
+.FoldableTheme.default .icon-twitter {
+  color: rgba(89, 102, 121, 0.5);
+}
+
+.FoldableTheme.default .icon-twitter:hover {
+  color: rgba(89, 102, 121, 1);
 }
 
 .FoldableTheme.black .icon-twitter,
 .TabTheme.default .icon-twitter {
-  background-image: url("images/twitter-black.png");
-  opacity: 0.5;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.FoldableTheme.black .icon-twitter:hover,
+.TabTheme.default .icon-twitter:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
 .icon-twitter {
-  background-image: url("images/twitter-black.png");
-  opacity: 0.5;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.icon-twitter:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
 .FoldableTheme.red .icon-twitter,
 .TabTheme.red .icon-twitter {
-  background-image: url("images/twitter-red.png");
-  opacity: 0.5;
+  color: rgba(201, 46, 73, 0.5);
+}
+
+.FoldableTheme.red .icon-twitter:hover,
+.TabTheme.red .icon-twitter:hover {
+  color: rgba(201, 46, 73, 1);
 }
 
 .TabTheme.simpleblue .icon-twitter {
-  background-image: url("images/twitter-blue.png");
-  opacity: 0.5;
+  color: rgba(52, 152, 219, 0.5);
 }
 
-.FoldableTheme.green .icon-twitter{
-  background-image: url("images/twitter-green.png");
-  opacity: 0.5;
+.TabTheme.simpleblue .icon-twitter:hover {
+  color: rgba(52, 152, 219, 1);
 }
 
-.FoldableTheme.cyan .icon-twitter{
-  background-image: url("images/twitter-cyan.png");
-  opacity: 0.5;
+.FoldableTheme.green .icon-twitter {
+  color: rgba(42, 170, 138, 0.5);
+}
+
+.FoldableTheme.green .icon-twitter:hover {
+  color: rgba(42, 170, 138, 1);
+}
+
+.FoldableTheme.cyan .icon-twitter {
+  color: rgba(177, 211, 212, 0.5);
+}
+
+.FoldableTheme.cyan .icon-twitter:hover {
+  color: rgba(177, 211, 212, 1);
 }
 
 .FoldableTheme.purple .icon-twitter,
 .TabTheme.purple .icon-twitter {
-  background-image: url("images/twitter-purple.png");
-  opacity: 0.5;
+  color: rgba(171, 109, 174, 0.5);
+}
+
+.FoldableTheme.purple .icon-twitter:hover,
+.TabTheme.purple .icon-twitter:hover {
+  color: rgba(171, 109, 174, 1);
 }
 
 .FoldableTheme.red .icon-twitter,
-.TabTheme.red .icon-twitter{
-  background-image: url("images/twitter-red.png");
-  opacity: 0.5;
+.TabTheme.red .icon-twitter {
+  color: rgba(201, 46, 73, 0.5);
 }
 
-.FoldableTheme.default .icon-twitter:hover,
-.FoldableTheme.black .icon-twitter:hover,
-.FoldableTheme.green .icon-twitter:hover,
-.FoldableTheme.cyan .icon-twitter:hover,
 .FoldableTheme.red .icon-twitter:hover,
-.FoldableTheme.purple .icon-twitter:hover,
-.TabTheme.default .icon-twitter:hover,
-.TabTheme.simpleblue .icon-twitter:hover,
-.TabTheme.red .icon-twitter:hover,
-.TabTheme.purple .icon-twitter:hover,
-.icon-twitter:hover {
-  opacity: 1;
+.TabTheme.red .icon-twitter:hover {
+  color: rgba(201, 46, 73, 1);
 }
 
-.FoldableTheme.default .icon-facebook-squared{
-  background-image: url("images/facebook-default.png");
-  opacity: 0.5;
+.FoldableTheme.default .icon-facebook-squared {
+  color: rgba(89, 102, 121, 0.5);
+}
+
+.FoldableTheme.default .icon-facebook-squared:hover {
+  color: rgba(89, 102, 121, 1);
 }
 
 .FoldableTheme.black .icon-facebook-squared,
 .TabTheme.default .icon-facebook-squared {
-  background-image: url("images/facebook-black.png");
-  opacity: 0.5;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.FoldableTheme.black .icon-facebook-squared:hover,
+.TabTheme.default .icon-facebook-squared:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
 .icon-facebook-squared {
-  background-image: url("images/facebook-black.png");
-  opacity: 0.5;
+  color: rgba(0, 0, 0, 0.5);
 }
 
-.FoldableTheme.green .icon-facebook-squared{
-  background-image: url("images/facebook-green.png");
-  opacity: 0.5;
+.icon-facebook-squared:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
-.FoldableTheme.cyan .icon-facebook-squared{
-  background-image: url("images/facebook-cyan.png");
-  opacity: 0.5;
+.FoldableTheme.green .icon-facebook-squared {
+  color: rgba(42, 170, 138, 0.5);
+}
+
+.FoldableTheme.green .icon-facebook-squared:hover {
+  color: rgba(42, 170, 138, 1);
+}
+
+.FoldableTheme.cyan .icon-facebook-squared {
+  color: rgba(177, 211, 212, 0.5);
+}
+
+.FoldableTheme.cyan .icon-facebook-squared:hover {
+  color: rgba(177, 211, 212, 1);
 }
 
 .FoldableTheme.red .icon-facebook-squared,
 .TabTheme.red .icon-facebook-squared {
-  background-image: url("images/facebook-red.png");
-  opacity: 0.5;
+  color: rgba(201, 46, 73, 0.5);
+}
+
+.FoldableTheme.red .icon-facebook-squared:hover,
+.TabTheme.red .icon-facebook-squared:hover {
+  color: rgba(201, 46, 73, 1);
 }
 
 .FoldableTheme.purple .icon-facebook-squared,
 .TabTheme.purple .icon-facebook-squared {
-  background-image: url("images/facebook-purple.png");
-  opacity: 0.5;
+  color: rgba(171, 109, 174, 0.5);
+}
+
+.FoldableTheme.purple .icon-facebook-squared:hover,
+.TabTheme.purple .icon-facebook-squared:hover {
+  color: rgba(171, 109, 174, 1);
 }
 
 .TabTheme.simpleblue .icon-facebook-squared {
-  background-image: url("images/facebook-blue.png");
-  opacity: 0.5;
+  color: rgba(52, 152, 219, 0.5);
 }
 
-.FoldableTheme.default .icon-facebook-squared:hover,
-.FoldableTheme.black .icon-facebook-squared:hover,
-.FoldableTheme.green .icon-facebook-squared:hover,
-.FoldableTheme.cyan .icon-facebook-squared:hover,
-.FoldableTheme.red .icon-facebook-squared:hover,
-.FoldableTheme.purple .icon-facebook-squared:hover,
-.TabTheme.default .icon-facebook-squared:hover,
-.TabTheme.simpleblue .icon-facebook-squared:hover,
-.TabTheme.red .icon-facebook-squared:hover,
-.TabTheme.purple .icon-facebook-squared:hover,
-.icon-facebook-squared:hover{
-  opacity: 1;
+.TabTheme.simpleblue .icon-facebook-squared:hover {
+  color: rgba(52, 152, 219, 1);
 }
 
 .FoldableTheme.default .icon-gplus {
-  background-image: url("images/googleplusdefault.png");
-  opacity: 0.5;
+  color: rgba(89, 102, 121, 0.5);
+}
+
+.FoldableTheme.default .icon-gplus:hover {
+  color: rgba(89, 102, 121, 1);
 }
 
 .FoldableTheme.black .icon-gplus,
 .TabTheme.default .icon-gplus {
-  background-image: url("images/googleplusblack.png");
-  opacity: 0.5;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.FoldableTheme.black .icon-gplus:hover,
+.TabTheme.default .icon-gplus:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
 .FoldableTheme.cyan .icon-gplus {
-  background-image: url("images/googlepluscyan.png");
-  opacity: 0.5;
+  color: rgba(177, 211, 212, 0.5);
+}
+
+.FoldableTheme.cyan .icon-gplus:hover {
+  color: rgba(177, 211, 212, 1);
 }
 
 .TabTheme.simpleblue .icon-gplus {
-  background-image: url("images/googleplusblue.png");
-  opacity: 0.5;
+  color: rgba(52, 152, 219, 0.5);
 }
 
-.FoldableTheme.green .icon-gplus{
-  background-image: url("images/googleplusgreen.png");
-  opacity: 0.5;
+.TabTheme.simpleblue .icon-gplus:hover {
+  color: rgba(52, 152, 219, 1);
+}
+
+.FoldableTheme.green .icon-gplus {
+  color: rgba(42, 170, 138, 0.5);
+}
+
+.FoldableTheme.green .icon-gplus:hover {
+  color: rgba(42, 170, 138, 1);
 }
 
 .FoldableTheme.red .icon-gplus,
 .TabTheme.red .icon-gplus {
-  background-image: url("images/googleplusred.png");
-  opacity: 0.5;
+  color: rgba(201, 46, 73, 0.5);
+}
+
+.FoldableTheme.red .icon-gplus:hover,
+.TabTheme.red .icon-gplus:hover {
+  color: rgba(201, 46, 73, 1);
 }
 
 .FoldableTheme.purple .icon-gplus,
-.TabTheme.purple .icon-gplus{
-  background-image: url("images/googlepluspurple.png");
-  opacity: 0.5;
+.TabTheme.purple .icon-gplus {
+  color: rgba(171, 109, 174, 0.5);
 }
 
-.FoldableTheme.default .icon-gplus:hover,
-.FoldableTheme.black .icon-gplus:hover,
-.FoldableTheme.green .icon-gplus:hover,
-.FoldableTheme.cyan .icon-gplus:hover,
-.FoldableTheme.red .icon-gplus:hover,
 .FoldableTheme.purple .icon-gplus:hover,
-.TabTheme.default .icon-gplus:hover,
-.TabTheme.simpleblue .icon-gplus:hover,
-.TabTheme.red .icon-gplus:hover,
-.TabTheme.purple .icon-gplus:hover,
-.icon-gplus:hover{
-  opacity: 1;
+.TabTheme.purple .icon-gplus:hover {
+  color: rgba(171, 109, 174, 1);
 }
 
 .FoldableTheme.default .icon-mail-alt {
-  background-image: url("images/Email-default.png");
-  opacity: 0.5;
+  color: rgba(89, 102, 121, 0.5);
+}
+
+.FoldableTheme.default .icon-mail-alt:hover {
+  color: rgba(89, 102, 121, 1);
 }
 
 .FoldableTheme.black .icon-mail-alt,
 .TabTheme.default .icon-mail-alt {
-  background-image: url("images/Email-black.png");
-  opacity: 0.5;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.FoldableTheme.black .icon-mail-alt:hover,
+.TabTheme.default .icon-mail-alt:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
 .TabTheme.simpleblue .icon-mail-alt {
-  background-image: url("images/Email-blue.png");
-  opacity: 0.5;
+  color: rgba(52, 152, 219, 0.5);
+}
+
+.TabTheme.simpleblue .icon-mail-alt:hover {
+  color: rgba(52, 152, 219, 1);
 }
 
 .FoldableTheme.green .icon-mail-alt {
-  background-image: url("images/Email-green.png");
-  opacity: 0.5;
+  color: rgba(42, 170, 138, 0.5);
+}
+
+.FoldableTheme.green .icon-mail-alt:hover {
+  color: rgba(42, 170, 138, 1);
 }
 
 .FoldableTheme.cyan .icon-mail-alt {
-  background-image: url("images/Email-cyan.png");
-  opacity: 0.5;
+  color: rgba(177, 211, 212, 0.5);
+}
+
+.FoldableTheme.cyan .icon-mail-alt:hover {
+  color: rgba(177, 211, 212, 1);
 }
 
 .FoldableTheme.red .icon-mail-alt,
 .TabTheme.red .icon-mail-alt {
-  background-image: url("images/Email-red.png");
-  opacity: 0.5;
+  color: rgba(201, 46, 73, 0.5);
+}
+
+.FoldableTheme.red .icon-mail-alt:hover,
+.TabTheme.red .icon-mail-alt:hover {
+  color: rgba(201, 46, 73, 1);
 }
 
 .FoldableTheme.purple .icon-mail-alt,
 .TabTheme.purple .icon-mail-alt {
-  background-image: url("images/Email-purple.png");
-  opacity: 0.5;
+  color: rgba(171, 109, 174, 0.5);
 }
 
-.FoldableTheme.default .icon-mail-alt:hover,
-.FoldableTheme.black .icon-mail-alt:hover,
-.FoldableTheme.green .icon-mail-alt:hover,
-.FoldableTheme.cyan .icon-mail-alt:hover,
-.FoldableTheme.red .icon-mail-alt:hover,
 .FoldableTheme.purple .icon-mail-alt:hover,
-.TabTheme.default .icon-mail-alt:hover,
-.TabTheme.simpleblue .icon-mail-alt:hover,
-.TabTheme.red .icon-mail-alt:hover,
-.TabTheme.purple .icon-mail-alt:hover,
-.icon-mail-alt:hover{
-  opacity: 1;
+.TabTheme.purple .icon-mail-alt:hover {
+  color: rgba(171, 109, 174, 1);
 }
 
 .FoldableTheme.default .icon-link {
-  background-image: url("images/link-default.png");
-  opacity: 0.5;
+  color: rgba(89, 102, 121, 0.5);
+}
+
+.FoldableTheme.default .icon-link:hover {
+  color: rgba(89, 102, 121, 1);
 }
 
 .FoldableTheme.black .icon-link,
 .TabTheme.default .icon-link {
-  background-image: url("images/link-black.png");
-  opacity: 0.5;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.FoldableTheme.black .icon-link:hover,
+.TabTheme.default .icon-link:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
 .FoldableTheme.cyan .icon-link {
-  background-image: url("images/link-cyan.png");
-  opacity: 0.5;
+  color: rgba(177, 211, 212, 0.5);
+}
+
+.FoldableTheme.cyan .icon-link:hover {
+  color: rgba(177, 211, 212, 1);
 }
 
 .FoldableTheme.green .icon-link {
-  background-image: url("images/link-green.png");
-  opacity: 0.5;
+  color: rgba(42, 170, 138, 0.5);
+}
+
+.FoldableTheme.green .icon-link:hover {
+  color: rgba(42, 170, 138, 1);
 }
 
 .TabTheme.simpleblue .icon-link {
-  background-image: url("images/link-blue.png");
-  opacity: 0.5;
+  color: rgba(52, 152, 219, 0.5);
+}
+
+.TabTheme.simpleblue .icon-link:hover {
+  color: rgba(52, 152, 219, 1);
 }
 
 .FoldableTheme.red .icon-link,
 .TabTheme.red .icon-link {
-  background-image: url("images/link-red.png");
-  opacity: 0.5;
+  color: rgba(201, 46, 73, 0.5);
+}
+
+.FoldableTheme.red .icon-link:hover,
+.TabTheme.red .icon-link:hover {
+  color: rgba(201, 46, 73, 1);
 }
 
 .FoldableTheme.purple .icon-link,
-.TabTheme.purple .icon-link{
-  background-image: url("images/link-purple.png");
-  opacity: 0.5;
+.TabTheme.purple .icon-link {
+  color: rgba(171, 109, 174, 0.5);
 }
 
-.FoldableTheme.default .icon-link:hover,
-.FoldableTheme.black .icon-link:hover,
-.FoldableTheme.green .icon-link:hover,
-.FoldableTheme.cyan .icon-link:hover,
-.FoldableTheme.red .icon-link:hover,
 .FoldableTheme.purple .icon-link:hover,
-.TabTheme.default .icon-link:hover,
-.TabTheme.simpleblue .icon-link:hover,
-.TabTheme.red .icon-link:hover,
-.TabTheme.purple .icon-link:hover,
-.icon-link:hover{
-  opacity: 1;
+.TabTheme.purple .icon-link:hover {
+  color: rgba(171, 109, 174, 1);
 }
+
+/*Icon Fonts*/
+@font-face {
+  font-family: 'tool-icons';
+  src: url('../fonts/tool-icons.eot?23344103');
+  src: url('../fonts/tool-icons.eot?23344103#iefix') format('embedded-opentype'), url('../fonts/tool-icons.woff?23344103') format('woff'), url('../fonts/tool-icons.ttf?23344103') format('truetype'), url('../fonts/tool-icons.svg?23344103#tool-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'tool-icons';
+    src: url('../fonts/tool-icons.svg?23344103#tool-icons') format('svg');  }
+}
+*/
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "tool-icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: 0.2em;
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+
+  margin-left: 0.2em;
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-twitter:before {
+  content: '\e802';
+}
+/* '' */
+
+.icon-facebook-squared:before {
+  content: '\e803';
+}
+/* '' */
+
+.icon-gplus:before {
+  content: '\e804';
+}
+/* '' */
+
+.icon-mail-alt:before {
+  content: '\e805';
+}
+/* '' */
+
+.icon-link:before {
+  content: '\e806';
+}
+/* '' */
