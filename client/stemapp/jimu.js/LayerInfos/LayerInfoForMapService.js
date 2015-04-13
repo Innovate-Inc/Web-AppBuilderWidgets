@@ -420,7 +420,7 @@ esriRequest, LayerInfoFactory) {
 
     _allLayerAndTableServer: function(subId) {
       var def = new Deferred();
-      var url = this.originOperLayer.url + '/layers';
+      var url = this.originOperLayer.layerObject.url + '/layers';
       if(this._sublayerIdent.empty) {
         this._sublayerIdent.empty = false;
         this._request(url).then(lang.hitch(this, function(results) {
@@ -447,7 +447,7 @@ esriRequest, LayerInfoFactory) {
 
     _allLayerAndTable: function(subId) {
       var def = new Deferred();
-      var url = this.originOperLayer.url + '/' + subId;
+      var url = this.originOperLayer.layerObject.url + '/' + subId;
       this._request(url).then(lang.hitch(this, function(result) {
         this._sublayerIdent.definitions[subId] = result;
         def.resolve(result);

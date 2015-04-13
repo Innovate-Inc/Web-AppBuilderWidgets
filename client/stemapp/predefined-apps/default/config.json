@@ -16,7 +16,11 @@
   "links": [],
 
   "widgetOnScreen": {
-    "widgets": [{
+    "widgets": [
+	{
+	  "uri": "widgets/LocalLayer/Widget",
+      "visible": false
+	},{
       "uri": "themes/FoldableTheme/widgets/HeaderController/Widget",
       "positionRelativeTo": "browser",
       "position": {

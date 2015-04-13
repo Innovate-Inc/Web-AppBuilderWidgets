@@ -116,7 +116,8 @@
 
     "mapOptions": {
       "center": [-98, 40],
-      "scale": 16937199
+      "scale": 16937199,
+	  "showLabels":true
     }
   },
 
