@@ -18,6 +18,46 @@
   "widgetOnScreen": {
     "widgets": [
 	{
+	   "uri": "widgets/Pan/Widget",
+	   "visible": false,
+	   "positionRelativeTo": "map",
+	   "name": "Pan",
+       "label": "Pan",
+	   "id": "widgets/Pan/Widget_10_13",
+	   "position": {
+          "left": 155,
+          "top": 95
+        }
+	},{
+	  "uri": "widgets/ZoomIn/Widget",
+	  "visible": false,
+	  "positionRelativeTo": "map",
+      "name": "ZoomIn",
+      "label": "Zoom In",
+	  "id": "widgets/ZoomIn/Widget_10_11",
+	  "position": {
+        "left": 55,
+        "top": 95
+      }
+	},{
+      "uri": "widgets/ZoomOut/Widget",
+	  "visible": false,
+	  "positionRelativeTo": "map",
+      "name": "ZoomOut",
+      "label": "Zoom Out",
+	  "id": "widgets/ZoomOut/Widget_10_12",
+	  "position": {
+        "left": 105,
+        "top": 95
+      }
+	},{
+	  "uri": "widgets/SwipePlus/Widget",
+	  "visible": false,
+	  "position": {
+	    "top": 180,
+		"left": 7
+		}
+	},{
 	  "uri": "widgets/LocalLayer/Widget",
       "visible": false
 	},{
