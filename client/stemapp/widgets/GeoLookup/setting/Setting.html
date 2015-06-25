@@ -1,10 +1,10 @@
 <div style="width:100%;">
-    <div data-dojo-attach-point="fieldsPage" class="hide">
+    <div data-dojo-attach-point="fieldsPage" class="hideGLItem">
         <label data-dojo-attach-point="layername"></label><br />
         <div data-dojo-attach-point="tableFieldInfos"></div>
     </div>
 
-    <div data-dojo-attach-point="advSettingsPage" class="hide">
+    <div data-dojo-attach-point="advSettingsPage" class="hideGLItem">
 
         <table class="setting-adv-table" cellspacing="0">
             <tbody>
@@ -50,6 +50,20 @@
                         <div class="textBox" data-dojo-attach-point="advSettingsIntersectOutValue" data-dojo-type="dijit/form/TextBox"></div>
                     </td>
                 </tr>
+                <tr class="controls">
+                    <td>
+                        <span>${nls.advSettings.maxRowCount}</span>
+
+                        <div class="textBox" data-dojo-attach-point="advSettingsMaxRowCount" data-dojo-type="dijit/form/TextBox"></div>
+                    </td>
+                </tr>                 
+                <tr class="controls">
+                    <td>
+                        <span>${nls.advSettings.cacheNumberDesc}</span>
+
+                        <div class="textBox" data-dojo-attach-point="advSettingsCacheNumber" data-dojo-type="dijit/form/TextBox"></div>
+                    </td>
+                </tr>                
             </tbody>
         </table><br />
     </div>

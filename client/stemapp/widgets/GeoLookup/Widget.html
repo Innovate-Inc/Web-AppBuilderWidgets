@@ -5,6 +5,8 @@
         <form data-dojo-attach-point="inputForm">
             <input type="file" id="csvFileInput" data-dojo-attach-point="csvFileInput" data-dojo-attach-event="change:fileSelected" accept=".csv">
             <div class="jimu-btn" data-dojo-attach-point="showFileDialogBtn" data-dojo-attach-event="click:showFileDialog">${nls.selectCSV}</div>
+            <div class="jimu-btn" data-dojo-attach-point="clearResultsBtn" data-dojo-attach-event="click:clearCSVResults">${nls.clearResults}</div>
+            <input type="checkbox" id="chkboxPlotOnly" data-dojo-attach-point="chkboxPlotOnly"><label>${nls.plotOnly}</label>
         </form>
         <div data-dojo-attach-point="results" class="hide">
             <table class="widgets-results-table" data-dojo-attach-point="widgetsResultsTable" cellspacing="0">
@@ -16,7 +18,7 @@
                             <div data-dojo-attach-point="resultsLoadingImage" id="resultsLoadingImage" class="status processing" />
                         </td>
                         <td>
-                            <div class="result-text" data-dojo-attach-point="resultsLoading">Loading CSV</div>
+                            <div class="result-text" data-dojo-attach-point="resultsLoading">${nls.loadingCSV}</div>
                         </td>
                     </tr>
 
@@ -27,14 +29,15 @@
 
                         </td>
                         <td>
-                            <div class="result-text" data-dojo-attach-point="resultsPlotting">Ploting rows</div>
+                            <div class="result-text" data-dojo-attach-point="resultsPlotting">${nls.plottingRows}</div>
                         </td>
                     </tr>
 
                 </tbody>
 
             </table>
-            <div data-dojo-attach-point="enrichErrors"></div>
+            <div class="errorLink" data-dojo-attach-point="enrichErrors" data-dojo-attach-event="click:showErrorTable"></div>
+            <div class="hide" data-dojo-attach-point="enrichErrorsList"></div>
         </div>
         <!--  </div>-->
         <div data-dojo-attach-point="loading" data-dojo-type="jimu/dijit/LoadingIndicator" data-dojo-props='hidden:true'></div>

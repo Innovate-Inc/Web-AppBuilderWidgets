@@ -24,6 +24,12 @@ input[type="file"] {
     top: -1000px;
 }
 
+.chkPlotOnly {
+    position: fixed;
+    top: -1500px;
+}
+
+
 /*Results Table*/
 .solutions-widget-geolookup .widgets-results-table {
     margin: 1px;
@@ -52,11 +58,19 @@ input[type="file"] {
 }
 
 .processing {
-    content: url("./images/processing.png");
+    content: url("./images/processing.gif");
 }
 
 .complete {
     content: url("./images/complete.png");
+}
+
+.error {
+    content: url("./images/x_symbol_red.png");
+}
+
+.bypass {
+    content: url("");
 }
 
 .result-text {
@@ -64,4 +78,8 @@ input[type="file"] {
     font-family: Century Gothic;
 }
 
+.errorLink {
+	color: #0000FF;
+	cursor:pointer;
+}
 

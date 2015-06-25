@@ -59,6 +59,7 @@ define([ "dojo/_base/declare",
                 if (has("ie") && has("ie") < 10) {
                     this._handleIEScrollWidth();
                 }
+				this._resultsList.startup();
             },
             _handleIEScrollWidth: function () {
                 if (this._resultsList.domNode) {
@@ -72,8 +73,10 @@ define([ "dojo/_base/declare",
                 this.resetQuery();
                 var memoryParameters;
                 memoryParameters = {data: resultItems, idProperty: this.COMMON_FIELDS.RESULT_ID_FIELD};
+				console.log("setting store");
+				console.dir(memoryParameters);
                 this.resultsStore = new Memory(memoryParameters);
-                this._resultsList.setStore(this.resultsStore);
+                this._resultsList.set('store',this.resultsStore);
             },
             addResultItem: function (resultItem) {
                 if (resultItem && this.resultsStore) {
@@ -258,7 +261,7 @@ define([ "dojo/_base/declare",
                     var memoryParameters;
                     memoryParameters = {data: [], idProperty: this.COMMON_FIELDS.RESULT_ID_FIELD};
                     this.resultsStore = new Memory(memoryParameters);
-                    this._resultsList.setStore(this.resultsStore);
+                    this._resultsList.set('store',this.resultsStore);
                 }
             },
             _onCartCountChanged: function () {

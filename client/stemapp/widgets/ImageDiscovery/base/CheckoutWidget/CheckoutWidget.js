@@ -130,7 +130,6 @@ define([
             },
             removeItemFromCart: function (feature, element) {
                 this.inherited(arguments);
-                var currentFeatureService = feature[this.COMMON_FIELDS.SERVICE_FIELD];
                 this.totalItemsInCartCount--;
                 //todo update this for download and order items
                 this.setTotalItems(this.totalItemsInCartCount);

@@ -22,6 +22,8 @@ define({
             intersectFieldDesc: "The name of the field created to store value if lookup intersected a layer.",
             intersectInDesc: "Value to store when location intersected a polygon.",
             intersectOutDesc: "Value to store when location did not intersected a polygon.",
+            maxRowCount: "Maximum number of rows in CSV file.",            
+            cacheNumberDesc: "Point cluster threshold for faster processing."
         },
         noPolygonLayers: "No Polygon Layers",
         errorOnOk: "Please fill out all parameters before saving config",
