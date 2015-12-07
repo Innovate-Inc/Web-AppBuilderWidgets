@@ -30,7 +30,8 @@
 }
 
 .widget-identify-setting .btn-add-section,
-.widget-identify-setting .btn-sym-section{
+.widget-identify-setting .btn-sym-section,
+.widget-identify-setting .btn-format-section{
   display:inline-block;
   overflow:hidden;
   height:24px;
@@ -56,7 +57,8 @@
   background-image: url(images/add_enable.png);
 }
 
-.widget-identify-setting .btn-sym-section .btn-edit-icon {
+.widget-identify-setting .btn-sym-section .btn-edit-icon,
+.widget-identify-setting .btn-format-section .btn-edit-icon{
   float:left;
   height:100%;
   width:14px;
@@ -66,7 +68,8 @@
 }
 
 .widget-identify-setting .btn-add-section .btn-add-label,
-.widget-identify-setting .btn-sym-section .btn-edit-label{
+.widget-identify-setting .btn-sym-section .btn-edit-label,
+.widget-identify-setting .btn-format-section .btn-edit-format-label{
   float:left;
   height:100%;
   line-height:24px;
@@ -80,6 +83,7 @@
   margin-left: 12px;
 }
 
+.result-format-edit .help-icon,
 .symbology-edit .help-icon,
 .link-edit .help-icon {
   cursor: pointer;
@@ -97,6 +101,7 @@
   font-weight:bold;
 }
 
+.result-format-edit .help-icon:hover,
 .symbology-edit .help-icon:hover,
 .link-edit .help-icon:hover {
   cursor: pointer;
@@ -112,6 +117,24 @@
   -moz-box-shadow: 0px 2px 4px #000000;
   box-shadow: 0px 2px 4px #000000;*/
   font-weight:bold;
+}
+
+/* format-edit */
+.result-format-edit .input-table{
+  width:100%;
+}
+
+.result-format-edit .input-table > tbody > tr > td{
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  padding:4px 0;
+}
+
+.result-format-edit {
+  margin:0;
+  padding:0;
+  font-size:15px;
 }
 
 /* symbology-edit */
@@ -371,4 +394,66 @@
 
 .jimu-checkbox{
   margin-top: 7px;
+}
+
+.result-format-edit .format-buttons{
+  display: inline-block;
+  padding: 0 8px;
+  float: left;
+}
+
+.result-format-edit .format-buttons>.icon-btn{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #518DCA;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+  width:40px;
+  height:28px;
+  margin-left:5px;
+}
+
+.result-format-edit .format-buttons>.icon-btn:hover,
+.result-format-edit .format-buttons>.icon-btn.selected{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #15a4fa;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+  width:40px;
+  height:28px;
+  margin-left:5px;
+}
+
+.result-format-edit .format-buttons .seperator {
+  border-right: 2px solid gray;
+  width:4px;
+  display: inline-block;
+  line-height: 28px;
+  vertical-align: middle;
+  text-align: center;
+  height:28px;
+  margin-left:5px;
+}
+
+.result-format-edit .format-buttons .bold-btn{
+  font-weight: bold;
+}
+
+.result-format-edit .format-buttons .italic-btn{
+  font-style: italic;
+}
+
+.result-format-edit .format-buttons .under-btn{
+  text-decoration: underline;
 }

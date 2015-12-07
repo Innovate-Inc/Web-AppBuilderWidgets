@@ -59,7 +59,7 @@ define(
         if(this._symbols.simplemarkersymbol){
           this.defaultPointSymbolPicker.showBySymbol(jsonUtils.fromJson(this._symbols.simplemarkersymbol));
         }else{
-          this.defaultLineSymbolPicker.showByType('point');
+          this.defaultPointSymbolPicker.showByType('point');
         }
         if(this._symbols.simplelinesymbol){
           this.defaultLineSymbolPicker.showBySymbol(jsonUtils.fromJson(this._symbols.simplelinesymbol));

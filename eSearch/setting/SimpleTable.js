@@ -305,14 +305,16 @@ define(['dojo/_base/declare',
           var type = fieldMeta.type;
           var td = null;
           if (type === 'actions') {
-//My Add
+//My Edit
             td = this._createActionsTd(tr, fieldMeta, rowData);
-//End My Add
+//End My Edit
           } else {
             if (type === "text") {
               td = this._createTextTd(tr, fieldMeta, fieldData);
             } else if (type === "radio") {
-              td = this._createRadioTd(tr, fieldMeta, fieldData);
+//My Edit
+              td = this._createRadioTd(tr, fieldMeta, fieldData, rowData);
+//My Edit
             } else if (type === 'checkbox') {
               td = this._createCheckboxTd(tr, fieldMeta, fieldData);
             } else if (type === "empty") {
@@ -495,10 +497,16 @@ define(['dojo/_base/declare',
         return td;
       },
 
-      _createRadioTd: function(tr, fieldMeta, fieldData) {
+      _createRadioTd: function(tr, fieldMeta, fieldData, rowData) {
         var tdStr = '<td class="radio-td ' + fieldMeta.name + '"><input type="radio" /></td>';
         var td = html.toDom(tdStr);
         html.addClass(td, 'simple-table-cell');
+//My Add
+        if(fieldMeta.name === 'sum' && !rowData.isnumber){
+          html.addClass(td, 'hidden-column');
+        }
+        //console.info(rowData, fieldMeta);
+//End My Add
         html.place(td, tr);
         if (fieldMeta['class']) {
           html.addClass(td, fieldMeta['class']);

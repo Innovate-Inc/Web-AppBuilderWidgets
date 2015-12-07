@@ -49,7 +49,8 @@
     <div class="search-tab-node-hidden" data-dojo-attach-point="tabNode2">
       <div>
         <label>${nls.searchLayer}</label>
-        <br>
+        <a style="float:right; margin-right:10px" href="#" data-dojo-attach-point="btnClear3">${nls.clear}</a>
+        <div style="clear:both;"></div>
         <select class="esearch-select" style="margin-bottom:10px;float:left;" data-dojo-attach-point="selectLayerAttribute" data-dojo-type="dijit/form/Select"></select>
         <div data-dojo-type="dijit/form/DropDownButton" data-dojo-attach-point="aSelectType" iconclass="newSelIcon"
              class="selectionmenu"><span></span>
@@ -117,7 +118,8 @@
       <label data-dojo-attach-point="divResultMessage">${nls.noResults}</label>
       <div data-dojo-type="widgets/eSearch/List" data-dojo-attach-point="list" data-dojo-attach-event="click:_selectResultItem"
            class="esearch-list"></div>
+      <label data-dojo-attach-point="divSum" class="esearch-sum" style="display:none;"></label>
     </div>
   </div>
-  <div data-dojo-type="jimu/dijit/LoadingShelter" data-dojo-attach-point="shelter" data-dojo-props="hidden:true"></div>
+  <div data-dojo-type="jimu/dijit/LoadingShelter" data-dojo-attach-point="shelter" data-dojo-props="hidden:true" style="overflow:hidden;"></div>
 </div>

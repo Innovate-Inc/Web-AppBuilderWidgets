@@ -74,9 +74,9 @@ define(['dojo/_base/declare',
         rTitle.textContent = rTitle.innerText = item.title;
         domConstruct.place(rTitle, div);
         if(item.alt){
-          domClass.add(div, this._itemCSS);
-        }else{
           domClass.add(div, this._itemAltCSS);
+        }else{
+          domClass.add(div, this._itemCSS);
         }
 
         if(item.rsltcontent !== ""){
@@ -88,6 +88,7 @@ define(['dojo/_base/declare',
           for (var i = 0; i < arrayLength; i++) {
             attValArr = attArr[i].split('</em>: ');
             attTitle = domConstruct.create("em");
+            domClass.add(attTitle, "attTitle");
             domAttr.set(attTitle, "id", this.id.toLowerCase()+item.id);
             attTitle.textContent = attTitle.innerText = attValArr[0].replace('<em>', '');
             label = domConstruct.create("p");
@@ -174,10 +175,10 @@ define(['dojo/_base/declare',
         if (!item) {
           return;
         }
-
         domClass.replace(id, this._itemSelectedCSS, ((item.alt) ? this._itemAltCSS:this._itemCSS));
         if (this._selectedNode) {
-          domClass.replace(this._selectedNode, ((item.alt)? this._itemAltCSS:this._itemCSS), this._itemSelectedCSS);
+          var item_selected = this._getItemById(this._selectedNode);
+          domClass.replace(this._selectedNode, ((item_selected.alt)? this._itemAltCSS:this._itemCSS), this._itemSelectedCSS);
         }
         this._selectedNode = id;
         this.emit('click', this.selectedIndex, item);
@@ -195,6 +196,19 @@ define(['dojo/_base/declare',
           }
         }
         return null;
+      },
+
+      setSelectedItem: function(id) {
+        var item = this._getItemById(id);
+        if (!item) {
+          return;
+        }
+        domClass.replace(id, this._itemSelectedCSS, ((item.alt) ? this._itemAltCSS:this._itemCSS));
+        if (this._selectedNode) {
+          var item_selected = this._getItemById(this._selectedNode);
+          domClass.replace(this._selectedNode, ((item_selected.alt)? this._itemAltCSS:this._itemCSS), this._itemSelectedCSS);
+        }
+        this._selectedNode = id;
       }
     });
   });

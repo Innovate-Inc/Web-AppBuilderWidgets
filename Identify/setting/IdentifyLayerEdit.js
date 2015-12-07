@@ -308,6 +308,8 @@ define(
           urlDijit.proceedValue = true;
           result = true;
           this.featureLayerDetails = evt;
+          this.layerName.set('value', lang.trim(this.featureLayerDetails.data.name));
+          this.layerName.proceedValue = true;
           this._refreshLayerFields();
         } else {
           urlDijit.proceedValue = false;

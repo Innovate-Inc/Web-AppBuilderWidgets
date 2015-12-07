@@ -192,6 +192,10 @@
   cursor: default;
 }
 
+.search-list-item .attTitle {
+  font-weight: 600;
+}
+
 .search-list-item .labellink {
   padding-left: 40px;
   padding-right: 10px;
@@ -270,6 +274,29 @@
   bottom: 0;
   overflow-x: auto;
   overflow-y: auto;
+}
+
+.widget-esearch .esearch-list.sum {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left: 0;
+  right: 0;
+  top: 50px;
+  bottom: 24px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.widget-esearch .esearch-sum {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .widget-esearch .select-layer-spatial {

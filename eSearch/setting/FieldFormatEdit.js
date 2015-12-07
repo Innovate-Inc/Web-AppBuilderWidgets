@@ -47,6 +47,8 @@ define(
       formatArray: null,
       returnfieldInfo: null,
       tr: null,
+      sumfield: null,
+      sumlabel: null,
 
       postCreate: function(){
         this.inherited(arguments);
@@ -99,6 +101,10 @@ define(
           });
           this.currencyCbx.set('status', true);
           this.currencyCbx.set('disabled', false);
+          if(this.sumfield){
+            this.useSumCbx.setValue(true);
+            this.tbSumLabel.set('value', this.sumlabel);
+          }
           if(fieldInfo.currencyformat){
             this.formatString = fieldInfo.currencyformat;
             this.formatArray = this.formatString.split('|');
@@ -166,6 +172,9 @@ define(
         }else if (this.returnfieldInfo.isnumber || this._isNumberType(this.returnfieldInfo.type)){
           var currencyformat = '';
           var numberformat = '';
+          this.sumfield = this.useSumCbx.getValue();
+          this.sumlabel = this.tbSumLabel.get('value');
+
           if(this.currencyCbx.getValue()){
             currencyformat += this.currencySymboltxt.get('value') + "|";
             if(this.percisionCbx.getValue()){

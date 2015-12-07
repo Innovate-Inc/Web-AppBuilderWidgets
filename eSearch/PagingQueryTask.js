@@ -68,7 +68,7 @@ define(['dojo/_base/declare',
         this.isQuerying = true;
         this.query.returnGeometry = false;
         this.query.outFields = [this.fieldName];
-        if (this.version >= 10.1) {
+        if (this.version > 10.11) {
           this.query.orderByFields = [this.fieldName];
         }
         this.query.objectIds = null;

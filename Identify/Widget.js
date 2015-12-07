@@ -105,6 +105,7 @@ define(['dojo/_base/declare',
       selSym: null,
       wManager: null,
       pManager: null,
+      resultFormatString: "",
 
       postCreate: function () {
         this.inherited(arguments);
@@ -131,6 +132,7 @@ define(['dojo/_base/declare',
         }
         this.configIdentLayers = [];
         this.excludeLayers = this.config.layers.excludelayer;
+        this._initResultFormatString();
         this._initIdentifySymbols();
         this._initTabContainer();
         this._initIdentifyLayers();
@@ -204,7 +206,59 @@ define(['dojo/_base/declare',
         }
       },
 
+      _initResultFormatString: function () {
+        var tBold = false, tItalic = false, tUnder = false, tColorHex = "#000000";
+        var vBold = false, vItalic = false, vUnder = false, vColorHex = "#000000";
+        this.resultFormatString = "";
+        if(this.config.resultFormat){
+          var attribName = '[attribname]';
+          tBold = this.config.resultFormat.attTitlesymbol.bold;
+          tItalic = this.config.resultFormat.attTitlesymbol.italic;
+          tUnder = this.config.resultFormat.attTitlesymbol.underline;
+          if(this.config.resultFormat.attTitlesymbol.color){
+            tColorHex = new Color(this.config.resultFormat.attTitlesymbol.color).toHex();
+          }
+          if(tBold){
+            attribName = "<strong>" + attribName + "</strong>";
+          }
+          if(tItalic){
+            attribName = "<em>" + attribName + "</em>";
+          }
+          if(tUnder){
+            attribName = "<u>" + attribName + "</u>";
+          }
+          if(tColorHex){
+            attribName = "<font color='" + tColorHex + "'>" + attribName + "</font>";
+          }
+          var attribValue = '[attribvalue]';
+          vBold = this.config.resultFormat.attValuesymbol.bold;
+          vItalic = this.config.resultFormat.attValuesymbol.italic;
+          vUnder = this.config.resultFormat.attValuesymbol.underline;
+          if(this.config.resultFormat.attValuesymbol.color){
+            vColorHex = new Color(this.config.resultFormat.attValuesymbol.color).toHex();
+          }
+          if(vBold){
+            attribValue = "<strong>" + attribValue + "</strong>";
+          }
+          if(vItalic){
+            attribValue = "<em>" + attribValue + "</em>";
+          }
+          if(vUnder){
+            attribValue = "<u>" + attribValue + "</u>";
+          }
+          if(vColorHex){
+            attribValue = "<font color='" + vColorHex + "'>" + attribValue + "</font>";
+          }
+          this.resultFormatString = attribName + ": " + attribValue + '<br>';
+        }else{
+          this.resultFormatString = '<font><em>[attribname]</em></font>: <font>[attribvalue]</font><br>';
+        }
+      },
+
       _initDrawBox: function () {
+        aspect.before(this.drawBox, "_activate", lang.hitch(this, function(){
+          this.publishData({message: "Deactivate_DrawTool"});
+        }));
         this.drawBox.setMap(this.map);
         var enabledButtons = ['POINT'];
         if(this.config.enablelineselect){
@@ -292,6 +346,7 @@ define(['dojo/_base/declare',
         this.selSym = new SimpleFillSymbol(SimpleFillSymbol.STYLE_NULL,
                                            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
                                            new Color([68,140,203]), 3), new Color([255,255,255,0]));
+        this.fetchData();
       },
 
       _initTabContainer: function () {
@@ -614,6 +669,14 @@ define(['dojo/_base/declare',
           return layer.id;
         }));
 
+        var LyrNames = array.map(layers, lang.hitch(this, function (layer) {
+          return layer.name;
+        }));
+
+        var LyrIds = array.map(layers, lang.hitch(this, function (layer) {
+          return layer.id;
+        }));
+
         var params = this.createIdentifyParams(layers, geom);
         var params2 = this.createQueryParams(featureLayers, geom);
 
@@ -636,7 +699,7 @@ define(['dojo/_base/declare',
           if(this.returngeometryforzoom){
             this.graphicsLayer.clear();
           }
-          this.showIdentifyResults(r, tasks);
+          this.showIdentifyResults(r, tasks, LyrNames, LyrIds);
         }), lang.hitch(this, function (err){
           console.info(err);
         }));
@@ -837,7 +900,7 @@ define(['dojo/_base/declare',
         return false;
       },
 
-      showIdentifyResults: function (r, itasks) {
+      showIdentifyResults: function (r, itasks, names, Ids) {
         this.numServicesIdent--;
         //if top is chosen and a result is already found than bail out of all other returns.
         if(this.identifyLayerOption === 'top' && this.resultFound){
@@ -859,6 +922,7 @@ define(['dojo/_base/declare',
 
         results = array.filter(results, lang.hitch(this, function (identifyResult, index) {
           var serviceUrl = taskUrls[index];
+          var currentLayer = this.map.getLayer(Ids[index]);
 //check if this is needed anymore
           if(this._isResultLayerExcluded(identifyResult, serviceUrl)){
             return false;
@@ -889,12 +953,11 @@ define(['dojo/_base/declare',
             return false;
           }
 
-
           var title = identifyResult.layerName;
           var obj = identifyResult.feature.attributes;
           var content = '';
           var rsltContent = '';
-          var br = '<br>';
+          //var br = '<br>';
           var fld;
           var value;
           var identFields;
@@ -1013,7 +1076,7 @@ define(['dojo/_base/declare',
                 if(identLinks[a].disablelinksifnull){
                   var lfields = this._getFieldsfromLink(identLinks[a].content);
                   for (var lf=0; lf<lfields.length; lf++){
-                    if(!obj[lfields[lf]] || obj[lfields[lf]] === ''){
+                    if(!obj[lfields[lf]] || obj[lfields[lf]] === '' || obj[lfields[lf]] === 'Null'){
                       linkFieldNull = true;
                       break;
                     }
@@ -1035,7 +1098,9 @@ define(['dojo/_base/declare',
                   disableinpopup: disableInPopUp,
                   popuptype: popupType
                 };
-                lyrIdLinks.push(lObj);
+                if(!linkFieldNull){
+                  lyrIdLinks.push(lObj);
+                }
               }
             }
 
@@ -1076,7 +1141,7 @@ define(['dojo/_base/declare',
               }
               if(numFormat !=='NA' && value !== 'Null' && value !== ''){
                 var args = numFormat.split('|');
-                /*value,percision,symbol,thousands,decimal*/
+                /*value, percision, symbol, thousands, decimal*/
                 value = this._formatNumber(value,args[0]||null,args[1]||null,args[2]||null);
               }
               if(curFormat !== 'NA' && value !== 'Null' && value !== ''){
@@ -1085,16 +1150,15 @@ define(['dojo/_base/declare',
                 value = this._formatCurrency(value,args2[1]||null,args2[0]||null,args2[2]||null,args2[3]||null);
               }
               if(cArr[1] !== 'NA'){
-                content = content + '<em>' + cArr[1] + '</em>: ' + value + br;
+                content = content + this.resultFormatString.replace('[attribname]', cArr[1]).replace('[attribvalue]', value);
               }else{
-                content = content + '<em>' + cArr[0] + '</em>: ' + value + br;
+                content = content + this.resultFormatString.replace('[attribname]', cArr[0]).replace('[attribvalue]', value);
               }
               if(cArr[6] === 'false' || cArr[6] === 'NA'){
                 if(cArr[1] !== 'NA'){
-                  rsltContent = rsltContent + '<em>' + cArr[1] + '</em>: ' + value + br;
-                  br = '<br>';
+                  rsltContent = rsltContent + this.resultFormatString.replace('[attribname]', cArr[1]).replace('[attribvalue]', value);
                 }else{
-                  rsltContent = rsltContent + '<em>' + cArr[0] + '</em>: ' + value + br;
+                  rsltContent = rsltContent + this.resultFormatString.replace('[attribname]', cArr[0]).replace('[attribvalue]', value);
                 }
               }
             }
@@ -1198,7 +1262,8 @@ define(['dojo/_base/declare',
                   if(this.replacenullswithemptystring && (value === 'Null' || value === '<Null>')){
                     value = '';
                   }
-                  content = content + '<em>' + fld + '</em>: ' + value + br;
+                  content = content + this.resultFormatString.replace('[attribname]', fld).replace('[attribvalue]', value);
+                  //content = content + '<em><strong>' + fld + '</strong></em>: ' + value + br;
                 }
               }
 
@@ -1345,11 +1410,29 @@ define(['dojo/_base/declare',
         return result;
       },
 
-      _substitute:function(string, Attribs){
-        var lfields = this._getFieldsfromLink(string);
-        for (var lf=0; lf<lfields.length; lf++){
-          if(Attribs[lfields[lf]]){
-            string = string.replace(new RegExp('{' + lang.trim(lfields[lf]) + '}', 'g'), lang.trim(Attribs[lfields[lf]]));
+      _substitute:function(string, Attribs, currentLayer){
+        var lfields, alfields, fld, fld2Replace, lf;
+        if(currentLayer){
+          alfields = this._getFieldsfromLink(string, currentLayer);
+          lfields = this._getFieldsfromLink(string);
+          for (lf=0; lf<alfields.length; lf++){
+            if(Attribs[alfields[lf]]){
+              fld2Replace = lang.trim(lfields[lf]);
+              fld = this._getField(currentLayer, alfields[lf]);
+              if (fld.type === "esriFieldTypeString") {
+                string = string.replace(new RegExp('{' + fld2Replace + '}', 'g'), lang.trim(Attribs[alfields[lf]]));
+              } else {
+                string = string.replace(new RegExp('{' + fld2Replace + '}', 'g'), Attribs[alfields[lf]]);
+              }
+            }
+          }
+        }else{
+          lfields = this._getFieldsfromLink(string);
+          for (lf=0; lf<lfields.length; lf++){
+            if(Attribs[lfields[lf]]){
+              fld2Replace = lang.trim(lfields[lf]);
+              string = string.replace(new RegExp('{' + fld2Replace + '}', 'g'), Attribs[lfields[lf]]);
+            }
           }
         }
         return string;
@@ -1369,7 +1452,7 @@ define(['dojo/_base/declare',
         return result;
       },
 
-      _getFieldsfromLink:function(strLink) {
+      _getFieldsfromLink:function(strLink, currentLayer) {
         var retArr = [];
         var b1 = 0;
         var e1 = 0;
@@ -1379,6 +1462,17 @@ define(['dojo/_base/declare',
           if(b1 === -1 ){break;}
           e1 = strLink.indexOf('}', b1);
           fldName = strLink.substring(b1 + 1,e1);
+          //get the actual field name if the currentLayer is supplied
+          //console.info(currentLayer);
+          if(currentLayer){
+            for (var i=0; i < currentLayer.fields.length; i++){
+              var fld = currentLayer.fields[i];
+              if(fld.alias === fldName){
+                fldName = fld.name;
+                break;
+              }
+            }
+          }
           retArr.push(fldName);
         } while(e1 < strLink.length - 1);
         return retArr;
@@ -1506,7 +1600,8 @@ define(['dojo/_base/declare',
           if (listItem.links[l].link){
             var pos = listItem.links[l].link.length - 4;
             var sfx = String(listItem.links[l].link).substr(pos, 4).toLowerCase();
-            if (((sfx === '.jpg') || (sfx === '.png') || (sfx === '.gif')) && listItem.links[l].popuptype !== 'text'){ // use PopUpMediaInfo if it is an image
+            if (((sfx === '.jpg') || (sfx === '.png') || (sfx === '.gif')) && listItem.links[l].popuptype !== 'text'){
+              // use PopUpMediaInfo if it is an image
               popUpMediaInfo = {};
               popUpMediaInfo.type = 'image';
               var val = {};
@@ -1643,6 +1738,7 @@ define(['dojo/_base/declare',
               }
             }
             if(identFields && !identFields.all){
+              var currentLayer = this.map.getLayer(fIds[i]);
               this.resultFound = true;
               this.gid ++;
               if(this.identifyLayerOption === 'top' && this.resultFound){
@@ -1735,9 +1831,9 @@ define(['dojo/_base/declare',
                     disableInPopUp = true;
                   }
                   if(identLinks[a].disablelinksifnull){
-                    var lfields = this._getFieldsfromLink(identLinks[a].content);
+                    var lfields = this._getFieldsfromLink(identLinks[a].content, currentLayer);
                     for (var lf=0; lf<lfields.length; lf++){
-                      if(!obj[lfields[lf]] || obj[lfields[lf]] === ''){
+                      if(!obj[lfields[lf]] || obj[lfields[lf]] === '' || obj[lfields[lf]] === 'Null'){
                         linkFieldNull = true;
                         break;
                       }
@@ -1746,11 +1842,11 @@ define(['dojo/_base/declare',
                   if(linkFieldNull){
                     link = '';
                   }else{
-                    link = this._substitute(identLinks[a].content, obj);
+                    link = this._substitute(identLinks[a].content, obj, currentLayer);
                   }
-                  var sub = this._substitute(identLinks[a].alias, obj);
+                  var sub = this._substitute(identLinks[a].alias, obj, currentLayer);
                   alias = (sub) ? sub : identLinks[a].alias;
-                  linkicon = this._substitute((identLinks[a].icon || this.folderUrl + 'images/w_link.png'), obj);
+                  linkicon = this._substitute((identLinks[a].icon || this.folderUrl + 'images/w_link.png'), obj, currentLayer);
                   popupType = identLinks[a].popuptype;
                   var lObj ={
                     link: link,
@@ -1759,7 +1855,9 @@ define(['dojo/_base/declare',
                     disableinpopup: disableInPopUp,
                     popuptype: popupType
                   };
-                  lyrIdLinks.push(lObj);
+                  if(!linkFieldNull){
+                    lyrIdLinks.push(lObj);
+                  }
                 }
               }
               for (var f3 = 0; f3 < fldArr.length; f3++) {
@@ -1808,10 +1906,9 @@ define(['dojo/_base/declare',
                 }
                 if(curFormat !== 'NA' && value !== 'Null' && value !== ''){
                   var args2 = curFormat.split('|');
-                  /*value,percision,symbol,thousands,decimal*/
+                  /*value, percision, symbol, thousands, decimal*/
                   value = this._formatCurrency(value, args2[1] || null, args2[0] || null, args2[2] || null, args2[3] || null);
                 }
-                var currentLayer = this.map.getLayer(fIds[i]);
                 var typeID = currentLayer.typeIdField ? obj[currentLayer.typeIdField] : null;
                 if (cArr[0] === currentLayer.typeIdField) {
                   var featureType = this._getFeatureType(currentLayer, typeID);
@@ -1826,15 +1923,15 @@ define(['dojo/_base/declare',
                 }
 
                 if(cArr[1] !== 'NA'){
-                  content = content + '<em>' + cArr[1] + '</em>: ' + value + br;
+                  content = content + this.resultFormatString.replace('[attribname]', cArr[1]).replace('[attribvalue]', value);
                 }else{
-                  content = content + '<em>' + cArr[0] + '</em>: ' + value + br;
+                  content = content + this.resultFormatString.replace('[attribname]', cArr[0]).replace('[attribvalue]', value);
                 }
                 if(cArr[6] === 'false' || cArr[6] === 'NA'){
                   if(cArr[1] !== 'NA'){
-                    rsltContent = rsltContent + '<em>' + cArr[1] + '</em>: ' + value + br;
+                    rsltContent = rsltContent + this.resultFormatString.replace('[attribname]', cArr[1]).replace('[attribvalue]', value);
                   }else{
-                    rsltContent = rsltContent + '<em>' + cArr[0] + '</em>: ' + value + br;
+                    rsltContent = rsltContent + this.resultFormatString.replace('[attribname]', cArr[0]).replace('[attribvalue]', value);
                   }
                 }
               }
@@ -1939,7 +2036,7 @@ define(['dojo/_base/declare',
                     if(this.replacenullswithemptystring && (value === 'Null' || value === '<Null>')){
                       value = '';
                     }
-                    content = content + '<em>' + fld + '</em>: ' + value + br;
+                    content = content + '<em><strong>' + fld + '</strong></em>: <font color="blue">' + value + '</font>' + br;
                   }
                 }
 
@@ -2076,6 +2173,12 @@ define(['dojo/_base/declare',
           this.drawBox = null;
         }
         this.inherited(arguments);
+      },
+
+      onReceiveData: function(name, widgetId, data) {
+        if(data.message && data.message === "Deactivate_DrawTool"){
+          this.drawBox.deactivate();
+        }
       },
 
       onOpen: function () {

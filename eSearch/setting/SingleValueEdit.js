@@ -582,10 +582,9 @@ function(declare, lang, array, html, query, on, json, Memory, Deferred, _WidgetB
       })));
       this.cbxAskValues.onChange = lang.hitch(this, this._onCbxAskValuesClicked);
       this.cbxValueRequired.onChange = lang.hitch(this, function(){
-        console.info(this.config.valueObj);
         this._valueObj = this.config.valueObj;
         var fieldInfo = (this.fieldsSelect) ? this._getSelectedFilteringItem(this.fieldsSelect) : null;
-        if(fieldInfo){
+        if(fieldInfo && this.layerURL && this.layerUniqueCache[this.layerURL]){
           delete this.layerUniqueCache[this.layerURL][fieldInfo.name];
         }
         this._resetByFieldAndOperation();
@@ -948,8 +947,8 @@ function(declare, lang, array, html, query, on, json, Memory, Deferred, _WidgetB
             }));
             if(!this.isValueRequired){
               var dataItem2 = lang.mixin({}, {name:'',code:''});
-              dataItem2.id = stringCodedData.length - 1;
-              stringCodedData.push(dataItem2);
+              dataItem2.id = stringCodedData.length;
+              stringCodedData.unshift(dataItem2);
             }
             var stringCodedStore = new Memory({data:stringCodedData});
             this.stringCodedValuesFS.set('store', stringCodedStore);
@@ -1021,6 +1020,11 @@ function(declare, lang, array, html, query, on, json, Memory, Deferred, _WidgetB
                 dataItem.id = index;
                 return dataItem;
               }));
+              if(!this.isValueRequired){
+                var dataItem3 = lang.mixin({}, {name:'',code:''});
+                dataItem3.id = numberCodedData.length;
+                numberCodedData.unshift(dataItem3);
+              }
               var numberCodedStore = new Memory({data:numberCodedData});
               this.numberCodedValuesFS.set('store',numberCodedStore);
               if(valueObj && !isNaN(valueObj.value)){

@@ -87,5 +87,17 @@ define({
     addTextQuery: 'Inclure le texte requête dans les critères de sélection',
     uniqueValues: 'Récupération des valeurs uniques',
     processingUnique: 'Traitement des valeurs uniques: ',
-    of: ' de '
+    of: ' de ',
+    requiredTip: "Valeur nécessaire pour exécuter la recherche",
+    required: "Nécessaire",
+    requiredWarning: "Valeur Obligatoire manquant",
+    requiredErrorMessage: "Vous avez échoué à entrer un ou plusieurs valeurs requises",
+    selectFeaturesFrom: "Utilisez des graphiques à partir de",
+    eLocateTip: "L'utilisation actuelle Enhanced Localiser Graphics Widget",
+    createnewselection: "Créer de nouveaux résultats",
+    addtoselection: "Ajouter aux résultats actuels",
+    removefromselection: "Retirer de résultats actuels",
+    mapServiceFailureTitle: "Recherche d'erreurs couche Map Service",
+    mapServicefailureMsg: "La couche de recherche suivant (s) service de carte (s) n'a pas répondu: ",
+    mapServicefailureMsg2: ". En raison de cet échec la couche (s) de recherche sera supprimé de le widget."
 });

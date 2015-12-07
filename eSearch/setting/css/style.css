@@ -134,6 +134,7 @@ textarea {
 }
 
 .eSearch-default-symbol-setting .help-icon,
+.eSearch-layer-symbol-setting .help-icon,
 .widget-esearch-singlelink-setting .help-icon{
   cursor: pointer;
   display: inline-block;
@@ -151,6 +152,7 @@ textarea {
 }
 
 .eSearch-default-symbol-setting .help-icon:hover,
+.eSearch-layer-symbol-setting .help-icon:hover,
 .widget-esearch-singlelink-setting .help-icon:hover{
   cursor: pointer;
   display: inline-block;
@@ -286,6 +288,7 @@ textarea {
 .widget-esearch-defaultbuffer-setting .input-table,
 .widget-esearch-singlesearch-setting .input-table,
 .eSearch-default-symbol-setting .input-table,
+.eSearch-layer-symbol-setting .input-table,
 .widget-esearch-setting .marker-section .input-table,
 .widget-esearch-singlelink-setting .input-table,
 .widget-esearch-singlevalue-setting .input-table{
@@ -295,6 +298,7 @@ textarea {
 .widget-esearch-singleexpression-setting .input-table > tbody > tr > td,
 .widget-esearch-defaultbuffer-setting .input-table > tbody > tr > td,
 .eSearch-default-symbol-setting .input-table > tbody > tr > td,
+.eSearch-layer-symbol-setting .input-table > tbody > tr > td,
 .widget-esearch-singlelink-setting .input-table > tbody > tr > td,
 .widget-esearch-singlevalue-setting .input-table > tbody > tr > td{
   height: 30px;
@@ -607,6 +611,18 @@ textarea {
   line-height:40px;
 }
 
+.jimu-simple-table .radio-td.simple-table-cell {
+  padding-left: 24px;
+}
+
+.jimu-simple-table .checkbox-td.simple-table-cell {
+  padding-left: 42px;
+}
+
+.jimu-simple-table .actions-td.simple-table-cell {
+  padding-left: 24px;
+}
+
 .jimu-simple-table .simple-table-field,
 .jimu-simple-table .simple-table-cell{
   vertical-align:middle;
@@ -672,6 +688,10 @@ textarea {
 .jimu-simple-table.link-table,
 .jimu-simple-table.values-table{
   max-height: 117px;
+}
+
+.jimu-simple-table.user-values-table{
+  max-height: 306px;
 }
 
 .searches-section .label.jimu-float-leading {

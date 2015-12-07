@@ -311,7 +311,7 @@ define([
           this.stringCodedValuesFS.set('displayedValue','');
           var estore = new Memory({data:[]});
           this.stringCodedValuesFS.set('store',estore);
-          if(codedValues){
+          if(codedValues && !uvField && !userList){
             stringCodedData = array.map(codedValues, lang.hitch(this, function(item, index) {
               //item:{name,code},name is the code description and code is code value.
               var dataItem = lang.mixin({}, item);
@@ -532,6 +532,11 @@ define([
                 dataItem.id = index;
                 return dataItem;
               }));
+              if(!this.isValueRequired){
+                var dataItem3 = lang.mixin({}, {name:'',code:''});
+                dataItem3.id = numberCodedData.length;
+                numberCodedData.unshift(dataItem3);
+              }
               var numberCodedStore = new Memory({data:numberCodedData});
               this.numberCodedValuesFS.set('store',numberCodedStore);
               if(valueObj && !isNaN(valueObj.value)){
@@ -560,15 +565,20 @@ define([
             this.numberCodedValuesFS.set('displayedValue','');
             var estore = new Memory({data:[]});
             this.numberCodedValuesFS.set('store',estore);
-            if(codedValues){
+            if(codedValues && !uvField && !userList){
               numberCodedData2 = array.map(codedValues,lang.hitch(this,function(item,index){
                 //item:{name,code},name is the code description and code is code value.
                 var dataItem = lang.mixin({},item);
                 dataItem.id = index;
                 return dataItem;
               }));
+              if(!this.isValueRequired){
+                var dataItem4 = lang.mixin({}, {name:'',code:''});
+                dataItem4.id = numberCodedData2.length;
+                numberCodedData2.unshift(dataItem4);
+              }
               var numberCodedStore2 = new Memory({data:numberCodedData2});
-              this.numberCodedValuesFS.set('store',numberCodedStore2);
+              this.numberCodedValuesFS.set('store', numberCodedStore2);
               if(valueObj && !isNaN(valueObj.value)){
                 var number2 = parseFloat(valueObj.value);
                 var numberSelectedItems2 = array.filter(numberCodedData2,lang.hitch(this,function(item){

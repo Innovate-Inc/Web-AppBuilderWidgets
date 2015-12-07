@@ -71,12 +71,14 @@
 }
 .identify-list-item .linksdiv{
   text-align: center;
-  width: 100%;
-  padding-left: 5px;
+  width: 300px;
+  padding-left: 60px;
   padding-right: 5px;
+  padding-top: 3px;
 }
 .identify-list-item .linkIcon{
   display: inline-block;
+  line-height: 23px;
 }
 .identify-list-item .iconDiv:before{
   content: '';

@@ -65,6 +65,11 @@ function(
       upgrader: function(oldConfig){
         return oldConfig;
       }
+    },{
+      version: '1.2.0.6',
+      upgrader: function(oldConfig){
+        return oldConfig;
+      }
     }];
   }
 

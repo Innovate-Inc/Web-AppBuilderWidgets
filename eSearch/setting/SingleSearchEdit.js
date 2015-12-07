@@ -31,6 +31,7 @@ define([
   'widgets/eSearch/setting/SingleExpressionEdit',
   'widgets/eSearch/setting/FieldFormatEdit',
   'widgets/eSearch/setting/SingleLinkEdit',
+  './LayerSearchSymEdit',
   'dojo/keys',
   'jimu/dijit/Message',
   'jimu/utils',
@@ -65,6 +66,7 @@ define([
        SingleExpressionEdit,
        FieldFormatEdit,
        SingleLinkEdit,
+       LayerSearchSymEdit,
        keys,
        Message,
        jimuUtils,
@@ -85,6 +87,7 @@ define([
       popup2: null,
       popup3: null,
       popup4: null,
+      popup5: null,
       fieldformatedit: null,
       singleExpressionedit: null,
       singleLinkedit: null,
@@ -121,8 +124,11 @@ define([
         if(this.config.zoomScale){
           this.zoomScale.set('value', parseInt(this.config.zoomScale,10));
         }
+        this.forceScaleCbx.setValue(this.config.forceZoomScale || false);
         if(this.config.layersymbolfrom && this.config.layersymbolfrom === 'config'){
           this.defaultSymRadio.checked = true;
+        }else if(this.config.layersymbolfrom && this.config.layersymbolfrom === 'layer'){
+          this.layerSymRadio.checked = true;
         }else{
           this.serverSymRadio.checked = true;
         }
@@ -163,6 +169,7 @@ define([
           definitionexpression: lang.trim(this.definitionExpression.get('value')),
           spatialsearchlayer: this.isSpatialLayer.getValue(),
           zoomScale: parseInt(this.zoomScale.get('value'),10),
+          forceZoomScale: this.forceScaleCbx.getValue(),
           shareResult: this.shareCbx.getValue(),
           addToAttrib: this.attribTableCbx.getValue(),
           expressions: {
@@ -180,10 +187,23 @@ define([
           //showattachments: this.showAttachmentsCbx.getValue()
         };
 
+        if (this.config.sumfield) {
+          config.sumfield = this.config.sumfield;
+          config.sumlabel = this.config.sumlabel;
+        }
         if(this.serverSymRadio.checked){
           config.layersymbolfrom = 'server';
+          if(config.symbology){
+            delete config.symbology;
+          }
+        }else if(this.layerSymRadio.checked){
+          config.layersymbolfrom = 'layer';
+          config.symbology = this.config.symbology;
         }else{
           config.layersymbolfrom = 'config';
+          if(config.symbology){
+            delete config.symbology;
+          }
         }
 
         var rowsData = this.displayFieldsTable.getData();
@@ -233,9 +253,11 @@ define([
         var group = "radio_" + jimuUtils.getRandomString();
         this.serverSymRadio.name = group;
         this.defaultSymRadio.name = group;
+        this.layerSymRadio.name = group;
 
         jimuUtils.combineRadioCheckBoxWithLabel(this.serverSymRadio, this.serverSymRadioLabel);
         jimuUtils.combineRadioCheckBoxWithLabel(this.defaultSymRadio, this.defaultSymRadioLabel);
+        jimuUtils.combineRadioCheckBoxWithLabel(this.layerSymRadio, this.layerSymRadioLabel);
       },
 
       _addLinkFields: function(fields, links) {
@@ -399,6 +421,14 @@ define([
             this._showSingleExpressionsEdit(tr);
           }
         })));
+        this.own(on(this.btnAddSymbol, 'click', lang.hitch(this, function () {
+          this.layerSymRadio.checked = true;
+          if(!this.featureLayerDetails){
+            return;
+          }
+          var geomType = this.featureLayerDetails.data.geometryType;
+          this._openSymbolEdit(this.nls.addSymbol, this.config, geomType);
+        })));
         this.own(on(this.btnAddLink, 'click', lang.hitch(this, function () {
           var args = {
             config: null
@@ -436,11 +466,60 @@ define([
         })));
       },
 
+      _onSymbolEditOk: function() {
+        var sConfig = this.layerSearchSymedit.getConfig();
+
+        if (sConfig.length < 0) {
+          new Message({
+            message: this.nls.warning
+          });
+          return;
+        }
+        this.config.symbology = sConfig;
+        this.popup5.close();
+      },
+
+      _onSymbolEditClose: function() {
+        this.layerSearchSymedit = null;
+        this.popup5 = null;
+      },
+
+      _openSymbolEdit: function(title, lSym, gType) {
+        this.layerSearchSymedit = new LayerSearchSymEdit({
+          nls: this.nls,
+          config: lSym || {},
+          geomType: gType,
+          widget: this
+        });
+
+        this.popup5 = new Popup({
+          titleLabel: title,
+          autoHeight: true,
+          content: this.layerSearchSymedit,
+          container: 'main-page',
+          buttons: [{
+            label: this.nls.ok,
+            key: keys.ENTER,
+            onClick: lang.hitch(this, '_onSymbolEditOk')
+          }, {
+            label: this.nls.cancel,
+            key: keys.ESCAPE
+          }],
+          onClose: lang.hitch(this, '_onSymbolEditClose')
+        });
+        html.addClass(this.popup5.domNode, 'widget-setting-popup');
+        this.layerSearchSymedit.startup();
+      },
+
       _openFieldEdit: function (name, tr) {
         this.fieldformatedit = new FieldFormatEdit({
           nls: this.nls,
           tr: tr
         });
+        if(this.config.sumfield && tr.fieldInfo.name === this.config.sumfield){
+          this.fieldformatedit.sumfield = true;
+          this.fieldformatedit.sumlabel = this.config.sumlabel;
+        }
         this.fieldformatedit.setConfig(tr.fieldInfo || {});
         this.popup4 = new Popup({
           titleLabel: name,
@@ -467,6 +546,11 @@ define([
       _onFieldEditOk: function () {
         var edits = {};
         var fieldInfo = this.fieldformatedit.getConfig();
+        console.info(this.fieldformatedit.sumfield);
+        if(this.fieldformatedit.sumfield){
+          this.config.sumfield = fieldInfo.name;
+          this.config.sumlabel = this.fieldformatedit.sumlabel;
+        }
         if (fieldInfo.useutc) {
           edits.useutc = true;
         }else{
@@ -672,6 +756,10 @@ define([
         }
         var result = this.displayFieldsTable.addRow(rowData);
         result.tr.fieldInfo = fieldInfo;
+        if(fieldInfo.name === this.config.sumfield){
+          result.tr.sumfield = true;
+          result.tr.sumlabel = this.config.sumlabel;
+        }
       },
 
       _getTitleField: function () {

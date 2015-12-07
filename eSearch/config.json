@@ -73,7 +73,28 @@
           }
         ]
       },
-      "layersymbolfrom": "config"
+      "layersymbolfrom": "config",
+      "symbology": {
+        "color": [
+          0,
+          0,
+          255,
+          128
+        ],
+        "outline": {
+          "color": [
+            0,
+            0,
+            255,
+            204
+          ],
+          "width": 2,
+          "type": "esriSLS",
+          "style": "esriSLSSolid"
+        },
+        "type": "esriSFS",
+        "style": "esriSFSSolid"
+      }
     },
     {
       "name": "Traffic Cameras",

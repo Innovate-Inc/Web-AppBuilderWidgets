@@ -24,6 +24,7 @@ define(['dojo/_base/declare',
     'dojo/_base/array',
     'dojo/dom',
     'dojo/dom-class',
+    'dojo/dom-style',
     'dojo/Evented',
     'esri/symbols/jsonUtils'
   ],
@@ -37,6 +38,7 @@ define(['dojo/_base/declare',
     array,
     dom,
     domClass,
+    domStyle,
     Evented,
     jsonUtils) {
     return declare([_WidgetBase, Evented], {
@@ -96,27 +98,61 @@ define(['dojo/_base/declare',
         }
 
         var attArr = item.rsltcontent.split('<br>');
-        var attValArr;
-        var label;
-        var attTitle;
+        var attValArr, tHasColor, bIndex, eIndex, tColor, vHasColor, vColor;
+        var label, attTitle, attVal;
         var arrayLength = attArr.length;
         for (var i = 0; i < arrayLength; i++) {
-          attValArr = attArr[i].split('</em>: ');
-          attTitle = domConstruct.create('em');
+          attValArr = attArr[i].split(': ');
+          attTitle = domConstruct.create('font');
           domAttr.set(attTitle, 'id', this.id.toLowerCase()+item.id);
-          attTitle.textContent = attTitle.innerText = attValArr[0].replace('<em>', '');
+          if(attValArr[0].toLowerCase().indexOf('<em>') > -1){
+            domStyle.set(attTitle, 'font-style', 'italic');
+          }
+          if(attValArr[0].toLowerCase().indexOf('<strong>') > -1){
+            domStyle.set(attTitle, 'font-weight', 'bold');
+          }
+          if(attValArr[0].toLowerCase().indexOf('<u>') > -1){
+            domStyle.set(attTitle, 'text-decoration', 'underline');
+          }
+          tHasColor = (attValArr[0].toLowerCase().indexOf("<font color='") > -1)?true:false;
+          if(tHasColor){
+            bIndex = attValArr[0].toLowerCase().indexOf("<font color='") + 13;
+            eIndex = attValArr[0].toLowerCase().indexOf("'>", bIndex);
+            tColor = attValArr[0].substr(bIndex, eIndex - bIndex);
+            domStyle.set(attTitle, 'color', tColor);
+          }
+
+          attTitle.textContent = attTitle.innerText = attValArr[0].replace(/<[\/]{0,1}(em|EM|strong|STRONG|font|FONT|u|U)[^><]*>/g, "");
           label = domConstruct.create('p');
           domAttr.set(label, 'id', this.id.toLowerCase()+item.id);
           domClass.add(label, 'label');
+          attVal = domConstruct.create('font');
 
-          if (attValArr[1] === 'null') {
-            label.textContent = label.innerText = ": ";
-          } else {
-            label.textContent = label.innerText = ": " + attValArr[1];
+          if(attValArr[1].toLowerCase().indexOf('<em>') > -1){
+            domStyle.set(attVal, 'font-style', 'italic');
+          }
+          if(attValArr[1].toLowerCase().indexOf('<strong>') > -1){
+            domStyle.set(attVal, 'font-weight', 'bold');
+          }
+          if(attValArr[1].toLowerCase().indexOf('<u>') > -1){
+            domStyle.set(attVal, 'text-decoration', 'underline');
+          }
+          vHasColor = (attValArr[1].toLowerCase().indexOf("<font color='") > -1)?true:false;
+          if(vHasColor){
+            bIndex = attValArr[1].toLowerCase().indexOf("<font color='") + 13;
+            eIndex = attValArr[1].toLowerCase().indexOf("'>", bIndex);
+            vColor = attValArr[1].substr(bIndex, eIndex - bIndex);
+            domStyle.set(attVal, 'color', vColor);
           }
 
+          if (attValArr[1] === 'null') {
+            attVal.textContent = attVal.innerText = ": ";
+          } else {
+            attVal.textContent = attVal.innerText = ": " + attValArr[1].replace(/<[\/]{0,1}(em|EM|strong|STRONG|font|FONT|u|U)[^><]*>/g, "");
+          }
+          domConstruct.place(attTitle, label);
+          domConstruct.place(attVal, label);
           domConstruct.place(label, div);
-          domConstruct.place(attTitle, label, 'first');
         }
         if(document.all && !document.addEventListener){
           //do nothing because it is IE8
@@ -141,7 +177,7 @@ define(['dojo/_base/declare',
             domConstruct.place(linkText, linksDiv, 'before');
             domClass.add(linkText, 'labellink');
           }else{
-            var linkImg = domConstruct.toDom("<a href='" + link.link + "' target='_blank' title='" + link.alias + "'><img src='" + link.icon + "' alt='" + link.alias + "' border='0' width='20px' height='20px'></a>");
+            var linkImg = domConstruct.toDom("<a href='" + link.link + "' target='_blank' title='" + link.alias + "'><img src='" + link.icon + "' alt='" + link.alias + "' border='0' width='20px' height='20px' style='vertical-align: middle;'></a>");
             domConstruct.place(linkImg, linksDiv);
             domClass.add(linkImg, 'linkIcon');
           }

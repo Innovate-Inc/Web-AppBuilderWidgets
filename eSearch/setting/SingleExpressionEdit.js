@@ -51,7 +51,6 @@ function(declare, lang, array, html, query, on, json, _WidgetBase, _TemplatedMix
         return;
       }
       this.isHosted = jimuUtils.isHostedService(this.layerURL);
-      console.info ("is hosted:", this.isHosted, this.layerURL);
       this.config = config;
       this.resetAll();
       this.searchLabel.set('value', lang.trim(this.config.textsearchlabel || ''));

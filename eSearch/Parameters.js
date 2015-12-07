@@ -14,12 +14,11 @@ define([
   'dojo/on',
   'dojo/query',
   'dijit/registry',
-  'jimu/filterUtils',
   './SingleParameter',
   'dojo/Evented'
 ],
   function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, lang,
-  html, array, on, query, registry, filterUtils, SingleParameter, Evented) {/*jshint unused: false*/
+  html, array, on, query, registry, SingleParameter, Evented) {/*jshint unused: false*/
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-search-parameters',
       templateString: template,
@@ -28,12 +27,10 @@ define([
       layerInfo: null,
       layerUri: null,
       layerDef: null,
-      _filterUtils:null,
       layerUniqueCache: null,
 
       postCreate:function(){
         this.inherited(arguments);
-        this._filterUtils = new filterUtils();
         if(this.valuesObj){
           this.build(this.valuesObj);
         }
@@ -41,7 +38,6 @@ define([
 
       destroy: function(){
         this.clear();
-        this._filterUtils = null;
         this.inherited(arguments);
       },
 
@@ -99,7 +95,6 @@ define([
         this.layerInfo = lang.mixin({},layerInfo);
         this.layerUri = layerUri;
         this.layerDef = layerDef;
-        //console.info(layerDef);
         array.forEach(valuesObj,lang.hitch(this,function(singleValue){
           var tr = html.create('tr',{innerHTML:'<td></td>'},this.tbody);
           var td = query('td',tr)[0];
@@ -124,7 +119,7 @@ define([
         }));
       },
 
-      _getFieldInfo:function(fieldName,lyrDef){
+      _getFieldInfo:function(fieldName, lyrDef){
         var fieldInfos = lyrDef.fields;
         for(var i=0;i<fieldInfos.length;i++){
           var fieldInfo = fieldInfos[i];

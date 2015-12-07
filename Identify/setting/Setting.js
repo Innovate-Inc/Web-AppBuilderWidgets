@@ -20,6 +20,7 @@ define([
     'dijit/form/NumberSpinner',
     'dijit/form/Select',
     './SymbologyEdit',
+    './ResultFormatEdit',
     './IdentifyLayerEdit',
     './ExcludeLayerEdit'
   ],
@@ -40,6 +41,7 @@ define([
     NumberSpinner,
     Select,
     SymbologyEdit,
+    ResultFormatEdit,
     IdentifyLayerEdit,
     ExcludeLayerEdit) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
@@ -47,11 +49,13 @@ define([
       baseClass: 'widget-identify-setting',
       dnls: null,
       popupsymedit: null,
+      popupformatedit: null,
       popuplayeredit: null,
       popupexcludelayeredit: null,
       popup: null,
       popup2: null,
       popup3: null,
+      popup4: null,
       popupState: null,
       layerInfoCache: null,
 
@@ -69,6 +73,9 @@ define([
       _bindEvents: function() {
         this.own(on(this.btnSymIdentify,'click',lang.hitch(this,function(){
           this._openSymEdit(this.nls.editDefaultSym);
+        })));
+        this.own(on(this.btnFormatResults,'click',lang.hitch(this,function(){
+          this._openFormatEdit(this.nls.editResultFormat);
         })));
         this.own(on(this.btnAddLayer,'click',lang.hitch(this,function(){
           var args = {
@@ -306,10 +313,45 @@ define([
         this.popupsymedit.startup();
       },
 
+      _onFormatEditOk: function() {
+        this.config.resultFormat = this.popupformatedit.getConfig().format;
+        this.popup4.close();
+        this.popupState = '';
+      },
+
+      _onFormatEditClose: function() {
+        this.popupfromatedit = null;
+        this.popup4 = null;
+      },
+
+      _openFormatEdit: function(title) {
+        this.popupformatedit = new ResultFormatEdit({
+          nls: this.nls,
+          config: this.config || {}
+        });
+
+        this.popup4 = new Popup({
+          titleLabel: title,
+          autoHeight: true,
+          content: this.popupformatedit,
+          container: 'main-page',
+          width: 540,
+          buttons: [{
+            label: this.nls.ok,
+            key: keys.ENTER,
+            onClick: lang.hitch(this, '_onFormatEditOk')
+          }, {
+            label: this.nls.cancel,
+            key: keys.ESCAPE
+          }],
+          onClose: lang.hitch(this, '_onFormatEditClose')
+        });
+        html.addClass(this.popup4.domNode, 'widget-setting-format');
+        this.popupformatedit.startup();
+      },
+
       _onILEditOk: function() {
         var layerConfig = this.popuplayeredit.getConfig();
-//        console.info(layerConfig);
-
         if (layerConfig.length < 0) {
           new Message({
             message: this.nls.warning
@@ -371,8 +413,6 @@ define([
 
       _onIELEditOk: function() {
         var layerConfig = this.popupexcludelayeredit.getConfig();
-//        console.info(layerConfig[0]);
-
         if (layerConfig.length < 0) {
           new Message({
             message: this.nls.warning
@@ -438,7 +478,6 @@ define([
           }],
           onClose: lang.hitch(this, '_onIELEditClose')
         });
-        //html.addClass(this.popup.domNode, 'widget-setting-symbology');
         this.popupexcludelayeredit.startup();
       }
 

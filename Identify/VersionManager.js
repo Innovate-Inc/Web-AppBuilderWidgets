@@ -37,6 +37,36 @@ function(
       upgrader: function(oldConfig){
         return oldConfig;
       }
+    },{
+      version: '1.2.0.4',
+      upgrader: function(oldConfig){
+        var newConfig = oldConfig;
+        newConfig.resultFormat = {
+          "attTitlesymbol": {
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "color": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          "attValuesymbol": {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "color": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        };
+        return newConfig;
+      }
     }];
   }
 
