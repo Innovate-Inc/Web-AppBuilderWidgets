@@ -1,2 +1,0 @@
-//>>built
-define(["dojo/_base/declare","dijit/_WidgetBase"],function(a,b){return a([b],{baseClass:"json-editor",postCreate:function(){this.inherited(arguments);this.editor=ace.edit(this.domNode);this.editor.setTheme("ace/theme/textmate");this.editor.setHighlightActiveLine(!0);this.editor.setValue(JSON.stringify(this.json,null,2));this.editor.getSession().setMode("ace/mode/json")},setJSON:function(a){this.json=a;this.editor.setValue(JSON.stringify(this.json,null,2))},getJSON:function(){return JSON.parse(this.editor.getValue())}})});

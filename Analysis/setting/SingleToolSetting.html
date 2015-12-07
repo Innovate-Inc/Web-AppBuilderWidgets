@@ -1,0 +1,29 @@
+<div>
+  <div class="control-section jimu-leading-margin3">
+    <label class="jimu-widget-normal">${nls.toolLabel}&nbsp;:</label>
+    <input data-dojo-attach-point="labelEditor" data-dojo-type="dijit/form/ValidationTextBox"
+           data-dojo-props='required:true,trim:true'/>
+  </div>
+  <div class="control-section jimu-leading-margin3">
+    <div class="control-option" data-dojo-attach-point="helpTipOption">
+      <div data-dojo-attach-point="helptipChk" data-dojo-type="jimu/dijit/CheckBox"
+         data-dojo-props='checked:true, label:"${nls.showHelpTip}"'></div>
+    </div>
+    <div class="control-option" data-dojo-attach-point="mapExtentOption">
+      <div data-dojo-attach-point="mapExtentChk" data-dojo-type="jimu/dijit/CheckBox"
+         data-dojo-props='checked:true, label:"${nls.showCurrentMapExtent}"'></div>
+    </div>
+    <div class="control-option" data-dojo-attach-point="creditsOption">
+      <div data-dojo-attach-point="creditsChk" data-dojo-type="jimu/dijit/CheckBox"
+         data-dojo-props='checked:true, label:"${nls.showCredits}"'></div>
+    </div>
+    <div class="control-option" data-dojo-attach-point="resultOption">
+      <div data-dojo-attach-point="resultChk" data-dojo-type="jimu/dijit/CheckBox"
+         data-dojo-props='checked:true, label:"${nls.saveAsFeatureService}"'></div>
+    </div>
+    <div class="control-option" data-dojo-attach-point="readyToUseLayersOption">
+      <div data-dojo-attach-point="readyToUseLayersChk" data-dojo-type="jimu/dijit/CheckBox"
+         data-dojo-props='checked:true, label:"${nls.showReadyToUseLayers}"'></div>
+    </div>
+  </div>
+</div>

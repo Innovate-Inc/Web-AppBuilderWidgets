@@ -1,8 +1,0 @@
-{
-	"name": "libs",
-	"version": "1.2",
-	"main": "main",
-	"description": "ArcGIS Web Application stemapp libs",
-	"bugs": "",
-	"dojoBuild": "package.js"
-}

@@ -1,0 +1,13 @@
+<div>
+  <div class="single-filter-container">
+    <div>
+      <span class="jimu-widget-normal">${nls.filterName}</span>
+      <input data-dojo-type="dijit/form/ValidationTextBox"
+        data-dojo-props="required:true"
+        data-dojo-attach-point="filterNameEditor">
+    </div>
+    <div data-dojo-attach-point="singleFilterContent"></div>
+  </div>
+  <div data-dojo-attach-point="shelter" data-dojo-type="jimu/dijit/LoadingShelter"
+       data-dojo-props='hidden:true'></div>
+</div>

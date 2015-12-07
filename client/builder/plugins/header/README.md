@@ -1,2 +1,0 @@
-* Published events:
-  * closeAppConfigPage

@@ -1,5 +1,0 @@
-﻿define(
-   ({
-    showLegend: "Rodyti legendą"
-  })
-);

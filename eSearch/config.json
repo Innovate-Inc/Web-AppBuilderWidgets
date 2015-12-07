@@ -1,0 +1,383 @@
+{
+  "layers": [
+    {
+      "name": "Louisville Zoning",
+      "url": "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Louisville/LOJIC_LandRecords_Louisville/MapServer/2",
+      "definitionexpression": "ZONING_TYPE = 'RESIDENTIAL'",
+      "spatialsearchlayer": true,
+      "zoomScale": 10000,
+      "shareResult": false,
+      "addToAttrib": false,
+      "expressions": {
+        "expression": [
+          {
+            "alias": "Zoning Type",
+            "textsearchlabel": "Search by Zoning Type",
+            "values": {
+              "value": [
+                {
+                  "fieldObj": {
+                    "name": "ZONING_TYPE",
+                    "label": "ZONING_TYPE",
+                    "shortType": "string",
+                    "type": "esriFieldTypeString"
+                  },
+                  "valueObj": {
+                    "value": ""
+                  },
+                  "prompt": "Zoning Type is",
+                  "textsearchhint": "Example: RESIDENTIAL",
+                  "sqltext": "ZONING_TYPE = '[value]'",
+                  "operation": "stringOperatorIs",
+                  "uniquevalsfromfield": "ZONING_TYPE"
+                },
+                {
+                  "fieldObj": {
+                    "name": "ZONING_NAME",
+                    "label": "ZONING_NAME",
+                    "shortType": "string",
+                    "type": "esriFieldTypeString"
+                  },
+                  "valueObj": {
+                    "value": ""
+                  },
+                  "prompt": "Zoning Name is",
+                  "textsearchhint": "Example: RES SINGLE FAMILY",
+                  "sqltext": "ZONING_NAME = '[value]'",
+                  "operation": "stringOperatorIs",
+                  "uniquevalsfromfield": "ZONING_NAME",
+                  "operator": "AND"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "titlefield": "ZONING_NAME",
+      "fields": {
+        "all": false,
+        "field": [
+          {
+            "name": "ZONING_NAME",
+            "alias": "ZONING_NAME"
+          },
+          {
+            "name": "ZONING_CODE",
+            "alias": "ZONING_CODE",
+            "popuponly": true
+          },
+          {
+            "name": "ZONING_TYPE",
+            "alias": "ZONING_TYPE",
+            "popuponly": true
+          }
+        ]
+      },
+      "layersymbolfrom": "config"
+    },
+    {
+      "name": "Traffic Cameras",
+      "url": "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Louisville/LOJIC_PublicSafety_Louisville/MapServer/2",
+      "definitionexpression": "",
+      "spatialsearchlayer": true,
+      "zoomScale": 5000,
+      "shareResult": true,
+      "addToAttrib": true,
+      "expressions": {
+        "expression": [
+          {
+            "alias": "Traffic Camera Description",
+            "textsearchlabel": "Search Traffic Cameras by Location...",
+            "values": {
+              "value": [
+                {
+                  "fieldObj": {
+                    "name": "DESCRIPTION",
+                    "label": "DESCRIPTION",
+                    "shortType": "string",
+                    "type": "esriFieldTypeString"
+                  },
+                  "valueObj": {},
+                  "prompt": "DESCRIPTION starts with",
+                  "textsearchhint": "Example: I-71",
+                  "sqltext": "DESCRIPTION LIKE '[value]%'",
+                  "operation": "stringOperatorStartsWith",
+                  "userlist": "I-71,I-64"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "titlefield": "DESCRIPTION",
+      "fields": {
+        "all": false,
+        "field": [
+          {
+            "name": "DESCRIPTION",
+            "alias": "Description"
+          },
+          {
+            "name": "URL",
+            "alias": "Show Image",
+            "visible": false
+          },
+          {
+            "name": "ONLINE",
+            "alias": "Online"
+          },
+          {
+            "name": "LAST_UPDATED",
+            "alias": "Last Updated",
+            "dateformat": "MM/dd/yyyy",
+            "useutc": true,
+            "isdate": true
+          }
+        ]
+      },
+      "links": {
+        "link": [
+          {
+            "alias": "View Traffic Photo",
+            "content": "{URL}",
+            "icon": "http://resources.arcgis.com/en/help/flex-viewer/live/assets/images/i_camera.png",
+            "disablelinksifnull": true,
+            "popuptype": "image"
+          }
+        ]
+      },
+      "layersymbolfrom": "server"
+    },
+    {
+      "name": "Tax Sales",
+      "url": "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/TaxParcel/AssessorsLiveLayers/MapServer/1",
+      "definitionexpression": "",
+      "spatialsearchlayer": false,
+      "zoomScale": 10000,
+      "shareResult": false,
+      "addToAttrib": false,
+      "expressions": {
+        "expression": [
+          {
+            "alias": "Deed Type",
+            "textsearchlabel": "Search By Deed Type",
+            "values": {
+              "value": [
+                {
+                  "fieldObj": {
+                    "name": "DOCNAME",
+                    "label": "Document Name",
+                    "shortType": "string",
+                    "type": "esriFieldTypeString"
+                  },
+                  "valueObj": {
+                    "value": ""
+                  },
+                  "prompt": "Document Name is",
+                  "textsearchhint": "Choose From List",
+                  "sqltext": "DOCNAME = '[value]'",
+                  "operation": "stringOperatorIs",
+                  "uniquevalsfromfield": "DOCNAME"
+                }
+              ]
+            }
+          },
+          {
+            "alias": "Site Address",
+            "textsearchlabel": "Search By Site Address",
+            "values": {
+              "value": [
+                {
+                  "fieldObj": {
+                    "name": "SITEADDRESS",
+                    "label": "Full Site Address",
+                    "shortType": "string",
+                    "type": "esriFieldTypeString"
+                  },
+                  "valueObj": {
+                    "value": ""
+                  },
+                  "prompt": "Full Site Address contains",
+                  "textsearchhint": "1702 Hickory Bark Ln",
+                  "sqltext": "Upper(SITEADDRESS) LIKE Upper('%[value]%')",
+                  "operation": "stringOperatorContains"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "titlefield": "PARCELID",
+      "fields": {
+        "all": false,
+        "field": [
+          {
+            "name": "PARCELID",
+            "alias": "Parcel Identification Number"
+          },
+          {
+            "name": "SITEADDRESS",
+            "alias": "Full Site Address"
+          },
+          {
+            "name": "DOCNAME",
+            "alias": "Document Name"
+          },
+          {
+            "name": "RECORDDT",
+            "alias": "Date Recorded",
+            "isdate": true
+          },
+          {
+            "name": "TRANSDT",
+            "alias": "Transaction Date",
+            "isdate": true
+          },
+          {
+            "name": "GRANTOR",
+            "alias": "Grantor"
+          },
+          {
+            "name": "GRANTEE",
+            "alias": "Grantee"
+          },
+          {
+            "name": "LIBER",
+            "alias": "Liber"
+          },
+          {
+            "name": "PAGE",
+            "alias": "Page"
+          },
+          {
+            "name": "SALEAMNT",
+            "alias": "Sale Amount",
+            "isnumber": true
+          }
+        ]
+      },
+      "links": {
+        "link": []
+      },
+      "layersymbolfrom": "server"
+    }
+  ],
+  "initialView": "text",
+  "enablePopupsOnResultClick": true,
+  "limitsearch2mapextentchecked": false,
+  "autozoomtoresults": true,
+  "mouseovergraphics": false,
+  "toleranceforpointgraphicalselection": 6,
+  "bufferDefaults": {
+    "addtolegend": false,
+    "bufferUnits": {
+      "bufferUnit": [
+        {
+          "name": "UNIT_FOOT",
+          "label": "Feet"
+      }, {
+          "name": "UNIT_STATUTE_MILE",
+          "label": "Miles"
+      }, {
+          "name": "UNIT_METER",
+          "label": "Meter"
+      }
+    ]
+    },
+    "bufferDefaultValue": 5,
+    "bufferWKID": 102003,
+    "simplefillsymbol": {
+      "color": [
+        1,
+        185,
+        253,
+        128
+      ],
+      "outline": {
+        "color": [
+          1,
+          185,
+          253,
+          204
+        ],
+        "width": 1,
+        "type": "esriSLS",
+        "style": "esriSLSSolid"
+      },
+      "type": "esriSFS",
+      "style": "esriSFSSolid"
+    }
+  },
+  "spatialrelationships":{
+    "spatialrelationship":[
+      {
+        "name":"esriSpatialRelContains",
+        "label":"entirely contained in"
+      },{
+        "name":"esriSpatialRelIntersects",
+        "label":"intersected by"
+      },{
+        "name":"esriSpatialRelEnvelopeIntersects",
+        "label":"intersected by envelope of"
+      }
+    ]
+  },
+  "graphicalsearchoptions":{
+    "enablepointselect": true,
+    "enablelineselect": true,
+    "enablepolylineselect": true,
+    "enableextentselect": true,
+    "enablecircleselect": true,
+    "enablepolyselect": true,
+    "showmultigraphicsgraphicaloption": true,
+    "showaddtolerancegraphicaloption": true,
+    "showaddsqltextgraphicaloption": true,
+    "showbuffergraphicaloption": true,
+    "buffercheckedbydefaultgraphicaloption": false,
+    "multipartgraphicsearchchecked": false,
+    "addpointtolerancechecked": false,
+    "keepgraphicalsearchenabled": true
+  },
+  "symbols": {
+    "simplemarkersymbol": null,
+    "picturemarkersymbol": {
+      "url": "images/i_search.png",
+      "height": "20",
+      "width": "20",
+      "type": "esriPMS",
+      "angle": "0"
+    },
+    "simplelinesymbol": {
+      "type": "esriSLS",
+      "style": "esriSLSSolid",
+      "color": [
+        255,
+        0,
+        0,
+        204
+      ],
+      "width": 2
+    },
+    "simplefillsymbol": {
+      "color": [
+        255,
+        0,
+        0,
+        128
+      ],
+      "outline": {
+        "color": [
+          255,
+          0,
+          0,
+          204
+        ],
+        "width": 2,
+        "type": "esriSLS",
+        "style": "esriSLSSolid"
+      },
+      "type": "esriSFS",
+      "style": "esriSFSSolid"
+    }
+  }
+}

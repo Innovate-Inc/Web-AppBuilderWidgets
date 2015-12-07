@@ -1,0 +1,49 @@
+{
+    "ERGChemicalGPServiceURL" : "http://arcgis-emergencymanagement-2057568539.us-east-1.elb.amazonaws.com/arcgis/rest/services/COP/ERGByChemical/GPServer/ERG%20By%20Chemical",
+    "ERGPlacardGPServiceURL" : "http://arcgis-emergencymanagement-2057568539.us-east-1.elb.amazonaws.com/arcgis/rest/services/COP/ERGByPlacard/GPServer/ERG%20By%20Placard",
+    "FindNearestWSServiceURL" : "http://arcgis-emergencymanagement-2057568539.us-east-1.elb.amazonaws.com/arcgis/rest/services/COP/FindNearestWS/GPServer/FindNearestWeatherStation",
+    "WindDirectionLayerURL": "http://arcgis-emergencymanagement-2057568539.us-east-1.elb.amazonaws.com/arcgis/rest/services/COP/EmergencyOperations/MapServer/11",
+    "WindDirectionField": "WindDirection",
+    "StationNameField": "StationName",
+    "DateTimeField": "UTC_DateTime",
+    "FacilitiesLayerURL": "http://arcgis-emergencymanagement-2057568539.us-east-1.elb.amazonaws.com/arcgis/rest/services/COP/EmergencyOperations/MapServer/0",
+    "FacilitiesFields":["NAME","FEATURECODE","FULLADDR"],
+    "FacilitiesSummaryField":"FEATURECODE",
+    "infrastructureLayer": {
+        "url": "http://arcgis-emergencymanagement-2057568539.us-east-1.elb.amazonaws.com/arcgis/rest/services/COP/EmergencyOperations/MapServer/0",
+        "labelField": "NAME",
+        "fields": ["NAME", "FEATURECODE", "STATE"]
+    },
+    "demographicLayer": {
+        "label": "Age under 5",
+        "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/1",
+        "labelField": "NAME",
+        "fields": ["*"],
+        "medias": [
+            {
+                "chartField": "POP2007",
+                "title": "Total Population",
+                "description": "Total population for selected census blocks for 2007",
+                "type": "columnschart"
+            },
+            {
+                "chartField": "MALES",
+                "title": "Population Males",
+                "description": "Total male population for selected census blocks in 2007",
+                "type": "columnschart"
+            },
+            {
+                "chartField": "FEMALES",
+                "title": "Population Females",
+                "description": "Total female population for selected census blocks in 2007",
+                "type": "columnschart"
+            },
+            {
+                "chartField": "HOUSEHOLDS",
+                "title": "Number of Households",
+                "description": "Total number of households for selected census blocks in 2007",
+                "type": "columnschart"
+            }
+        ]
+    }
+}

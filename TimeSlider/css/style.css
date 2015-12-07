@@ -1,0 +1,113 @@
+.jimu-widget-timeslider{
+	bottom: 55px;
+	left: 7px;
+	position: absolute;
+}
+.jimu-widget-timeslider .esriTimeSlider{
+	z-index: 99;
+}
+.jimu-widget-timeslider .no-time-content,
+.jimu-widget-timeslider .time-content{
+	position: relative;
+	display: none;
+	background: #8e8e8e;
+	background: rgba(0,0,0,0.4);
+	z-index: 0;
+}
+.jimu-widget-timeslider .no-time-content{
+	height: 30px;
+	padding: 0px 10px;
+	line-height: 30px;
+	font-size: 14px;
+	color: #fff;
+}
+.jimu-widget-timeslider .time-content{
+	height: 100px;
+	padding-top: 20px;
+	opacity: 0;
+	/*background-color: #8e8e8e;*/
+}
+/*.jimu-rtl .jimu-widget-timeslider .time-content .time-close{
+	left: 20px;
+	right: auto;
+}*/
+.jimu-widget-timeslider .time-extent{
+	margin-bottom: 5px;
+	font-size: 14px;
+	color: #fff;
+	text-align: center;
+}
+.jimu-widget-timeslider .layer-labels{
+	font-size: 12px;
+	color: #fff;
+	text-align: center;
+	margin-bottom: 8px;
+}
+.jimu-widget-timeslider .slider-content{
+	position: relative;
+	max-width: 657px;
+	margin: auto;
+}
+.jimu-widget-timeslider .slider-content .esriTimeSlider{
+	width: 600px;
+}
+.jimu-widget-timeslider .speed-container{
+	position: relative;
+	height: 28px;
+	width: 40px;
+	cursor: pointer;
+}
+/*.jimu-widget-timeslider .speed-container:hover .speed-menu{
+	display: block;
+}*/
+.jimu-widget-timeslider .speed-menu{
+	display: none;
+	width: 105px;
+	background: #759dc0;
+	color: white;
+	position: absolute;
+	bottom: 27px;
+	text-align: left;
+	border-radius: 4px;
+}
+.jimu-rtl .jimu-widget-timeslider .speed-menu{
+	text-align: right;
+}
+.jimu-widget-timeslider .speed-menu-item{
+	width: 100%;
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	padding-left: 10px;
+}
+.jimu-rtl .jimu-widget-timeslider .speed-menu-item{
+	padding-left: 0;
+	padding-right: 10px;
+}
+.jimu-widget-timeslider .item-label {
+	border-bottom: 1px solid #c9e0f6;
+}
+.jimu-widget-timeslider .speed-menu-item:hover{
+	background: #485566;
+}
+.jimu-widget-timeslider .speed-label{
+	width: 40px;
+	height: 25px;
+	color: white;
+	text-align: center;
+	background: #759dc0;
+	line-height: 25px;
+	position: absolute;
+	bottom: 0;
+	border-radius: 4px;
+}
+
+.mobile-time-slider{
+	left: 5px !important;
+	right: 5px !important;
+	width: auto;
+}
+
+.jimu-widget-timeslider .mobile .slider-content{
+	width: 100% !important;
+}
