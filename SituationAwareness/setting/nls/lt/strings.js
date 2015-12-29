@@ -31,6 +31,26 @@
     "missingTabLabel": "Bent vienas skirtukas neturi žymės",
     "cancel": "Atšaukti",
     "ok": "Gerai",
-    "missingLayerInWebMap": "Darbinių sluoksnių nerasta."
+    "missingLayerInWebMap": "Darbinių sluoksnių nerasta.",
+    "selectFields": "Pasirinkite laukus",
+    "addField": "Pridėti lauką",
+    "sum": "SUMA",
+    "min": "MIN.",
+    "max": "MAKS.",
+    "avg": "VID.",
+    "count": "KIEKIS",
+    "area": "PLOTAS",
+    "length": "ILGIS",
+    "count_checkBox": "Rodyti skaičių",
+    "area_checkBox": "Rodyti plotą",
+    "length_checkBox": "Rodyti ilgį",
+    "max_records": "Pasiekta maksimali riba",
+    "save_label": "Įrašyti parinktis",
+    "save_checkbox": "Įjungti įrašymą",
+    "csv_label": "CSV parinktys",
+    "csv_checkbox": "Eksportuoti visus sluoksnio laukus.",
+    "display_label": "Rodymo parinktys",
+    "display_checkbox": "Pateikti santraukos elementus",
+    "must_select_template": "Pasirinkite vieną iš redagavimo šablonų įrašymo parinktyse."
   })
 );

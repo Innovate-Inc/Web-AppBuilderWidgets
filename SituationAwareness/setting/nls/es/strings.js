@@ -31,6 +31,26 @@
     "missingTabLabel": "Falta la etiqueta en una pestaña al menos",
     "cancel": "Cancelar",
     "ok": "Aceptar",
-    "missingLayerInWebMap": "No se ha encontrado ninguna capa operativa."
+    "missingLayerInWebMap": "No se ha encontrado ninguna capa operativa.",
+    "selectFields": "Selecciona campos",
+    "addField": "Agregar campo",
+    "sum": "SUM",
+    "min": "MIN",
+    "max": "MÁX",
+    "avg": "AVG",
+    "count": "TOTAL",
+    "area": "ÁREA",
+    "length": "LONGITUD",
+    "count_checkBox": "Mostrar recuento",
+    "area_checkBox": "Mostrar área",
+    "length_checkBox": "Mostrar longitud",
+    "max_records": "Se ha alcanzado el límite máximo",
+    "save_label": "Opciones para guardar",
+    "save_checkbox": "Habilitar guardar",
+    "csv_label": "Opciones de CSV",
+    "csv_checkbox": "Exportar todos los campos en la capa.",
+    "display_label": "Opciones de visualización",
+    "display_checkbox": "Mostrar entidades de resumen",
+    "must_select_template": "Selecciona una de las plantillas de edición en Opciones para guardar."
   })
 );

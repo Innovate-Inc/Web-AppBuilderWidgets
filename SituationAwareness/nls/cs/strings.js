@@ -1,10 +1,10 @@
 ﻿define(
    ({
-    _widgetLabel: "Analýza událostí",
+    _widgetLabel: "Povědomí o situaci (Beta)",
     locate_incident: "Vyhledat událost",
     clear_incidents: "Vymazat události",
     reverse_geocoded_address: "Nejbližší adresa",
-    reverse_geocoded_error: "Není k dispozici",
+    reverse_geocoded_error: "Nedostupné",
     miles: "Míle",
     kilometers: "Kilometry",
     feet: "Stopy",
@@ -22,8 +22,26 @@
     SAT: "SO",
     defaultTabMsg: "Nebyly identifikovány žádné incidenty.",
     actionLabel: "Nastavit jako incident",
+    drawPoint: "Nakreslit bod",
+    drawLine: "Nakreslit linii",
+    drawPolygon: "Kreslit polygon",
+    saveIncident: "Uložit událost",
+    clearIncident: "Vymazat událost",
     useMapExtent: "Použít současný rozsah mapy",
     noFeaturesFound: "Nebyly nalezeny žádné prvky.",
-    downloadCSV: "STÁHNOUT CSV"
+    downloadCSV: "STÁHNOUT CSV",
+    editComplete: "Prvek byl úspěšně uložen.",
+    updateComplete: "Prvek byl úspěšně aktualizován.",
+    deleteComplete: "Prvek byl úspěšně smazán.",
+    sum: "SUMA",
+    min: "MIN",
+    max: "MAX",
+    avg: "AVG",
+    count: "POČET",
+    area: "PLOCHA",
+    length: "DÉLKA",
+    notPolySave: "Před uložením zadejte šířku obalové zóny.",
+    update_btn: "Aktualizovat",
+    delete_btn: "Smazat"
   })
 );

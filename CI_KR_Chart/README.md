@@ -21,8 +21,8 @@ The Critical Infrastructure and Key Resources (CI/KR) widget allows users to det
 ## Instructions
 * In order to develop and test the widget you need to deploy the CI/KR_Chart folder to the stemapp/widgets folder.  The stemapp/widgets folder can be found 
 at \arcgis-web-appbuilder-1.2\client\stemapp\widgets in your WebApp Builder installation folder.
-* Two feature services are necessary for the widget to function properly, a demographic service and an infrastructure service.  
-* The url's to each service are located in the config.json file.
+* Two feature services are necessary for the widget to function properly, a demographic feature service and an infrastructure feature service.  
+* The url's to each service are located in the config.json file under their corresponding sections - "demographicLayer" & "infrastructureLayer"
 * The 'title' field in the demographicLayer and the infrastructureLayer in config.json will be displayed in the corresponding content panes in the results section.
 
 ## Issues

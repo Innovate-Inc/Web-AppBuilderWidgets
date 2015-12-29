@@ -23,7 +23,8 @@
             <label class="esriCTLayoutLeft" title="${nls.OthersHighlighter.height}">
                 ${nls.OthersHighlighter.height}</label>
             <input data-dojo-attach-point="spinnerImgHeight" data-dojo-type="dijit/form/NumberSpinner"
-                class="common-inputspin" value="100" data-dojo-props="smallDelta:1, constraints:{min:1,places:0,pattern: '#'}" />
+                title="${nls.OthersHighlighter.height}" class="common-inputspin" value="100"
+                data-dojo-props="smallDelta:1, constraints:{min:1,places:0,pattern: '#'}" />
             <label class="esriCTunitsForOther">
                 ${nls.OthersHighlighter.pixel}</label>
             <div class="esriCTHintField">
@@ -33,7 +34,7 @@
             <label class="esriCTLayoutLeft" title="${nls.OthersHighlighter.width}">
                 ${nls.OthersHighlighter.width}</label>
             <input data-dojo-attach-point="spinnerImgWidth" data-dojo-type="dijit/form/NumberSpinner"
-                class="common-inputspin" value="100" data-dojo-props="smallDelta:1, constraints:{min:1,places:0,pattern: '#'}" />
+                title="${nls.OthersHighlighter.width}" class="common-inputspin" value="100" data-dojo-props="smallDelta:1, constraints:{min:1,places:0,pattern: '#'}" />
             <label class="esriCTunitsForOther">
                 ${nls.OthersHighlighter.pixel}</label>
             <div class="esriCTHintField">
@@ -43,7 +44,8 @@
             <label class="esriCTLayoutLeft" title="${nls.OthersHighlighter.timeout}">
                 ${nls.OthersHighlighter.timeout}</label>
             <input data-dojo-attach-point="spinnerImgTimeout" data-dojo-type="dijit/form/NumberSpinner"
-                class="common-inputspin" value="1000" data-dojo-props="smallDelta:1000, constraints:{min:1,places:0,pattern: '#'}" />
+                title="${nls.OthersHighlighter.timeout}" class="common-inputspin" value="1000"
+                data-dojo-props="smallDelta:1000, constraints:{min:1,places:0,pattern: '#'}" />
             <label class="esriCTLayoutLeft esriCTunitsForOther">
                 ${nls.OthersHighlighter.milliseconds}</label><div class="esriCTHintField">
                     ${nls.hintText.imgTimeoutHintText}</div>
@@ -56,7 +58,8 @@
             <label class="esriCTImg esriCTLayoutLeft" title="${nls.OthersHighlighter.displayTextForButton}">
                 ${nls.OthersHighlighter.displayTextForButton}</label>
             <input data-dojo-attach-point="displayTextforRun" data-dojo-type="dijit/form/ValidationTextBox"
-                class="common-input " data-dojo-props="required: true" value="${nls.OthersHighlighter.displayTextforButtonDefaultValue}">
+                title="${nls.OthersHighlighter.displayTextForButton}" class="common-input " data-dojo-props="required: true"
+                value="${nls.OthersHighlighter.displayTextforButtonDefaultValue}">
         </div>
     </div>
     <div class="esriCTSubFieldHeader">
@@ -64,9 +67,9 @@
     <div class="esriCTOthersData">
         <div class="field">
             <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="autoZoomAfterTrace"
-                class="jimu-checkbox">
+                class="jimu-checkbox" title="${nls.OthersHighlighter.zoomText}">
             </div>
-            <label class="esriCTCheckboxLabel esriCTAutoZoomText" title="${nls.OthersHighlighter.autoZoomAfterTrace}">
+            <label class="esriCTCheckboxLabel esriCTAutoZoomText" title="${nls.OthersHighlighter.zoomText}">
                 ${nls.OthersHighlighter.zoomText}
             </label>
         </div>

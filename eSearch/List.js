@@ -23,7 +23,9 @@ define(['dojo/_base/declare',
     'dojo/dom-attr',
     'dojo/_base/array',
     'dojo/dom',
+    'dojo/query',
     'dojo/dom-class',
+    'dojo/dom-style',
     'dojo/Evented',
     'esri/symbols/jsonUtils'
   ],
@@ -36,7 +38,9 @@ define(['dojo/_base/declare',
     domAttr,
     array,
     dom,
+    query,
     domClass,
+    domStyle,
     Evented,
     jsonUtils) {
     return declare([_WidgetBase, Evented], {
@@ -78,37 +82,70 @@ define(['dojo/_base/declare',
         }else{
           domClass.add(div, this._itemCSS);
         }
+        //domClass.add(div, this._itemCSS);
 
         if(item.rsltcontent !== ""){
           var attArr = item.rsltcontent.split('<br>');
-          var attValArr;
-          var label;
-          var attTitle;
+          var attValArr, tHasColor, bIndex, eIndex, tColor, vHasColor, vColor;
+          var label, attTitle, attVal;
           var arrayLength = attArr.length;
           for (var i = 0; i < arrayLength; i++) {
-            attValArr = attArr[i].split('</em>: ');
-            attTitle = domConstruct.create("em");
-            domClass.add(attTitle, "attTitle");
-            domAttr.set(attTitle, "id", this.id.toLowerCase()+item.id);
-            attTitle.textContent = attTitle.innerText = attValArr[0].replace('<em>', '');
-            label = domConstruct.create("p");
-            domAttr.set(label, "id", this.id.toLowerCase()+item.id);
-            domClass.add(label, "label");
-
-            if (attValArr[1] == "null") {
-              label.textContent = label.innerText = ": ";
-
-            } else {
-              label.textContent = label.innerText = ": " + attValArr[1];
+            attValArr = attArr[i].split(': ');
+            attTitle = domConstruct.create('font');
+            domAttr.set(attTitle, 'id', this.id.toLowerCase()+item.id);
+            if(attValArr[0].toLowerCase().indexOf('<em>') > -1){
+              domStyle.set(attTitle, 'font-style', 'italic');
+            }
+            if(attValArr[0].toLowerCase().indexOf('<strong>') > -1){
+              domStyle.set(attTitle, 'font-weight', 'bold');
+            }
+            if(attValArr[0].toLowerCase().indexOf('<u>') > -1){
+              domStyle.set(attTitle, 'text-decoration', 'underline');
+            }
+            tHasColor = (attValArr[0].toLowerCase().indexOf("<font color='") > -1)?true:false;
+            if(tHasColor){
+              bIndex = attValArr[0].toLowerCase().indexOf("<font color='") + 13;
+              eIndex = attValArr[0].toLowerCase().indexOf("'>", bIndex);
+              tColor = attValArr[0].substr(bIndex, eIndex - bIndex);
+              domStyle.set(attTitle, 'color', tColor);
             }
 
+            attTitle.textContent = attTitle.innerText = attValArr[0].replace(/<[\/]{0,1}(em|EM|strong|STRONG|font|FONT|u|U)[^><]*>/g, "");
+            label = domConstruct.create('p');
+            domAttr.set(label, 'id', this.id.toLowerCase()+item.id);
+            domClass.add(label, 'label');
+            attVal = domConstruct.create('font');
+
+            if(attValArr[1].toLowerCase().indexOf('<em>') > -1){
+              domStyle.set(attVal, 'font-style', 'italic');
+            }
+            if(attValArr[1].toLowerCase().indexOf('<strong>') > -1){
+              domStyle.set(attVal, 'font-weight', 'bold');
+            }
+            if(attValArr[1].toLowerCase().indexOf('<u>') > -1){
+              domStyle.set(attVal, 'text-decoration', 'underline');
+            }
+            vHasColor = (attValArr[1].toLowerCase().indexOf("<font color='") > -1)?true:false;
+            if(vHasColor){
+              bIndex = attValArr[1].toLowerCase().indexOf("<font color='") + 13;
+              eIndex = attValArr[1].toLowerCase().indexOf("'>", bIndex);
+              vColor = attValArr[1].substr(bIndex, eIndex - bIndex);
+              domStyle.set(attVal, 'color', vColor);
+            }
+
+            if (attValArr[1] === 'null') {
+              attVal.textContent = attVal.innerText = ": ";
+            } else {
+              attVal.textContent = attVal.innerText = ": " + attValArr[1].replace(/<[\/]{0,1}(em|EM|strong|STRONG|font|FONT|u|U)[^><]*>/g, "");
+            }
+            domConstruct.place(attTitle, label);
+            domConstruct.place(attVal, label);
             domConstruct.place(label, div);
-            domConstruct.place(attTitle, label, "first");
           }
         }else{
           var label2 = domConstruct.create("p");
           domClass.add(label2, "label");
-          label2.textContent = " ";
+          label2.textContent = label2.innerText = " ";
           domConstruct.place(label2, div);
         }
         if(document.all && !document.addEventListener){
@@ -141,6 +178,7 @@ define(['dojo/_base/declare',
           }
         });
         domConstruct.place(div, this._listContainer);
+        this.clearSelection();
       },
 
       remove: function(index) {
@@ -150,6 +188,10 @@ define(['dojo/_base/declare',
         if (this.items.length === 0) {
           this._init();
         }
+        if(item.id === this._selectedNode){
+          this._selectedNode = null;
+        }
+        this.clearSelection();
       },
 
       _init: function() {
@@ -178,7 +220,9 @@ define(['dojo/_base/declare',
         domClass.replace(id, this._itemSelectedCSS, ((item.alt) ? this._itemAltCSS:this._itemCSS));
         if (this._selectedNode) {
           var item_selected = this._getItemById(this._selectedNode);
-          domClass.replace(this._selectedNode, ((item_selected.alt)? this._itemAltCSS:this._itemCSS), this._itemSelectedCSS);
+          if(item_selected){
+            domClass.replace(this._selectedNode, ((item_selected.alt)? this._itemAltCSS:this._itemCSS), this._itemSelectedCSS);
+          }
         }
         this._selectedNode = id;
         this.emit('click', this.selectedIndex, item);
@@ -198,6 +242,20 @@ define(['dojo/_base/declare',
         return null;
       },
 
+      clearSelection: function () {
+        this._selectedNode = null;
+        this.selectedIndex = -1;
+        query('.search-list-item').forEach(function(node){
+          domClass.remove(node, "alt");
+        });
+        array.map(this.items, lang.hitch(this, function(item, index){
+          item.alt = (index % 2 === 0);
+          if(item.alt){
+            domClass.add(this.id.toLowerCase() + item.id + "", "alt");
+          }
+        }));
+      },
+
       setSelectedItem: function(id) {
         var item = this._getItemById(id);
         if (!item) {
@@ -206,7 +264,9 @@ define(['dojo/_base/declare',
         domClass.replace(id, this._itemSelectedCSS, ((item.alt) ? this._itemAltCSS:this._itemCSS));
         if (this._selectedNode) {
           var item_selected = this._getItemById(this._selectedNode);
-          domClass.replace(this._selectedNode, ((item_selected.alt)? this._itemAltCSS:this._itemCSS), this._itemSelectedCSS);
+          if(item_selected){
+            domClass.replace(this._selectedNode, ((item_selected.alt)? this._itemAltCSS:this._itemCSS), this._itemSelectedCSS);
+          }
         }
         this._selectedNode = id;
       }

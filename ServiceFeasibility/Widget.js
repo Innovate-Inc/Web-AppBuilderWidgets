@@ -201,6 +201,7 @@ define([
       this._createTimer();
       this._createRouteFeatureLayer();
       on(this.findButton, "click", lang.hitch(this, function () {
+
         if (!this.findButton.disabled) {
           domClass.add(this.saveLayercontentContainer,
             "esriCTHidePanel");
@@ -226,13 +227,18 @@ define([
         }
       }));
       on(this.clearButtonSearch, "click", lang.hitch(this, function () {
-        this._onClearButtonClicked();
+        this._onClearButtonClicked(true);
       }));
       this.viewWindowSize = dojoWindow.getBox();
       this.panelManager = PanelManager.getInstance();
       dom.byId(this.panelManager.panels[0].titleNode);
       this._createResultPanelButtons();
       this._initSortOrder();
+      // if applied Theme is for widget is dart Theme and browser is IE9
+      if (this.appConfig.theme.name === "DartTheme" && has("ie") ===
+        9) {
+        this._setDartBackgroudColorForIE9();
+      }
     },
 
     /**
@@ -240,7 +246,7 @@ define([
     * @memberOf widgets/ServiceFeasibility/Widget
     */
     destroy: function () {
-      this._onClearButtonClicked();
+      this._onClearButtonClicked(true);
       this._removeGraphicLayers();
       this.inherited(arguments);
     },
@@ -325,7 +331,7 @@ define([
         "class": "jimu-btn ExportToLayer"
       }, this.divExportToLayerButtons);
       on(this.clearButton, "click", lang.hitch(this, function () {
-        this._onClearButtonClicked();
+        this._onClearButtonClicked(true);
         for (j = 0; j < this.tabContainer.controlNodes.length; j++) {
           if (this.tabContainer.controlNodes[j].innerHTML ===
             this.nls.searchContainerHeading) {
@@ -536,8 +542,10 @@ define([
           "class": "esriCTFindNearestDropdown"
         }, this.selectFindNearest);
         this.findNearestList = new Select({
-          "options": selectOptionArr
+          "options": selectOptionArr,
+          "title": this.nls.findNearest
         }, selectListDiv);
+
         labelDiv = query(".esriCTFindNearest", this.divFindNearest)[0];
         this.resultPanelIndex = (this.resultPanelIndex + 1);
         if (labelDiv && this.config.AllowedAccessPointCheckBoxChecked) {
@@ -564,6 +572,7 @@ define([
           }
         }));
       }
+
     },
 
     /**
@@ -623,19 +632,22 @@ define([
       };
       //In case of range domain API requires range array to be available in domain,
       //so check if range array is not available add it to domain
-      array.forEach(featureCollection.layerDefinition.fields, lang.hitch(this, function (field) {
-        if (field && field.domain && field.domain.type === "range") {
-          if (!field.domain.range) {
-            field.domain.range = [];
-            if (field.domain.minValue) {
-              field.domain.range.push(field.domain.minValue);
-            }
-            if (field.domain.maxValue) {
-              field.domain.range.push(field.domain.maxValue);
+      array.forEach(featureCollection.layerDefinition.fields, lang.hitch(
+        this,
+        function (field) {
+          if (field && field.domain && field.domain.type ===
+            "range") {
+            if (!field.domain.range) {
+              field.domain.range = [];
+              if (field.domain.minValue) {
+                field.domain.range.push(field.domain.minValue);
+              }
+              if (field.domain.maxValue) {
+                field.domain.range.push(field.domain.maxValue);
+              }
             }
           }
-        }
-      }));
+        }));
       this.routeFeatureLayer = new FeatureLayer(featureCollection, {
         outFields: outFields,
         id: "routeFeatureLayer"
@@ -1270,7 +1282,7 @@ define([
     * This function reset all the controls to default
     * @memberOf widgets/ServiceFeasibility/Widget
     **/
-    _onClearButtonClicked: function () {
+    _onClearButtonClicked: function (clearBarrier) {
       this._enhancedStyling();
       domClass.remove(this.businessPassedDiv,
         "esriCTHideBusinessPassedDiv");
@@ -1279,7 +1291,7 @@ define([
       if (!this.clearButtonSearch.disabled || this.errorExist) {
         this._hideLoadingIndicator();
         this._enableWebMapPopup();
-        this._clearLayerGraphics();
+        this._clearLayerGraphics(clearBarrier);
         if (this.config.businessesLayerName !== this.config.targetBusinessLayer &&
           this.findNearestList.value.toString() !== this.config.businessesLayerName
         ) {
@@ -1316,8 +1328,10 @@ define([
     * This function will clear all graphics from graphic layers.
     * @memberOf widgets/ServiceFeasibility/Widget
     **/
-    _clearLayerGraphics: function () {
-      this.barrierGraphicLayer.clear();
+    _clearLayerGraphics: function (clearBarrier) {
+      if (clearBarrier) {
+        this.barrierGraphicLayer.clear();
+      }
       this.selectLocationGraphicLayer.clear();
       if (this.routeFeatureLayer) {
         this.routeFeatureLayer.clear();
@@ -1479,13 +1493,13 @@ define([
           this._addBufferGeometryOnMap(geometryBufferEng[0], geometry);
         } else {
           this._onBufferGeometryError();
-          this._onClearButtonClicked();
+          this._onClearButtonClicked(false);
           this._enableAllControls();
         }
       } catch (err) {
         this._showAlertMessage(err.message);
         this.errorExist = true;
-        this._onClearButtonClicked();
+        this._onClearButtonClicked(false);
         this._enableAllControls();
         this._hideLoadingIndicator();
       }
@@ -1525,14 +1539,14 @@ define([
             this._getResultantRoutes(featuresList);
           } catch (error) {
             this.errorExist = true;
-            this._onClearButtonClicked();
+            this._onClearButtonClicked(false);
             this._showAlertMessage(error.message);
             this._enableAllControls();
             this._hideLoadingIndicator();
           }
         }), lang.hitch(this, function (error) {
           this.errorExist = true;
-          this._onClearButtonClicked();
+          this._onClearButtonClicked(false);
           this._showAlertMessage(error.message);
           this._enableAllControls();
           this._hideLoadingIndicator();
@@ -1561,7 +1575,7 @@ define([
     * @memberOf widgets/ServiceFeasibility/Widget
     **/
     _onBufferGeometryError: function () {
-      this._onClearButtonClicked();
+      this._onClearButtonClicked(false);
       this._enableAllControls();
       this.errorExist = true;
       this._showAlertMessage(this.nls.unableToCreateSearchBuffer);
@@ -1598,7 +1612,7 @@ define([
           }
         }), lang.hitch(this, function (error) {
           this.errorExist = true;
-          this._onClearButtonClicked();
+          this._onClearButtonClicked(false);
           this._showAlertMessage(error.message);
           this._enableAllControls();
           this._hideLoadingIndicator();
@@ -1667,7 +1681,7 @@ define([
             this._showFinalRoute(solveResults.routes[0]);
           } else {
             this.errorExist = true;
-            this._onClearButtonClicked();
+            this._onClearButtonClicked(false);
             errorMsg = this.nls.unableToFindClosestFacility;
             this._showAlertMessage(errorMsg);
             this._enableAllControls();
@@ -1675,7 +1689,7 @@ define([
           }
         }), lang.hitch(this, function (error) {
           this.errorExist = true;
-          this._onClearButtonClicked();
+          this._onClearButtonClicked(false);
           errorMsg = (error && error.message ? error.message : "") +
           (error.details && error.details.length > 0 ? "\n" +
             error.details[0] : "");
@@ -1803,6 +1817,9 @@ define([
     _calculateRouteUnit: function (result) {
       var routeUnitVal;
       if (this.config.routeUnitsRoundingOption === this.config.settingNLS
+        .oneDecimalValue) {
+        routeUnitVal = result.toFixed(1);
+      } else if (this.config.routeUnitsRoundingOption === this.config.settingNLS
         .twoDecimalValue) {
         routeUnitVal = result.toFixed(2);
       } else if (this.config.routeUnitsRoundingOption === this.config
@@ -1812,9 +1829,8 @@ define([
         .settingNLS.tenDecimalValue || this.config.routeUnitsRoundingOption ===
         this.config.settingNLS.hunderedDecimalValue || this.config.routeUnitsRoundingOption ===
         this.config.settingNLS.thousandDecimalValue) {
-        routeUnitVal = Math.floor(result / parseInt(this.config.routeUnitsRoundingOption,
-          10)) * parseInt(this.config.routeUnitsRoundingOption,
-          10);
+        routeUnitVal = Math.round(result / parseInt(this.config.routeUnitsRoundingOption,
+          10)) * parseInt(this.config.routeUnitsRoundingOption, 10);
       }
       return routeUnitVal;
     },
@@ -1830,7 +1846,7 @@ define([
         routeLayerInfos = [],
         routeFieldInfo = [],
         variable, resultVariable, result, routeGeometry;
-      variable = routes.attributes.Shape_Length.toFixed(0).toString();
+      variable = routes.attributes.Shape_Length.toString();
       if (this.config && this.config.LabelForBox) {
         this.lblForBox.innerHTML = this.config.LabelForBox;
       }
@@ -1929,7 +1945,7 @@ define([
           }
         } else {
           this.errorExist = true;
-          this._onClearButtonClicked();
+          this._onClearButtonClicked(false);
           this._enableAllControls();
           this._showAlertMessage(this.nls.unableToGenerateRoute);
           this._hideLoadingIndicator();
@@ -2060,7 +2076,7 @@ define([
           this._showBusinessDataOnMap(queryResult);
         }), lang.hitch(this, function (err) {
           this.errorExist = true;
-          this._onClearButtonClicked();
+          this._onClearButtonClicked(false);
           this._showAlertMessage(err.message);
           this._enableAllControls();
         }));
@@ -2308,7 +2324,7 @@ define([
         }), lang.hitch(this, function (err) {
           queryObjectDeferred.resolve();
           this.errorExist = true;
-          this._onClearButtonClicked();
+          this._onClearButtonClicked(false);
           this._showAlertMessage(err.message);
           this._hideLoadingIndicator();
         }));
@@ -2458,6 +2474,7 @@ define([
     _createResultGrid: function (displayList, resultFeatures) {
       var m, exportToCSV, list, saveExportDiv;
       domConstruct.empty(this.exportToCSVContainer);
+
       saveExportDiv = domConstruct.create("div", {
         "class": "esriCTSaveExportBtnDiv"
       }, this.exportToCSVContainer);
@@ -2472,6 +2489,10 @@ define([
         }));
       }
 
+      if (!window.appInfo.isRunInMobile) {
+        this._setHeightOfResultListContainer();
+      }
+
       // loop to create result grid for each feature and binding the events
       for (m = 0; m < displayList.length; m++) {
         list = domConstruct.create("div", {
@@ -2481,8 +2502,133 @@ define([
         }, this.resultListContainer);
         this._attachEventsToResultListContainer(resultFeatures, list);
       }
+
       this.isResultExist = true;
       this._switchToResultPanel();
+    },
+
+    /**
+    * This function is used to set height of result list container
+    * @memberOf widgets/ServiceFeasibility/Widget
+    **/
+    _setHeightOfResultListContainer: function () {
+      var parentContainerHeight, tabHeight, labelContainerHeight,
+        listTitleHeight, clearButtonContainerHeight, parentContainer,
+        tabs, computedResultListHeight, resizeHandle,
+        resizeHandleHeight, additionalPixel;
+
+      parentContainer = query(".jimu-widget-frame.jimu-container");
+      if ((parentContainer && parentContainer.length === 0) || (!
+          parentContainer)) {
+        parentContainer = query(".jimu-container");
+      }
+      if (parentContainer && parentContainer.length > 0) {
+        parentContainerHeight = domStyle.getComputedStyle(
+          parentContainer[0]).height;
+        parentContainerHeight = parentContainerHeight.replace(/px/g,
+          '');
+        if (parentContainerHeight !== "auto") {
+          parentContainerHeight = parseFloat(parentContainerHeight);
+        } else {
+          parentContainerHeight = 0;
+        }
+      } else {
+        parentContainerHeight = 0;
+      }
+
+      tabs = query(".tab.jimu-vcenter-text");
+      if (tabs && tabs.length > 0) {
+        tabHeight = domStyle.getComputedStyle(tabs[0]).height;
+        tabHeight = tabHeight.replace(/px/g, '');
+        if (tabHeight !== "auto") {
+          tabHeight = parseFloat(tabHeight);
+        } else {
+          tabHeight = 0;
+        }
+      } else {
+        tabHeight = 0;
+      }
+
+      labelContainerHeight = domStyle.getComputedStyle(this.resultContainer)
+        .height;
+      labelContainerHeight = labelContainerHeight.replace(/px/g, '');
+      if (labelContainerHeight !== "auto") {
+        labelContainerHeight = parseFloat(labelContainerHeight);
+      } else {
+        labelContainerHeight = 0;
+      }
+
+      listTitleHeight = domStyle.getComputedStyle(this.selectionListTitleContainer)
+        .height;
+      listTitleHeight = listTitleHeight.replace(/px/g, '');
+      if (listTitleHeight !== "auto") {
+        listTitleHeight = parseFloat(listTitleHeight);
+      } else {
+        listTitleHeight = 0;
+      }
+
+      clearButtonContainerHeight = domStyle.getComputedStyle(this.clearButtonSearch)
+        .height;
+      clearButtonContainerHeight = clearButtonContainerHeight.replace(
+        /px/g, '');
+      if (clearButtonContainerHeight !== "auto") {
+        clearButtonContainerHeight = parseFloat(
+          clearButtonContainerHeight);
+      } else {
+        clearButtonContainerHeight = 0;
+      }
+
+      resizeHandle = query(".dojoxResizeHandle.dojoxResizeNW");
+
+      if (resizeHandle && resizeHandle.length > 0) {
+        resizeHandleHeight = domStyle.getComputedStyle(
+          resizeHandle[0]).height;
+        resizeHandleHeight = resizeHandleHeight.replace(
+          /px/g, '');
+        if (resizeHandleHeight !== "auto") {
+          resizeHandleHeight = parseFloat(
+            resizeHandleHeight);
+        } else {
+          resizeHandleHeight = 0;
+        }
+      } else {
+        resizeHandleHeight = 0;
+      }
+
+      if (this.appConfig.theme.name === "DartTheme" && has("ie") ===
+        9) {
+        additionalPixel = 62;
+      } else if (this.appConfig.theme.name === "LaunchpadTheme" &&
+        has("ie")) {
+        additionalPixel = 70;
+      } else if (this.appConfig.theme.name === "LaunchpadTheme" &&
+        document && document.documentMode) {
+        additionalPixel = 70;
+      } else if (this.appConfig.theme.name === "BillboardTheme") {
+        additionalPixel = 70;
+      } else {
+        additionalPixel = 55;
+      }
+
+      computedResultListHeight = parentContainerHeight - (
+        labelContainerHeight + listTitleHeight +
+        clearButtonContainerHeight + tabHeight +
+        resizeHandleHeight + additionalPixel);
+
+      computedResultListHeight = computedResultListHeight + "px";
+
+      domStyle.set(this.resultListContainer, "max-height",
+        computedResultListHeight);
+    },
+
+    /**
+    * This function is used to resize the business list on resize of panel
+    * @memberOf widgets/ServiceFeasibility/Widget
+    */
+    resize: function () {
+      if (!window.appInfo.isRunInMobile) {
+        this._setHeightOfResultListContainer();
+      }
     },
 
     /**
@@ -3656,17 +3802,50 @@ define([
     },
 
     /**
+    * This function is used to add class on click of dijit select for IE9
+    * @param{object} Element node to which class needs to be added
+    * @memberOf widgets/ServiceFeasibility/Widget
+    */
+    _addClassOnSelectClick: function (selectNode) {
+      on(selectNode, "click", lang.hitch(this, function () {
+        var dijitMenuItemHoverDiv, dijitMenuItemSelectedDiv, i,
+          dijitMenuPopupDiv, dijitMenuItemDiv, dijitMenuDiv;
+        dijitMenuItemSelectedDiv = query(
+          ".dijitMenuItemSelected");
+        dijitMenuItemHoverDiv = query(".dijitMenuItemHover");
+        dijitMenuPopupDiv = query(".dijitMenuPopup");
+        dijitMenuItemDiv = query(".dijitMenuItem");
+        dijitMenuDiv = query(".dijitMenu");
+        // loop for adding class for applying CSS on div of menu popup
+        for (i = 0; i < dijitMenuPopupDiv.length; i++) {
+          domClass.add(dijitMenuPopupDiv[i],
+            "dijitMenuPopupIE9");
+        }
+        // loop for adding class for applying CSS on div of menu item
+        for (i = 0; i < dijitMenuItemDiv.length; i++) {
+          domClass.add(dijitMenuItemDiv[i], "dijitMenuItemIE9");
+        }
+        // loop for adding class for applying CSS on div of menu
+        for (i = 0; i < dijitMenuDiv.length; i++) {
+          domClass.add(dijitMenuDiv[i], "dijitMenuIE9");
+        }
+      }));
+    },
+
+    /**
     * Function for setting dart theme background color on IE 9
     * @memberOf widgets/ServiceFeasibility/Widget
     */
     _setDartBackgroudColorForIE9: function () {
       var dijitTextBoxdiv, dijitButtonNodediv, i, dijitInputInnerdiv,
-        dijitArrowButtondiv;
+        dijitArrowButtondiv, dijitSelectDiv;
       dijitTextBoxdiv = query(".dijitTextBox");
       dijitButtonNodediv = query(".dijitButtonNode");
       dijitInputInnerdiv = query(".dijitInputInner");
       dijitArrowButtondiv = query(".dijitArrowButton");
-
+      dijitSelectDiv = query(".dijitSelect");
+      // loop for adding class for applying CSS on div of arrow button node
+      // in dart theme in case of  IE9
       for (i = 0; i < dijitArrowButtondiv.length; i++) {
         domClass.add(dijitArrowButtondiv[i], "dijitArrowButtonIE9");
       }
@@ -3682,11 +3861,16 @@ define([
         this._addClassOnFocus(dijitInputInnerdiv[i]);
       }
       // loop for adding class for applying CSS on button div of select div
-      //in dart theme in case of  IE9
+      // in dart theme in case of  IE9
       for (i = 0; i < dijitButtonNodediv.length; i++) {
         domClass.add(dijitButtonNodediv[i], "dijitButtonNodeIE9");
       }
+      // loop for adding class for applying CSS on select div of dijit select
+      // in dart theme in case of  IE9
+      for (i = 0; i < dijitSelectDiv.length; i++) {
+        domClass.add(dijitSelectDiv[i], "dijitSelectIE9");
+        this._addClassOnSelectClick(dijitSelectDiv[i]);
+      }
     }
-
   });
 });

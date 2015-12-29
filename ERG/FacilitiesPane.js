@@ -26,7 +26,6 @@ define([
                 this.inherited(arguments);
             },
             buildRendering: function() {
-                console.log("FacilitiesPane - BuildRendering");
                 var titleText = dojoLang.replace(
                     "<div class='jimu-widget-erg resultTitle'>Results: {count}</div>", {
                         count: this.resultsList.length

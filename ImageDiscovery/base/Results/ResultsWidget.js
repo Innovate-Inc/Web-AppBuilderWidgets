@@ -386,6 +386,14 @@ define([
                 }
                 this.resultList.setResults(resultItems);
                 this.showMessage(this.nls.searchReturned + " " + resultItems.length + " " + this.nls.result + (resultItems.length === 1 ? "" : "s"));
+				if (this.resultFilter) {
+					var serviceLabels = [];
+					for (i = 0; i < resultServices.length; i++) {
+						serviceLabels.push(resultServices[i].label);
+					}
+					this.resultFilter.setServiceFilter(serviceLabels);
+				}
+
                 //set the filters
                 this.refreshResults();
             },
@@ -446,6 +454,9 @@ define([
                 }
                 featureFilterParameters.filteredArchiveSensorTypes = [];
                 featureFilterParameters.cloudCover = cloudCoverDecimalValue;
+				if (this.resultFilter) {
+					featureFilterParameters.selectedServices = this.resultFilter.getSelectedServices();
+				}
                 return featureFilterParameters;
             },
             handleSortChange: function (sortObj) {

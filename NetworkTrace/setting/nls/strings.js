@@ -127,7 +127,7 @@
       imageHeightHintText: "Hint: Specify numeric value for image height.",
       imageWidthHintText: "Hint: Specify numeric value for image width.",
       selectImageHintText: "Hint: Please click on the image to select any other highlighter image.",
-      inputTextHint: "Hint:Build your expression above by selectig input,output and fielnames",
+      inputTextHint: "Hint:Build your expression above by selectig input,output and fieldnames",
       expressionHint: "Hint: Select items and click add to build expression"
     },
     // Symbol chooser

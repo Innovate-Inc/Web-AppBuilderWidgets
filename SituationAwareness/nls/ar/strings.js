@@ -1,6 +1,6 @@
 ﻿define(
    ({
-    _widgetLabel: "عملية تحليل الحادث",
+    _widgetLabel: "الوعي الموقفي (تجريبي)",
     locate_incident: "تحديد موقع الحادث",
     clear_incidents: "مسح الحوادث",
     reverse_geocoded_address: "أقرب عنوان",
@@ -10,7 +10,7 @@
     feet: "قدم",
     meters: "متر",
     yards: "ياردة",
-    nauticalMiles: "ميل بحري",
+    nauticalMiles: "الأميال البحرية",
     now: "الآن",
     wind: "رياح",
     SUN: "الأحد",
@@ -22,8 +22,26 @@
     SAT: "السبت",
     defaultTabMsg: "لم يتم تعريف أية حوادث",
     actionLabel: "تحديد باعتبارها حادثة",
+    drawPoint: "رسم نقطة",
+    drawLine: "رسم خط",
+    drawPolygon: "رسم مضلع",
+    saveIncident: "حفظ الحدث العرضي",
+    clearIncident: "مسح الحادث",
     useMapExtent: "استخدم نطاق الخريطة الحالي",
     noFeaturesFound: "لم يتم العثور على معالم.",
-    downloadCSV: "تنزيل CSV"
+    downloadCSV: "تنزيل CSV",
+    editComplete: "تم حفظ المعلم بنجاح!",
+    updateComplete: "تم تحديث المعلم بنجاح!",
+    deleteComplete: "تم حذف المعلم بنجاح!",
+    sum: "مجموع",
+    min: "الحد الأدنى",
+    max: "MAX",
+    avg: "المعدل",
+    count: "عدد",
+    area: "AREA",
+    length: "LENGTH",
+    notPolySave: "يجرى تحديد مسافة النطاق قبل الحفظ.",
+    update_btn: "تحديث",
+    delete_btn: "حذف"
   })
 );

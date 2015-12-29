@@ -31,6 +31,26 @@
     "missingTabLabel": "Cel puţin o filă nu are etichetă",
     "cancel": "Anulare",
     "ok": "OK",
-    "missingLayerInWebMap": "Nu s-a găsit niciun strat tematic operaţional."
+    "missingLayerInWebMap": "Nu s-a găsit niciun strat tematic operaţional.",
+    "selectFields": "Selectare câmpuri",
+    "addField": "Adăugare câmp",
+    "sum": "SUMĂ",
+    "min": "MIN.",
+    "max": "MAX",
+    "avg": "MED.",
+    "count": "NUMĂR",
+    "area": "SUPRAFAŢĂ",
+    "length": "LUNGIME",
+    "count_checkBox": "Afişare număr",
+    "area_checkBox": "Afişare zonă",
+    "length_checkBox": "Afişare lungime",
+    "max_records": "Limită maximă atinsă",
+    "save_label": "Opţiuni salvare",
+    "save_checkbox": "Activare salvare",
+    "csv_label": "Opţiuni CSV",
+    "csv_checkbox": "Exportaţi toate câmpurile din stratul tematic.",
+    "display_label": "Opţiuni de afişare",
+    "display_checkbox": "Afişare obiecte spaţiale rezumat",
+    "must_select_template": "Selectaţi unul dintre şabloanele de editare din Opţiuni salvare."
   })
 );

@@ -1,6 +1,6 @@
 ﻿define(
    ({
-    _widgetLabel: "ניתוח מקרים",
+    _widgetLabel: "מודעות למצב (Beta)",
     locate_incident: "אתר מקרים",
     clear_incidents: "נקה מקרים",
     reverse_geocoded_address: "הכתובת הקרובה ביותר",
@@ -22,8 +22,26 @@
     SAT: "שבת",
     defaultTabMsg: "לא זוהו מקרים.",
     actionLabel: "הגדר כמקרה",
+    drawPoint: "שרטט נקודה",
+    drawLine: "שרטט קו",
+    drawPolygon: "שרטט פוליגון",
+    saveIncident: "שמור אירוע",
+    clearIncident: "נקה אירוע",
     useMapExtent: "השתמש בתיחום המפה הנוכחי",
     noFeaturesFound: "לא נמצאו ישויות",
-    downloadCSV: "הורד CSV"
+    downloadCSV: "הורד CSV",
+    editComplete: "הישות נשמרה בהצלחה!",
+    updateComplete: "הישות עודכנה בהצלחה!",
+    deleteComplete: "הישות נמחקה בהצלחה!",
+    sum: "סכום",
+    min: "מינימום",
+    max: "מקסימום",
+    avg: "ממוצע",
+    count: "ספירה",
+    area: "אזור",
+    length: "אורך",
+    notPolySave: "ציין מרחק חיץ לפני השמירה.",
+    update_btn: "עדכן",
+    delete_btn: "מחק"
   })
 );

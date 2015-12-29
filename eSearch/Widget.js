@@ -35,12 +35,12 @@ define([
     'esri/geometry/Multipoint',
     'esri/geometry/Extent',
     'esri/symbols/SimpleFillSymbol',
-    'esri/symbols/jsonUtils',
     'esri/renderers/SimpleRenderer',
     'esri/renderers/jsonUtils',
     'esri/toolbars/draw',
     'esri/dijit/PopupTemplate',
     'esri/request',
+    'esri/Color',
     'dojo/Deferred',
     'dijit/ProgressBar',
     'dojo/_base/lang',
@@ -71,9 +71,9 @@ define([
   function (
     declare, _WidgetsInTemplateMixin, BaseWidget, TabContainer, List, Parameters, Message, jimuUtils, urlUtils, Query, QueryTask, CodedValueDomain,
     Domain, GraphicsLayer, FeatureLayer, FeatureType, Field, RangeDomain, BufferParameters, GeometryService, esriConfig, Graphic, graphicsUtils,
-    Point, SimpleMarkerSymbol, PictureMarkerSymbol, Polyline, SimpleLineSymbol, Polygon, Multipoint, Extent, SimpleFillSymbol, symUtils,
-    SimpleRenderer, jsonUtil, Draw, PopupTemplate, esriRequest, Deferred, ProgressBar, lang, on, html, array, all, date, locale, Select,
-    TextBox, NumberTextBox, DrawBox, LoadingShelter, ioquery, dojoQuery, SpatialReference, registry, WidgetManager, PanelManager, aspect, domUtils
+    Point, SimpleMarkerSymbol, PictureMarkerSymbol, Polyline, SimpleLineSymbol, Polygon, Multipoint, Extent, SimpleFillSymbol, SimpleRenderer, jsonUtil,
+    Draw, PopupTemplate, esriRequest, Color, Deferred, ProgressBar, lang, on, html, array, all, date, locale, Select, TextBox, NumberTextBox, DrawBox,
+    LoadingShelter, ioquery, dojoQuery, SpatialReference, registry, WidgetManager, PanelManager, aspect, domUtils
   ) { /*jshint unused: true*/
     return declare([BaseWidget, _WidgetsInTemplateMixin], {
       name: 'eSearch',
@@ -124,11 +124,13 @@ define([
       gSelectTypeVal: 'new',
       aSelectTypeVal: 'new',
       serviceFailureNames: [],
+      resultFormatString: "",
 
       postCreate: function () {
         this.inherited(arguments);
         this.resultLayers = [];
         this.layerUniqueCache = {};
+        this._initResultFormatString();
         this._initTabContainer();
         this._initBufferUnits();
         this._initSpatialRelationships();
@@ -189,6 +191,66 @@ define([
           if(!this.eLocateGLFound){
             this.own(this.mapLayerAddResultEvent = this.map.on('layer-add-result', lang.hitch(this, this.checkForeLocateGL)));
           }
+        }
+      },
+
+      _initResultFormatString: function () {
+        var tBold = false, tItalic = false, tUnder = false, tColorHex = "#000000";
+        var vBold = false, vItalic = false, vUnder = false, vColorHex = "#000000";
+        this.resultFormatString = "";
+        if(this.config.resultFormat){
+          var attribName = '[attribname]';
+          tBold = this.config.resultFormat.attTitlesymbol.bold;
+          tItalic = this.config.resultFormat.attTitlesymbol.italic;
+          tUnder = this.config.resultFormat.attTitlesymbol.underline;
+          if(this.config.resultFormat.attTitlesymbol.color){
+            tColorHex = new Color(this.config.resultFormat.attTitlesymbol.color).toHex();
+          }
+          if(tBold){
+            attribName = "<strong>" + attribName + "</strong>";
+          }
+          if(tItalic){
+            attribName = "<em>" + attribName + "</em>";
+          }
+          if(tUnder){
+            attribName = "<u>" + attribName + "</u>";
+          }
+          if(tColorHex){
+            attribName = "<font color='" + tColorHex + "'>" + attribName + "</font>";
+          }
+          var attribValue = '[attribvalue]';
+          vBold = this.config.resultFormat.attValuesymbol.bold;
+          vItalic = this.config.resultFormat.attValuesymbol.italic;
+          vUnder = this.config.resultFormat.attValuesymbol.underline;
+          if(this.config.resultFormat.attValuesymbol.color){
+            vColorHex = new Color(this.config.resultFormat.attValuesymbol.color).toHex();
+          }
+          if(vBold){
+            attribValue = "<strong>" + attribValue + "</strong>";
+          }
+          if(vItalic){
+            attribValue = "<em>" + attribValue + "</em>";
+          }
+          if(vUnder){
+            attribValue = "<u>" + attribValue + "</u>";
+          }
+          if(vColorHex){
+            attribValue = "<font color='" + vColorHex + "'>" + attribValue + "</font>";
+          }
+          this.resultFormatString = attribName + ": " + attribValue + '<br>';
+        }else{
+          this.resultFormatString = '<font><em>[attribname]</em></font>: <font>[attribvalue]</font><br>';
+        }
+      },
+
+      startup: function(){
+        this.inherited(arguments);
+        this.fetchData();
+      },
+
+      onReceiveData: function(name, widgetId, data) {
+        if(data.message && data.message === "Deactivate_DrawTool"){
+          this.drawBox.deactivate();
         }
       },
 
@@ -398,14 +460,6 @@ define([
 
       onGraphicalLayerChange: function (newValue) {
         this.graphicLayerIndex = newValue;
-        //determine if this layer has a sum field
-        if(this.config.layers[newValue].sumfield){
-          html.addClass(this.list.domNode, 'sum');
-          html.setStyle(this.divSum, 'display', '');
-        }else{
-          html.removeClass(this.list.domNode, 'sum');
-          html.setStyle(this.divSum, 'display', 'none');
-        }
       },
 
       onAttributeLayerChange: function (newValue) {
@@ -419,14 +473,6 @@ define([
         //set the graphical layer to be the same
         this.graphicLayerIndex = newValue;
         this.selectLayerGraphical.set('value', newValue);
-        //determine if this layer has a sum field
-        if(this.config.layers[newValue].sumfield){
-          html.addClass(this.list.domNode, 'sum');
-          html.setStyle(this.divSum, 'display', '');
-        }else{
-          html.removeClass(this.list.domNode, 'sum');
-          html.setStyle(this.divSum, 'display', 'none');
-        }
       },
 
       onAttributeLayerExpressionChange: function (newValue) {
@@ -707,6 +753,8 @@ define([
         }
 
         if (len > 0) {
+
+
           this.paramsDijit = new Parameters({
             nls: this.nls,
             layerUniqueCache: this.layerUniqueCache
@@ -727,9 +775,7 @@ define([
             array.forEach(results, lang.hitch(this, function (result, j) {
               if(result.state === 'success'){
                 var layerInfo = result.value;
-                //console.info(layerInfo);
                 var layerConfig = this.config.layers[j];
-
                 if (layerInfo.objectIdField) {
                   layerConfig.objectIdField = layerInfo.objectIdField;
                 } else {
@@ -757,25 +803,15 @@ define([
                 layerInfo.effectiveMinScale = 0;
                 layerInfo.effectiveMaxScale = 0;
                 layerInfo.defaultVisibility = true;
-
                 this.resultLayers.push(layerInfo);
               }else{
+
                 //remove this layer from the options list
-                //console.info(this.config.layers[j].name);
-                var oIndex = -1;
-                array.some(options, lang.hitch(this, function(option,o){
-                  if(option.label === this.config.layers[j].name){
-                    oIndex = o;
-                    return true;
-                  }
-                  return false;
-                }));
-                options.splice(oIndex, 1);
+                options.splice(options.indexOf(this.config.layers[j].name), 1);
                 if (this.config.layers[j].spatialsearchlayer) {
                   spatialOptions.splice(spatialOptions.indexOf(this.config.layers[j].spatialsearchlayer), 1);
                 }
                 this.serviceFailureNames.push(this.config.layers[j].name);
-                this.resultLayers.push({});
               }
             }));
 
@@ -791,24 +827,14 @@ define([
                 message: myObject.slayer
               });
             } else {
-              //init the first available layers paramsDijit
-              var aIndex = options[0].value;
-              //console.info(options[0].label);
-              this.AttributeLayerIndex = aIndex;
+              //init the first layers paramsDijit
+              this.AttributeLayerIndex = 0;
               this._initSelectedLayerExpressions();
-              var valuesObj = lang.clone(this.config.layers[aIndex].expressions.expression[0].values.value);
-              this.paramsDijit.build(valuesObj, this.resultLayers[aIndex], this.config.layers[aIndex].url,
-                                     this.config.layers[aIndex].definitionexpression);
-              if(this.config.layers[aIndex].sumfield){
-                html.addClass(this.list.domNode, 'sum');
-                html.setStyle(this.divSum, 'display', '');
-              }else{
-                html.removeClass(this.list.domNode, 'sum');
-                html.setStyle(this.divSum, 'display', 'none');
-              }
+              var valuesObj = lang.clone(this.config.layers[0].expressions.expression[0].values.value);
+              this.paramsDijit.build(valuesObj, this.resultLayers[0], this.config.layers[0].url, this.config.layers[0].definitionexpression);
             }
             if(this.serviceFailureNames.length > 0){
-              console.info("service failed", this.serviceFailureNames);
+              console.info("service failed", this.config.layers[0].name, this.serviceFailureNames);
               new Message({
                 titleLabel: this.nls.mapServiceFailureTitle,
                 message: this.nls.mapServicefailureMsg + this.serviceFailureNames.join(", ") + this.nls.mapServicefailureMsg2
@@ -903,13 +929,6 @@ define([
             var valuesObj = lang.clone(this.config.layers[slayerId].expressions.expression[exprNum].values.value);
             this.paramsDijit.setSingleParamValues(valuesObj, value);
             var valsArr = this._buildSearchValues(valuesObj, value);
-            if(this.config.layers[slayerId].sumfield){
-              html.addClass(this.list, 'sum');
-              html.setStyle(this.divSum, 'display', '');
-            }else{
-              html.removeClass(this.list, 'sum');
-              html.setStyle(this.divSum, 'display', 'none');
-            }
             setTimeout(lang.hitch(this, function () {
               this.search(null, slayerId, exprNum, valsArr, null, close);
             }), 800);
@@ -924,24 +943,18 @@ define([
           //new a feature layer
           var layerInfo = lang.clone(this.resultLayers[layerIndex]);
           //only keep necessary fields
+//look into possibly setting the fields order to be same as specified in the config
           var necessaryFieldNames = this._getOutputFields(layerIndex);
           layerInfo.fields = array.filter(layerInfo.fields, lang.hitch(this, function (fieldInfo) {
             return necessaryFieldNames.indexOf(fieldInfo.name) >= 0;
           }));
-/*Adjust field aliases to those configured in the json*/
-          array.map(layerInfo.fields, lang.hitch(this, function (fieldInfo){
-            if(necessaryFieldNames.indexOf(fieldInfo.name) >= 0){
-              var cnfgFldObj = this._getConfigFieldObject(fieldInfo.name, layerIndex);
-              if(cnfgFldObj && cnfgFldObj.alias !== fieldInfo.alias){
-                fieldInfo.alias = cnfgFldObj.alias;
-              }
-            }
-          }));
+
           var featureCollection = {
             layerDefinition: layerInfo,
             featureSet: null
           };
           resultLayer = new FeatureLayer(featureCollection);
+          //resultLayer.url = layerConfig.url;
         } else {
           //use graphics layer
           this._resetAndAddTempResultLayer();
@@ -949,22 +962,6 @@ define([
         }
 
         return resultLayer;
-      },
-
-      _getConfigFieldObject: function (fldName, layerIndex) {
-//        console.info(fldName, layerIndex);
-        var layerConfig = this.config.layers[layerIndex];
-        var fields = layerConfig.fields.field;
-        var retFldObj = null;
-        array.some(fields, lang.hitch(this, function (fieldInfo) {
-          if(fieldInfo.name === fldName){
-            retFldObj = fieldInfo;
-            return true;
-          }else{
-            return false;
-          }
-        }));
-        return retFldObj;
       },
 
       _getOutputFields: function (layerIndex) {
@@ -1085,6 +1082,9 @@ define([
       },
 
       _initDrawBox: function () {
+        aspect.before(this.drawBox, "_activate", lang.hitch(this, function(){
+          this.publishData({message: "Deactivate_DrawTool"});
+        }));
         this.drawBox.setMap(this.map);
         var enabledButtons = [];
         if (this.config.graphicalsearchoptions.enablepointselect) {
@@ -1171,7 +1171,6 @@ define([
         this.own(on(this.btnExport, "click", lang.hitch(this, this.exportURL)));
         this.own(on(this.btnClear, "click", lang.hitch(this, this.clear, true)));
         this.own(on(this.btnClear2, "click", lang.hitch(this, this.clear, true)));
-        this.own(on(this.btnClear3, "click", lang.hitch(this, this.clear, true)));
         this.own(on(this.btnClearBuffer, "click", lang.hitch(this, this.clearbuffer)));
         this.own(on(this.btnClearBuffer2, "click", lang.hitch(this, this.clearbuffer)));
         this.own(on(this.btnClearBuffer3, "click", lang.hitch(this, this.clearbuffer)));
@@ -1182,7 +1181,6 @@ define([
         html.setStyle(this.btnClearBuffer3, 'display', 'none');
         html.setStyle(this.btnClear, 'display', 'none');
         html.setStyle(this.btnClear2, 'display', 'none');
-        html.setStyle(this.btnClear3, 'display', 'none');
         html.setStyle(this.btnExport, 'display', 'none');
       },
 
@@ -1284,8 +1282,7 @@ define([
             var poly1 = graphic.geometry;
             dojo.forEach(this.gArray, lang.hitch(this, function (aGraphic) {
               var aPoly = aGraphic.geometry;
-              if (aPoly.extent.contains(this.graphic.geometry) && (aPoly.extent.center.x !== poly1.extent.center.x ||
-                                                                   aPoly.extent.center.y !== poly1.extent.center.y)) {
+              if (aPoly.extent.contains(this.graphic.geometry) && (aPoly.extent.center.x !== poly1.extent.center.x || aPoly.extent.center.y !== poly1.extent.center.y)) {
                 this.polygonsToDiscard.push(poly1);
               }
             }));
@@ -1343,8 +1340,7 @@ define([
               if (this.polygonsToDiscard.length > 0) {
                 for (polygonToDiscard in this.polygonsToDiscard) {
                   add = true;
-                  if (targetPolygon.extent.center.x === polygonToDiscard.extent.center.x &&
-                      targetPolygon.extent.center.y === polygonToDiscard.extent.center.y) {
+                  if (targetPolygon.extent.center.x === polygonToDiscard.extent.center.x && targetPolygon.extent.center.y === polygonToDiscard.extent.center.y) {
                     add = false;
                     break;
                   }
@@ -1406,15 +1402,13 @@ define([
       },
 
       extentToPolygon: function (extent) {
-        var polygon = new Polygon([extent.xmax, extent.ymax], [extent.xmax, extent.ymin], [extent.xmin, extent.ymin],
-                                  [extent.xmin, extent.ymax], [extent.xmax, extent.ymax]);
+        var polygon = new Polygon([extent.xmax, extent.ymax], [extent.xmax, extent.ymin], [extent.xmin, extent.ymin], [extent.xmin, extent.ymax], [extent.xmax, extent.ymax]);
         polygon.setSpatialReference(this.map.spatialReference);
         return polygon;
       },
 
       extentToMPArray: function (extent) {
-        var MPArr = [[extent.xmax, extent.ymax], [extent.xmax, extent.ymin], [extent.xmin, extent.ymin],
-                     [extent.xmin, extent.ymax], [extent.xmax, extent.ymax]];
+        var MPArr = [[extent.xmax, extent.ymax], [extent.xmax, extent.ymin], [extent.xmin, extent.ymin], [extent.xmin, extent.ymax], [extent.xmax, extent.ymax]];
         return MPArr;
       },
 
@@ -1476,6 +1470,7 @@ define([
         }
 
         if (geometry) {
+          this.initiator = 'graphic';
           //get the adding or removing
           if(this.gSelectTypeVal === 'add'){
             adding = true;
@@ -1484,6 +1479,7 @@ define([
             removing = true;
           }
         }else{
+          this.initiator = 'attribute';
           //get the adding or removing
           if(this.aSelectTypeVal === 'add'){
             adding = true;
@@ -1508,7 +1504,6 @@ define([
         var layerConfig = this.config.layers[layerIndex];
 
         if (geometry) {
-          this.initiator = 'graphic';
           queryParams.geometry = geometry;
           queryParams.spatialRelationship = spatialRelationship || Query.SPATIAL_REL_INTERSECTS;
           if (this.cbxAddTextQuery.getValue()) {
@@ -1524,7 +1519,6 @@ define([
             console.info('SQL Where with layers definition expression: ', queryParams.where);
           }
         } else {
-          this.initiator = 'attribute';
           var where = this.buildWhereClause(layerIndex, expressIndex, theValue);
           queryParams.where = this.lastWhere = where;
           if (this.limitMapExtentCbx.getValue()) {
@@ -1642,7 +1636,6 @@ define([
         this.currentFeatures = [];
         this._hideInfoWindow();
         this._clearLayers();
-        this.divSum.innerHTML = '';
         this.zoomAttempt = 0;
         this.gSelectTypeVal = 'new';
         this.aSelectTypeVal = 'new';
@@ -1853,7 +1846,6 @@ define([
         html.setStyle(this.btnZoomAll, 'display', 'none');
         html.setStyle(this.btnClear, 'display', 'none');
         html.setStyle(this.btnClear2, 'display', 'none');
-        html.setStyle(this.btnClear3, 'display', 'none');
         html.setStyle(this.btnExport, 'display', 'none');
       },
 
@@ -1913,9 +1905,7 @@ define([
         currentLayer = this.currentSearchLayer;
         if (layerConfig.layersymbolfrom === 'server') {
           currentLayer.setRenderer(this._setCurentLayerRenderer('server'));
-        } else if(layerConfig.layersymbolfrom === 'layer') {
-          currentLayer.setRenderer(this._setCurentLayerRenderer('layer'));
-        } else{
+        } else {
           currentLayer.setRenderer(this._setCurentLayerRenderer('config'));
         }
         if (this.rsltsTab) {
@@ -1926,7 +1916,6 @@ define([
 
         var title = "";
         var titlefield = layerConfig.titlefield;
-        var sumfield = layerConfig.sumfield || null;
         var objectIdField = layerConfig.objectIdField;
         var existObjectId = layerConfig.existObjectId;
         var typeIdField = layerConfig.typeIdField;
@@ -1966,32 +1955,7 @@ define([
         } else {
           this.divResultMessage.textContent = this.divResultMessage.innerText = this.nls.featuresSelected + this.currentFeatures.length;
         }
-        var i, slen, sumTotal;
-/*if we have a sum field then sum the fields values*/
-        if(sumfield){
-          sumTotal = 0;
-          for ( i = 0, slen = this.currentFeatures.length; i < slen; i++) {
-            var feature = this.currentFeatures[i];
-            sumTotal += Number(feature.attributes[sumfield]);
-          }
-
-          var numFormat = this._getNumberFormat(sumfield, layerIndex), sValue;
-          if (numFormat) {
-            var args = numFormat.split("|");
-            /*value,percision,symbol,thousands,decimal*/
-            sValue = this._formatNumber(sumTotal, args[0] || null, args[1] || null, args[2] || null);
-          }
-          var currFormat = this._getCurrencyFormat(sumfield, layerIndex);
-          if (currFormat) {
-            var args2 = currFormat.split("|");
-            /*value,percision,symbol,thousands,decimal*/
-            sValue = this._formatCurrency(sumTotal, args2[1] || null, args2[0] || null, args2[2] || null, args2[3] || null);
-          }
-          console.info(layerConfig.sumlabel + ': ' + sValue || sumTotal);
-          this.divSum.innerHTML = layerConfig.sumlabel + ' ' + sValue;
-        }
-
-        for (i = 0; i < len; i++) {
+        for (var i = 0; i < len; i++) {
           var featureAttributes = results.features[i].attributes;
           //console.info(results.features[i]);
           //work with the links now
@@ -2040,22 +2004,22 @@ define([
             }
           }
 
-          var br = "<br>",
-            content = "",
+          var type = results.features[i].geometry.type;
+          var content = "",
             rsltcontent = "",
             value = "",
             oidVal;
           for (var att in featureAttributes) {
             var fld = this._getField(results, att);
-            if (this.initiator && (this.initiator === 'graphic' || this.limitMapExtentCbx.getValue())) {
-              if (fld.name === objectIdField) {
-                this.oidArray.push(featureAttributes[att]);
-                oidVal = featureAttributes[att];
-              }
-            }
             if (fld.name === objectIdField) {
               oidVal = featureAttributes[att];
             }
+            if (this.initiator && (this.initiator === 'graphic' || this.limitMapExtentCbx.getValue())) {
+              if (fld.name === objectIdField) {
+                this.oidArray.push(oidVal);
+              }
+            }
+
             if (!existObjectId && fld.name === objectIdField) {
               continue;
             }
@@ -2107,9 +2071,9 @@ define([
               title = value;
             } else {
               if (this._isVisible(att, layerIndex)) {
-                content = content + "<em>" + this._getAlias(att, layerIndex) + "</em>: " + value + br;
+                content = content + this.resultFormatString.replace('[attribname]', this._getAlias(att, layerIndex)).replace('[attribvalue]', value);
                 if (!this._isPopupOnly(att, layerIndex)) {
-                  rsltcontent = rsltcontent + "<em>" + this._getAlias(att, layerIndex) + "</em>: " + value + br;
+                  rsltcontent = rsltcontent + this.resultFormatString.replace('[attribname]', this._getAlias(att, layerIndex)).replace('[attribvalue]', value);
                 }
               }
             }
@@ -2124,7 +2088,46 @@ define([
           } else {
             rsltcontent = rsltcontent;
           }
-          var symbol = currentLayer.renderer.getSymbol(results.features[i]);
+          var symbol;
+          switch (type) {
+          case "multipoint":
+          case "point":
+            if (this.config.symbols && this.config.symbols.simplemarkersymbol) {
+              symbol = new SimpleMarkerSymbol(this.config.symbols.simplemarkersymbol);
+            } else {
+              if (this.config.symbols && this.config.symbols.picturemarkersymbol) {
+                var pms = lang.clone(this.config.symbols.picturemarkersymbol);
+                pms.url = this.folderUrl + pms.url;
+                symbol = new PictureMarkerSymbol(pms);
+              } else {
+                symbol = new SimpleMarkerSymbol();
+              }
+            }
+            break;
+          case "polyline":
+            if (this.config.symbols && this.config.symbols.simplelinesymbol) {
+              symbol = new SimpleLineSymbol(this.config.symbols.simplelinesymbol);
+            } else {
+              symbol = new SimpleLineSymbol();
+            }
+            break;
+          case "extent":
+          case "polygon":
+            if (this.config.symbols && this.config.symbols.simplefillsymbol) {
+              symbol = new SimpleFillSymbol(this.config.symbols.simplefillsymbol);
+            } else {
+              symbol = new SimpleFillSymbol();
+            }
+            break;
+          default:
+            break;
+          }
+          if (this.config.layers[layerIndex].layersymbolfrom === 'server') {
+            var rend = jsonUtil.fromJson(this.resultLayers[layerIndex].drawingInfo.renderer);
+            if (rend.getSymbol(results.features[i])) {
+              symbol = lang.clone(rend.getSymbol(results.features[i]));
+            }
+          }
 
           if(!removing){
             this.list.add({
@@ -2147,20 +2150,22 @@ define([
         html.setStyle(this.btnZoomAll, 'display', 'block');
         html.setStyle(this.btnClear, 'display', 'block');
         html.setStyle(this.btnClear2, 'display', 'block');
-        html.setStyle(this.btnClear3, 'display', 'block');
         if (this.initiator && this.initiator === 'attribute' && this.config.exportsearchurlchecked) {
           html.setStyle(this.btnExport, 'display', 'block');
         }
+        this.list.clearSelection();
         this._drawResults(layerIndex, results, currentLayer, closeOnComplete);
       },
 
       _returnListIndexFromOID: function (OID) {
-        for (var i = 0; i < this.list.items.length; i++) {
-          var item = this.list.items[i];
+        var retVal = -1;
+        array.some(this.list.items, lang.hitch(this, function(item, index){
           if (item.OID === OID) {
-            return i;
+            retVal = index;
+            return true;
           }
-        }
+        }));
+        return retVal;
       },
 
       _setCurentLayerRenderer: function (symFromWhere) {
@@ -2169,15 +2174,6 @@ define([
         } else {
           var symbol,
             type = this.resultLayers[this.currentLayerIndex].geometryType;
-
-          if(symFromWhere === 'layer'){
-            var layerConfig = this.config.layers[this.currentLayerIndex];
-            symbol = symUtils.fromJson(layerConfig.symbology);
-            var sRend = new SimpleRenderer(symbol);
-            sRend.label = sRend.description = this.config.layers[this.currentLayerIndex].name;
-            return sRend;
-          }
-
           //Determine the geometry type to set the symbology
           switch (type) {
           case "esriGeometryMultipoint":
@@ -2185,20 +2181,13 @@ define([
             if (this.config.symbols && this.config.symbols.simplemarkersymbol) {
               symbol = new SimpleMarkerSymbol(this.config.symbols.simplemarkersymbol);
             } else {
-              /*if (this.config.symbols && this.config.symbols.picturemarkersymbol) {
+              if (this.config.symbols && this.config.symbols.picturemarkersymbol) {
                 if (this.config.symbols.picturemarkersymbol.url.substring(0, 7).toLowerCase === 'images/') {
                   this.config.symbols.picturemarkersymbol.url = this.folder + "/" + this.config.symbols.picturemarkersymbol.url;
                   symbol = new PictureMarkerSymbol(this.config.symbols.picturemarkersymbol);
                 } else {
                   symbol = new PictureMarkerSymbol(this.config.symbols.picturemarkersymbol);
                 }
-              } else {
-                symbol = new SimpleMarkerSymbol();
-              }*/
-              if (this.config.symbols && this.config.symbols.picturemarkersymbol) {
-                var pms = lang.clone(this.config.symbols.picturemarkersymbol);
-                pms.url = this.folderUrl + pms.url;
-                symbol = new PictureMarkerSymbol(pms);
               } else {
                 symbol = new SimpleMarkerSymbol();
               }
@@ -2408,8 +2397,7 @@ define([
         var negative = value < 0 ? "-" : "",
           i = parseInt(value = Math.abs(+value || 0).toFixed(percision), 10) + "",
           j = (j = i.length) > 3 ? j % 3 : 0;
-        return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) +
-          (percision ? decimal + Math.abs(value - i).toFixed(percision).slice(2) : "");
+        return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (percision ? decimal + Math.abs(value - i).toFixed(percision).slice(2) : "");
       },
 
       _getNumberFormat: function (att, layerIndex) {
@@ -2432,8 +2420,7 @@ define([
         var negative = value < 0 ? "-" : "",
           i = parseInt(value = Math.abs(+value || 0).toFixed(percision), 10) + "",
           j = (j = i.length) > 3 ? j % 3 : 0;
-        return negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) +
-          (percision ? decimal + Math.abs(value - i).toFixed(percision).slice(2) : "");
+        return negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (percision ? decimal + Math.abs(value - i).toFixed(percision).slice(2) : "");
       },
 
       _drawResults: function (layerIndex, results, currentLayer, closeOnComplete) {
@@ -2587,11 +2574,6 @@ define([
           var item = this.list.items[i];
           var point = item.centerpoint;
           if (item.OID === OID) {
-            var itemDom = dojo.byId(this.list.id.toLowerCase() + item.id);
-            if(itemDom){
-              itemDom.scrollIntoView(false);
-            }
-            this.list.setSelectedItem(this.list.id.toLowerCase() + item.id);
             if (this.map.infoWindow && this.config.enablePopupsOnResultClick) {
               this.map.infoWindow.setFeatures([item.graphic]);
               if (this.map.infoWindow.reposition) {
@@ -2665,7 +2647,7 @@ define([
         var layerConfig = this.config.layers[this.currentLayerIndex];
         var zoomScale = layerConfig.zoomScale || 10000;
         if (item.graphic.geometry.type === "point") {
-          if (this.map.getScale() > zoomScale || layerConfig.forceZoomScale) {
+          if (this.map.getScale() > zoomScale) {
             this.map.setScale(zoomScale).then(lang.hitch(this, this.map.centerAt(point).then(lang.hitch(this, function () {
               if (this.map.infoWindow && this.config.enablePopupsOnResultClick) {
                 this.map.infoWindow.setFeatures([item.graphic]);
@@ -2688,7 +2670,7 @@ define([
           }
         } else {
           var gExt = graphicsUtils.graphicsExtent([item.graphic]);
-          if (gExt && !layerConfig.forceZoomScale) {
+          if (gExt) {
             this.map.setExtent(gExt.expand(1.5), true).then(lang.hitch(this, function () {
               if (this.map.infoWindow && this.config.enablePopupsOnResultClick) {
                 this.map.infoWindow.setFeatures([item.graphic]);
@@ -2699,7 +2681,7 @@ define([
               }
             }));
           } else {
-            if (this.map.getScale() > zoomScale || layerConfig.forceZoomScale) {
+            if (this.map.getScale() > zoomScale) {
               this.map.setScale(zoomScale).then(lang.hitch(this, this.map.centerAt(point).then(lang.hitch(this, function () {
                 if (this.map.infoWindow && this.config.enablePopupsOnResultClick) {
                   this.map.infoWindow.setFeatures([item.graphic]);

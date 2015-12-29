@@ -14,6 +14,7 @@
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
 //
+//  12/16/2015 - tested with WAB 1.3 and added nautical miles to the distance pick list.
 //  10/06/2015 - added editing capability to some geometries.  CLICK graphic to start and stop editing, CTRL-CLICK to delete a measure graphic.
 //  09/30/2015 - updated to remove unnecessary logic for IE - NIM094815: The mouse-drag event now works correctly using IE10 and IE11.
 //  09/29/2015 - added logic to use better area and length calculations using the API geometryEngine
@@ -1056,6 +1057,9 @@ define([
                     unit: 'KILOMETERS',
                     label: this.nls.kilometers
                 }, {
+                    unit: 'NAUTICAL_MILES',
+                    label: this.nls.nauticalMiles
+                }, {
                     unit: 'FEET',
                     label: this.nls.feet
                 }, {
@@ -1317,6 +1321,9 @@ define([
 						break;
 					case esriUnits.MILES:
 						gsUnit = 9035;
+						break;
+					case esriUnits.NAUTICAL_MILES:
+						gsUnit = 9030;
 						break;
 					case esriUnits.METERS:
 						gsUnit = 9001;

@@ -31,6 +31,26 @@
     "missingTabLabel": "Vismaz vienai cilnei nav marķējuma",
     "cancel": "Atcelt",
     "ok": "Labi",
-    "missingLayerInWebMap": "Nav atrasti darbības slāņi."
+    "missingLayerInWebMap": "Nav atrasti darbības slāņi.",
+    "selectFields": "Atlasīt laukus",
+    "addField": "Pievienot lauku",
+    "sum": "SUM",
+    "min": "MIN",
+    "max": "MAKS.",
+    "avg": "VID",
+    "count": "SKAITĪT",
+    "area": "APGABALS",
+    "length": "GARUMS",
+    "count_checkBox": "Rādīt skaitu",
+    "area_checkBox": "Rādīt apgabalu",
+    "length_checkBox": "Rādīt garumu",
+    "max_records": "Sasniegts maksimālais ierobežojums",
+    "save_label": "Saglabāšanas opcijas",
+    "save_checkbox": "Iespējot saglabāšanu",
+    "csv_label": "CSV opcijas",
+    "csv_checkbox": "Eksportēt visus laukus slānī.",
+    "display_label": "Parādīšanas opcijas",
+    "display_checkbox": "Rādīt kopsavilkuma elementus",
+    "must_select_template": "Lūdzu, sadaļā Saglabāšanas opcijas atlasiet vienu no rediģēšanas veidnēm."
   })
 );

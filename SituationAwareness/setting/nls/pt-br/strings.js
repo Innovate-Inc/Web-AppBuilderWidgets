@@ -31,6 +31,26 @@
     "missingTabLabel": "Pelo menos uma guia está sem rótulo",
     "cancel": "Cancelar",
     "ok": "OK",
-    "missingLayerInWebMap": "Nenhuma camada operacional encontrada."
+    "missingLayerInWebMap": "Nenhuma camada operacional encontrada.",
+    "selectFields": "Selecionar Campos",
+    "addField": "Adicionar Campo",
+    "sum": "SOMA",
+    "min": "MÍN",
+    "max": "MÁX",
+    "avg": "MÉDIA",
+    "count": "CONTAGEM",
+    "area": "ÁREA",
+    "length": "COMPRIMENTO",
+    "count_checkBox": "Mostrar Contagem",
+    "area_checkBox": "Mostrar Área",
+    "length_checkBox": "Mostrar Comprimento",
+    "max_records": "Limite máximo alcançado",
+    "save_label": "Opções de Salvar",
+    "save_checkbox": "Habilitar Salvar",
+    "csv_label": "Opções do CSV",
+    "csv_checkbox": "Exportar todos os campos na camada.",
+    "display_label": "Opções de Visualização",
+    "display_checkbox": "Exibir Feições de Resumo",
+    "must_select_template": "Selecione um dos modelos de edição em Opções de Salvar."
   })
 );

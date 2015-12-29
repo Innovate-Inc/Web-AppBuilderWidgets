@@ -31,6 +31,26 @@
     "missingTabLabel": "Minst én kategori mangler påskrift",
     "cancel": "Avbryt",
     "ok": "Ok",
-    "missingLayerInWebMap": "Finner ingen operative lag."
+    "missingLayerInWebMap": "Finner ingen operative lag.",
+    "selectFields": "Velg felter",
+    "addField": "Legg til felt",
+    "sum": "SUM",
+    "min": "MIN.",
+    "max": "MAKS.",
+    "avg": "GJ.SN.",
+    "count": "ANTALL",
+    "area": "OMRÅDE",
+    "length": "LENGDE",
+    "count_checkBox": "Vis antall",
+    "area_checkBox": "Vis område",
+    "length_checkBox": "Vis lengde",
+    "max_records": "Maksimumsgrensen er nådd",
+    "save_label": "Lagre alternativer",
+    "save_checkbox": "Aktiver lagring",
+    "csv_label": "Alternativer for CSV",
+    "csv_checkbox": "Eksporter alle feltene i laget.",
+    "display_label": "Visningsalternativer",
+    "display_checkbox": "Vis geoobjekter for summering",
+    "must_select_template": "Velg en av redigeringsmalene i Lagre alternativer."
   })
 );

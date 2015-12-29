@@ -157,7 +157,7 @@ define([
       // if input parameters configuration is available else set fall back symbol as Symbol
       if (this.inputConfig && this.inputConfig.symbol) {
         this.symbolJson = selectedSymbol = this.inputSymbolChooser.symbolChooser
-                  .getSymbol().toJson();
+          .getSymbol().toJson();
         addSymbol = this._createGraphicFromJSON(selectedSymbol);
       } else {
         this.symbolJson = this._getFallbackSymbol();

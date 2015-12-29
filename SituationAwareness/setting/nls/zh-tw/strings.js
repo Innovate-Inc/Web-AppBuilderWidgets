@@ -2,7 +2,7 @@
    ({
     "tabs_section_Label": "索引標籤",
     "addTab": "新增索引標籤",
-    "layerName": "圖層",
+    "layerName": "圖層(L)",
     "layerType": "分析類型",
     "layerLabel": "標籤",
     "actions": "操作",
@@ -31,6 +31,26 @@
     "missingTabLabel": "至少一個索引標籤缺失標籤",
     "cancel": "取消",
     "ok": "確定",
-    "missingLayerInWebMap": "未找到業務圖層。"
+    "missingLayerInWebMap": "未找到業務圖層。",
+    "selectFields": "選擇欄位",
+    "addField": "增加欄位",
+    "sum": "總和",
+    "min": "最小值",
+    "max": "最大值",
+    "avg": "平均值",
+    "count": "計數",
+    "area": "區域",
+    "length": "長度",
+    "count_checkBox": "顯示計數",
+    "area_checkBox": "顯示區域",
+    "length_checkBox": "顯示長度",
+    "max_records": "已達上限",
+    "save_label": "儲存選項",
+    "save_checkbox": "啟用儲存",
+    "csv_label": "CSV 選項",
+    "csv_checkbox": "匯出圖層中的所有欄位。",
+    "display_label": "顯示選項",
+    "display_checkbox": "顯示摘要圖徵",
+    "must_select_template": "請在「儲存選項」中選擇其中一個編輯範本。"
   })
 );

@@ -1,6 +1,6 @@
 ﻿define(
    ({
-    _widgetLabel: "Ereignisanalyse",
+    _widgetLabel: "Situationsbewusstsein (Beta)",
     locate_incident: "Ereignis verorten",
     clear_incidents: "Ereignisse löschen",
     reverse_geocoded_address: "Nächstgelegene Adresse",
@@ -22,8 +22,26 @@
     SAT: "SA",
     defaultTabMsg: "Keine Ereignisse identifiziert.",
     actionLabel: "Als Ereignis festlegen",
+    drawPoint: "Punkt zeichnen",
+    drawLine: "Linie zeichnen",
+    drawPolygon: "Polygon zeichnen",
+    saveIncident: "Ereignis speichern",
+    clearIncident: "Ereignis löschen",
     useMapExtent: "Die aktuelle Kartenausdehnung verwenden",
     noFeaturesFound: "Keine Features gefunden.",
-    downloadCSV: "CSV HERUNTERLADEN"
+    downloadCSV: "CSV HERUNTERLADEN",
+    editComplete: "Feature wurde erfolgreich gespeichert!",
+    updateComplete: "Feature wurde erfolgreich aktualisiert!",
+    deleteComplete: "Feature wurde erfolgreich gelöscht!",
+    sum: "SUMME",
+    min: "MINIMUM",
+    max: "MAXIMUM",
+    avg: "DURCHSCHNITT",
+    count: "ANZAHL",
+    area: "FLÄCHE",
+    length: "LÄNGE",
+    notPolySave: "Geben Sie vor dem Speichern eine Pufferentfernung an.",
+    update_btn: "Aktualisieren",
+    delete_btn: "Löschen"
   })
 );

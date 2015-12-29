@@ -31,6 +31,26 @@
     "missingTabLabel": "Er ontbreekt minstens één label in het tabblad",
     "cancel": "Annuleren",
     "ok": "OK",
-    "missingLayerInWebMap": "Geen operationele lagen gevonden."
+    "missingLayerInWebMap": "Geen operationele lagen gevonden.",
+    "selectFields": "Velden selecteren",
+    "addField": "Veld toevoegen",
+    "sum": "SOM",
+    "min": "MIN",
+    "max": "MAX",
+    "avg": "GEM",
+    "count": "TELLEN",
+    "area": "GEBIED",
+    "length": "LENGTE",
+    "count_checkBox": "Aantal weergeven",
+    "area_checkBox": "Oppervlakte weergeven",
+    "length_checkBox": "Lengte weergeven",
+    "max_records": "Maximumlimiet bereikt",
+    "save_label": "Opties opslaan",
+    "save_checkbox": "Opslaan activeren",
+    "csv_label": "Resultaten exporteren",
+    "csv_checkbox": "CSV-opties",
+    "display_label": "Weergaveopties",
+    "display_checkbox": "Samenvatting objecten weergeven",
+    "must_select_template": "Selecteer één van de bewerkingsjablonen in Opties opslaan."
   })
 );

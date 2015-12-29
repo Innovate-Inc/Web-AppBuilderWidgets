@@ -31,6 +31,26 @@
     "missingTabLabel": "Mindestens eine Registerkarte weist keine Beschriftung auf",
     "cancel": "Abbrechen",
     "ok": "OK",
-    "missingLayerInWebMap": "Keine operationalen Layer gefunden."
+    "missingLayerInWebMap": "Keine operationalen Layer gefunden.",
+    "selectFields": "Felder auswählen",
+    "addField": "Feld hinzufügen",
+    "sum": "SUMME",
+    "min": "MINIMUM",
+    "max": "MAXIMUM",
+    "avg": "DURCHSCHNITT",
+    "count": "ANZAHL",
+    "area": "FLÄCHE",
+    "length": "LÄNGE",
+    "count_checkBox": "Anzahl anzeigen",
+    "area_checkBox": "Bereich anzeigen",
+    "length_checkBox": "Länge anzeigen",
+    "max_records": "Maximaler Grenzwert erreicht",
+    "save_label": "Speicheroptionen",
+    "save_checkbox": "Speichern aktivieren",
+    "csv_label": "CSV-Optionen",
+    "csv_checkbox": "Alle Felder des Layers exportieren.",
+    "display_label": "Anzeigeoptionen",
+    "display_checkbox": "Zusammenfassungs-Features anzeigen",
+    "must_select_template": "Wählen Sie eine der Bearbeitungsvorlagen unter \"Speicheroptionen\" aus."
   })
 );

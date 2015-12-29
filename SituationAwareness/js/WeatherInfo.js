@@ -81,6 +81,8 @@ define([
 
     // update for Incident
     updateForIncident: function(incident) {
+      this.container.innerHTML = "";
+      domClass.add(this.container, "loading");
       var geom = incident.geometry;
       var loc = geom;
       if (geom.type !== "point") {
@@ -121,12 +123,13 @@ define([
       var timeInfo = 1;
 
       this.container.innerHTML = "";
+      domClass.remove(this.container, "loading");
 
       var tpc = domConstruct.create("div", {
         id: "tpc",
-        style: "width:" + ((weather.length + 2) * 165) + "px;"
+        style: "width:" + ((weather.length + 3) * 165) + "px;"
       }, this.container);
-      domClass.add(tpc, "IMT_tabPanelContent");
+      domClass.add(tpc, "SAT_tabPanelContent");
 
 
       var cur, code, temp, w, info;
@@ -152,23 +155,23 @@ define([
         temp = cur.temp_F;
         code = cur.weatherCode;
         w = this.weatherDict[parseInt(code, 10)];
-        info = this.parent.nls.now + "<br/><img style='height:50px' src='" +
+        info = this.parent.nls.now + "<br/><img style='height:45px' src='" +
           this.parent.folderUrl + "images/w/" + w[timeInfo] + "' /><br/>" + temp + "&deg;";
         var div = domConstruct.create("div", {
           innerHTML: info
         }, tpc);
-        domClass.add(div, "IMTcolSmall");
+        domClass.add(div, "SATcolSmall");
 
         // wind
         var windSpeed = cur.windspeedMiles;
         var windDir = cur.winddir16Point;
 
-        info = this.parent.nls.wind + "<br/><span style='font-size: 30px; line-height:50px'>" +
+        info = this.parent.nls.wind + "<br/><span style='font-size: 30px; line-height:47px'>" +
           windDir + "</span><br/>" + windSpeed + " MPH";
         var div2 = domConstruct.create("div", {
           innerHTML: info
         }, tpc);
-        domClass.add(div2, "IMTcolSmall");
+        domClass.add(div2, "SATcolSmall");
 
       }
 
@@ -180,14 +183,24 @@ define([
         var tempMin = cur.tempMinF;
         code = cur.weatherCode;
         w = this.weatherDict[parseInt(code, 10)];
-        info = day + "<br/><img style='height:50px' src='" + this.parent.folderUrl + "images/w/" +
+        info = day + "<br/><img style='height:45px' src='" + this.parent.folderUrl + "images/w/" +
           w[timeInfo] + "' /><br/>" + tempMax + "&deg; | " + tempMin + "&deg;";
         var div3 = domConstruct.create("div", {
           innerHTML: info
         }, tpc);
-        domClass.add(div3, "IMTcolSmall");
+        domClass.add(div3, "SATcolSmall");
       }
 
+      // credits
+      var txt = '<br/><br/><br/><span style="font-size:11px;color:#6e6e6e">Powered by<br/>' +
+      '<a style="color:#6e6e6e;text-decoration:none" ' +
+      'href="http://www.worldweatheronline.com/" title="Free Weather API" target="_blank">' +
+      'World Weather Online</a></span>';
+      var divCredit  = domConstruct.create("div", {
+        innerHTML: txt
+      }, tpc);
+      domClass.add(divCredit, "SATcolSmall");
+      domClass.add(divCredit, "SATcolLast");
     },
 
     // get day
@@ -207,7 +220,7 @@ define([
       var div = domConstruct.create("div", {
         innerHTML: info
       }, this.container);
-      domClass.add(div, "IMTcolSmall");
+      domClass.add(div, "SATcolSmall");
     }
   });
 

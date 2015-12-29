@@ -37,10 +37,11 @@
   "maxDistance": "80",
   "defaultZoomLevel": 13,
   "tabs": [{
-    "label": "Weather",
-    "type": "weather",
-    "layers": "",
-    "url": "http://api.worldweatheronline.com/free/v1/weather.ashx?format=json&num_of_days=3&extra=localObsTime&key=63hkyhwzpks3a3kj9k9jdfeg"
-  }],
+      "label": "Weather",
+      "type": "weather",
+      "layers": "",
+      "url": "http://api.worldweatheronline.com/free/v1/weather.ashx?format=json&num_of_days=3&extra=localObsTime&key=63hkyhwzpks3a3kj9k9jdfeg"
+    }],
+  "csvAllFields": "true",
   "summaryDisplayEnabled": "true"
 }

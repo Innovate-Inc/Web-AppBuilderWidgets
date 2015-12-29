@@ -184,7 +184,8 @@ define([
         "class": "esriCTNonRestrictionCheckBox esriCTParameterValueMargin"
       }, attrNonRestrictionParamvalue);
       checkBox = this._createAttributeCheckBox(attrParameter,
-        attributeParameterCheckBoxDiv);
+        attributeParameterCheckBoxDiv, attrParameter.parameters[0].name
+      );
 
       domAttr.set(checkBox.domNode, "restrictionParameterName",
         attrParameter.parameters[0].name);
@@ -210,7 +211,8 @@ define([
 
 
       defaultToValueDropdown = this._createDefaultToValueDropDown(
-        attributeParameterDropDownColumn, checkBox
+        attributeParameterDropDownColumn, checkBox, attrParameter.parameters[
+          0].name
       );
 
       //User input section
@@ -231,7 +233,8 @@ define([
       }, userToInputValueDiv);
       minTextBox = new NumberTextBox({
         "class": "esriCTLeftAlign esriCTNonRestrictionUserInputMargin",
-        "name": ""
+        "name": "",
+        "title": this.nls.attributeParameter.minText
       }, minTextBoxDiv);
 
       maxLabelDiv = domConstruct.create("div", {
@@ -247,7 +250,8 @@ define([
       }, userToInputValueDiv);
       maxTextBox = new NumberTextBox({
         "class": "esriCTLeftAlign esriCTNonRestrictionUserInputMargin",
-        "name": ""
+        "name": "",
+        "title": this.nls.attributeParameter.maxText
       }, maxTextBoxDiv);
 
       // for default value
@@ -267,7 +271,8 @@ define([
       }, defaultInputValueDiv);
       defaultTextBox = new NumberTextBox({
         "class": "esriCTLeftAlign esriCTNonRestrictionUserInputMargin",
-        "name": ""
+        "name": "",
+        "title": attrParameter.parameters[0].name
       }, defaultTextBoxDiv);
       defaultTextBox.set("value", attrParameter.parameters[0].defaultValue);
 
@@ -296,10 +301,12 @@ define([
     * @param {object} attrParameter: restriction attribute object
     * @memberOf widgets/ServiceFeasibility/settings/attribute-parameter
     **/
-    _createAttributeCheckBox: function (attrParameter, parentDiv) {
+    _createAttributeCheckBox: function (attrParameter, parentDiv,
+      toolTip) {
       var checkBox, self = this;
       checkBox = new CheckBox({
         "name": attrParameter.attributeName,
+        "title": toolTip,
         onChange: function () {
           self._showHideInputControls(this.domNode, domClass.contains(
             this.domNode.childNodes[0], "checked"));
@@ -334,7 +341,7 @@ define([
         "class": "esriCTParameterValueMargin"
       }, attrParamvalueChildContainer);
       checkBox = this._createAttributeCheckBox(attrParameter,
-        attributeParameterCheckBoxDiv);
+        attributeParameterCheckBoxDiv, attrParameter.attributeName);
 
       domAttr.set(checkBox.domNode, "restrictionParameterName",
         attrParameter.parameters[0].name);
@@ -360,7 +367,7 @@ define([
 
 
       defaultToValueDropdown = this._createDefaultToValueDropDown(
-        attributeParameterDropDownColumn, checkBox
+        attributeParameterDropDownColumn, checkBox, attrParameter.attributeName
       );
       attrParamvalueLookupContainer = domConstruct.create("div", {
         "class": " esriCTAttrParamDisplay"
@@ -378,7 +385,8 @@ define([
       }, attrParamvalueLookupContainer);
 
       valueDropDown = new Select({
-        "class": "defaultValueDropdown"
+        "class": "defaultValueDropdown",
+        "title": attrParameter.attributeName
       }, attributeParameterValueDropDown);
       domAttr.set(valueDropDown.domNode, "defaultValue",
         attrParameter.parameters[0].defaultValue);
@@ -440,7 +448,8 @@ define([
 
       //User input section
       userToInputValueDiv = domConstruct.create("div", {
-        "class": "esriCTIndendedTextBoxMargin"
+        "class": "esriCTIndendedTextBoxMargin",
+        "title": parameter.name
       }, identedParameterContainer);
 
       minLabelDiv = domConstruct.create("div", {
@@ -456,7 +465,8 @@ define([
       }, userToInputValueDiv);
       minTextBox = new NumberTextBox({
         "class": "esriCTLeftAlign esriCTNonRestrictionUserInputMargin",
-        "name": ""
+        "name": "",
+        "title": this.nls.attributeParameter.minText
       }, minTextBoxDiv);
 
       maxLabelDiv = domConstruct.create("div", {
@@ -472,7 +482,8 @@ define([
       }, userToInputValueDiv);
       maxTextBox = new NumberTextBox({
         "class": "esriCTLeftAlign esriCTNonRestrictionUserInputMargin ",
-        "name": ""
+        "name": "",
+        "title": this.nls.attributeParameter.maxText
       }, maxTextBoxDiv);
 
       // for default value
@@ -481,7 +492,8 @@ define([
       }, identedParameterContainer);
       defaultTextBox = new NumberTextBox({
         "class": "esriCTLeftAlign esriCTIndendedTextBoxAlign",
-        "name": ""
+        "name": "",
+        "title": parameter.name
       }, defaultInputValueDiv);
       defaultTextBox.set("value", parameter.defaultValue);
       if (parameterConfigObj) {
@@ -575,10 +587,12 @@ define([
     * @memberOf widgets/ServiceFeasibility/settings/attribute-parameter
     **/
     _createDefaultToValueDropDown: function (
-      attributeParameterDropDownColumn, checkBox
+      attributeParameterDropDownColumn, checkBox, toolTip
     ) {
       var select;
-      select = new Select({}, attributeParameterDropDownColumn);
+      select = new Select({
+        "title": toolTip
+      }, attributeParameterDropDownColumn);
       select.startup();
       select.addOption({
         value: this.nls.defaultToValue,

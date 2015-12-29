@@ -30,6 +30,7 @@ define([
   "dojo/dom",
   'dijit/Editor',
   'dojo/_base/html',
+  "dojo/_base/array",
   "jimu/dijit/Message",
   "dijit/_editor/plugins/TextColor"
 ], function (
@@ -46,6 +47,7 @@ define([
   dom,
   Editor,
   html,
+  array,
   Message
 ) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -59,9 +61,10 @@ define([
     _selectedOutput: null, // to store output option object evt
     _selectedField: null, // to store feild option object evt
     _selectedOperator: null, // to store operator option object evt
-    _summaryExpressionArray: [], // to store summery Expression Array
     _summaryExpressionEditor: null, // to store object of summary expression editor
     _editorObj: null, // to store editor object
+    _outputLayerSettingsArr: [], // to store settings of output configuration
+    _selectedOutputGeometryType: null, // to store geometry type of selected output
 
     postCreate: function () {
       this._initEditor();
@@ -95,10 +98,20 @@ define([
           })));
         this.own(on(this._editorObj, "blur", lang.hitch(this,
           function () {
-            if (this._editorObj.focusNode.innerHTML === null ||
-              lang.trim(this._editorObj.focusNode.innerHTML) ===
-              ""
-            ) {
+            var editorText, regExp;
+            editorText = this._editorObj.focusNode.innerHTML;
+            editorText = editorText.replace(/&nbsp;/g, '');
+            regExp = new RegExp("<div><br></div>", 'g');
+            editorText = editorText.replace(regExp, "");
+            regExp = new RegExp("<p><br></p>", 'g');
+            editorText = editorText.replace(regExp, "");
+            regExp = new RegExp("<p></p>", 'g');
+            editorText = editorText.replace(regExp, "");
+            editorText = editorText.replace(/<br>/g, "");
+            editorText = lang.trim(editorText);
+
+            if ((editorText === null) || (editorText === "")) {
+              this._editorObj.set("value", "");
               domClass.add(this.verifySummaryExpression,
                 "jimu-state-disabled");
             } else {
@@ -106,6 +119,20 @@ define([
                 "jimu-state-disabled");
             }
           })));
+
+        this._editorObj.onLoadDeferred.then(lang.hitch(this, function () {
+          if ((this._editorObj) && (this._editorObj.hasOwnProperty(
+              'editNode'))) {
+            if ("title" in this._editorObj.editNode) {
+              if (this._editorObj.editNode.title === null ||
+                this._editorObj.editNode.title === "") {
+                this._editorObj.editNode.title = this.nls.summaryTab
+                  .summaryEditorText;
+              }
+            }
+          }
+        }));
+
         this._editorObj.startup();
       }
     },
@@ -128,7 +155,6 @@ define([
       if (this.config.summaryExpression) {
         this._editorObj.focus();
         this._editorObj.set("value", this.config.summaryExpression.summaryExpressionValue);
-        this._summaryExpressionArray = this.config.summaryExpression.summaryExpressionValidArray;
         if (this.config.summaryExpression.summaryExpressionValue ===
           null || this.config.summaryExpression.summaryExpressionValue ===
           "") {
@@ -245,7 +271,7 @@ define([
     * @memberOf widgets/NetworkTrace/settings/summarySettings
     */
     _onInputOutputClick: function () {
-      var type, taskDataContainer, geometryType;
+      var type, taskDataContainer;
       this.own(on(this._inputOutputSelect, "click", lang.hitch(this,
         function (evt) {
           type = domAttr.get(evt.currentTarget[evt.currentTarget
@@ -255,8 +281,8 @@ define([
               "jimu-state-disabled");
             taskDataContainer = dom.byId("taskDataContainerId");
             taskDataContainer.scrollTop = 0;
-            this._selectedInput = this._selectedOutput = this._selectedOperator =
-              null;
+            this._selectedInput = this._selectedOutput = this._selectedField =
+              this._selectedOperator = null;
             this._selectedInput = evt.currentTarget[evt.currentTarget
               .selectedIndex];
             this._emptyFieldPanel();
@@ -265,9 +291,8 @@ define([
             this._displayOperators(true, false, false, false);
             domClass.remove(this.operatorPanel, "esriCTHidden");
           } else if (type === "Output") {
-            domClass.add(this.addSummaryExpression,
-              "jimu-state-disabled");
-            geometryType = domAttr.get(evt.currentTarget[evt.currentTarget
+            this._selectedOutputGeometryType = domAttr.get(evt.currentTarget[
+              evt.currentTarget
               .selectedIndex], "GeometryType");
             taskDataContainer = dom.byId("taskDataContainerId");
             taskDataContainer.scrollTop = 0;
@@ -279,14 +304,48 @@ define([
             this._emptyFieldPanel();
             this._emptyOperatorPanel();
             this._displayOutputFields();
-            if (geometryType !== "esriGeometryPoint") {
-              this._displayOperators(false, true, false, false);
-            } else {
-              this._displayOperators(false, true, false, true);
-            }
-            this._fieldSelect.selectedIndex = "-1";
+            this._fetchAndDisplayOutputOperators();
           }
         })));
+    },
+
+    /**
+    * This function is used to fetch & display output operators
+    * @memberOf widgets/NetworkTrace/settings/summarySettings
+    */
+    _fetchAndDisplayOutputOperators: function () {
+      domClass.add(this.addSummaryExpression,
+        "jimu-state-disabled");
+      if (this._selectedOutputGeometryType !== "esriGeometryPoint") {
+        this._displayOperators(false, true, false, false);
+      } else {
+        this._outputLayerSettingsArr = [];
+        if (this.outputSettingArray) {
+          array.forEach(this.outputSettingArray, lang.hitch(
+            this,
+            function (widgetNode) {
+              if (widgetNode) {
+                this._outputLayerSettingsArr.push(
+                  widgetNode.getOutputForm());
+              }
+            }));
+        }
+        for (var i = 0; i < this._outputLayerSettingsArr.length; i++) {
+          if (this._outputLayerSettingsArr[i].paramName ===
+            this._selectedOutput.value) {
+            if (this._outputLayerSettingsArr[i].bypassDetails
+              .skipable) {
+              this._displayOperators(false, true, false,
+                true);
+            } else {
+              this._displayOperators(false, true, false,
+                false);
+            }
+            break;
+          }
+        }
+      }
+      this._fieldSelect.selectedIndex = "-1";
     },
 
     /**
@@ -325,7 +384,7 @@ define([
       this.own(on(this._fieldSelect, "click", lang.hitch(this,
         function (evt) {
           domClass.add(this.addSummaryExpression,
-              "jimu-state-disabled");
+            "jimu-state-disabled");
           this._selectedField = null;
           this._selectedField = evt.currentTarget[evt.currentTarget
             .selectedIndex];
@@ -370,6 +429,26 @@ define([
       }
       this._selectOperator();
       this._allocateEqualSizeToPanels();
+    },
+
+    /**
+    * This function is used to refresh operator list
+    * @memberOf widgets/NetworkTrace/settings/summarySettings
+    */
+    refreshOperator: function () {
+      if (!this._selectedField) {
+        if (this._selectedOutput) {
+          this._fetchAndDisplayOutputOperators();
+          if (this._selectedOperator && (this._selectedOperator.value ===
+            this.nls.summaryTab.outputOperatorCountOption)) {
+            if (this._operatorSelect) {
+              this._operatorSelect.selectedIndex = 0;
+              domClass.remove(this.addSummaryExpression,
+              "jimu-state-disabled");
+            }
+          }
+        }
+      }
     },
 
     /**
@@ -478,16 +557,12 @@ define([
           this._editorObj.focus();
           this._editorObj.execCommand("inserthtml", "{" + this._selectedInput
             .value + ":" + this._selectedOperator.value + "}");
-          this._summaryExpressionArray.push(this._selectedInput.value +
-            ":" + this._selectedOperator.value);
           verifyFlag = true;
         } else if ((this._selectedOutput !== null && this._selectedField ===
             null) && this._selectedOperator !== null) {
           this._editorObj.focus();
           this._editorObj.execCommand("inserthtml", "{" + this._selectedOutput
             .value + ":" + this._selectedOperator.value + "}");
-          this._summaryExpressionArray.push(this._selectedOutput.value +
-            ":" + this._selectedOperator.value);
           verifyFlag = true;
         } else if ((this._selectedOutput !== null && this._selectedField !==
             null) && this._selectedOperator !== null) {
@@ -495,9 +570,6 @@ define([
           this._editorObj.execCommand("inserthtml", "{" + this._selectedOutput
             .value + ":" + this._selectedField.value + ":" + this._selectedOperator
             .value + "}");
-          this._summaryExpressionArray.push(this._selectedOutput.value +
-            ":" + this._selectedField.value + ":" + this._selectedOperator
-            .value);
           verifyFlag = true;
         }
         if (verifyFlag === true && (domClass.contains(this.verifySummaryExpression,
@@ -549,7 +621,6 @@ define([
       obj.summaryExpressionTrimmedValue = this._getSummaryExpressionFilteredValue(
         obj.summaryExpressionValueArr);
       obj.summaryExpressionNLS = this.nls.summaryTab;
-      obj.summaryExpressionValidArray = this._summaryExpressionArray;
       return obj;
     },
 
@@ -578,11 +649,153 @@ define([
     },
 
     /**
+    * This function is used to validate each expressions entry
+    * @memberOf widgets/NetworkTrace/settings/summarySettings
+    **/
+    _validateExpressionEntry: function (expressionArray) {
+      var entryMatched, i, expressionItemArr, j;
+      for (i = 0; i < expressionArray.length; i++) {
+        expressionItemArr = expressionArray[i].split(":");
+        for (j = 0; j < expressionItemArr.length; j++) {
+          if (j === 0) {
+            entryMatched = this._validateInputOutputEntry(
+              expressionItemArr[0]);
+            if (!entryMatched) {
+              return false;
+            }
+          } else if (j === 1 && expressionItemArr.length === 2) {
+            entryMatched = this._validateInputOutputOperatorEntry(
+              expressionItemArr[0], expressionItemArr[1]);
+            if (!entryMatched) {
+              return false;
+            }
+          } else if (j === 1 && expressionItemArr.length === 3) {
+            entryMatched = this._validateFieldEntry(expressionItemArr[
+              0], expressionItemArr[1]);
+            if (!entryMatched) {
+              return false;
+            }
+          } else if (j === 2 && expressionItemArr.length === 3) {
+            entryMatched = this._validateFieldOperatorEntry(
+              expressionItemArr[2]);
+            if (!entryMatched) {
+              return false;
+            }
+          }
+        }
+      }
+      return true;
+    },
+
+    /**
+    * This function is used to validate each expressions input & output entry
+    * @memberOf widgets/NetworkTrace/settings/summarySettings
+    **/
+    _validateInputOutputEntry: function (expressionItem) {
+      var i, entryMatched;
+      entryMatched = false;
+      for (i = 0; i < this.inputParametersArray.length; i++) {
+        if (expressionItem === this.inputParametersArray[i].name) {
+          entryMatched = true;
+        }
+      }
+      for (i = 0; i < this.outputParametersArray.length; i++) {
+        if (expressionItem === this.outputParametersArray[i].name) {
+          entryMatched = true;
+        }
+      }
+      return entryMatched;
+    },
+
+    /**
+    * This function is used to validate each expressions input & output operator entry
+    * @memberOf widgets/NetworkTrace/settings/summarySettings
+    **/
+    _validateInputOutputOperatorEntry: function (inputOutputEntry,
+      expressionItem) {
+      var i, entryMatched;
+      entryMatched = false;
+      this._outputLayerSettingsArr = [];
+      if (this.outputSettingArray) {
+        array.forEach(this.outputSettingArray, lang.hitch(this,
+          function (widgetNode) {
+            if (widgetNode) {
+              this._outputLayerSettingsArr.push(widgetNode.getOutputForm());
+            }
+          }));
+      }
+      for (i = 0; i < this._outputLayerSettingsArr.length; i++) {
+        if (this._outputLayerSettingsArr[i].paramName ===
+          inputOutputEntry) {
+          if (this._outputLayerSettingsArr[i].bypassDetails.skipable) {
+            if ((expressionItem === this.nls.summaryTab.outputOperatorCountOption) ||
+              (expressionItem === this.nls.summaryTab.outputOperatorSkipCountOption)
+            ) {
+              entryMatched = true;
+            }
+          } else {
+            if (expressionItem === this.nls.summaryTab.outputOperatorCountOption) {
+              entryMatched = true;
+            }
+          }
+          break;
+        }
+      }
+      if (!entryMatched) {
+        for (i = 0; i < this.inputParametersArray.length; i++) {
+          if (this.inputParametersArray[i].name === inputOutputEntry) {
+            if (expressionItem === this.nls.summaryTab.inputOperatorCountOption) {
+              entryMatched = true;
+            }
+            break;
+          }
+        }
+      }
+      return entryMatched;
+    },
+
+    /**
+    * This function is used to validate each expressions field entry
+    * @memberOf widgets/NetworkTrace/settings/summarySettings
+    **/
+    _validateFieldEntry: function (layerName, fieldName) {
+      var entryMatched = false;
+      for (var i = 0; i < this._inputOutputParamArray.length; i++) {
+        if (layerName === this._inputOutputParamArray[i].name) {
+          for (var j = 0; j < this._inputOutputParamArray[i].defaultValue
+            .fields.length; j++) {
+            if (fieldName === this._inputOutputParamArray[i].defaultValue
+              .fields[j].name) {
+              entryMatched = true;
+            }
+          }
+        }
+      }
+      return entryMatched;
+    },
+
+    /**
+    * This function is used to validate each expressions field operator entry
+    * @memberOf widgets/NetworkTrace/settings/summarySettings
+    **/
+    _validateFieldOperatorEntry: function (expressionItem) {
+      var entryMatched = false;
+      if ((expressionItem === this.nls.summaryTab.fieldOperatorSumOption) ||
+        (expressionItem === this.nls.summaryTab.fieldOperatorMinOption) ||
+        (expressionItem === this.nls.summaryTab.fieldOperatorMaxOption) ||
+        (expressionItem === this.nls.summaryTab.fieldOperatorMeanOption)
+      ) {
+        entryMatched = true;
+      }
+      return entryMatched;
+    },
+
+    /**
     * This function is used to validate expression on click of OK/Verify button
     * @memberOf widgets/NetworkTrace/settings/summarySettings
     **/
     validateExpression: function (isVerifyBtnClicked) {
-      var expression, expressionArray, i, index, trimmedString,
+      var expression, expressionArray, trimmedString,
         validExp;
       expressionArray = [];
       expression = this._editorObj.value;
@@ -597,16 +810,7 @@ define([
         validExp = true;
       }
       if (expressionArray.length > 0) {
-        for (i = 0; i < expressionArray.length; i++) {
-          index = this._summaryExpressionArray.indexOf(
-            expressionArray[i]);
-          if (index === -1) {
-            validExp = false;
-            break;
-          } else {
-            validExp = true;
-          }
-        }
+        validExp = this._validateExpressionEntry(expressionArray);
       }
       if (expression.indexOf("{}") !== -1) {
         validExp = false;

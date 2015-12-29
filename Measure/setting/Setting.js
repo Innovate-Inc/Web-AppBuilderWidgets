@@ -53,7 +53,14 @@ define([
           label: this.nls.miles,
           abbr: this.nls.milesAbbreviation || 'mi',
           conversion: jimuUtils.localizeNumber(0.000621, {
-            places: 6
+            places: 2
+          })
+        }, {
+          value: 'NAUTICAL_MILES',
+          label: this.nls.nauticalMiles,
+          abbr: this.nls.nauticalMilesAbbreviation || 'nm',
+          conversion: jimuUtils.localizeNumber(0.000539957, {
+            places: 3
           })
         }, {
           value: 'METERS',

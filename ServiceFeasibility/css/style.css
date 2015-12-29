@@ -270,7 +270,7 @@
 {
     float: left;
     width: 100%;
-    padding: 4% 10% 5% 10%;
+    padding: 5px;
     text-align: center;
 }
 
@@ -444,7 +444,7 @@
 .jimu-container .jimu-widget-ServiceFeasibility
 {
     overflow: hidden;
-    min-width: 300px;
+    min-width: 290px;
 }
 
 .jimu-widget-ServiceFeasibility .esriCTDefaultCursor
@@ -907,6 +907,7 @@
 }
 
 /* IE9 CSS for Dart Theme */
+
 .claro .dijitTextBoxIE9
 {
     background-color: rgba(0, 0, 0, 0.25) !important;
@@ -924,6 +925,18 @@
     background-color: rgba(0, 0, 0, 0.25) !important;
 }
 
+.claro .dijitSelect .dijitArrowButtonIE9
+{
+    background-image: none !important;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.25) !important;
+}
+
+.claro .dijitSelectIE9
+{
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
 .claro .dijitTextBoxFocusedIE9 .dijitInputContainer
 {
     background-color: rgba(0, 0, 0, 0.5) !important;
@@ -937,6 +950,16 @@
 .claro .dijitTextBox .dijitInputField
 {
     padding: 2px 8px !importatnt;
+}
+
+.claro .dijitMenuPopupIE9 .dijitMenuItemIE9, .claro .dijitMenuPopupIE9 .dijitMenuItemIE9 td
+{
+    color: #f8f8f8;
+}
+
+.claro .dijitMenuIE9
+{
+    background-color: #4c4c4c;
 }
 
 /* IE9 CSS for Dart Theme */

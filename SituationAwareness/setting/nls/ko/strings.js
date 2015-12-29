@@ -31,6 +31,26 @@
     "missingTabLabel": "하나 이상의 탭에 레이블이 누락됨",
     "cancel": "취소",
     "ok": "확인",
-    "missingLayerInWebMap": "운영 레이어를 찾을 수 없습니다."
+    "missingLayerInWebMap": "운영 레이어를 찾을 수 없습니다.",
+    "selectFields": "필드 선택",
+    "addField": "필드 추가",
+    "sum": "SUM",
+    "min": "MIN",
+    "max": "MAX",
+    "avg": "AVG",
+    "count": "COUNT",
+    "area": "AREA",
+    "length": "LENGTH",
+    "count_checkBox": "개수 보기",
+    "area_checkBox": "면적 보기",
+    "length_checkBox": "길이 보기",
+    "max_records": "최대 제한 도달",
+    "save_label": "옵션 저장",
+    "save_checkbox": "저장 활성화",
+    "csv_label": "CSV 옵션",
+    "csv_checkbox": "레이어의 모든 필드를 내보냅니다.",
+    "display_label": "디스플레이 옵션",
+    "display_checkbox": "요약 피처 보기",
+    "must_select_template": "저장 옵션에서 편집 템플릿 중 하나를 선택하세요."
   })
 );

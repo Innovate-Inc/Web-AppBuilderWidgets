@@ -31,6 +31,26 @@
     "missingTabLabel": "En az bir sekmenin etiketi yok",
     "cancel": "İptal",
     "ok": "Tamam",
-    "missingLayerInWebMap": "Hiçbir işlem katmanı bulunamadı."
+    "missingLayerInWebMap": "Hiçbir işlem katmanı bulunamadı.",
+    "selectFields": "Alanları Seç",
+    "addField": "Alan Ekle",
+    "sum": "TOP",
+    "min": "MIN",
+    "max": "MAKS",
+    "avg": "ORT",
+    "count": "SAYIM",
+    "area": "ALAN",
+    "length": "UZUNLUK",
+    "count_checkBox": "Sayımı Göster",
+    "area_checkBox": "Alanı Göster",
+    "length_checkBox": "Uzunluğu Göster",
+    "max_records": "Maksimum sınıra ulaşıldı",
+    "save_label": "Seçenekleri Kaydet",
+    "save_checkbox": "Kaydetmeyi Etkinleştir",
+    "csv_label": "CSV Seçenekleri",
+    "csv_checkbox": "Katmandaki tüm alanları aktarın.",
+    "display_label": "Görüntüleme Seçenekleri",
+    "display_checkbox": "Özet Detaylarını Görüntüle",
+    "must_select_template": "Kaydetme Seçeneklerindeki düzenleme şablonlarından birini seçin."
   })
 );

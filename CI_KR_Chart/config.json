@@ -115,18 +115,11 @@
 			]
         },
         "infrastructureLayer": {
-		  "title": "Texas State Parks",
-		  "url": "http://services1.arcgis.com/1mtXwieMId59thmg/arcgis/rest/services/Texas_State_Parks_Headquarter_and_Access_Points/FeatureServer/0",
-		  "labelField": "Name",
-		  "fields": [
-			"Name",
-			"Type",
-			"Comments",
-			"URL",
-			"Phone",
-			"Street",
-			"City"
-		  ]
-		}
+			"title": "Critical Infrastructures",
+            "label": "Critical Infrastructures",
+            "url": "http://arcgis-emergencymanagement-2057568539.us-east-1.elb.amazonaws.com/arcgis/rest/services/COP/EmergencyOperations/MapServer/0",
+            "labelField": "NAME",
+            "fields": ["NAME", "FEATURECODE", "STATE", "FULLADDR", "FACAREA"]    
+        }
     }
 }

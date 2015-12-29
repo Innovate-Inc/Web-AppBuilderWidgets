@@ -1,6 +1,7 @@
 define([
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
+    'dijit/form/Button',
     'jimu/BaseWidget',
     'jimu/dijit/Message',
     'jimu/utils',
@@ -29,6 +30,7 @@ define([
     'esri/geometry/webMercatorUtils',
     'esri/graphic',
     'esri/layers/GraphicsLayer',
+    'esri/layers/FeatureLayer',
     'esri/symbols/Font',
     'esri/symbols/SimpleLineSymbol',
     'esri/symbols/SimpleFillSymbol',
@@ -38,6 +40,10 @@ define([
     'esri/tasks/BufferParameters',
     'esri/tasks/GeometryService',
     'esri/toolbars/draw',
+    'esri/domUtils',
+    'esri/dijit/AttributeInspector',
+    'esri/dijit/Popup',
+    'esri/tasks/query',
     './js/SummaryInfo',
     './js/WeatherInfo',
     './js/ClosestInfo',
@@ -45,7 +51,7 @@ define([
     'dojo/keys',
     'dojo/domReady!'
   ],
-  function(declare, _WidgetsInTemplateMixin, BaseWidget, Message, utils, LayerInfos,
+  function(declare, _WidgetsInTemplateMixin, Button, BaseWidget, Message, utils, LayerInfos,
     Color, html, dom, on, domStyle, domClass, domConstruct, domGeom, lang, array, xhr,
     query,
     JSON,
@@ -60,6 +66,7 @@ define([
     webMercatorUtils,
     Graphic,
     GraphicsLayer,
+    FeatureLayer,
     Font,
     SimpleLineSymbol,
     SimpleFillSymbol,
@@ -69,6 +76,10 @@ define([
     BufferParameters,
     GeometryService,
     Draw,
+    domUtils,
+    AttributeInspector,
+    Popup,
+    Query,
     SummaryInfo,
     WeatherInfo,
     ClosestInfo,
@@ -82,7 +93,7 @@ define([
       //templateString: template,
       /*jshint scripturl:true*/
 
-      baseClass: 'jimu-widget-IMT',
+      baseClass: 'jimu-widget-SAT',
       name: 'IncidentAnalysis',
 
       opLayers: null,
@@ -92,6 +103,7 @@ define([
       lyrClosest: null,
       lyrProximity: null,
       lyrSummary: null,
+      lyrEdit: null,
       toolbar: null,
       tool: -1,
       symPoint: null,
@@ -105,8 +117,9 @@ define([
       locator: null,
       stops: [],
       initalLayerVisibility: {},
+      updateFeature: null,
 
-      Incident_Local_Storage_Key: "IMT_Incident",
+      Incident_Local_Storage_Key: "SAT_Incident",
       SLIDER_MAX_VALUE: 10000,
 
       postCreate: function() {
@@ -136,25 +149,7 @@ define([
           }));
         }
 
-        var actionLabel = this.nls.actionLabel;
-        var actionLink;
-        var aDom = query(".actionList", this.map.infoWindow.domNode);
-        if (aDom.length > 0) {
-          if (aDom[0].innerHTML.indexOf(actionLabel) < 0) {
-            actionLink = domConstruct.create("a", {
-              "class": "action",
-              "id": "actionLink",
-              "innerHTML": actionLabel,
-              "href": "javascript: void(0);"
-            }, aDom[0]);
-          } else {
-            actionLink = dom.byId("actionLink");
-          }
-          this.own(on(actionLink, "click", lang.hitch(this, this._setEventLocation)));
-        }
-
         this.SLIDER_MAX_VALUE = this.config.bufferRange.maximum;
-
 
         // set operational layers
         this.opLayers = this.map.itemInfo.itemData.operationalLayers;
@@ -166,15 +161,21 @@ define([
 
       onOpen: function() {
         this.inherited(arguments);
+        if (this.map.infoWindow.isShowing) {
+          this.map.infoWindow.hide();
+        }
         this._storeInitalVisibility();
+        this._initEditInfo();
+        this._addActionLink();
         this._clickTab(0);
       },
 
       onClose: function() {
         this._clear();
         this._toggleTabLayersOld();
-        this.inherited(arguments);
         this._resetInitalVisibility();
+        this._resetInfoWindow();
+        this.inherited(arguments);
       },
 
       onDeActive: function() {
@@ -194,10 +195,10 @@ define([
           this.map.removeLayer(this.lyrClosest);
         }
         if (this.lyrProximity) {
-          this.map.addLayer(this.lyrProximity);
+          this.map.removeLayer(this.lyrProximity);
         }
         if (this.lyrSummary) {
-            this.map.removeLayer(this.lyrSummary);
+          this.map.removeLayer(this.lyrSummary);
         }
         this.inherited(arguments);
       },
@@ -216,6 +217,25 @@ define([
           case 'widgetPoolChange':
             this._verifyRouting();
             break;
+        }
+      },
+
+      _addActionLink: function () {
+        var actionLabel = this.nls.actionLabel;
+        var actionLink;
+        var aDom = query(".actionList", this.map.infoWindow.domNode);
+        if (aDom.length > 0) {
+          if (aDom[0].innerHTML.indexOf(actionLabel) < 0) {
+            actionLink = domConstruct.create("a", {
+              "class": "action",
+              "id": "SA_actionLink",
+              "innerHTML": actionLabel,
+              "href": "javascript: void(0);"
+            }, aDom[0]);
+          } else {
+            actionLink = dom.byId("SA_actionLink");
+          }
+          this.own(on(actionLink, "click", lang.hitch(this, this._setEventLocation)));
         }
       },
 
@@ -271,6 +291,11 @@ define([
           if (this.started) {
             this.resize();
           }
+          // fix for Tab Thme on mobile devices
+          if(this.appConfig.theme.name === "TabTheme") {
+            var controllerWidget = this.widgetManager.getControllerWidgets()[0];
+            this.widgetManager.minimizeWidget(controllerWidget.id);
+          }
         }
       },
 
@@ -287,12 +312,17 @@ define([
       },
 
       _setEventLocation: function() {
+        this.lyrIncidents.clear();
+        this.lyrBuffer.clear();
         var feature = this.map.infoWindow.getSelectedFeature();
         var pData = {
           "eventType": "IncidentLocation",
           "dataValue": feature
         };
         this.onReceiveData("", "", pData);
+        if(this.map.infoWindow.isShowing){
+          this.map.infoWindow.hide();
+        }
       },
 
       //create a map based on the input web map id
@@ -319,24 +349,226 @@ define([
         this.lyrProximity.setVisibility(false);
         this.map.addLayer(this.lyrProximity);
 
-        //solutions: added to support summary layer display
         if (this.summaryDisplayEnabled) {
-            //TODO: may need to spin up a collection of GLs here 
-            //so we could move away from local storage...would also allow for display of all summary layers relative to the incidnet as well
-            this.lyrSummary = new GraphicsLayer();
-            this.lyrSummary.setVisibility(false);
-            this.map.addLayer(this.lyrSummary);
+          this.lyrSummary = new GraphicsLayer();
+          this.lyrSummary.setVisibility(false);
+          this.map.addLayer(this.lyrSummary);
         }
       },
 
       // map loaded
       _mapLoaded: function() {
+        // option to move base map ref layers below graphics
+        query('[data-reference]').style("z-index", 0);
         if (this.map.itemId) {
           LayerInfos.getInstance(this.map, this.map.itemInfo)
             .then(lang.hitch(this, function(operLayerInfos) {
               this.opLayers = operLayerInfos;
               this._processOperationalLayers();
+
+              if(this.saveEnabled){
+                this.lyrEdit = this.opLayers.getLayerInfoById(this.config.editLayer).layerObject;
+                this.own(on(this.map.infoWindow, "selection-change", lang.hitch(this, this._selectionChanged)));
+                this.own(on(this.map.infoWindow, "set-features", lang.hitch(this, this._setPopupFeature)));
+
+                var aDom = query(".esriPopupWrapper", this.map.infoWindow.domNode);
+                if (aDom.length > 0) {
+                  if (typeof(aDom[0].clientHeight) !== 'undefined' && typeof(aDom[0].clientWidth) !== 'undefined') {
+                    this.defaultPopupSize = {
+                      "width": aDom[0].clientWidth,
+                      "height": aDom[0].clientHeight
+                    };
+                  }
+                }
+
+                this.map.infoWindow.highlight = true;
+
+                this.own(on(this.lyrEdit, "click", lang.hitch(this, function (results) {
+                  if (results.graphic) {
+                    this.updateFeature = results.graphic;
+                    this._updatePopup(this.updateFeature);
+                  }
+                })));
+                this.defaultEditWindowContentJson = JSON.stringify(this.lyrEdit.infoTemplate);
+                this.editLayerPrototype = this.editTemplate.prototype;
+              }
             }));
+        }
+        this._clickTab(0);
+      },
+
+      _initEditInfo: function () {
+        if (this.saveEnabled && this.lyrEdit) {
+          this.map.infoWindow.resize(350, 340);
+          this.lyrEdit.infoTemplate.setContent(lang.hitch(this, this._setEditLayerPopup));
+        }
+      },
+
+      _setPopupFeature: function () {
+        this.updateFeature = this.map.infoWindow.getSelectedFeature();
+      },
+
+      _selectionChanged: function () {
+        this.updateFeature = this.map.infoWindow.getSelectedFeature();
+        if (this.updateFeature) {
+          this._updatePopup(this.updateFeature);
+        }
+      },
+
+      _setEditLayerPopup: function (f) {
+        var fInfos = [];
+        var popupFields = this._getPopupFields(this.lyrEdit);
+        for (var i = 0; i < popupFields.length; i++) {
+          var fld = popupFields[i];
+          if (fld.isEditable && fld.isEditableOnLayer) {
+            fInfos.push({
+              'fieldName': fld.fieldName,
+              'isEditable': fld.isEditable
+            });
+          }
+        }
+
+        var layerInfos = [{
+          'featureLayer': this.lyrEdit,
+          'showAttachments': false,
+          'isEditable': true,
+          'fieldInfos': fInfos
+        }];
+
+        this.attInspector = new AttributeInspector({
+          layerInfos: layerInfos
+        }, domConstruct.create("div"));
+
+        var saveButton = new Button({
+          label: "Update"
+        }, domConstruct.create("div"));
+
+        domConstruct.place(saveButton.domNode, this.attInspector.deleteBtn.domNode, "before");
+
+        this.own(on(saveButton, "click", lang.hitch(this, function () {
+          this.lyrEdit.applyEdits(null, [this.updateFeature], null, lang.hitch(this, function () {
+            new Message({
+              message: this.nls.updateComplete
+            });
+          }), function (error) {
+            var msg = "Error";
+            if (typeof (error.details) !== 'undefined') {
+              msg = error.details;
+            }
+            if (typeof (error.message) !== 'undefined') {
+              msg = error.message;
+            }
+            new Message({
+              message: msg
+            });
+          });
+        })));
+
+        this.own(on(this.attInspector, "attribute-change", lang.hitch(this, function (evt) {
+          this.updateFeature = evt.feature;
+          this.updateFeature.attributes[evt.fieldName] = evt.fieldValue;
+        })));
+
+        this.own(on(this.attInspector, "next", lang.hitch(this, function (evt) {
+          this.updateFeature = evt.feature;
+        })));
+
+        this.own(on(this.attInspector, "delete", lang.hitch(this, function (evt) {
+          //Test if the feature being deleted matches the incident or incident buffer
+          // if so flag the incident to be cleared
+          var removeIncident = false;
+          if (this.incident) {
+            if (geometryEngine.equals(evt.feature.geometry, this.incident.geometry)) {
+              removeIncident = true;
+            }
+            if (!removeIncident && this.lyrBuffer.graphics.length > 0) {
+              if (geometryEngine.equals(evt.feature.geometry, this.lyrBuffer.graphics[0].geometry)) {
+                removeIncident = true;
+              }
+            }
+          }
+
+          this.lyrEdit.applyEdits(null, null, [evt.feature], lang.hitch(this, function () {
+            new Message({
+              message: this.nls.deleteComplete
+            });
+          }), function (error) {
+            var msg = "Error";
+            if (typeof (error.details) !== 'undefined') {
+              msg = error.details;
+            }
+            if (typeof (error.message) !== 'undefined') {
+              msg = error.message;
+            }
+            new Message({
+              message: msg
+            });
+          });
+          this.updateFeature = this.editLayerPrototype;
+
+          if (removeIncident) {
+            this._clear();
+          }
+
+          this.map.infoWindow.hide();
+        })));
+        if (this.updateFeature) {
+          if (!this.updateFeature.hasOwnProperty('_graphicsLayer') && f) {
+            if (f.hasOwnProperty('_graphicsLayer')) {
+              this.updateFeature = f;
+            }
+          }
+          this.attInspector.showFeature(this.updateFeature);
+        }
+        return this.attInspector.domNode;
+      },
+
+      _getPopupFields: function (layer) {
+        var fldInfos;
+        if (layer.infoTemplate) {
+          fldInfos = layer.infoTemplate.info.fieldInfos;
+        } else if (this.tab.tabLayers[0].url.indexOf("MapServer") > -1) {
+          var lID = this.tab.tabLayers[0].url.split("MapServer/")[1];
+          var mapLayers = this.parent.map.itemInfo.itemData.operationalLayers;
+          fldInfos = null;
+          for (var ii = 0; ii < mapLayers.length; ii++) {
+            var lyr = mapLayers[ii];
+            if (lyr.layerObject.infoTemplates) {
+              var infoTemplate = lyr.layerObject.infoTemplates[lID];
+              if (infoTemplate) {
+                fldInfos = infoTemplate.infoTemplate.info.fieldInfos;
+                break;
+              }
+            }
+          }
+        } else {
+          fldInfos = layer.fields;
+        }
+        if (!fldInfos) {
+          fldInfos = layer.fields;
+        }
+        return fldInfos;
+      },
+
+      _updatePopup: function (uf) {
+        if (typeof(uf) !== 'undefined') {
+          var q = new Query();
+          if (uf.hasOwnProperty('attributes')) {
+            q.objectIds = [uf.attributes[uf.getLayer().objectIdField]];
+          } else {
+            q.objectIds = [uf];
+          }
+          this.lyrEdit.selectFeatures(q, FeatureLayer.SELECTION_NEW, lang.hitch(this, function (results) {
+            if (results.length > 0) {
+              this.updateFeature = results[0];
+              if (!this.attInspector) {
+                this._setEditLayerPopup(this.updateFeature);
+              }
+              if (this.attInspector) {
+                this.attInspector.showFeature(this.updateFeature);
+              }
+            }
+          }));
         }
       },
 
@@ -353,10 +585,12 @@ define([
 
       _createUI: function() {
         var units = this.config.distanceUnits;
-        var lbl = this.config.bufferLabel + " (" + this.nls[units] + ")";
+        var lbl = utils.sanitizeHTML(this.config.bufferLabel ? this.config.bufferLabel : '');
+        lbl += " (" + this.nls[units] + ")";
+
         this.buffer_lbl.innerHTML = lbl;
 
-        var sliderNode = dom.byId("horizontalSliderDiv");
+        var sliderNode = dom.byId("SA_horizontalSliderDiv");
         var rulesNode = document.createElement('div');
         sliderNode.appendChild(rulesNode);
         var rulesNodeLabels = document.createElement('div');
@@ -404,7 +638,7 @@ define([
 
         //tabs
         var pContainer = this.panelContainer;
-        var pTabs = dom.byId("IMT_tabs");
+        var pTabs = dom.byId("SA_SAT_tabs");
         var wTabs = 0;
         for (var i = 0; i < this.config.tabs.length; i++) {
           var obj = this.config.tabs[i];
@@ -413,18 +647,18 @@ define([
             label = obj.layers;
           }
           var tab = domConstruct.create("div", {
-            id: "tab" + i,
-            innerHTML: label
+            id: "SA_tab" + i,
+            innerHTML: utils.sanitizeHTML(label ? label : '')
           }, pTabs);
-          domClass.add(tab, "IMTTab");
+          domClass.add(tab, "SATTab");
           wTabs += domGeom.position(tab).w;
           on(tab, "click", lang.hitch(this, this._clickTab, i));
           if (i > 0) {
             var panel = domConstruct.create("div", {
-              id: "tabPanel" + i,
+              id: "SA_tabPanel" + i,
               innerHTML: this.nls.defaultTabMsg
             }, pContainer);
-            domClass.add(panel, "IMT_tabPanel");
+            domClass.add(panel, "SAT_tabPanel");
 
             // incidents
             //if (obj.type === "incidents") {}
@@ -456,36 +690,40 @@ define([
 
       },
 
-        //solutions: modified to support the optional adding of the save button
       // load UI
-      _loadUI: function() {
-          var cnt = 4;
-          if (this.saveEnabled) {
-              //TODO...could use
-              //domStyle.set
-              //jh...here then I wouldn;t even need the duplicated css
-              domClass.remove(this.incidentsLocate, 'IMTcol');
-              domClass.add(this.incidentsLocate, 'IMTcolSave')
+      _loadUI: function () {
+        var btnTitles = {
+          0: this.nls.drawPoint,
+          1: this.nls.drawLine,
+          2: this.nls.drawPolygon,
+          3: this.nls.clearIncident,
+          4: this.nls.saveIncident
+        };
 
-              cnt = 5;
-              this.saveSpan = domConstruct.create("span", {
-                  "class": "btn32SaveDisabled"
-              }, this.imgContainer2);
-              domConstruct.create("img", {
-                  "id": "btn4"
-              }, this.saveSpan);
-          }
+        var cnt = 4;
+        if (this.saveEnabled) {
+          domClass.remove(this.incidentsLocate, 'SATcol');
+          domClass.add(this.incidentsLocate, 'SATcolSave');
+          cnt = 5;
+          this.saveSpan = domConstruct.create("span", {
+            "class": "btn32SaveDisabled"
+          }, this.imgContainer);
+          domConstruct.create("img", {
+            "id": "SA_btn4"
+          }, this.saveSpan);
+        }
 
         // Incidents
         for (var i = 0; i < cnt; i++) {
-          var btn = dom.byId("btn" + i);       
+          var btn = dom.byId("SA_btn" + i);
           if (this.saveEnabled) {
-              domClass.remove(btn.parentNode, 'btn32');
-              if (btn.id !== "btn4") {
-                  domClass.add(btn.parentNode, 'btn32Save')
-              }
+            domClass.remove(btn.parentNode, 'btn32');
+            if (btn.id !== "btn4") {
+              domClass.add(btn.parentNode, 'btn32Save');
+            }
           }
           html.setAttr(btn, 'src', this.folderUrl + 'images/btn' + i + '.png');
+          html.setAttr(btn, 'title', btnTitles[i]);
           this.own(on(btn, "click", lang.hitch(this, this._clickIncidentsButton, i)));
         }
 
@@ -500,6 +738,18 @@ define([
         this.own(on(this.sliderValue, "keyup", lang.hitch(this, function(event) {
           if (event.keyCode === keys.ENTER) {
             this._updateSliderValue();
+          } else {
+            var num = this.sliderValue.get("value");
+            if(isNaN(num)) {
+              this.sliderValue.set("value", this.horizontalSlider.value);
+            } else {
+              if (num < this.config.bufferRange.minimum) {
+                this.sliderValue.set("value", this.config.bufferRange.minimum);
+              }
+              if (num > this.SLIDER_MAX_VALUE) {
+                this.sliderValue.set("value", this.SLIDER_MAX_VALUE);
+              }
+            }
           }
         })));
 
@@ -532,24 +782,19 @@ define([
         }
       },
 
-        //solutions: modified to support the optional adding/use of the save button
-      // click incidents button
-      _clickIncidentsButton: function(num) {
-          var btn;
-          //jh
-          var cnt = 4;
-          if (this.saveEnabled) {
-              cnt = 5;
-          }
-
+      _clickIncidentsButton: function (num) {
+        var btn;
+        var cnt = this.saveEnabled ? 5 : 4;
         if (num < cnt) {
           for (var i = 0; i < cnt; i++) {
-            btn = dom.byId("btn" + i);
+            btn = dom.byId("SA_btn" + i);
             domClass.remove(btn, "btnOn");
           }
           if (num > -1 && num !== this.tool) {
-            btn = dom.byId("btn" + num);
-            domClass.add(btn, "btnOn");
+            btn = dom.byId("SA_btn" + num);
+            if (num < cnt - 1) {
+              domClass.add(btn, "btnOn");
+            }
             this.tool = num;
           } else {
             this.tool = -1;
@@ -586,35 +831,60 @@ define([
       },
 
       _saveIncident: function () {
-          var layer = this.opLayers.getLayerInfoById(this.config.editLayer).layerObject;
-          var newGraphics = [];
-          for (var i = 0; i < this.lyrBuffer.graphics.length; i++) {
-              var graphic = this.lyrBuffer.graphics[i];
-              var g = new Graphic();
-              g.geometry = graphic.geometry;
-              g.setAttributes(this.editTemplate.prototype.attributes);
-              newGraphics.push(g);
-          }
-          if (newGraphics.length > 0) {
-              layer.applyEdits(newGraphics, null, null, lang.hitch(this, function (a, u, d) {
-                  new Message({
-                    message: this.nls.editComplete
-                  });
-              }), function (error) {
-                  var msg = "Error";
-                  if (typeof (error.details) !== 'undefined') {
-                      msg = error.details;
-                  }
-                  if (typeof (error.message) !== 'undefined') {
-                      msg = error.message;
-                  }
-                  new Message({
-                      message: msg
-                  });
-            });
-          }
+        var newGraphics = [];
 
-          this._clickIncidentsButton(-1);
+        if (this.lyrBuffer.graphics.length < 1 && this.incident.geometry.type !== "polygon") {
+          new Message({
+            message: this.nls.notPolySave
+          });
+        }
+
+        for (var i = 0; i < this.lyrBuffer.graphics.length; i++) {
+          var graphic = this.lyrBuffer.graphics[i];
+          var g = new Graphic();
+          g.geometry = graphic.geometry;
+          var tempProto = JSON.parse(JSON.stringify(this.editTemplate.prototype));
+          g.setAttributes(tempProto.attributes);
+          newGraphics.push(g);
+        }
+        if (newGraphics.length > 0) {
+          this.lyrEdit.applyEdits(newGraphics, null, null, lang.hitch(this, function (results) {
+            if(results.length > 0){
+              if (results[0].success) {
+                if (results[0].hasOwnProperty('objectId')) {
+                  this._updatePopup(results[0].objectId);
+                }
+                new Message({
+                  message: this.nls.editComplete
+                });
+                if (!this.map.infoWindow.isShowing) {
+                  if (this.lyrBuffer.graphics.length > 0) {
+                    var mpPt = this.lyrBuffer.graphics[0].geometry.getCentroid();
+                    var scrPt = this.map.toScreen(mpPt);
+                    this.map.emit("click", {
+                      bubbles: true,
+                      cancelable: true,
+                      screenPoint: scrPt,
+                      mapPoint: mpPt
+                    });
+                  }
+                }
+              }
+            }
+          }), function (error) {
+            var msg = "Error";
+            if (typeof (error.details) !== 'undefined') {
+              msg = error.details;
+            }
+            if (typeof (error.message) !== 'undefined') {
+              msg = error.message;
+            }
+            new Message({
+              message: msg
+            });
+          });
+        }
+        this._clickIncidentsButton(-1);
       },
 
       _clear: function() {
@@ -623,26 +893,27 @@ define([
         this.lyrBuffer.clear();
         this.lyrProximity.clear();
         this.lyrClosest.clear();
-          //jh
         if (this.summaryDisplayEnabled && this.lyrSummary) {
-            this.lyrSummary.clear();
+          this.lyrSummary.clear();
         }
-          //jh
         if (this.saveEnabled) {
-            domClass.remove(this.saveSpan, "btn32Save");
-            domClass.add(this.saveSpan, "btn32SaveDisabled");
+          domClass.remove(this.saveSpan, "btn32Save");
+          domClass.add(this.saveSpan, "btn32SaveDisabled");
         }
         this.incident = null;
         this.buffer = null;
         this.div_reversed_address.innerHTML = "";
         html.setStyle(this.div_reverse_geocoding, 'visibility', 'hidden');
         for (var i = 1; i < this.config.tabs.length; i++) {
-          if (dom.byId("tabPanel" + i)) {
-            dom.byId("tabPanel" + i).innerHTML = this.nls.defaultTabMsg;
+          if (dom.byId("SA_tabPanel" + i)) {
+            dom.byId("SA_tabPanel" + i).innerHTML = this.nls.defaultTabMsg;
           }
         }
-          //jh
         this._clearGraphics();
+
+        if (this.lyrEdit) {
+          this.updateFeature = this.editLayerPrototype;
+        }
       },
 
       _sliderChange: function() {
@@ -685,11 +956,11 @@ define([
       _toggleTabs: function(num) {
         for (var i = 0; i < this.config.tabs.length; i++) {
           if (i === num) {
-            domClass.add("tab" + i, "active");
-            domStyle.set("tabPanel" + i, "display", "block");
+            domClass.add("SA_tab" + i, "active");
+            domStyle.set("SA_tabPanel" + i, "display", "block");
           } else {
-            domClass.remove("tab" + i, "active");
-            domStyle.set("tabPanel" + i, "display", "none");
+            domClass.remove("SA_tab" + i, "active");
+            domStyle.set("SA_tabPanel" + i, "display", "none");
           }
         }
         this._scrollToTab(num);
@@ -711,9 +982,8 @@ define([
         }
         this.lyrClosest.setVisibility(false);
         this.lyrProximity.setVisibility(false);
-          //jh
         if (this.lyrSummary) {
-            this.lyrSummary.setVisibility(false);
+          this.lyrSummary.setVisibility(false);
         }
         if (oldTab.tabLayers) {
           array.forEach(oldTab.tabLayers, function(layer) {
@@ -724,54 +994,30 @@ define([
         }
       },
 
-        //jh changes in here
       // toggle tab layers new
       _toggleTabLayersNew: function(num) {
         var tab = this.config.tabs[num];
         switch (tab.type) {
           case "incidents":
             break;
-            case "summary":
-                //jh...TODO...the updated bit is just a failover...if it fails to grab from localStorage
-                // we will re-do the query
-                var updated = false;
-
-                ////////////////////////////////////////////////////////////////////////////////////
-                //JH TESTING WITH LOCAL STORAGE
-                ////////////////////////////////////////////////////////////////////////////////////
-                if (tab.updateFlag === false) {
-                    if (this.summaryDisplayEnabled) {
-                        updated = tab.summaryInfo._restoreGraphics(tab.summaryInfo.summaryLayer.url, this.lyrSummary);
-                    } else {
-                        updated = tab.summaryInfo._restoreGraphics(tab.summaryInfo.summaryLayer.url, null);
-                    }
-                }
-                if (this.incident && tab.updateFlag === true || this.incident && updated === false) {
-                    if (this.summaryDisplayEnabled) {
-                        tab.summaryInfo.updateForIncident(this.incident, this.buffer, this.lyrSummary);
-                    } else {
-                        tab.summaryInfo.updateForIncident(this.incident, this.buffer, null);
-                    }
-                    tab.updateFlag = false;
-                }
-                ////////////////////////////////////////////////////////////////////////////////////
-
-
-                ////////////////////////////////////////////////////////////////////////////////////
-                //JH TESTING WITHOUT LOCAL STORAGE
-                //also need to comment out the call to store in SummaryInfo
-                ////////////////////////////////////////////////////////////////////////////////////
-                //if (this.summaryDisplayEnabled) {
-                //    tab.summaryInfo.updateForIncident(this.incident, this.buffer, this.lyrSummary);
-                //} else {
-                //    tab.summaryInfo.updateForIncident(this.incident, this.buffer, null);
-                //}
-                //tab.updateFlag = false;
-                ////////////////////////////////////////////////////////////////////////////////////
-
-                if (this.summaryDisplayEnabled && this.lyrSummary) {
-                    this.lyrSummary.setVisibility(true);
-                }
+          case "summary":
+            if (this.lyrSummary) {
+              this.lyrSummary.clear();
+            }
+            if (tab.tabLayers) {
+              if (tab.tabLayers.length > 1) {
+                this.lyrSummary.infoTemplate = tab.tabLayers[1].infoTemplate;
+                array.forEach(tab.tabLayers[1].graphics, lang.hitch(this, function (graphic) {
+                  this.lyrSummary.add(graphic);
+                }));
+                this.lyrSummary.setVisibility(true);
+              }
+            }
+            if (this.incident && tab.updateFlag === true) {
+              var gl = this.summaryDisplayEnabled ? this.lyrSummary : null;
+              tab.summaryInfo.updateForIncident(this.incident, this.buffer, gl);
+              tab.updateFlag = false;
+            }
             break;
           case "weather":
             if (tab.tabLayers) {
@@ -832,10 +1078,9 @@ define([
         this.lyrIncidents.add(this.incident);
         this.toolbar.deactivate();
         this._clickIncidentsButton(-1);
-          //jh
         if (this.saveEnabled) {
-            domClass.remove(this.saveSpan, "btn32SaveDisabled");
-            domClass.add(this.saveSpan, "btn32Save");
+          domClass.remove(this.saveSpan, "btn32SaveDisabled");
+          domClass.add(this.saveSpan, "btn32Save");
         }
         this._bufferIncident();
         if (type === "point") {
@@ -897,7 +1142,13 @@ define([
 
         if (dist1 > 0) {
 
-          var bufferGeom = geometryEngine.buffer(gra.geometry, dist1, unitCode);
+          var wkid = gra.geometry.spatialReference.wkid;
+          var bufferGeom;
+          if (wkid === 4326 || wkid === 3587 || wkid === 102100) {
+            bufferGeom = geometryEngine.geodesicBuffer(gra.geometry, dist1, unitCode);
+          } else {
+            bufferGeom = geometryEngine.buffer(gra.geometry, dist1, unitCode);
+          }
           this._locateBuffer(bufferGeom.getExtent());
           this.buffer = new Graphic(bufferGeom, this.symBuffer);
           this.lyrBuffer.add(this.buffer);
@@ -912,6 +1163,7 @@ define([
             this._performAnalysis();
           }
         }
+
       },
 
       _performAnalysis: function() {
@@ -1008,20 +1260,18 @@ define([
       // get tab layers
       _getTabLayers: function(names) {
         var lyrs = [];
-        array.forEach(this.opLayers._layerinfos, lang.hitch(this, function(layer) {
+        array.forEach(this.opLayers._layerInfos, lang.hitch(this, function(layer) {
           if(layer.newSubLayers.length > 0) {
             this._recurseOpLayers(layer.newSubLayers, lyrs, names);
           } else {
             if (names.indexOf(layer.title) > -1) {
-                lyrs.push(layer.layerObject);
-
-                //jh...hackaround...without this demographics layer was coming back empty from summaryLayer.queryFeatures
-                if (typeof (layer.layerObject.visible) !== 'undefined') {
-                    if (!layer.layerObject.visible) {
-                        layer.layerObject.setVisibility(true);
-                        layer.layerObject.setVisibility(false);
-                    }
+              lyrs.push(layer.layerObject);
+              if (typeof (layer.layerObject.visible) !== 'undefined') {
+                if (!layer.layerObject.visible) {
+                  layer.layerObject.setVisibility(true);
+                  layer.layerObject.setVisibility(false);
                 }
+              }
             }
           }
         }));
@@ -1035,7 +1285,7 @@ define([
             this._recurseOpLayers(Node.newSubLayers, pLyrs, pNames);
           } else {
             if (pNames.indexOf(Node.title) > -1) {
-                pLyrs.push(Node.layerObject);
+              pLyrs.push(Node.layerObject);
             }
           }
         }));
@@ -1078,7 +1328,7 @@ define([
             }
           } else if (data.eventType === "WebMapChanged") {
             this._storeIncidents();
-          } 
+          }
         }
       },
 
@@ -1138,57 +1388,78 @@ define([
         }
       },
 
-        //jh
-      _storeInitalVisibility: function () {
-          array.forEach(this.config.tabs, lang.hitch(this, function (tab) {
-              array.forEach(tab.tabLayers, lang.hitch(this, function (layer) {
-                    if (typeof(layer.visible) !== 'undefined') {
-                        this.initalLayerVisibility[layer.id] = layer.visible;
-                        layer.setVisibility(false);
-                    }
-              }));
-          }));
-      },
-
-        //jh
-      _resetInitalVisibility: function () {
-          array.forEach(this.config.tabs, lang.hitch(this, function (tab) {
-              array.forEach(tab.tabLayers, lang.hitch(this, function (layer) {
-                  if (typeof (layer.visible) !== 'undefined') {
-                      if (layer.id in this.initalLayerVisibility) {
-                          layer.setVisibility(this.initalLayerVisibility[layer.id]);
-                      }
-                  }
-              }));
-          }));
-      },
-
       // _scroll to tab
       _scrollToTab: function(num) {
         var boxW = domGeom.position(this.footerContentNode).w;
         var tabsW = domGeom.position(this.tabsNode).w;
         if (tabsW > boxW) {
-          var box = domGeom.getMarginBox("tab" + num);
+          var box = domGeom.getMarginBox("SA_tab" + num);
           var dist = box.l - (boxW - box.w) / 2;
           this.footerContentNode.scrollLeft = dist;
         }
       },
 
-      _clearGraphics: function () {
-          array.forEach(this.config.tabs, lang.hitch(this, function (tab) {
-              array.forEach(tab.tabLayers, function (tabLayer) {
-                  var stored_graphic = window.localStorage.getItem(tabLayer.url);
-                  if (stored_graphic !== null && stored_graphic !== "null") {
-                      window.localStorage.removeItem(tabLayer.url);
-                  }
-              });
+      _storeInitalVisibility: function () {
+        array.forEach(this.config.tabs, lang.hitch(this, function (tab) {
+          array.forEach(tab.tabLayers, lang.hitch(this, function (layer) {
+            if (typeof (layer.visible) !== 'undefined') {
+              this.initalLayerVisibility[layer.id] = layer.visible;
+              layer.setVisibility(false);
+            }
           }));
+        }));
+      },
+
+      _resetInitalVisibility: function () {
+        array.forEach(this.config.tabs, lang.hitch(this, function (tab) {
+          array.forEach(tab.tabLayers, lang.hitch(this, function (layer) {
+            if (typeof (layer.visible) !== 'undefined') {
+              if (layer.id in this.initalLayerVisibility) {
+                layer.setVisibility(this.initalLayerVisibility[layer.id]);
+              }
+            }
+          }));
+        }));
+      },
+
+      _clearGraphics: function () {
+        array.forEach(this.config.tabs, lang.hitch(this, function (tab) {
+          if (tab.type === "summary") {
+            if (tab.tabLayers) {
+              if (tab.tabLayers.length > 1) {
+                for (var i = 1; i < tab.tabLayers.length; i++) {
+                  tab.tabLayers.pop();
+                }
+              }
+            }
+          }
+        }));
+      },
+
+      _resetInfoWindow: function(){
+        if (this.defaultEditWindowContentJson){
+          this.lyrEdit.infoTemplate.setContent(JSON.parse(this.defaultEditWindowContentJson));
+        }
+
+        if (this.defaultPopupSize) {
+          //this.map.infoWindow.resize(this.defaultPopupSize["width"], this.defaultPopupSize["height"]);
+        }
+
+        var aDom = query(".actionList", this.map.infoWindow.domNode);
+        if (aDom.length > 0) {
+          if (aDom[0].innerHTML.indexOf(this.nls.actionLabel) > 0) {
+            domConstruct.destroy("SA_actionLink");
+          }
+        }
+
+        if (this.map.infoWindow.isShowing) {
+          this.map.infoWindow.hide();
+        }
       },
 
       // close
-      _close: function() {
+      _close: function () {
         this.widgetManager.closeWidget(this.id);
       }
-
     });
   });

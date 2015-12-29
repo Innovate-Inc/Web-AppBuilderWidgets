@@ -31,6 +31,26 @@
     "missingTabLabel": "Manca l\'etichetta ad almeno una scheda",
     "cancel": "Annulla",
     "ok": "OK",
-    "missingLayerInWebMap": "Nessun layer operativo trovato."
+    "missingLayerInWebMap": "Nessun layer operativo trovato.",
+    "selectFields": "Seleziona campi",
+    "addField": "Aggiungi Campo",
+    "sum": "SOMMA",
+    "min": "MIN",
+    "max": "MAX",
+    "avg": "MEDIA",
+    "count": "COUNT",
+    "area": "AREA",
+    "length": "LENGTH",
+    "count_checkBox": "Mostra conteggio",
+    "area_checkBox": "Mostra area",
+    "length_checkBox": "Mostra lunghezza",
+    "max_records": "Raggiunto limite massimo",
+    "save_label": "Salva opzioni",
+    "save_checkbox": "Abilita salvataggio",
+    "csv_label": "Opzioni CSV",
+    "csv_checkbox": "Esportare tutti i campi nel layer.",
+    "display_label": "Opzioni di visualizzazione",
+    "display_checkbox": "Visualizza riepilogo delle feature",
+    "must_select_template": "Selezionare uno dei modelli di modifica nelle opzioni di salvataggio."
   })
 );

@@ -31,6 +31,26 @@
     "missingTabLabel": "Minst en flik saknar sin etikett",
     "cancel": "Avbryt",
     "ok": "OK",
-    "missingLayerInWebMap": "Inga funktionslager hittades."
+    "missingLayerInWebMap": "Inga funktionslager hittades.",
+    "selectFields": "Välj fält",
+    "addField": "Lägg till fält",
+    "sum": "SUMMA",
+    "min": "MIN",
+    "max": "MAX",
+    "avg": "SNITT",
+    "count": "ANTAL",
+    "area": "AREA",
+    "length": "LÄNGD",
+    "count_checkBox": "Visa antal",
+    "area_checkBox": "Visa area",
+    "length_checkBox": "Visa längd",
+    "max_records": "Maximigränsen är nådd",
+    "save_label": "Alternativ för att spara",
+    "save_checkbox": "Aktivera sparfunktionen",
+    "csv_label": "Tillåt export av resultat",
+    "csv_checkbox": "CSV-alternativ",
+    "display_label": "Visningsalternativ",
+    "display_checkbox": "Visa sammanfattningsgeoobjekt",
+    "must_select_template": "Markera en av redigeringsmallarna i Alternativ för att spara."
   })
 );

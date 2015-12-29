@@ -183,6 +183,19 @@ define([
         }
         this._bindEvents();
         this._initMeasureTool();
+
+        this.own(on(this.domNode, 'mousedown', lang.hitch(this, function (event) {
+          event.stopPropagation();
+          if (event.altKey) {
+            var msgStr = this.nls.widgetverstr + ': ' + this.manifest.version;
+            msgStr += '\n' + this.nls.wabversionmsg + ': ' + this.manifest.wabVersion;
+            msgStr += '\n' + this.manifest.description;
+            new Message({
+              titleLabel: this.nls.widgetversion,
+              message: msgStr
+            });
+          }
+        })));
       },
 
       /**
@@ -235,21 +248,6 @@ define([
       },
 
       onOpen: function () {
-        var widgetTitlebar = this.domNode.parentNode.parentNode.parentNode.childNodes[0];
-        if(typeof widgetTitlebar.onmousedown !== "function") {
-           this.own(on(widgetTitlebar, 'mousedown', lang.hitch(this, function(event) {
-            event.stopPropagation();
-            if(event.altKey){
-              var msgStr = this.nls.widgetverstr + ': ' + this.manifest.version;
-              msgStr += '\n' + this.nls.wabversionmsg + ': ' + this.manifest.wabVersion;
-              msgStr += '\n' + this.manifest.description;
-              new Message({
-                titleLabel: this.nls.widgetversion,
-                message: msgStr
-              });
-            }
-          })));
-        }
         if (this.lastMeasure && this.measureTool) {
           this.measureTool.measure(this.lastMeasure);
         }
@@ -338,26 +336,8 @@ define([
         });
       },
 
-      /**
-       * ON MEASURE-END EVENT
-       *
-       * @param evt
-       * @private
-       */
-      /*_onMeasureEnd: function (evt) {
-        if (evt.toolName === 'distance') {
-          this.tabContainer.selectTab(this.nls.resultslabel);
-          this.lastMeasure = evt.geometry;
-          this.displayProfileChart(evt.geometry);
-          // UPDATE THE CHART WHEN USER CHANGES UNITS //
-          aspect.after(this.measureTool.unit.dropDown, 'onItemClick', lang.hitch(this, this._updateProfileChart), true);
-        }
-      },*/
-
       _onMeasureEnd: function (evt) {
         if (evt.toolName === "distance") {
-          //Todo we should really list distance for both select and measure
-          console.log(number.format(evt.values) + " " + evt.unitName);
           this.tabContainer.selectTab(this.nls.resultslabel);
           this.lastMeasure = evt.geometry;
           this.displayProfileChart(evt.geometry);

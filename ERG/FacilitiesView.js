@@ -30,10 +30,6 @@ define([
     return dojoDeclare([_WidgetBase], {
 
         NonDisplayedFieldNames: ["SHAPE", "OBJECTID", "SHAPE_LENGTH", "SHAPE_AREA", "AREA_", "PERIMETER"],
-
-        postCreate: function() {
-            console.log("FacilitiesView - postCreate");
-        },
         checkFieldName: function(forFld) {
             var x = dojoArray.indexOf(this.NonDisplayedFieldNames, forFld.toUpperCase()) === -1;
             return x;
@@ -111,8 +107,6 @@ define([
             this.gLayer.getMap().setExtent(gExtent.getExtent());
         },
         buildRendering: function() {
-            console.log("FacilitiesView - buildRendering");
-
             var fAtt;
             var v;
             var flds;

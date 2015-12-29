@@ -83,7 +83,7 @@ define([
         //hack the 'Learn more about this widget link'
         setTimeout(function(){
           var helpLink = dojo.query('.help-link');
-          helpLink[0].href = 'http://gis.calhouncounty.org/WAB/V1.2/widgets/eBasemapGallery/help/eBasemapGallery_Help.htm';
+          helpLink[0].href = 'http://gis.calhouncounty.org/WAB/V1.3/widgets/eBasemapGallery/help/eBasemapGallery_Help.htm';
           html.setStyle(helpLink[0],'display','block');
         },600);
 

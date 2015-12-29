@@ -1,6 +1,6 @@
 ﻿define(
    ({
-    _widgetLabel: "Olay Analizi",
+    _widgetLabel: "Durum Farkındalığı (Beta)",
     locate_incident: "Olay Bul",
     clear_incidents: "Olayları Temizle",
     reverse_geocoded_address: "En yakın adres",
@@ -22,8 +22,26 @@
     SAT: "CTS",
     defaultTabMsg: "Tanımlanan olay yok.",
     actionLabel: "Olay Olarak Ayarla",
+    drawPoint: "Nokta Çiz",
+    drawLine: "Çizgi Çiz",
+    drawPolygon: "Alan Çiz",
+    saveIncident: "Olayı Kaydet",
+    clearIncident: "Olayı Temizle",
     useMapExtent: "Geçerli harita yayılımını kullan",
     noFeaturesFound: "Detay bulunamadı.",
-    downloadCSV: "CSV İNDİR"
+    downloadCSV: "CSV İNDİR",
+    editComplete: "Detay başarıyla kaydedildi!",
+    updateComplete: "Detay başarıyla güncellendi!",
+    deleteComplete: "Detay başarıyla silindi!",
+    sum: "TOP",
+    min: "MIN",
+    max: "MAKS",
+    avg: "ORT",
+    count: "SAYIM",
+    area: "ALAN",
+    length: "UZUNLUK",
+    notPolySave: "Kaydetmeden önce bir tampon mesafesi belirtin.",
+    update_btn: "Güncelle",
+    delete_btn: "Sil"
   })
 );

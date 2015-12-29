@@ -8,11 +8,12 @@
                     <tr>
                         <td>
                             <div data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="txtURL"
-                                data-dojo-props='required:true,trim:true,disabled:true'>
+                                data-dojo-props='required:true,trim:true,disabled:true' title="${nls.taskUrl}">
                             </div>
                         </td>
                         <td>
-                            <div data-dojo-attach-event="onclick:_onChooseTaskClicked" id="validateUrl" class="jimu-btn jimu-float-trailing esriSetButton">
+                            <div data-dojo-attach-event="onclick:_onChooseTaskClicked" id="validateUrl" class="jimu-btn jimu-float-trailing esriSetButton"
+                                title="${nls.validate}">
                                 ${nls.validate}</div>
                         </td>
                     </tr>

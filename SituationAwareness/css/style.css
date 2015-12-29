@@ -1,4 +1,4 @@
-.jimu-widget-IMT {
+.jimu-widget-SAT {
   color: #ffffff !important;
   background-color: #4c4c4c;
   left: 0px !important;
@@ -10,29 +10,29 @@
 }
 /* Classes */
 
-.jimu-widget-IMT .rounded {
+.jimu-widget-SAT .rounded {
   -moz-border-radius: 5px 5px 5px 5px;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
 }
 
-.jimu-widget-IMT .roundedL {
+.jimu-widget-SAT .roundedL {
   -moz-border-radius: 5px 0px 0px 5px;
   -webkit-border-radius: 5px 0px 0px 5px;
   border-radius: 5px 0px 0px 5px;
 }
 
-.jimu-widget-IMT .roundedR {
+.jimu-widget-SAT .roundedR {
   -moz-border-radius: 0px 5px 5px 0px;
   -webkit-border-radius: 0px 5px 5px 0px;
   border-radius: 0px 5px 5px 0px;
 }
 /* Start ST */
 
-.jimu-widget-IMT .panelBottom {
+.jimu-widget-SAT .panelBottom {
   position: absolute;
   width: 100%;
-  height: 140px; 
+  height: 140px;
   left: 0px;
   top: 0px;
   text-align: center;
@@ -40,7 +40,7 @@
   padding: 0px;
 }
 
-.jimu-widget-IMT #panelMessage {
+.jimu-widget-SAT #SA_panelMessage {
   position: absolute;
   top: 0px;
   text-align: center;
@@ -50,7 +50,7 @@
   display: none;
 }
 
-.jimu-widget-IMT #panelFooter {
+.jimu-widget-SAT #SA_panelFooter {
   position: absolute;
   bottom: 0px;
   left: 0px;
@@ -64,23 +64,23 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-.jimu-widget-IMT #panelFooterContent {
+.jimu-widget-SAT #SA_panelFooterContent {
   position: absolute;
   left: 0px;
   right: 24px;
-  height: 90px; 
+  height: 90px;
   overflow-x: auto;
   overflow-y: hidden;
   display: block;
 }
 
-.jimu-rtl .jimu-widget-IMT #panelFooterContent {
+.jimu-rtl .jimu-widget-SAT #SA_panelFooterContent {
   position: absolute;
   left: 24px;
   right: 0px;
 }
 
-.jimu-widget-IMT #panelClose {
+.jimu-widget-SAT #SA_panelClose {
   position: absolute;
   left: auto;
   right: 0px;
@@ -96,21 +96,21 @@
   background-size: 18px;
 }
 
-.jimu-rtl .jimu-widget-IMT #panelClose {
+.jimu-rtl .jimu-widget-SAT #SA_panelClose {
   position: absolute;
   left: 0px;
   right: auto;
 }
 
-.jimu-widget-IMT .panelContainer {
+.jimu-widget-SAT .panelContainer {
   position: absolute;
   width: 100%;
-  height: 100px; 
+  height: 100px;
   overflow: hidden;
   display: block;
 }
 
-.jimu-widget-IMT .IMT_tabPanel {
+.jimu-widget-SAT .SAT_tabPanel {
   position: absolute;
   top: 10px;
   left: 0px;
@@ -121,7 +121,7 @@
   overflow-y: hidden !important;
 }
 
-.jimu-widget-IMT .IMT_tabPanelContent {
+.jimu-widget-SAT .SAT_tabPanelContent {
   position: absolute;
   top: 0px;
   width: auto;
@@ -133,7 +133,7 @@
 }
 /* TABS */
 
-.jimu-widget-IMT #IMT_tabs {
+.jimu-widget-SAT #SA_SAT_tabs {
   position: absolute;
   white-space: nowrap;
   height: 40px;
@@ -142,7 +142,7 @@
   overflow-y: hidden;
 }
 
-.jimu-widget-IMT .IMTTab {
+.jimu-widget-SAT .SATTab {
   width: auto;
   max-width: 220px;
   overflow: hidden;
@@ -158,11 +158,11 @@
   cursor: pointer;
 }
 
-.jimu-rtl .jimu-widget-IMT .IMTTab {
+.jimu-rtl .jimu-widget-SAT .SATTab {
   float: right;
 }
 
-.jimu-widget-IMT .active {
+.jimu-widget-SAT .active {
   color: #ffffff;
   background-color: #353535;
   background-color: rgba(0, 0, 0, 0.3);
@@ -172,7 +172,7 @@
 }
 /* INCIDENTS */
 
-.jimu-widget-IMT .IMTcol {
+.jimu-widget-SAT .SATcol {
   float: left;
   height: 80px;
   width: 220px;
@@ -184,8 +184,7 @@
   overflow: hidden;
 }
 
-/*jh added*/
-.jimu-widget-IMT .IMTcolSave {
+.jimu-widget-SAT .SATcolSave {
   float: left;
   height: 80px;
   width: 220px;
@@ -193,26 +192,18 @@
   border-right: 1px solid #ffffff;
   border-right: 1px solid rgba(255, 255, 255, 0.5);
   margin-left: 0;
-  padding: 0 5px; 
+  padding: 0 5px;
   overflow: hidden;
 }
 
-.jimu-rtl .jimu-widget-IMT .IMTcol {
+.jimu-rtl .jimu-widget-SAT .SATcol {
   float: right;
   border-left: 1px solid #ffffff;
   border-left: 1px solid rgba(255, 255, 255, 0.5);
   border-right: none;
 }
 
-/*jh added*/
-/*.jimu-rtl .jimu-widget-IMT .IMTcolSave {
-  float: right;
-  border-left: 1px solid #ffffff;
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  border-right: none;
-}*/
-
-.jimu-widget-IMT .IMTcolSmall {
+.jimu-widget-SAT .SATcolSmall {
   float: left;
   height: 80px;
   width: 165px;
@@ -222,38 +213,44 @@
   margin-left: 0;
   padding: 0 20px;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.jimu-rtl .jimu-widget-IMT .IMTcolSmall {
+.jimu-rtl .jimu-widget-SAT .SATcolSmall {
   float: right;
   border-left: 1px solid #ffffff;
   border-left: 1px solid rgba(255, 255, 255, 0.5);
   border-right: none;
 }
 
-.jimu-widget-IMT .IMTcol .label,
-.jimu-widget-IMT .IMTcolSmall .label {
+.jimu-widget-SAT .SATcolLast {
+  border-left: none;
+  border-right: none;
+}
+
+.jimu-widget-SAT .SATcol .label,
+.jimu-widget-SAT .SATcolSmall .label {
   font-size: 13px;
   padding: 2px 0;
 }
 
-.jimu-widget-IMT .IMTcol .colBar {
+.jimu-widget-SAT .SATcol .colBar {
   position: relative;
   /*text-align: left;*/
-  
+
   height: 32px;
   display: block;
 }
 
-.jimu-widget-IMT .IMTcolSave .colBar {
+.jimu-widget-SAT .SATcolSave .colBar {
   position: relative;
   /*text-align: left;*/
-  
+
   height: 69px;
   display: block;
 }
 
-.jimu-widget-IMT .btn32 {
+.jimu-widget-SAT .btn32 {
   float: left;
   width: 32px;
   height: 32px;
@@ -267,8 +264,7 @@
   cursor: pointer;
 }
 
-/*jh added*/
-.jimu-widget-IMT .btn32Save {
+.jimu-widget-SAT .btn32Save {
   float: left;
   width: 32px;
   height: 32px;
@@ -278,81 +274,78 @@
   background-color: rgba(0, 0, 0, 0.25);
   border-radius: 2px;
   display: block;
-  margin-right: 4px;
+  margin-right: 6px;
   cursor: pointer;
 }
 
-.jimu-rtl .jimu-widget-IMT .btn32 {
-  float: right;
-}
-
-/*jh added*/
-.jimu-rtl .jimu-widget-IMT .btn32Save {
-  float: right;
-}
-
-/*jh added*/
-.jimu-widget-IMT .btn32SaveDisabled {
-  cursor:default; 
-  background-color: #C0C0C0;
-
+.jimu-widget-SAT .btn32SaveDisabled {
   float: left;
   width: 32px;
   height: 32px;
   padding: 0;
-  color: #ffffff;
+  color: #999999;
+  background-color: #999999;
   border-radius: 2px;
   display: block;
-  margin-right: 4px;
+  margin-right: 6px;
+  cursor:default;
 }
 
-.jimu-widget-IMT .btn32:hover {
+.jimu-rtl .jimu-widget-SAT .btn32 {
+  float: right;
+}
+
+.jimu-rtl .jimu-widget-SAT .btn32Save {
+  float: right;
+}
+
+.jimu-widget-SAT .btn32:hover {
   background-color: #262626;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.jimu-widget-IMT .btn32Save:hover {
+.jimu-widget-SAT .btn32Save:hover {
   background-color: #262626;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.jimu-widget-IMT .btnOn {
+.jimu-widget-SAT .btnOn {
   border: 1px solid #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.75);
   background-color: #262626;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.jimu-widget-IMT .btn32 img {
+.jimu-widget-SAT .btn32 img {
   padding: 8px;
 }
 
-.jimu-widget-IMT .btn32Save img {
+.jimu-widget-SAT .btn32Save img {
   padding: 8px;
 }
 
-.jimu-widget-IMT .btn32SaveDisabled img {
+.jimu-widget-SAT .btn32SaveDisabled img {
   padding: 8px;
 }
 
-.jimu-widget-IMT .btnClear {
+.jimu-widget-SAT .btnClear {
   background-color: #bb0000;
   margin-left: 16px;
 }
 
-.jimu-rtl .jimu-widget-IMT .btnClear {
+.jimu-rtl .jimu-widget-SAT .btnClear {
   margin-right: 16px;
   margin-left: 0;
 }
 
-.jimu-widget-IMT .btnClear:hover {
+.jimu-widget-SAT .btnClear:hover {
   background-color: #ff0000;
 }
 
-.jimu-widget-IMT .dijitTextBox,
-.jimu-widget-IMT .dijitTextBoxHover,
-.jimu-widget-IMT .dijitTextBoxFocused,
-.jimu-widget-IMT .dijitTextBoxHoverFocused {
+.jimu-widget-SAT .dijitTextBox,
+.jimu-widget-SAT .dijitTextBoxHover,
+.jimu-widget-SAT .dijitTextBoxFocused,
+.jimu-widget-SAT .dijitTextBoxHoverFocused {
   background-color: #393939;
   background-color: rgba(0, 0, 0, 0.25) !important;
   color: #ffffff !important;
@@ -362,20 +355,20 @@
   line-height: 26px !important;
 }
 
-.jimu-widget-IMT .dijitTextBoxFocused,
-.jimu-widget-IMT .dijitInputInner,
-.jimu-widget-IMT .dijitInputContainer {
+.jimu-widget-SAT .dijitTextBoxFocused,
+.jimu-widget-SAT .dijitInputInner,
+.jimu-widget-SAT .dijitInputContainer {
   background: transparent !important;
   color: #ffffff !important;
   height: 26px !important;
   line-height: 26px !important;
 }
 
-.jimu-widget-IMT .dijitInputField {
+.jimu-widget-SAT .dijitInputField {
   padding: 0px 10px !important;
 }
 
-.jimu-widget-IMT .btnExport {
+.jimu-widget-SAT .btnExport {
   background-color: #393939;
   background-color: rgba(0, 0, 0, 0.25);
   border-radius: 2px;
@@ -386,26 +379,31 @@
   cursor: pointer;
 }
 
-.jimu-widget-IMT .btnExport:hover {
+.jimu-widget-SAT .btnExport:hover {
   background-color: #262626;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.jimu-widget-IMT .download {
+.jimu-widget-SAT .download {
   background-image: url('images/download.png');
   background-repeat: no-repeat;
-  background-position: right 0px center;  
+  background-position: right 0px center;
 }
 
-.jimu-widget-IMT .processing {
+.jimu-widget-SAT .processing {
   background-image: url('images/processing.gif');
   background-repeat: no-repeat;
-  background-position: right 10px center;  
+  background-position: right 10px center;
 }
 
+.jimu-widget-SAT .loading {
+  background-image: url('images/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
 /* SUMMARY */
 
-.jimu-widget-IMT .colSummary {
+.jimu-widget-SAT .colSummary {
   height: 36px;
   line-height: 36px;
   font-size: 28px;
@@ -413,7 +411,7 @@
 }
 /* REC */
 
-.jimu-widget-IMT .IMTcolRec {
+.jimu-widget-SAT .SATcolRec {
   float: left;
   height: 80px;
   width: 220px;
@@ -427,7 +425,7 @@
   text-overflow: ellipsis;
 }
 
-.jimu-rtl .jimu-widget-IMT .IMTcolRec {
+.jimu-rtl .jimu-widget-SAT .SATcolRec {
   float: right;
   border-left: 1px solid #ffffff;
   border-left: 1px solid rgba(255, 255, 255, 0.5);
@@ -435,14 +433,14 @@
   text-align: right;
 }
 
-.jimu-widget-IMT .IMTcolRecBar {
+.jimu-widget-SAT .SATcolRecBar {
   position: relative;
   height: 26px;
   width: 100%;
   display: block;
 }
 
-.jimu-widget-IMT .IMTcolRecNum {
+.jimu-widget-SAT .SATcolRecNum {
   position: absolute;
   width: 26px;
   height: 26px;
@@ -455,7 +453,7 @@
   cursor: pointer;
 }
 
-.jimu-widget-IMT .IMTcolDir {
+.jimu-widget-SAT .SATcolDir {
   position: absolute;
   right: 0px;
   width: 26px;
@@ -466,13 +464,13 @@
   cursor: pointer;
 }
 
-.jimu-rtl .jimu-widget-IMT .IMTcolDir {
+.jimu-rtl .jimu-widget-SAT .SATcolDir {
   position: absolute;
   left: 0px;
   right: auto;
 }
 
-.jimu-widget-IMT .IMTcolDistance {
+.jimu-widget-SAT .SATcolDistance {
   position: absolute;
   left: 30px;
   right: 30px;
@@ -481,7 +479,7 @@
   line-height: 26px;
 }
 
-.jimu-widget-IMT .IMTcolInfo {
+.jimu-widget-SAT .SATcolInfo {
   position: relative;
   margin-top: 10px;
   height: 64px;
@@ -627,17 +625,17 @@
   border: 0 none;
 }
 
-.IMT_tabPanel::-webkit-scrollbar {
+.SAT_tabPanel::-webkit-scrollbar {
   width: 6px;
   height: 6px;
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.IMT_tabPanel::-webkit-scrollbar-thumb {
+.SAT_tabPanel::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.IMT_tabPanel {
+.SAT_tabPanel {
   scrollbar-base-color: #4c4c4c;
   scrollbar-3dlight-color: #4c4c4c;
   scrollbar-highlight-color: #4c4c4c;
@@ -647,3 +645,58 @@
   scrollbar-dark-shadow-color: #4c4c4c;
   scrollbar-face-color: #2e2e2e;
 }
+
+
+/*********about attributeInspector**********/
+
+
+.esriAttributeInspector .atiRichTextField{ 
+
+}
+
+.esriAttributeInspector div.dijitEditorIFrameContainer {
+  height: 78px;
+  width: 100%;
+}
+
+.esriAttributeInspector .dijitTextBox.dijitTextArea {
+  height: 32px;
+}
+
+.esriAttributeInspector .atiButton {
+     background-repeat: no-repeat;
+     height:30px;
+     width:60px;
+     background-image:none;
+     padding:2px;
+}
+
+.esriAttributeInspector .atiButtons {
+     height:30px;
+     width:100%;
+     display:inline-block;
+     width:100%;
+}
+
+.esriAttributeInspector {
+    display:inline-block;
+}
+
+  .esriAttributeInspector .dijitArrowButtonContainer {
+    margin-top:0px;
+    margin-right:0px;
+    margin-bottom:0px;
+    width:18px;
+  }
+
+.esriAttributeInspector .atiNavButtons {
+    display:none;
+    visibility:hidden;
+    height: 0px;
+}
+
+.esriPopup .spinner {
+    display: none;
+}
+
+/*********end attributeInspector**********/

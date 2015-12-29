@@ -1,4 +1,4 @@
-.jimu-widget-IMT-setting .btn-add-section {
+.jimu-widget-SAT-setting .btn-add-section {
   display: inline-block;
   overflow: hidden;
   height: 24px;
@@ -10,22 +10,23 @@
   margin-top: 8px;
 }
 
-.jimu-widget-IMT-setting .btn-add-section .btn-add-icon {
-  float: left;
+.jimu-widget-SAT-setting .btn-add-section .btn-add-icon {
   height: 100%;
   width: 14px;
   background-repeat: no-repeat;
   background-position: center center;
   background-image: url(images/add.png);
+  display: inline-block;
+  vertical-align: top;
 }
 
-.jimu-widget-IMT-setting .btn-add-section .btn-add-label {
-  float: left;
+.jimu-widget-SAT-setting .btn-add-section .btn-add-label {
   height: 100%;
   line-height: 24px;
-  vertical-align: middle;
   margin-left: 7px;
   text-decoration: underline;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .claro .dojoxCheckedMultiSelect .dojoxCheckedMultiSelectWrapper {
@@ -88,32 +89,19 @@
   padding-top: 5px;
 }
 
-.jimu-widget-IMT-setting .display-options{
+.dijitSelectLabel {
+    text-align:left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width:300px;
+}
+
+.jimu-widget-SAT-setting .display-options{
   display: inline-block;
   margin-right: 30px;
   vertical-align: middle;
 }
 
-/*jh for TemplatePicker*/
-            /*.itemSymbol {
-                float: left;
-                left: 0;
-                width: 40px;
-            }
-            .itemLabel {
-                color: blue;
-                width: auto;
-                left: 50px;
-                text-align: left;
-            }
-            .dojoxGridRowTable {
-                table-layout: auto;
-                width: 500px;
-                empty-cells: show;
-            }
-            .dojoxGridCell {
-                background-color: yellow;
-            }*/
 .template-picker-on{
     display: block;
 }

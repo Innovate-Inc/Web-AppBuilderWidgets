@@ -490,7 +490,8 @@ define([
             "title": paramName.displayName
           }, divFieldValue);
           outageAreaFieldNameDropDown = new Select({
-            "class": "esriCTOutageAreaFieldName"
+            "class": "esriCTOutageAreaFieldName",
+            "title": paramName.displayName
           }, domConstruct.create("input", {}, divFieldValue));
           domConstruct.create("div", {
             "class": "esriCTFieldMapPadding",

@@ -395,19 +395,32 @@ define([
     **/
     _onTraceButtonClick: function () {
       var resultMainDiv, i, tracePanelHeight,
-        inputBarrierTabContentHeight, loadingIconHeight;
-      style.set(this.loadingIcon, "height", "0px");
-      tracePanelHeight = style.get(this.tracePanel, "height");
-      inputBarrierTabContentHeight = style.get(this.InputBarrierTabContent,
-        "height");
-      loadingIconHeight = tracePanelHeight +
-        inputBarrierTabContentHeight + 35;
-      if (has("ie")) {
-        loadingIconHeight = loadingIconHeight + 40;
-      } else if (document && document.documentMode) {
-        loadingIconHeight = loadingIconHeight + 40;
+        inputBarrierTabContentHeight, loadingIconHeight, widgetPanel;
+      // if application is running on desktop browsers
+      if (!window.appInfo.isRunInMobile) {
+        style.set(this.loadingIcon, "height", "0px");
+        tracePanelHeight = style.get(this.tracePanel, "height");
+        inputBarrierTabContentHeight = style.get(this.InputBarrierTabContent,
+          "height");
+        loadingIconHeight = tracePanelHeight +
+          inputBarrierTabContentHeight + 35;
+        if (has("ie")) {
+          loadingIconHeight = loadingIconHeight + 40;
+        } else if (document && document.documentMode) {
+          loadingIconHeight = loadingIconHeight + 40;
+        }
+        loadingIconHeight = loadingIconHeight.toString() + "px";
+      } else {
+        // else in mobile do scroll top and show loading indicator
+        widgetPanel = query(".jimu-widget-frame.jimu-container")[0];
+        if (!widgetPanel) {
+          widgetPanel = query(".jimu-container")[0];
+        }
+        if (widgetPanel) {
+          loadingIconHeight = style.getComputedStyle(widgetPanel).height;
+          widgetPanel.scrollTop = 0;
+        }
       }
-      loadingIconHeight = loadingIconHeight.toString() + "px";
       style.set(this.loadingIcon, "height", loadingIconHeight);
       if (!domClass.contains(this.btnTrace, "jimu-state-disabled")) {
         this._outputResultArr = [];
@@ -452,6 +465,9 @@ define([
         this._displaySaveLayerPanel();
         this._overviewLayerSave();
         this._displayOutageAreaDetail();
+        if (this.btnSave) {
+          domClass.add(this.btnSave, "esriCTCentralisedSaveButton");
+        }
         // if selected theme is Dart Theme and browser is IE9
         if (this.appConfig.theme.name === "DartTheme" && has("ie") ===
           9) {
@@ -767,7 +783,7 @@ define([
       });
       //Save
       saveButton = domConstruct.create("div", {
-        "class": "jimu-btn",
+        "class": "jimu-btn esriCTCentralisedSaveButton",
         "innerHTML": this.nls.btnSaveExportToLayer
       }, btnExportToLayerDiv);
       this.own(on(saveButton, "click", lang.hitch(this, function () {
@@ -2152,7 +2168,8 @@ define([
       // (match[2] ? +match[2] : 0) --> Adjust for scientific notation.
       // To solve JSHint error(Operator - should be on a new line)
       // comments position is changed in above manner
-      return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? +match[2] : 0));
+      return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ?
+        +match[2] : 0));
     },
 
     /**

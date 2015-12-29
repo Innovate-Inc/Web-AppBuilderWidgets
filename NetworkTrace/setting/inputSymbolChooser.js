@@ -82,7 +82,8 @@ define([
           if (this.data.symbol) {
             objSymbol.symbol = jsonUtils.fromJson(this.data.symbol);
           } else {
-            objSymbol.type = utils.getSymbolTypeByGeometryType(this.data.defaultValue.geometryType);
+            objSymbol.type = utils.getSymbolTypeByGeometryType(this.data
+              .defaultValue.geometryType);
           }
         }
         this.symbolChooser = new SymbolChooser(objSymbol,

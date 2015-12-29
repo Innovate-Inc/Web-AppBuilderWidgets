@@ -1,6 +1,6 @@
 ﻿define(
    ({
-    _widgetLabel: "Hendelsesanalyse",
+    _widgetLabel: "Situasjonsbevissthet (betaversjon)",
     locate_incident: "Lokaliser hendelsen",
     clear_incidents: "Fjern hendelser",
     reverse_geocoded_address: "Nærmeste adresse",
@@ -22,8 +22,26 @@
     SAT: "LØR",
     defaultTabMsg: "Ingen hendelser identifisert.",
     actionLabel: "Angi som hendelse",
+    drawPoint: "Tegn punkt",
+    drawLine: "Tegn linje",
+    drawPolygon: "Tegn polygon",
+    saveIncident: "Lagre hendelse",
+    clearIncident: "Fjern hendelse",
     useMapExtent: "Bruk gjeldende kartutstrekning",
     noFeaturesFound: "Fant ingen geoobjekter.",
-    downloadCSV: "LAST NED CSV"
+    downloadCSV: "LAST NED CSV",
+    editComplete: "Geoobjektet er lagret.",
+    updateComplete: "Geoobjektet er oppdatert.",
+    deleteComplete: "Geoobjektet er slettet.",
+    sum: "SUM",
+    min: "MIN.",
+    max: "MAKS.",
+    avg: "GJ.SN.",
+    count: "ANTALL",
+    area: "OMRÅDE",
+    length: "LENGDE",
+    notPolySave: "Angi en bufferavstand før du lagrer.",
+    update_btn: "Oppdatere",
+    delete_btn: "Slett"
   })
 );

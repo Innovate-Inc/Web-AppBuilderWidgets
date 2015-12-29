@@ -27,7 +27,7 @@ define([
     'dijit/form/ValidationTextBox',
     'dijit/_WidgetsInTemplateMixin',
     './FeaturelayerSource',
-    './FieldStatPicker',
+    './FieldPicker',
     'jimu/BaseWidgetSetting',
     'jimu/dijit/Message',
     'jimu/dijit/Popup',
@@ -36,39 +36,38 @@ define([
     'dojo/dom-class',
     'jimu/dijit/SimpleTable',
     'jimu/dijit/RadioBtn'
-  ],
+],
   function(
     declare, array, lang, html, domStyle, domConstruct, on, query,
     Select, ValidationTextBox, _WidgetsInTemplateMixin,
-    FeaturelayerSource, FieldStatPicker, BaseWidgetSetting, Message, Popup, LayerInfos, TemplatePicker, domClass
+    FeaturelayerSource, FieldPicker, BaseWidgetSetting, Message, Popup,
+    LayerInfos, TemplatePicker, domClass
   ) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
 
       //these two properties is defined in the BaseWidget
-      baseClass: 'jimu-widget-IMT-setting',
+      baseClass: 'jimu-widget-SAT-setting',
 
       //solutions: added to hold array of field operations for each summary layer
-      summaryFields: [],
+      //summaryFields: [],
       opLayers: [],
-      tempStats: null,
+      curRow: null,
 
       postCreate: function() {
         this.inherited(arguments);
-        //this._setLayers();
+        // this._setLayers();
+        // this._setTypes();
         this._getAllLayers();
-        //this._setTypes();
         this.own(on(this.btnAddTab, 'click', lang.hitch(this, this._addTabRow)));
-        this.own(on(this.tabTable, 'row-delete', lang.hitch(this, function(tr) {
-          if (tr.select) {
-            tr.select.destroy();
-            delete tr.select;
-          }
-        })));
-        //solutions: added edit option to define advanced summary types
+        // this.own(on(this.tabTable, 'row-delete', lang.hitch(this, function(tr) {
+        //   if (tr.select) {
+        //     tr.select.destroy();
+        //     delete tr.select;
+        //   }
+        // })));
         this.own(on(this.tabTable, 'actions-edit', lang.hitch(this, function(tr) {
-          this.popUpPrep(tr);
+          this._onEditLayerClicked(tr);
         })));
-
       },
 
       startup: function() {
@@ -101,11 +100,11 @@ define([
           } else {
             this._populateTabTableRow(aTab);
             //solutions: added to see if advanced stats exist. if it does, add it to summary fields
-            if(typeof(aTab.advStat) !== 'undefined') {
-              var temp = [];
-              temp.push({name:aTab.layers, stats:aTab.advStat.stats, url:aTab.advStat.url, statTypes:aTab.advStat.text});
-              this.summaryFields.push(temp);
-            }
+            // if(typeof(aTab.advStat) !== 'undefined') {
+            //   var temp = [];
+            //   temp.push({name:aTab.layers, stats:aTab.advStat.stats, url:aTab.advStat.url, statTypes:aTab.advStat.text});
+            //   this.summaryFields.push(temp);
+            // }
           }
         }
 
@@ -116,56 +115,57 @@ define([
         this.buffer_min.set("value", this.config.bufferRange.minimum);
 
         ////////////////////////////////////////////////////////////////
-          //solutions: added to support save and display
-        if (this.save_layer_options.length > 0) {
+        //solutions: added to support save and display
+        if (typeof (this.save_layer_options) !== 'undefined') {
+          if (this.save_layer_options.length > 0) {
             this.selectSaveLayer.on("change", lang.hitch(this, function () {
-                if (this.chk_save.checked) {
-                    var l = this.opLayers.getLayerInfoById(this.selectSaveLayer.value).layerObject;
-                    this._updateTemplatePicker(l);
-                }
+              if (this.chk_save.checked) {
+                var l = this.opLayers.getLayerInfoById(this.selectSaveLayer.value).layerObject;
+                this._updateTemplatePicker(l);
+              }
             }));
 
             this.chk_save.onChange = lang.hitch(this, function (val) {
-                if (this.selectSaveLayer) {
-                    if (val === true) {
-                        this.selectSaveLayer.set("disabled", '');
-                        var l = this.opLayers.getLayerInfoById(this.selectSaveLayer.value).layerObject;
-                        this._updateTemplatePicker(l);       
-                    }
-                    else {
-                        this.selectSaveLayer.set("disabled", 'disabled');
-                        if (this.tpd.children.length > 0) {
-                            if (this.templatePicker) {
-                                this.templatePicker.destroy();
-                                this.selectedTemplateIndex = -1;
-                                this.selectedTemplate = null;
-                            }
-                        }
-                    }
+              if (this.selectSaveLayer) {
+                if (val === true) {
+                  this.selectSaveLayer.set("disabled", '');
+                  var l = this.opLayers.getLayerInfoById(this.selectSaveLayer.value).layerObject;
+                  this._updateTemplatePicker(l);
                 }
+                else {
+                  this.selectSaveLayer.set("disabled", 'disabled');
+                  if (this.tpd.children.length > 0) {
+                    if (this.templatePicker) {
+                      this.templatePicker.destroy();
+                      this.selectedTemplateIndex = -1;
+                      this.selectedTemplate = null;
+                    }
+                  }
+                }
+              }
             });
 
             this.chk_save.set("checked", this.config.saveEnabled);
             this.selectSaveLayer.addOption(this.save_layer_options);
             this.selectSaveLayer.set("value", this.config.editLayer);
             if (this.config.saveEnabled && this.config.editTemplate) {
-                this.selectedTemplate = this.config.editTemplate;
-                if (typeof(this.config.selectedTemplateIndex) !== 'undefined') {
-                    this.selectedTemplateIndex = this.config.selectedTemplateIndex;
-                }
+              this.selectedTemplate = this.config.editTemplate;
+              if (typeof(this.config.selectedTemplateIndex) !== 'undefined') {
+                this.selectedTemplateIndex = this.config.selectedTemplateIndex;
+              }
             }
+          }
         } else {
-            this.chk_save.set("disabled", 'disabled');
+          this.chk_save.set("disabled", 'disabled');
         }
 
+        this.chk_csv.set("checked", this.config.csvAllFields);
         this.chk_display.set("checked", this.config.summaryDisplayEnabled);
-
-        this.tempStats = null;
         ////////////////////////////////////////////////////////////////
       },
 
       getConfig: function() {
-        this.tempStats = null;
+
         this.config.distanceUnits = this.selectUnits.value;
 
         if (this.txt_maximumDistance.value) {
@@ -190,28 +190,30 @@ define([
         }
 
         //solutions: added to check fields then append to the tab struct object.
-        this.updateSummaryFields();
+        //this.updateSummaryFields();
 
         var trs = this.tabTable.getRows();
         array.forEach(trs, lang.hitch(this, function(tr) {
           var selectLayers = tr.selectLayers;
           var selectTypes = tr.selectTypes;
           var labelText = tr.labelText;
-          var statTypes = tr.cells[4].innerText;
           aTab = {};
           aTab.label = labelText.value;
           aTab.type = selectTypes.value;
           aTab.layers = selectLayers.value;
-            //solutions: extending the structure to add the advance stats details
-            //jh: added the statTypes check so we can distinguish one row from the next if we have multiple summary layer instances for a single layer name
-          array.forEach(this.summaryFields, lang.hitch(this, function (fieldsItem) {
-              if (fieldsItem[0].name === selectLayers.value && selectTypes.value === 'summary' && Object.keys(fieldsItem[0].stats).join(", ") === statTypes) {
-              aTab.advStat = {};
-              aTab.advStat.url = fieldsItem[0].url;
-              aTab.advStat.stats = fieldsItem[0].stats;
-              aTab.advStat.text = statTypes;
-            }
-          }));
+          if(tr.tabInfo && tr.tabInfo.advStat) {
+            aTab.advStat = tr.tabInfo.advStat;
+          }
+          //solutions: extending the structure to add the advance stats details
+          //jh: added the statTypes check so we can distinguish one row from the next if we have multiple summary layer instances for a single layer name
+          //array.forEach(this.summaryFields, lang.hitch(this, function (fieldsItem) {
+          //   if (fieldsItem[0].name === selectLayers.value && selectTypes.value === 'summary' && Object.keys(fieldsItem[0].stats).join(", ") === statTypes) {
+          //     aTab.advStat = {};
+          //     aTab.advStat.url = fieldsItem[0].url;
+          //     aTab.advStat.stats = fieldsItem[0].stats;
+          //   aTab.advStat.text = statTypes;
+          //   }
+          // }));
           tabs.push(aTab);
         }));
 
@@ -220,27 +222,25 @@ define([
         this.config.bufferRange.maximum = this.buffer_max.value;
         this.config.bufferRange.minimum = this.buffer_min.value;
 
-        //////////////////////////////////////////////////////////////
-        //solutions: added to support save and display
         if (this.chk_save.checked) {
-            if (!this.selectedTemplate) {
-                new Message({
-                    message: this.nls.mustSelectTemplate
-                });
-            }
-            else {
-                this.config.editTemplate = this.selectedTemplate;
-                this.config.editLayer = this.selectSaveLayer.value;
-                this.config.selectedTemplateIndex = this.selectedTemplateIndex;
-            }
+          if (!this.selectedTemplate) {
+            new Message({
+              message: this.nls.mustSelectTemplate
+            });
+          }
+          else {
+            this.config.editTemplate = this.selectedTemplate;
+            this.config.editLayer = this.selectSaveLayer.value;
+            this.config.selectedTemplateIndex = this.selectedTemplateIndex;
+          }
         } else {
-            this.config.editTemplate = null;
-            this.config.selectedTemplateIndex = null;
+          this.config.editTemplate = null;
+          this.config.selectedTemplateIndex = null;
         }
-        
+
         this.config.saveEnabled = this.chk_save.checked;
+        this.config.csvAllFields = this.chk_csv.checked;
         this.config.summaryDisplayEnabled = this.chk_display.checked;
-        //////////////////////////////////////////////////////////////
 
         return this.config;
       },
@@ -249,7 +249,6 @@ define([
         if (this.map.itemId) {
           LayerInfos.getInstance(this.map, this.map.itemInfo)
             .then(lang.hitch(this, function(operLayerInfos) {
-              //console.log(operLayerInfos);
               this.opLayers = operLayerInfos;
               this._setLayers();
               this._setTypes();
@@ -259,9 +258,9 @@ define([
       },
 
       _setLayers: function() {
-          var options = [];
-          var saveOptions = [];
-        array.forEach(this.opLayers._layerinfos, lang.hitch(this, function(OpLyr) {
+        var options = [];
+        var saveOptions = [];
+        array.forEach(this.opLayers._layerInfos, lang.hitch(this, function(OpLyr) {
           if(OpLyr.newSubLayers.length > 0) {
             this._recurseOpLayers(OpLyr.newSubLayers, options, saveOptions);
           } else {
@@ -272,15 +271,15 @@ define([
 
             //solutions: added to only show editable poygon layers
             if (OpLyr.layerObject) {
-                var lo = OpLyr.layerObject;
-                //TODO: Check if strings like Create and Update need to be in NLS.
-                if (lo.geometryType === 'esriGeometryPolygon' && (lo.capabilities.indexOf("Edit") > 0 || lo.capabilities.indexOf("Create") > 0)) {
-                    saveOptions.push({
-                        label: OpLyr.title,
-                        value: OpLyr.id,
-                        selected: false
-                    });
-                }    
+              var lo = OpLyr.layerObject;
+              //TODO: Check if strings like Create and Edit need to be in NLS.
+              if (lo.geometryType === 'esriGeometryPolygon' && (lo.capabilities.indexOf("Edit") > 0 || lo.capabilities.indexOf("Create") > 0)) {
+                saveOptions.push({
+                  label: OpLyr.title,
+                  value: OpLyr.id,
+                  selected: false
+                });
+              }
             }
           }
         }));
@@ -297,7 +296,7 @@ define([
         this.save_layer_options = lang.clone(saveOptions);
       },
 
-      _recurseOpLayers: function (pNode, pOptions, pSaveOptions) {
+      _recurseOpLayers: function(pNode, pOptions, pSaveOptions) {
         var nodeGrp = pNode;
         array.forEach(nodeGrp, lang.hitch(this, function(Node) {
           if(Node.newSubLayers.length > 0) {
@@ -310,20 +309,14 @@ define([
 
             //solutions: added to only show editable poygon layers
             if (Node.layerObject) {
-                var lo = Node.layerObject;
-                if (lo.geometryType === 'esriGeometryPolygon' && (lo.capabilities.indexOf("Edit") > 0 || lo.capabilities.indexOf("Create") > 0)) {
-                    //TODO should I be adding to pOptions?? if so why did I keep pSaveOptions around...??
-                    //pOptions.push({
-                    //    label: Node.title,
-                    //    value: Node.id,
-                    //    selected: false
-                    //});
-                    pSaveOptions.push({
-                        label: Node.title,
-                        value: Node.id,
-                        selected: false
-                    });
-                }
+              var lo = Node.layerObject;
+              if (lo.geometryType === 'esriGeometryPolygon' && (lo.capabilities.indexOf("Edit") > 0 || lo.capabilities.indexOf("Create") > 0)) {
+                pSaveOptions.push({
+                  label: Node.title,
+                  value: Node.id,
+                  selected: false
+                });
+              }
             }
           }
         }));
@@ -352,11 +345,7 @@ define([
           tr.selectLayers.set("value", tabInfo.layers);
           tr.selectTypes.set("value", tabInfo.type);
           tr.labelText.set("value", tabInfo.label);
-          if (typeof(tabInfo.advStat) !== 'undefined') {
-            if(typeof(tabInfo.advStat.text) !== 'undefined'){
-              tr.cells[4].innerText = tabInfo.advStat.text;
-            }
-          }
+          tr.tabInfo = tabInfo;
         }
       },
 
@@ -420,115 +409,31 @@ define([
         tr.labelText = labelTextBox;
       },
 
-      //solutions: added to reuse the function _onBtnSelectLayersClicked with pass in parameters
-      popUpPrep: function(pParam) {
-        if(typeof(pParam.selectTypes) !== 'undefined') {
-          if(pParam.selectTypes.value === "summary") {
-            var parameters = pParam.selectLayers;
-            for (var i = 0; i < this.config.tabs.length; i++) {
-              var aTab = this.config.tabs[i];
-              var statText = pParam.cells[4].innerText;
-              var hasStatText = pParam.cells[4].innerText !== "";
-              if (aTab.type === pParam.selectTypes.value && aTab.layers === pParam.selectLayers.value) {
-                  var hasStats = typeof(aTab.advStat) !== 'undefined';
-                  if(hasStats && !hasStatText){
-                      hasStatText = aTab.advStat.text !== "";
-                  }
-
-                  if (hasStatText && hasStats) {
-                      if (Object.keys(aTab.advStat.stats).join(", ") === statText) {
-                          parameters = aTab;
-                          break;
-                      }
-                      
-                  }else if (!hasStatText) {
-                      parameters = aTab;
-                      break;
-                  }
-              }
-            }
-            if (this.tempStats) {
-                for (var i = 0; i < this.tempStats.length; i++) {
-                    var aTab = this.tempStats[i];
-                    var statText = pParam.cells[4].innerText;
-                    var hasStatText = pParam.cells[4].innerText !== "";
-                    if (aTab.type === pParam.selectTypes.value && aTab.layers === pParam.selectLayers.value) {
-                        var hasStats = typeof (aTab.advStat) !== 'undefined';
-                        if (hasStats && !hasStatText) {
-                            hasStatText = aTab.advStat.text !== "";
-                        }
-
-                        if (hasStatText && hasStats) {
-                            if (Object.keys(aTab.advStat.stats).join(", ") === statText) {
-                                parameters = aTab;
-                                break;
-                            }
-
-                        } else if (!hasStatText) {
-                            parameters = aTab;
-                            break;
-                        }
-                    }
-                }
-            }
-            this._onBtnSelectLayersClicked({
-              action:"summary",
-              name:pParam.selectLayers.value,
-              data: parameters,
-              row: pParam
-            });
-          } else {
-            new Message({
-              message: this.nls.notSummaryType
-            });
-          }
-        }else if (typeof(pParam.action) !== 'undefined') {
-            this._onBtnSelectLayersClicked(pParam);
-        }
-        else {
-          this._onBtnSelectLayersClicked({action:"weather"});
-        }
-      },
-
-      //solutions: added some conditional checks show this popUp can be used for advanced summary and weather
-      _onBtnSelectLayersClicked: function(pParam) {
+      _onBtnSelectLayersClicked: function() {
         var args = {
           nls: this.nls,
           map: this.map,
           config: this.config,
+          weatherTabAdditionalLayers: this.weatherTabAdditionalLayers,
           appConfig: this.appConfig
         };
-        var sourceDijit;
-        if(pParam.action === "weather") {
-          args.weatherTabAdditionalLayers = this.weatherTabAdditionalLayers;
-          sourceDijit = new FeaturelayerSource(args);
-        } else {
-          args.callerLayer = pParam.name;
-          args.callerTab = pParam.data;
-          args.callerOpLayers = this.opLayers._layerinfos;
-          sourceDijit = new FieldStatPicker(args);
-        }
+
+        var sourceDijit = new FeaturelayerSource(args);
 
         var popup = new Popup({
           width: 830,
           height: 560,
           content: sourceDijit,
-          titleLabel: pParam.action
+          titleLabel: this.nls.selectLayers
         });
 
         this.own(on(sourceDijit, 'ok', lang.hitch(this, function(items) {
-          if(pParam.action === "weather") {
-            this.weatherTabAdditionalLayers = items;
-            this.currentlySelectedLayer.innerHTML = this.weatherTabAdditionalLayers;
-          } else {
-              this.summaryFields.push(items);
-              //TODO must be a better way...also should check and make sure it's populated
-              pParam.row.cells[4].innerText = Object.keys(items[0].stats).join(", ");
-              this._tempTableStats();
-          }
+          this.weatherTabAdditionalLayers = items;
+          this.currentlySelectedLayer.innerHTML = this.weatherTabAdditionalLayers;
           sourceDijit.destroy();
           sourceDijit = null;
           popup.close();
+
         })));
 
         this.own(on(sourceDijit, 'cancel', lang.hitch(this, function() {
@@ -538,120 +443,153 @@ define([
         })));
       },
 
+      _onEditLayerClicked: function(tr) {
+
+        // var parameters = tr.selectLayers;
+        // for (var i = 0; i < this.config.tabs.length; i++) {
+        //   var aTab = this.config.tabs[i];
+        //   if (aTab.type === tr.selectTypes.value && aTab.layers === tr.selectLayers.value) {
+        //     parameters = aTab;
+        //     break;
+        //   }
+        // }
+        this.curRow = tr;
+
+        var aTab = tr.tabInfo;
+        if(!aTab) {
+          aTab = {};
+          aTab.label = tr.labelText.value;
+          aTab.type = tr.selectTypes.value;
+          aTab.layers = tr.selectLayers.value;
+          aTab.advStat = {};
+          tr.tabInfo = aTab;
+        }
+        if(aTab.type !== tr.selectTypes.value || aTab.layers !== tr.selectLayers.value){
+          aTab.type = tr.selectTypes.value;
+          aTab.layers = tr.selectLayers.value;
+          aTab.advStat = {};
+        }
+
+        var args = {
+          nls: this.nls,
+          callerLayer: tr.selectLayers.value,
+          callerTab: aTab,
+          callerOpLayers: this.opLayers._layerInfos
+        };
+
+        var sourceDijit = new FieldPicker(args);
+
+        var popup = new Popup({
+          width: 830,
+          height: 560,
+          content: sourceDijit,
+          titleLabel: this.nls.selectFields + ": " + tr.selectLayers.value
+        });
+
+        this.own(on(sourceDijit, 'ok', lang.hitch(this, function(items) {
+          this.curRow.tabInfo.advStat = items;
+          this.curRow = null;
+          //this.summaryFields.push(items);
+          sourceDijit.destroy();
+          sourceDijit = null;
+          popup.close();
+        })));
+
+        this.own(on(sourceDijit, 'cancel', lang.hitch(this, function() {
+          this.curRow = null;
+          sourceDijit.destroy();
+          sourceDijit = null;
+          popup.close();
+        })));
+      },
+
       //solutions: added to handle field summary array manipulation
-      updateSummaryFields: function() {
-        if(this.summaryFields.length > 0) {
-          var trs = this.tabTable.getRows();
-          var flag = false;
-          for(var i = this.summaryFields.length-1; i >= 0; i--){
-            flag = false;
-            array.forEach(trs, lang.hitch(this, function(tr) {
-              if (this.summaryFields[i][0].name === tr.selectLayers.value && tr.selectTypes.value === 'summary') {
-                flag = true;
-              }
-            }));
-            if(!flag) {
-                this.summaryFields.splice(i, 1);
-            }
+      /*jshint loopfunc: true */
+      // updateSummaryFields: function() {
+      //   console.log("Before", this.summaryFields);
+      //   if(this.summaryFields.length > 0) {
+      //     var trs = this.tabTable.getRows();
+      //     var flag = false;
+      //     for(var i = this.summaryFields.length-1; i >= 0; i--){
+      //       flag = false;
+      //       array.forEach(trs, lang.hitch(this, function(tr) {
+      //         //if (this.summaryFields[i][0].name === tr.selectLayers.value &&
+      //         // tr.selectTypes.value === 'summary') {
+      //         if (this.summaryFields[i][0].name === tr.selectLayers.value) {
+      //           flag = true;
+      //         }
+      //       }));
+      //       if(!flag) {
+      //         this.summaryFields.splice(i, 1);
+      //       }
+      //     }
+      //   }
+      //   console.log("After", this.summaryFields);
+      // },
+
+      //solutions: added to support save when a layer has more than one template
+      _updateTemplatePicker: function (layer) {
+        if (this.tpd.children.length > 0) {
+          if (this.templatePicker) {
+            this.templatePicker.destroy();
+          }
+        }
+        if (layer.templates) {
+          if (layer.templates.length > 1) {
+            this.createTemplatePicker([layer]);
+          } else if (layer.templates.length === 1) {
+            this.selectedTemplate = layer.templates[0];
+          }
+        }
+        if (layer.types) {
+          if (layer.types.length > 1) {
+            this.createTemplatePicker([layer]);
+          }
+          else if (layer.types.length === 1) {
+            this.selectedTemplate = layer.types[0].templates[0];
           }
         }
       },
 
-      //solutions: added to temporarily store stat values without updating the config
-      _tempTableStats: function () {
-          //TODO make sure I don't need to call updateSummaryFields prior to this
-          var tabs = [];
-          var aTab = {};
-          var trs = this.tabTable.getRows();
-          array.forEach(trs, lang.hitch(this, function (tr) {
-              var selectLayers = tr.selectLayers;
-              var selectTypes = tr.selectTypes;
-              var statTypes = tr.cells[4].innerText;
-              var labelText = tr.labelText;
-              aTab = {};
-              aTab.label = labelText.value;
-              aTab.type = selectTypes.value;
-              aTab.layers = selectLayers.value;
-              array.forEach(this.summaryFields, lang.hitch(this, function (fieldsItem) {
-                  if (fieldsItem[0].name === selectLayers.value && selectTypes.value === 'summary' && Object.keys(fieldsItem[0].stats).join(", ") === statTypes) {
-                      aTab.advStat = {};
-                      aTab.advStat.url = fieldsItem[0].url;
-                      aTab.advStat.stats = fieldsItem[0].stats;
-                      aTab.advStat.text = statTypes;
-                  }
-              }));
-              tabs.push(aTab);
-          }));
-          this.tempStats = tabs;
-      },
-
-      //solutions: added to support save when a layer has more than one template
-      _updateTemplatePicker: function (layer) {
-          if (this.tpd.children.length > 0) {
-              if (this.templatePicker) {
-                  this.templatePicker.destroy();
-              }
-          }
-          if (layer.templates) {
-              if (layer.templates.length > 1) {
-                  this.createTemplatePicker([layer]);
-              } else if (layer.templates.length === 1) {
-                  this.selectedTemplate = layer.templates[0];
-              }
-          }
-          if (layer.types) {
-              if (layer.types.length > 1) {
-                  this.createTemplatePicker([layer]);
-              }
-              else if (layer.types.length === 1) {
-                  this.selectedTemplate = layer.types[0].templates[0];
-              }
-              //} else {
-              //    this.selectedTemplate = layer.types[0].templates[0];
-              //}
-          }
-      },
-
       //solutions: added to support save
       createTemplatePicker: function (layers) {
-          var tpdDIV = domConstruct.create("div", {
-              id: "divTemplatePicker",
-              style: "padding-top: 10px;"
-          }, this.tpd);
+        var tpdDIV = domConstruct.create("div", {
+          id: "divTemplatePicker",
+          style: "padding-top: 10px;"
+        }, this.tpd);
 
-          var widget = new TemplatePicker({
-              featureLayers: layers,
-              rows: 1,
-              columns: "auto",
-              showTooltip: false,
-              style: "height: 100%; overflow: auto;",
-              grouping: false
-          }, tpdDIV);
+        var widget = new TemplatePicker({
+          featureLayers: layers,
+          rows: 1,
+          columns: "auto",
+          showTooltip: false,
+          style: "height: 100%; overflow: auto;",
+          grouping: false
+        }, tpdDIV);
 
-          widget.startup();
+        widget.startup();
 
-          widget.on("selection-change", lang.hitch(this, function () {
-              this.selectedTemplate = widget.getSelected().template;
-              if (typeof(this.selectedTemplateIndex) !== 'undefined') {
-                  if (widget._selectedCell.cellIndex !== this.selectedTemplateIndex) {
-                      var row = this.tpd.getElementsByTagName('tr')[0];
-                      var row1 = this.tpd.getElementsByTagName('tr')[1];
-                      domClass.remove(row.cells[this.selectedTemplateIndex], "dojoxGridCellOver dojoxGridCellFocus selectedItem");
-                      domClass.remove(row1.cells[this.selectedTemplateIndex], "dojoxGridCellOver dojoxGridCellFocus selectedItem");
-                  }
-              }
-              this.selectedTemplateIndex = widget._selectedCell.cellIndex;
-              console.log(this.selectedTemplate);
-          }));
-
-          this.templatePicker = widget;
-
+        widget.on("selection-change", lang.hitch(this, function () {
+          this.selectedTemplate = widget.getSelected().template;
           if (typeof(this.selectedTemplateIndex) !== 'undefined') {
+            if (widget._selectedCell.cellIndex !== this.selectedTemplateIndex) {
               var row = this.tpd.getElementsByTagName('tr')[0];
               var row1 = this.tpd.getElementsByTagName('tr')[1];
-              domClass.add(row.cells[this.selectedTemplateIndex], "dojoxGridCell  dojoxGridCellOver dojoxGridCellFocus selectedItem");
-              domClass.add(row1.cells[this.selectedTemplateIndex], "dojoxGridCell  dojoxGridCellOver dojoxGridCellFocus selectedItem");
+              domClass.remove(row.cells[this.selectedTemplateIndex], "dojoxGridCellOver dojoxGridCellFocus selectedItem");
+              domClass.remove(row1.cells[this.selectedTemplateIndex], "dojoxGridCellOver dojoxGridCellFocus selectedItem");
+            }
           }
+          this.selectedTemplateIndex = widget._selectedCell.cellIndex;
+        }));
+
+        this.templatePicker = widget;
+
+        if (typeof(this.selectedTemplateIndex) !== 'undefined') {
+          var row = this.tpd.getElementsByTagName('tr')[0];
+          var row1 = this.tpd.getElementsByTagName('tr')[1];
+          domClass.add(row.cells[this.selectedTemplateIndex], "dojoxGridCell  dojoxGridCellOver dojoxGridCellFocus selectedItem");
+          domClass.add(row1.cells[this.selectedTemplateIndex], "dojoxGridCell  dojoxGridCellOver dojoxGridCellFocus selectedItem");
+        }
       }
     });
   });

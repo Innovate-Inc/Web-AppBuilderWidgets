@@ -130,7 +130,8 @@ define([
           domClass.add(this.autoZoomAfterTrace.checkNode, "checked");
         } else {
           this.autoZoomAfterTrace.checked = this.autoZoomAfterTraceCheckedState;
-          domClass.remove(this.autoZoomAfterTrace.checkNode, "checked");
+          domClass.remove(this.autoZoomAfterTrace.checkNode,
+            "checked");
         }
       }
     }

@@ -1,6 +1,6 @@
 ﻿define(
    ({
-    _widgetLabel: "Juhtumi analüüs",
+    _widgetLabel: "Olukorrateadlikkus (beetaversioon)",
     locate_incident: "Paiguta juhtum",
     clear_incidents: "Puhasta juhtumid",
     reverse_geocoded_address: "Lähim aadress",
@@ -22,8 +22,26 @@
     SAT: "L",
     defaultTabMsg: "Juhtumeid ei tuvastatud.",
     actionLabel: "Määra juhtumiks",
+    drawPoint: "Joonista punkt",
+    drawLine: "Joonista joon",
+    drawPolygon: "Joonista polügoon",
+    saveIncident: "Salvesta juhtum",
+    clearIncident: "Puhasta juhtum",
     useMapExtent: "Kasuta praegust kaardi kuvaulatust",
     noFeaturesFound: "Objekte ei leitud.",
-    downloadCSV: "CSV faili allalaadimine"
+    downloadCSV: "CSV faili allalaadimine",
+    editComplete: "Objekt on salvestatud.",
+    updateComplete: "Objekt on uuendatud.",
+    deleteComplete: "Objekt on kustutatud.",
+    sum: "SUM",
+    min: "MIN",
+    max: "MAX",
+    avg: "AVG",
+    count: "KOGUARV",
+    area: "AREA",
+    length: "LENGTH",
+    notPolySave: "Määrake enne salvestamist puhvri ulatus.",
+    update_btn: "Uuenda",
+    delete_btn: "Kustuta"
   })
 );

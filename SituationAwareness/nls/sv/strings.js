@@ -1,10 +1,10 @@
 ﻿define(
    ({
-    _widgetLabel: "Incidentanalys",
+    _widgetLabel: "Situationsmedvetenhet (beta)",
     locate_incident: "Hitta incident",
     clear_incidents: "Rensa incidenter",
     reverse_geocoded_address: "Närmaste adress",
-    reverse_geocoded_error: "Inte tillgänglig",
+    reverse_geocoded_error: "Not available",
     miles: "Engelska mil",
     kilometers: "Kilometer",
     feet: "Fot",
@@ -22,8 +22,26 @@
     SAT: "LÖR",
     defaultTabMsg: "Inga incidenter har identifierats.",
     actionLabel: "Ange som incident",
+    drawPoint: "Rita punkt",
+    drawLine: "Rita linje",
+    drawPolygon: "Rita polygon",
+    saveIncident: "Spara incident",
+    clearIncident: "Rensa incident",
     useMapExtent: "Använd aktuell kartutbredning",
     noFeaturesFound: "Hittade inga objekt.",
-    downloadCSV: "HÄMTA CSV"
+    downloadCSV: "HÄMTA CSV",
+    editComplete: "Geoobjektet har sparats.",
+    updateComplete: "Geoobjektet har uppdaterats.",
+    deleteComplete: "Geoobjektet har tagits bort.",
+    sum: "SUMMA",
+    min: "MIN",
+    max: "MAX",
+    avg: "SNITT",
+    count: "ANTAL",
+    area: "AREA",
+    length: "LÄNGD",
+    notPolySave: "Ange ett buffertavstånd innan du sparar.",
+    update_btn: "Uppdatera",
+    delete_btn: "Ta bort"
   })
 );

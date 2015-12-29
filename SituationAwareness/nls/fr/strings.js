@@ -1,10 +1,10 @@
 ﻿define(
    ({
-    _widgetLabel: "Analyse des incidents",
+    _widgetLabel: "Perception de situation (Bêta)",
     locate_incident: "Localiser l\'incident",
     clear_incidents: "Effacer les incidents",
     reverse_geocoded_address: "Adresse la plus proche",
-    reverse_geocoded_error: "Indisponible",
+    reverse_geocoded_error: "Non disponible",
     miles: "Miles",
     kilometers: "Kilomètres",
     feet: "Pieds",
@@ -22,8 +22,26 @@
     SAT: "SAM",
     defaultTabMsg: "Aucun incident identifié.",
     actionLabel: "Définir comme incident",
+    drawPoint: "Dessiner un point",
+    drawLine: "Dessiner une ligne",
+    drawPolygon: "Dessiner un polygone",
+    saveIncident: "Enregistrer l\'incident",
+    clearIncident: "Effacer l\'incident",
     useMapExtent: "Utiliser l\'étendue de la carte actuelle",
     noFeaturesFound: "Aucune entité n’a été trouvée.",
-    downloadCSV: "TELECHARGER CSV"
+    downloadCSV: "TELECHARGER CSV",
+    editComplete: "L\'entité a été enregistrée !",
+    updateComplete: "L\'entité a été mise à jour !",
+    deleteComplete: "L\'entité a été supprimée !",
+    sum: "SOMME",
+    min: "MIN",
+    max: "MAX",
+    avg: "AVG",
+    count: "TOTAL",
+    area: "SURFACE",
+    length: "LENGTH",
+    notPolySave: "Veuillez spécifier une distance de zone tampon avant d\'enregistrer.",
+    update_btn: "Mise à jour",
+    delete_btn: "Supprimer"
   })
 );

@@ -637,13 +637,15 @@ define([
                     .features[i].attributes;
                 }
               }
-              this.travelModesList.addOption({
-                label: evt.results[0].value.features[i].attributes
-                  .Name,
-                value: evt.results[0].value.features[i].attributes
-                  .TravelModeId,
-                selected: selectedValue
-              });
+              if (this.travelModesList) {
+                this.travelModesList.addOption({
+                  label: evt.results[0].value.features[i].attributes
+                    .Name,
+                  value: evt.results[0].value.features[i].attributes
+                    .TravelModeId,
+                  selected: selectedValue
+                });
+              }
             }
             if (setConfig && this.config && this.config.selectedTravelMode) {
               this.travelModesList.set('value', this.config.selectedTravelMode
@@ -1145,7 +1147,8 @@ define([
     **/
     _createFieldMapping: function () {
       this.routeBussinessAttrTranferChkBox = new CheckBox({
-        "class": "routeBussinessAttrTranferChkBox"
+        "class": "routeBussinessAttrTranferChkBox",
+        "title": this.nls.FieldmMappingText
       }, this.routeBussinessAttrTranferCheckBox);
       domConstruct.create("label", {
         innerHTML: this.nls.FieldmMappingText,
@@ -2261,31 +2264,27 @@ define([
     _createAllowBarriers: function () {
       var allowBarrierCheckBox;
       allowBarrierCheckBox = new CheckBox({}, this.allowBarriersCheckBox);
+      domAttr.set(allowBarrierCheckBox.domNode, "title", this.nls.lblAllowBarriers);
       domConstruct.create("label", {
         "innerHTML": this.nls.lblAllowBarriers,
+        "title": this.nls.lblAllowBarriers,
         "class": "esriCTCheckboxLabel"
       }, this.allowBarriersLabel);
       switch (this.config.AllowedBarriersCheckBoxChecked) {
         case true:
           domClass.add(allowBarrierCheckBox.checkNode, "checked");
-          domClass.add(allowBarrierCheckBox.domNode,
-            "esriCTcheckedPointLayer");
           domStyle.set(this.barriersDiv, "display", "block");
           allowBarrierCheckBox.checked = true;
           this.isAllowBarriersCheckBoxChecked = allowBarrierCheckBox.checked;
           break;
         case false:
           domClass.remove(allowBarrierCheckBox.checkNode, "checked");
-          domClass.remove(allowBarrierCheckBox.domNode,
-            "esriCTcheckedPointLayer");
           domStyle.set(this.barriersDiv, "display", "none");
           allowBarrierCheckBox.checked = false;
           this.isAllowBarriersCheckBoxChecked = allowBarrierCheckBox.checked;
           break;
         default:
           domClass.add(allowBarrierCheckBox.checkNode, "checked");
-          domClass.add(allowBarrierCheckBox.domNode,
-            "esriCTcheckedPointLayer");
           domStyle.set(this.barriersDiv, "display", "block");
           allowBarrierCheckBox.checked = true;
           this.isAllowBarriersCheckBoxChecked = allowBarrierCheckBox.checked;
@@ -2322,6 +2321,8 @@ define([
     _createAllowAccessPointLayerCheckBox: function () {
       var allowAccessPointCheckBox;
       allowAccessPointCheckBox = new CheckBox({}, this.divAllowAccessPointLayer);
+      domAttr.set(allowAccessPointCheckBox.domNode, "title", this.nls
+        .lblAllowAccessPointLayerSelect);
       domConstruct.create("label", {
         innerHTML: this.nls.lblAllowAccessPointLayerSelect,
         "class": "esriCTCheckboxLabel"
@@ -2476,8 +2477,11 @@ define([
     _createMakeBusinessOptionalChkBx: function () {
       var makeBusinessOptionalChkBx;
       makeBusinessOptionalChkBx = new CheckBox({}, this.businessOptionalChkBx);
+      domAttr.set(makeBusinessOptionalChkBx.domNode, "title", this.nls
+        .lblEnableSelectionLayer);
       domConstruct.create("label", {
         "innerHTML": this.nls.lblEnableSelectionLayer,
+        "title": this.nls.lblEnableSelectionLayer,
         "class": "esriCTCheckboxLabel"
       }, this.businessOptionalLabel);
       this.isAllowBusinessOptional = this._checkUncheckCheckBox(
@@ -2549,22 +2553,16 @@ define([
       switch (isChecked) {
         case true:
           domClass.add(checkbox.checkNode, "checked");
-          domClass.add(checkbox.domNode,
-            "esriCTcheckedPointLayer");
           checkbox.checked = true;
           break;
         case false:
           domClass.remove(checkbox.checkNode,
             "checked");
-          domClass.remove(checkbox.domNode,
-            "esriCTcheckedPointLayer");
           checkbox.checked = false;
           break;
         default:
           domClass.remove(checkbox.checkNode,
             "checked");
-          domClass.remove(checkbox.domNode,
-            "esriCTcheckedPointLayer");
           checkbox.checked = false;
       }
       return checkbox.checked;

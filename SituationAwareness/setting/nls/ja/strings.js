@@ -31,6 +31,26 @@
     "missingTabLabel": "少なくとも 1 つのタブにラベルがありません",
     "cancel": "キャンセル",
     "ok": "OK",
-    "missingLayerInWebMap": "操作レイヤーが見つかりません"
+    "missingLayerInWebMap": "操作レイヤーが見つかりません",
+    "selectFields": "フィールド選択",
+    "addField": "フィールドの追加",
+    "sum": "SUM",
+    "min": "MIN",
+    "max": "MAX",
+    "avg": "AVG",
+    "count": "COUNT",
+    "area": "AREA",
+    "length": "LENGTH",
+    "count_checkBox": "数の表示",
+    "area_checkBox": "面積の表示",
+    "length_checkBox": "長さの表示",
+    "max_records": "最大制限に達しました",
+    "save_label": "保存オプション",
+    "save_checkbox": "保存の有効化",
+    "csv_label": "CSV オプション",
+    "csv_checkbox": "レイヤー内のすべてのフィールドをエクスポートします。",
+    "display_label": "表示オプション",
+    "display_checkbox": "集計フィーチャの表示",
+    "must_select_template": "保存オプションで編集テンプレートのいずれかを選択してください。"
   })
 );

@@ -15,7 +15,7 @@ define(
   'dijit/Tooltip',
   'dojo/text!./LinkEdit.html',
   'dijit/form/TextBox',
-  'jimu/dijit/LayerFieldChooser',
+  'widgets/Identify/setting//LayerFieldChooser',
   'esri/request',
   'jimu/dijit/CheckBox',
   'widgets/Identify/setting/AddFieldBtn'

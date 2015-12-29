@@ -394,6 +394,15 @@ define([
         domClass.add(this.outageData, "esriCTHidden");
         domClass.add(this.othersData, "esriCTHidden");
         domClass.remove(this.summaryTextData, "esriCTHidden");
+        if (this._summarySettingObjArr) {
+          array.forEach(this._summarySettingObjArr, lang.hitch(
+            this,
+            function (widgetNode) {
+              if (widgetNode) {
+                widgetNode.refreshOperator();
+              }
+            }));
+        }
       }));
     },
 
@@ -408,7 +417,8 @@ define([
         "nls": this.nls,
         "config": this.config,
         "inputParametersArray": this.inputParametersArray,
-        "outputParametersArray": this.outputParametersArray
+        "outputParametersArray": this.outputParametersArray,
+        "outputSettingArray": this.outputSettingArray
       };
       this._summarySettingObjArr = [];
       summarySettingInstance = new SummarySetting(param, domConstruct

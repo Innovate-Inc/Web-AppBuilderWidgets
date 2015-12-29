@@ -1,2 +1,2 @@
 ArcGIS Solutions
-October 2015
+Version 1.4 - November 2015
