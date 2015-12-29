@@ -20,7 +20,7 @@ define([
   'dijit/form/TextBox',
   'dijit/form/RadioButton',
   'dijit/form/Form',
-  'jimu/dijit/LayerFieldChooser',
+  'widgets/eSearch/setting/LayerFieldChooser',
   'widgets/eSearch/setting/IncludeAllButton',
   'widgets/eSearch/setting/IncludeButton',
   'jimu/dijit/SimpleTable',
@@ -363,7 +363,9 @@ define([
           urlDijit.proceedValue = true;
           result = true;
           this.featureLayerDetails = evt;
-          this.layerName.set('value', lang.trim(this.featureLayerDetails.data.name));
+          if(this.layerName.get('value') === ''){
+            this.layerName.set('value', lang.trim(this.featureLayerDetails.data.name));
+          }
           this.layerName.proceedValue = true;
           this._refreshLayerFields();
         } else {

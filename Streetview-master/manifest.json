@@ -1,0 +1,17 @@
+{
+    "name": "Streetview",
+  "platform": "HTML",
+  "version": "1.2",
+  "wabVersion": "1.2",
+  "author": "Kevin MacLeod",
+  "description": "This widget opens a link to Google Streetview.",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "properties": {
+"inPanel": true,
+    "hasConfig": false,
+    "hasStyle": true,
+    "hasLocale": false,
+    "hasUIFile": false
+  }
+}

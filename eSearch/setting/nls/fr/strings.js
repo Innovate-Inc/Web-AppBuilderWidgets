@@ -224,5 +224,16 @@ define({
   enableelocateselect: "Graphics Widget eLocate",
   defExprPlaceholder: "En option (voir widgets aider pour plus de détails)",
   zoomscaletip: "Échelle de zoom sera applicable à tous les types de géométrie, et pas seulement des points",
-  forceScale: "force de l'échelle"
+  forceScale: "force de l'échelle",
+  editResultFormat: "Edit Result Formating",
+  fromatTooltip: "The formtting set here will affect the result popups and widget result text",
+  attribTitleLbl: "Result Attribute Title:",
+  attribTitleExample: "Name",
+  attribValueLbl: "Result Attribute Value:",
+  attribValueExample: "John Doe",
+  color: "Color",
+  insertbold: "Bold",
+  insertitalic: "Italic",
+  insertunderline: "Underline",
+  preview: "Format Preview"
 });

@@ -67,6 +67,16 @@ function(
         };
         return newConfig;
       }
+    },{
+      version: '1.3',
+      upgrader: function(oldConfig){
+        return oldConfig;
+      }
+    },{
+      version: '1.3.0.1',
+      upgrader: function(oldConfig){
+        return oldConfig;
+      }
     }];
   }
 

@@ -11,7 +11,7 @@ define({
     ok: "OK",
     widgetversion: 'Google Street View Widget Version Info',
     widgetverstr: 'Widget Version',
-    wabversionmsg: 'Widget is designed to run in Web AppBuilder version',
+    wabversionmsg: 'Widget is designed to run in Web AppBuilder version'
   }),
   "ar": 0,
   "cs": 0,

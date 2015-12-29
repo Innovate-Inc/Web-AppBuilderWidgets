@@ -765,7 +765,7 @@ define(['dojo/_base/declare',
       removeGroupLayers: function(subLayers, layer) {
         var newSubLayers = [];
         for (var i = 0; i < subLayers.length; i++) {
-          if (layer.layerInfos[subLayers[i]].subLayerIds === null){
+          if (layer.layerInfos[subLayers[i]] && layer.layerInfos[subLayers[i]].subLayerIds === null){
             newSubLayers.push(subLayers[i]);
           }
         }
@@ -1207,7 +1207,7 @@ define(['dojo/_base/declare',
             idResult.removeResultMsg = this.nls.removeresultmessage;
             if(!projecting){
               var iGra = new Graphic(identifyResult.feature.geometry);
-              switch (identifyResult.feature.geometry.type){
+              switch (idResult.geometry.type){
                 case 'point':
                 case 'multipoint':{
                   iGra.symbol = this.identMarkerSymbol;

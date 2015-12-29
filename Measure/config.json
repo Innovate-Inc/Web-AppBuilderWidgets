@@ -9,6 +9,9 @@
         "unit": "KILOMETERS",
         "abbr": "km"
     }, {
+        "unit": "NAUTICAL_MILES",
+        "abbr": "nm"
+    }, {
         "unit": "METERS",
         "abbr": "m"
     }, {

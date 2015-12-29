@@ -17,7 +17,7 @@ define([
   'dojo/text!./SingleExpressionEdit.html',
   'dijit/form/TextBox',
   'jimu/dijit/Popup',
-  'jimu/dijit/LayerFieldChooser',
+  'widgets/eSearch/setting/LayerFieldChooser',
   'jimu/dijit/SimpleTable',
   'esri/request',
   './SingleValueEdit',

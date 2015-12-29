@@ -19,6 +19,7 @@ define([
   './SpatialRelationshipsEdit',
   './GraphicalEdit',
   './DisableTabEdit',
+  './ResultFormatEdit',
   'jimu/dijit/Message',
   'jimu/dijit/Popup',
   'dojo/keys',
@@ -30,7 +31,8 @@ define([
 ],
 function(declare, lang, array, html, query, on,json, _WidgetsInTemplateMixin, BaseWidgetSetting,
           SimpleTable, SingleSearchEdit, DefaultSearchSymEdit, DefaultBufferEdit, SpatialRelationshipsEdit,
-          GraphicalEdit, DisableTabEdit, Message, Popup, keys, NumberTextBox, TextBox, Select, esriRequest, domAttr) {/*jshint unused: false*/
+          GraphicalEdit, DisableTabEdit, ResultFormatEdit, Message, Popup, keys, NumberTextBox, TextBox,
+          Select, esriRequest, domAttr) {/*jshint unused: false*/
   return declare([BaseWidgetSetting,_WidgetsInTemplateMixin], {
     baseClass: 'widget-esearch-setting',
     ds: null,
@@ -47,12 +49,14 @@ function(declare, lang, array, html, query, on,json, _WidgetsInTemplateMixin, Ba
     popup5: null,
     popup6: null,
     popup7: null,
+    popup8: null,
     popupSRedit: null,
     popupGOedit: null,
     popupDisableTabedit: null,
     defaultBufferedit: null,
     defaultSingleSearchedit: null,
     defaultSearchSymedit: null,
+    popupformatedit: null,
 
     postCreate:function(){
       this.inherited(arguments);
@@ -63,10 +67,11 @@ function(declare, lang, array, html, query, on,json, _WidgetsInTemplateMixin, Ba
     },
 
     setConfig:function(config){
+      console.info(this);
       //hack the 'Learn more about this widget link'
       setTimeout(function(){
         var helpLink = dojo.query('.help-link');
-        helpLink[0].href = 'http://gis.calhouncounty.org/WAB/V1.2/widgets/eSearch/help/eSearch_Help.htm';
+        helpLink[0].href = 'http://gis.calhouncounty.org/WAB/V1.3/widgets/eSearch/help/eSearch_Help.htm';
         html.setStyle(helpLink[0],'display','block');
       },600);
 
@@ -112,6 +117,7 @@ function(declare, lang, array, html, query, on,json, _WidgetsInTemplateMixin, Ba
       if(this.config.symbols){
         config.symbols = lang.mixin({},this.config.symbols);
       }
+      config.resultFormat = this.config.resultFormat;
       this.config = lang.mixin({},config);
       return config;
     },
@@ -411,6 +417,43 @@ function(declare, lang, array, html, query, on,json, _WidgetsInTemplateMixin, Ba
       this.defaultSingleSearchedit.startup();
     },
 
+    _onFormatEditOk: function() {
+      this.config.resultFormat = this.popupformatedit.getConfig().format;
+      this.popup8.close();
+      this.popupState = '';
+    },
+
+    _onFormatEditClose: function() {
+      this.popupfromatedit = null;
+      this.popup8 = null;
+    },
+
+    _openFormatEdit: function(title) {
+      this.popupformatedit = new ResultFormatEdit({
+        nls: this.nls,
+        config: this.config || {}
+      });
+
+      this.popup8 = new Popup({
+        titleLabel: title,
+        autoHeight: true,
+        content: this.popupformatedit,
+        container: 'main-page',
+        width: 540,
+        buttons: [{
+          label: this.nls.ok,
+          key: keys.ENTER,
+          onClick: lang.hitch(this, '_onFormatEditOk')
+        }, {
+          label: this.nls.cancel,
+          key: keys.ESCAPE
+        }],
+        onClose: lang.hitch(this, '_onFormatEditClose')
+      });
+      html.addClass(this.popup8.domNode, 'widget-setting-format');
+      this.popupformatedit.startup();
+    },
+
     _bindEvents:function(){
       this.own(on(this.btnAddSearch,'click',lang.hitch(this,function(){
         var args = {
@@ -424,6 +467,9 @@ function(declare, lang, array, html, query, on,json, _WidgetsInTemplateMixin, Ba
       })));
       this.own(on(this.btnSymSearch,'click',lang.hitch(this,function(){
         this._openSymbolEdit(this.nls.editDefaultSym, this.config);
+      })));
+      this.own(on(this.btnFormatResults,'click',lang.hitch(this,function(){
+        this._openFormatEdit(this.nls.editResultFormat);
       })));
       this.own(on(this.btnBufferSearch,'click',lang.hitch(this,function(){
         this._openBufferEdit(this.nls.updateBuffer, this.config);

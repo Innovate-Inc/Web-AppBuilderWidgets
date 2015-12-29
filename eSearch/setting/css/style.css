@@ -133,6 +133,7 @@ textarea {
   border-radius: 5px;
 }
 
+.result-format-edit .help-icon,
 .eSearch-default-symbol-setting .help-icon,
 .eSearch-layer-symbol-setting .help-icon,
 .widget-esearch-singlelink-setting .help-icon{
@@ -151,6 +152,7 @@ textarea {
   font-weight:bold;
 }
 
+.result-format-edit .help-icon:hover,
 .eSearch-default-symbol-setting .help-icon:hover,
 .eSearch-layer-symbol-setting .help-icon:hover,
 .widget-esearch-singlelink-setting .help-icon:hover{
@@ -199,6 +201,7 @@ textarea {
 .widget-esearch-setting .btn-buffer-section,
 .widget-esearch-setting .btn-spatial-section,
 .widget-esearch-setting .btn-graphical-section,
+.widget-esearch-setting .btn-format-section,
 .widget-esearch-setting .btn-disable-section {
   display:inline-block;
   overflow:hidden;
@@ -229,7 +232,8 @@ textarea {
 .widget-esearch-singlesearch-setting .btn-buffer-section .btn-edit-icon,
 .widget-esearch-setting .btn-spatial-section .btn-edit-icon,
 .widget-esearch-setting .btn-graphical-section .btn-edit-icon,
-.widget-esearch-setting .btn-disable-section .btn-edit-icon{
+.widget-esearch-setting .btn-disable-section .btn-edit-icon,
+.widget-esearch-setting .btn-format-section .btn-edit-icon{
   float:left;
   height:100%;
   width:14px;
@@ -262,7 +266,8 @@ textarea {
 .widget-esearch-setting .btn-buffer-section .btn-edit-buffer-label,
 .widget-esearch-setting .btn-spatial-section .btn-edit-spatial-label,
 .widget-esearch-setting .btn-graphical-section .btn-edit-graphical-label,
-.widget-esearch-setting .btn-disable-section .btn-edit-disable-label{
+.widget-esearch-setting .btn-disable-section .btn-edit-disable-label,
+.widget-esearch-setting .btn-format-section .btn-edit-format-label{
   float:left;
   height:100%;
   line-height:24px;
@@ -777,4 +782,84 @@ textarea {
 
 .widget-esearch-singlevalue-setting .label.jimu-float-leading {
   margin-top: 7px;
+}
+
+.result-format-edit .format-buttons{
+  display: inline-block;
+  padding: 0 8px;
+  float: left;
+}
+
+.result-format-edit .format-buttons>.icon-btn{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #518DCA;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+  width:40px;
+  height:28px;
+  margin-left:5px;
+}
+
+.result-format-edit .format-buttons>.icon-btn:hover,
+.result-format-edit .format-buttons>.icon-btn.selected{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #15a4fa;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+  width:40px;
+  height:28px;
+  margin-left:5px;
+}
+
+.result-format-edit .format-buttons .seperator {
+  border-right: 2px solid gray;
+  width:4px;
+  display: inline-block;
+  line-height: 28px;
+  vertical-align: middle;
+  text-align: center;
+  height:28px;
+  margin-left:5px;
+}
+
+.result-format-edit .format-buttons .bold-btn{
+  font-weight: bold;
+}
+
+.result-format-edit .format-buttons .italic-btn{
+  font-style: italic;
+}
+
+.result-format-edit .format-buttons .under-btn{
+  text-decoration: underline;
+}
+
+/* format-edit */
+.result-format-edit .input-table{
+  width:100%;
+}
+
+.result-format-edit .input-table > tbody > tr > td{
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  padding:4px 0;
+}
+
+.result-format-edit {
+  margin:0;
+  padding:0;
+  font-size:15px;
 }

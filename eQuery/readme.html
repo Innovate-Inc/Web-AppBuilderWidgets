@@ -1,0 +1,63 @@
+Enhanced Query Widget
+
+By: Kevin MacLeod - Savannah - Chatham Area GIS 
+
+Version: Alpha 3 development build  10/14/15
+
+
+**Setup: 
+Define the service and initial layer to query in WebApp Builder in the widget setup when you add the widget. 
+
+**What this widget does:
+This widget allows you to build queries for any field, in any layer, for any service. 
+
+**How to use:
+	You use the buttons to create SQL queries that will be created as a URL and submitted to the map service (which you define with the REST link you provide in the widget setup). This widget essentially replicates the functionality and feel of ArcMap's 'Select By Attributes' tool.
+
+
+1. Assemble your query with the buttons.
+2. Click ?Add to Query? 
+3. If desired, create another query with the buttons and add it again. It will append to the first query.
+4. Click 'Search' to launch the query.
+
+You can manually enter SQL syntax or use the buttons to construct a query.  I recommend using the buttons so the spacing and syntax are correct.
+
+
+Note: you can set layer IDs to ignore by using the Switch statement in my code. I have not exposed this setting parameter yet to the WAB Builder configuration panel UI, yet. I plan to. For now, what you'd do, is add the layer IDs to the case list to exlude. I put a few in to my Demo site as an example here.
+
+example:
+           for (i = 0; i < originalArray.length; i++) {
+                  temp = originalArray[i];
+                  switch (temp.id.toString()) {
+                      //layers to remove:
+                    case "31": case "32": case "33": case "34": case "35": case "36": case "37": case "38": case "39": case "40": 
+                        temp.id = undefined; // used to determine layers to exclude from layerlist menu
+                      finalArrayLayers.push(temp);
+                      break;
+                  default:
+                      finalArrayLayers.push(temp);
+                  }
+              } //end switch 
+
+
+
+-----------
+TO DO for version 1.0 - Final Build:
+
+1. write a better read me (TAPAS, you are good at these..I'm open to collaboration man!! ;) :D  )
+
+2. Ability to add and use multiple map services, configured via WebApp Dev widget configure UI.
+
+3. Add option to restrict results by geometry. By map extent for version 1.0 and in future versions, potentially by user-drawn geometry i.e. circle, square, lasso.
+
+4. Wrap user text in quotes for sql.
+
+5. Refine UI. Allow user to insert text anywhere not just the end.  Add progress bar while it searches. 
+
+6. Test and debug. Ability to remove search result layers?
+
+7. Help doc linked to in-panel? Like Tom's Measure for example.
+
+8. add layer ID exclusion to the config panel UI
+
+Much thanks and credit go to Robert Scheitlin for coding contribution and advice.

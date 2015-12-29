@@ -16,7 +16,7 @@ define(
   'dijit/form/TextBox',
   'dijit/form/RadioButton',
   'dijit/form/Form',
-  'jimu/dijit/LayerFieldChooser',
+  'widgets/Identify/setting/LayerFieldChooser',
   'widgets/Identify/setting/IncludeAllButton',
   'widgets/Identify/setting/IncludeButton',
   'jimu/dijit/SimpleTable',

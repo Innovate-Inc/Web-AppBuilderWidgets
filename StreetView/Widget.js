@@ -101,6 +101,19 @@ define([
         baseUnload.addOnWindowUnload(lang.hitch(this, function(){
           document.winobj.close();
         }));
+
+        this.own(on(this.domNode, 'mousedown', lang.hitch(this, function (event) {
+          event.stopPropagation();
+          if (event.altKey) {
+            var msgStr = this.nls.widgetverstr + ': ' + this.manifest.version;
+            msgStr += '\n' + this.nls.wabversionmsg + ': ' + this.manifest.wabVersion;
+            msgStr += '\n' + this.manifest.description;
+            new Message({
+              titleLabel: this.nls.widgetversion,
+              message: msgStr
+            });
+          }
+        })));
       },
 
       onClose: function () {
@@ -130,21 +143,6 @@ define([
           }else{
             this.openSVwin(this.wBGColor,this.noSVImageAvailableMsg,this.gAPIKey,this.gAPIClientID,this.windowWidth,this.windowHeight);
           }
-        }
-        var widgetTitlebar = this.domNode.parentNode.parentNode.parentNode.childNodes[0];
-        if (typeof widgetTitlebar.onmousedown !== "function") {
-          this.own(on(widgetTitlebar, 'mousedown', lang.hitch(this, function (event) {
-            event.stopPropagation();
-            if (event.altKey) {
-              var msgStr = this.nls.widgetverstr + ': ' + this.manifest.version;
-              msgStr += '\n' + this.nls.wabversionmsg + ': ' + this.manifest.wabVersion;
-              msgStr += '\n' + this.manifest.description;
-              new Message({
-                titleLabel: this.nls.widgetversion,
-                message: msgStr
-              });
-            }
-          })));
         }
       },
 
