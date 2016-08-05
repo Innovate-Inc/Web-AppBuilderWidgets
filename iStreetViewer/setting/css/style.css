@@ -1,0 +1,33 @@
+.jimu-widget-StreetViewer-setting{
+  margin:0;
+  padding:0;
+  font-size:15px;
+}
+
+.jimu-widget-StreetViewer-setting .setting-table > thead > tr > th,.jimu-widget-StreetWalker-setting .setting-table > tbody > tr > td{
+  height:40px;
+  line-height:40px;
+  vertical-align:middle;
+}
+
+.jimu-widget-streetViewer-setting .input-table > tbody > tr > .first{
+  width:auto;
+  text-align: left;
+  padding-right:50px;
+}
+
+.jimu-widget-StreetViewer-setting .input-table > tbody > tr > .second{
+  width:200px;
+}
+
+.jimu-widget-StreetViewer-setting .input-table > tbody > tr > .third{
+  width:35px;
+}
+.widget-street-view-setting{
+  margin:0;
+  padding:0;
+  font-size:15px;
+}
+.widget-street-view-setting > table > tbody > tr > td{
+  padding:5px 0;
+}
